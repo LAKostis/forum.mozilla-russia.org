@@ -1,0 +1,196 @@
+/**************************************************/
+/* STRUCTURAL SETTINGS */
+/**************************************************/
+
+DIV, FORM, P, H1, H2, H3, H4, PRE, BLOCKQUOTE, UL, LI {
+	MARGIN: 0px;
+	PADDING: 0px;
+	FONT-WEIGHT: normal;
+}
+
+UL {
+	LIST-STYLE-TYPE: square;
+	PADDING-LEFT: 8px;
+}
+
+.clearer, .nosize {
+	HEIGHT: 0;
+	WIDTH: 0;
+	LINE-HEIGHT: 0;
+	FONT-SIZE: 0;
+	OVERFLOW: hidden
+}
+
+.clearer, .clearb {CLEAR: both}
+.nosize {POSITION:absolute; LEFT: -10000px}
+
+/* Begin IEWin Fix \*/
+* HTML .inbox, * HTML #content {HEIGHT: 1%}
+* HTML .imgbox {MARGIN-RIGHT: -18px}
+* HTML .imgbox IMG {PADDING-BOTTOM: 18px}
+/* End of IEWin Fix */
+
+DIV.incqbox, DIV.inimgbox {
+	WIDTH:100%;
+	OVERFLOW: hidden
+}
+
+DIV.scrollbox {
+	WIDTH: 100%;
+	OVERFLOW: auto
+}
+
+H4 {MARGIN-BOTTOM: 10px}
+
+BLOCKQUOTE, DIV.codebox {
+	MARGIN: 10px 15px 15px 15px;
+	PADDING: 8px
+}
+
+
+/**************************************************/
+/* TEXT */
+/**************************************************/
+
+BODY {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 10px
+}
+
+
+/* IEWin Font Size only - to allow IEWin to zoom. Do not remove comments \*/
+* HTML BODY {FONT-SIZE: 62.5%}
+/* End IE Win Font Size */
+
+H2 {FONT-SIZE: 1.8em}
+
+#nav {FONT-SIZE: 1em}
+
+H3, #nav LI, PRE {FONT-SIZE: 1.2em}
+
+H3, H4 {FONT-WEIGHT: bold}
+
+LI, P, H4, LABEL {FONT-SIZE: 1.1em}
+
+#footer {TEXT-ALIGN: right}
+
+/**************************************************/
+/* LAYOUT */
+/**************************************************/
+
+BODY {
+	MARGIN: 0 50px;
+	PADDING: 0
+}
+
+
+#wrapper {
+	BORDER-RIGHT-WIDTH: 6px;
+	BORDER-RIGHT-STYLE: solid;
+}
+
+.leftcol {
+	FLOAT: left;
+	WIDTH: 23em;
+}
+
+.rightcol, #footer, #nav {
+	BORDER-LEFT-WIDTH: 23em;
+	BORDER-LEFT-STYLE: solid;
+}
+
+#footer, #main {CLEAR: both}
+
+#footer, P.newsinfo {PADDING-TOP: 6px}
+
+#nav {
+	PADDING: 6px 0 6px 20px;
+	MARGIN-RIGHT: -6px
+
+}
+
+.leftcol H3 {
+	PADDING: 3px 10px;
+	MARGIN-TOP: 15px;
+	MARGIN-BOTTOM: 10px
+}
+
+.itemside {PADDING: 0px 10px 0px 10px}
+
+FORM P, LABEL, .rightcol h3, #main .rightcol P, .rightcol UL {PADDING-BOTTOM: 6px}
+
+LABEL {display: block}
+
+.rightcol .newsbox H3 {PADDING-BOTTOM: 12px}
+
+#main .leftcol, #main .rightcol {PADDING-TOP: 15px; PADDING-BOTTOM: 15px}
+
+DIV#content, #footer {
+	PADDING-RIGHT: 20px;
+	PADDING-LEFT: 20px;
+}
+
+#main H2, DIV.itembox {PADDING-BOTTOM: 15px}
+
+DIV.newsbox, #footer {PADDING-BOTTOM: 24px}
+
+
+.newsinfo {
+	BORDER-BOTTOM-STYLE: solid;
+	BORDER-BOTTOM-WIDTH: 1px;
+}
+
+DIV.newsbox {WIDTH: 100%; overflow: hidden}
+
+#header .rightcol {PADDING-LEFT: 20px}
+
+.leftcol UL, .itembox UL {
+	list-style-position: inside;
+	LIST-STYLE-TYPE: SQUARE;
+	line-height: 1.5em
+}
+
+#nav UL, #nav LI {
+	DISPLAY: inline;
+	HEIGHT: 0
+}
+
+#nav LI {MARGIN-RIGHT: 10px}
+
+#logo_left, #logo_right {HEIGHT: 110px}
+
+#standards, #links {TEXT-ALIGN: center}
+
+#standards IMG, #links IMG {BORDER: 0; MARGIN: 5px}
+
+#rambler img{border: none; margin: 0; padding: 0;}
+
+/**************************************************/
+/* LINKS */
+/**************************************************/
+
+A:link, A:visited {TEXT-DECORATION: underline}
+
+#nav A:hover {TEXT-DECORATION: underline}
+
+#nav LI.active A:link, #nav LI.active A:visited {TEXT-DECORATION: none} 
+
+/*************************************************/
+/* BUTTONS - tnx to vladimir
+/*************************************************/
+p input{
+	font:normal 12px verdana,arial,helvetica,sans serif;
+	color:#333;
+	background:#ddd;
+	border:1px solid #777;
+	cursor:hand;
+}
+
+#qjump input{
+	font:normal 13px verdana,arial,helvetica,sans serif;
+	color:#333;
+	background:#ddd;
+	border:1px solid #777;
+	cursor:hand;
+}
+

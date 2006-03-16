@@ -1,0 +1,56 @@
+/**************************************************/
+/* COLOUR SCHEME */
+/**************************************************/
+
+BODY {COLOR: #333}
+
+#wrapper {
+	BACKGROUND-COLOR: #F1F1F1;
+	BORDER-COLOR: #DEDFDF;
+}
+
+.leftcol {BACKGROUND-COLOR: #F1F1F1}
+
+.rightcol, #footer {
+	BORDER-LEFT-COLOR: #DEDFDF;
+	BACKGROUND-COLOR: #F1F1F1;
+}
+
+
+#nav {
+	BORDER-LEFT-COLOR: #006FC9;
+	BACKGROUND-COLOR: #0066B9;
+}
+
+.leftcol H3 {
+	BACKGROUND-COLOR: #D1D1D1;
+	COLOR: #006FC9
+}
+
+.leftcol UL {COLOR: #B0C3D3}
+
+BLOCKQUOTE, DIV.codebox {BACKGROUND-COLOR: #f9f9f9}
+
+.newsinfo {BORDER-BOTTOM-COLOR: #B0C3D3}
+
+A:link, A:visited {COLOR: #005CB1}
+
+A:hover {COLOR: #B42000}
+
+#nav A:link, #nav A:visited {COLOR: #FFF}
+
+#nav A:hover {COLOR: #FFF}
+
+/**************************************************/
+/* LOGO/TITLE */
+/**************************************************/
+
+SPA{.newsitem {
+	FLOAT: left;
+	DISPLAY: block;
+	BORDER-WIDTH: 0.6em 0.6em 0.6em 0.6em;
+	MARGIN-RIGHT: 0.8em;
+	BORDER-STYLE: solid
+}
+
+SPAN.newsitem {BORDER-COLOR: #E6E6E6 #DEDEDE #DADADA #E2E2E2}

@@ -1,0 +1,158 @@
+/****************************************************************/
+/* 1. BACKGROUND AND TEXT COLOURS */
+/****************************************************************/
+
+/* 1.1 Default background colour and text colour */
+
+BODY {background: url('../img/Mozilla-ru/pun_body_bg.gif') repeat-x top #FFFFFF;}
+
+.pun {COLOR: #333}
+
+DIV.box, .pun BLOCKQUOTE, DIV.codebox, #adminconsole FIELDSET TH, .rowodd, .roweven {BACKGROUND-COLOR: #f4f6f9}
+#adminconsole TD, #adminconsole TH {BORDER-COLOR: #F1F1F1}
+
+/* 1. 2 Darker background colours */
+
+TD.tc2, TD.tc3, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
+#adminconsole FIELDSET TD, DIV.blockmenu DIV.box, #adstats DD {BACKGROUND-COLOR: #b5c7d8}
+
+/* 1.3 Main headers and navigation bar background and text colour */
+
+.pun H2 {background: url('../img/Mozilla-ru/pun_h2_left_bg.png') no-repeat left top #3c6a97; color: #FFFFFF; font-weight: bold;}
+#brdmenu {background: url('../img/Mozilla-ru/pun_menu_bg.png') repeat-x top right #df731b;}
+
+.inform H2 SPAN,
+.blockform H2 SPAN,
+.blocktable H2 SPAN,
+.block H2 SPAN,
+.blockmenu H2 SPAN{
+	background: url('../img/Mozilla-ru/pun_h2_right_bg.png') no-repeat right top transparent;
+    display: block;
+	color: #FFFFFF;
+	width: 100%;
+	text-align: left;
+	margin: -4px -6px;
+	padding: 4px 6px;
+}
+/* 1.4 Table header rows */
+
+.pun TH {BACKGROUND-COLOR: #d2dde7;}
+
+/* 1.5 Fieldset legend text colour */
+
+.pun LEGEND {COLOR: #005CB1}
+
+/* 1.6 Highlighted text for various items */
+
+.pun DIV.blockmenu LI.isactive A, #posterror LI STRONG {COLOR: #333}
+
+/****************************************************************/
+/* 2. POST BACKGROUNDS AND TEXT */
+/****************************************************************/
+
+/* 2.1 This is the setup for posts. */
+
+DIV.blockpost DIV.box, DIV.postright, DIV.postfootright {BACKGROUND-COLOR: #fff;}
+DIV.postright, DIV.postfootright {BORDER-LEFT-COLOR: #f4f6f9}
+DIV.postleft, DIV.postfootleft, DIV.blockpost LABEL {BACKGROUND-COLOR: #f4f6f9}
+
+/* 2.2 Background for post headers and text colour for post numbers in viewtopic */
+
+DIV.blockpost H2 {background: url('../img/Mozilla-ru/pun_h2_left_bg.png') no-repeat top left #245889;}
+DIV.blockpost H2 SPAN.conr {
+	COLOR: #FFFFFF; 
+	background: url('../img/Mozilla-ru/pun_h2_conr_bg.png') no-repeat right top; 
+	margin: -4px -6px; 
+	padding: 4px 6px;
+	font-weight: normal;
+	}
+
+/* 2.3 This is the line above the signature in posts. Colour and background should be the same */
+
+.pun HR {BACKGROUND-COLOR: #333; COLOR: #333}
+
+/****************************************************************/
+/* 3. BORDER COLOURS */
+/****************************************************************/
+
+/* 3.1 All external borders */
+
+DIV.box {BORDER-COLOR: #688baf;} /* add Ragnaar */
+
+/* 3.2 Makes the top border of posts match the colour used for post headers */
+
+DIV.blockpost DIV.box, #brdwelcome {BORDER-COLOR: #688baf;}
+
+/* 3.3 Table internal borders. By default TH is same as background so border is invisible */
+
+.pun TD {BORDER-COLOR: #fff}
+.pun TH {BORDER-COLOR: #fff}
+
+/* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
+
+.pun BLOCKQUOTE, DIV.codebox, DIV.forminfo, DIV.blockpost LABEL {BORDER-COLOR: #b4c6d7 #dfe6ee #dfe6ee #b4c6d7}
+
+/* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
+without interferring with IE's rather nice default */
+
+.pun DIV>FIELDSET {BORDER-COLOR: #b4c6d7}
+
+/****************************************************************/
+/* 4. LINK COLOURS */
+/****************************************************************/
+
+/* 4.1 This is the default for all links */
+
+.pun A:link, .pun A:visited {COLOR: #005CB1}
+.pun A:hover {COLOR: #B42000}
+
+/* 4.2 This is the colour for links in header rows and the navigation bar */
+
+.pun H2 A:link, .pun H2 A:visited {COLOR: #FFFFFF}
+.pun H2 A:hover {COLOR: #FFFFFF}
+
+#brdmenu A:link, #brdmenu A:visited {COLOR: #FFFFFF}
+#brdmenu A:hover {COLOR: #FFFFFF}
+
+/* 4.3 This is for closed topics and "hot" links */
+
+LI.postreport A:link, LI.postreport A:visited, TR.iclosed TD.tcl A:link, TR.iclosed TD.tcl A:visited {COLOR: #888}
+LI.postreport A:hover, TR.iclosed TD.tcl A:hover {COLOR: #AAA}
+LI.maintenancelink A:link, LI.maintenancelink A:visited {COLOR: #B42000}
+LI.maintenancelink A:hover {COLOR: #B42000}
+LI.pmlink a:link,LI.pmlink a:hover,LI.pmlink a:visited {color: red !important;}
+
+/****************************************************************/
+/* 5. POST STATUS INDICATORS */
+/****************************************************************/
+
+/* These are the post status indicators which appear at the left of some tables. 
+.inew = new posts, .iredirect = redirect forums, .iclosed = closed topics and
+.isticky = sticky topics. The default is "icon". By default only .inew is different.*/
+
+DIV.icon {background: url('../img/Mozilla-ru/pun_icon_unactive.png') no-repeat #B5C7D8;}
+TR.inew DIV.icon, .intd DIV.inew {background: url('../img/Mozilla-ru/pun_icon_active.png') no-repeat #DF731B;}
+TR.isticky DIV.icon {background: url('../img/Mozilla-ru/pun_icon_sticky.png') no-repeat #B5C7D8;}
+TR.iclosed DIV.icon {background: url('../img/Mozilla-ru/pun_icon_close.png') no-repeat #DDDDDD;}
+TR.iredirect DIV.icon{background: url('../img/Mozilla-ru/pun_icon_redirect.png') no-repeat #B5C7D8;}
+
+TR.iclosed{background-color: #f2f2f2;}
+TR.iclosed TD.tc2, TR.iclosed TD.tc3{background-color: #cacaca;}
+
+TR.isticky{background-color: #f9e3d1;}
+TR.isticky TD.tc2, TR.isticky TD.tc3{background-color: #f4d0b2;}
+
+/****************************************************************/
+/* 11. ADDITIONAL STYLES */
+/****************************************************************/
+
+/* 11.2 Top menu links */
+DIV.projects a:link, DIV.projects a:visited {color: #888;}
+DIV.projects a:hover {color: #333; text-decoration: underline;}
+
+/* 11.3 Top menu search form */
+
+form input#search-input {background-color: #EAEAEA; border: 1px solid #577FA5;}
+form input#search-input:focus, form input#search-input:hover {background: #fff;}
+form input#search-submit {background-color: #2A5D8D; border-bottom: 1px solid #08447b; border-left: 1px solid #527CA2; border-right: 1px solid #08447b; border-top: 1px solid #527CA2; color: #fff;}
+

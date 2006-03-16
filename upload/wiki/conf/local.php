@@ -1,0 +1,4 @@
+<?
+$conf['syntax']       = 'syntaxru';
+?>
+

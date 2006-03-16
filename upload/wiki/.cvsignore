@@ -1,0 +1,7 @@
+*~
+*.orig
+*.patch
+robots.txt
+attic
+data
+media

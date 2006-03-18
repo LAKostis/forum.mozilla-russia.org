@@ -4,14 +4,14 @@
 $lang_misc = array(
 
 'Mark read redirect'		=>	'Все темы в этом форуме были отмечены как прочтённые. Переадресация...',
-'Mark forum read redirect'     =>      'Все темы в этом форуме были отмечены как прочтённые. Переадресация...', // MOD: MARK TOPICS AS READ
+'Mark forum read redirect'  =>  'Все темы в этом форуме были отмечены как прочтённые. Переадресация...', // MOD: MARK TOPICS AS READ
 
 // Send e-mail
 'Form e-mail disabled'		=>	'Пользователь, которому Вы хотите послать сообщение, отказался от получения сообщений по e-mail.',
-'No e-mail subject'			=>	'Вам необходимо ввести тему сообщения.',
-'No e-mail message'			=>	'Вам необходимо текст сообщения.',
-'Too long e-mail message'	=>	'Сообщение не может быть длиннее 65535 characters (64 KB).',
-'E-mail sent redirect'		=>	'Сообщение послано. Переадресация...',
+'No e-mail subject'			=>	'Вам необходимо ввести заголовок сообщения.',
+'No e-mail message'			=>	'Вам необходимо ввести текст сообщения.',
+'Too long e-mail message'	=>	'Сообщение не может быть длиннее 65535 символов (64 КБ).',
+'E-mail sent redirect'		=>	'E-mail послан. Переадресация...',
 'Send e-mail to'			=>	'Послать e-mail',
 'E-mail subject'			=>	'Заголовок',
 'E-mail message'			=>	'Сообщение',
@@ -19,7 +19,7 @@ $lang_misc = array(
 'Write e-mail'				=>	'Напишите e-mail и нажмите отправить',
 
 // Report
-'No reason'					=>	'Вы должны описать что произошло.',
+'No reason'					=>	'Вы должны описать, что произошло.',
 'Report redirect'			=>	'Сообщение отправлено. Переадресация...',
 'Report post'				=>	'Сообщить модератору',
 'Reason'					=>	'Причина сообщения',
@@ -42,7 +42,7 @@ $lang_misc = array(
 'Close'						=>	'Закрыть',
 'Move topic'				=>	'Переместить тему',
 'Move topics'				=>	'Переместить темы',
-'Move legend'				=>	'Выберите назначение для переноса',
+'Move legend'				=>	'Выберите назначение для перемещения',
 'Move to'					=>	'Переместить в',
 'Leave redirect'			=>	'Оставить переадресацию темы/тем',
 'Move topic redirect'		=>	'Тема перемещена. Переадресация...',
@@ -56,8 +56,8 @@ $lang_misc = array(
 'Close topic redirect'		=>	'Тема закрыта. Переадресация...',
 'Close topics redirect'		=>	'Темы закрыты. Переадресация...',
 'No topics selected'		=>	'Вы должны выбрать, по крайней мере, одну тему, для выполнения этого действия.',
-'Stick topic redirect'		=>	'Тема выделена. Переадресация...',
-'Unstick topic redirect'	=>	'Выделение с темы снято. Переадресация...',
+'Stick topic redirect'		=>	'Тема прикреплена. Переадресация...',
+'Unstick topic redirect'	=>	'Тема откреплена. Переадресация...',
 
 // Delete multiple posts in topic
 'Delete posts'				=>	'Удалить сообщения',

@@ -37,7 +37,7 @@ $lang_common = array(
 'Bad request'			=>	'Неверный запрос. Ссылка, по которой вы пришли неверная или устаревшая.',
 'No view'				=>	'Вы не имеете прав для просмотра этих форумов.',
 'No permission'			=>	'Вы не имеете прав для доступа к этой странице.',
-'Bad referrer'			=>	'Неверный источник. Вы попали на эту страницу из несанкционированного источника. Пожалуйста, вернитесь и попробуйте еще раз. Если проблема осталась, пожалуйста, убедитесь что \'Начальный URL\' правильно установлен в Администрирование/Свойства и, что, Вы попадаете на форум через этот URL.',
+'Bad referrer'			=>	'Неверный источник (HTTP_REFERER). Вы попали на эту страницу из несанкционированного источника. Пожалуйста, вернитесь и попробуйте еще раз. Если проблема осталась, пожалуйста, убедитесь что \'Начальный URL\' правильно установлен в Администрирование/Свойства и, что, Вы попадаете на форум через этот URL.',
 
 // Topic/forum indicators
 'New icon'				=>	'Есть новые сообщения',
@@ -47,12 +47,12 @@ $lang_common = array(
 
 // Miscellaneous
 'Announcement'			=>	'Объявление',
-'Announcements'                 =>      'Announcements',
-'Options'				=>	'Свойства',
-'Actions'				=>	'Действие',
+'Announcements'                 =>      'Объявления',
+'Options'				=>	'Параметры',
+'Actions'				=>	'Действия',
 'Submit'				=>	'Отправить',	// "name" of submit buttons
-'Ban message'			=>	'На этом форуме, Вы в черном списке (забанены).',
-'Ban message 2'			=>	'Время действия Вашего бана истекает',
+'Ban message'			=>	'На этом форуме, Вы находитесь в черном списке (забанены).',
+'Ban message 2'			=>	'Действие Вашего бана истекает',
 'Ban message 3'			=>	'Забанивший Вас администратор или модератор оставил следующее сообщение:',
 'Ban message 4'			=>	'Если у вас есть какие-нибудь вопросы, вы можете обратиться к администратору',
 'Never'					=>	'Никогда',
@@ -65,12 +65,12 @@ $lang_common = array(
 'Click redirect'		=>	'Нажмите сюда, если вы не хотите больше ждать (или если браузер не перенаправляет Вас автоматически)',
 'on'					=>	'включён',		// as in "BBCode is on"
 'off'					=>	'выключен',
-'Invalid e-mail'		=>	'E-mail адрес, который Вы ввели - неправильный',
+'Invalid e-mail'		=>	'Введенный вами e-mail - неправильный',
 'required field'		=>	'это поле обязательно для заполнения в этой форме.',	// for javascript form validation
 'Last post'				=>	'Последнее сообщение',
 'by'					=>	'оставил',	// as in last post by someuser
 'New posts'				=>	'Новые&nbsp;сообщения',	// the link that leads to the first new post (use &nbsp; for spaces)
-'New posts info'		=>	'Перейти к первому новому сообщению в этом топике.',	// the popup text for new posts links
+'New posts info'		=>	'Перейти к первому новому сообщению в этой теме.',	// the popup text for new posts links
 'Username'				=>	'Имя',
 'Password'				=>	'Пароль',
 'E-mail'				=>	'E-mail',
@@ -105,7 +105,7 @@ $lang_common = array(
 'Guest'					=>	'Гость',
 
 // Stuff for include/parser.php
-'BBCode error'			=>	'Синтаксис тегов BBCode в сообщении, неправильный.',
+'BBCode error'			=>	'Синтаксис тегов BBCode в сообщении неверен.',
 'BBCode error 1'		=>	'Отсутствует начальный тег для [/quote].',
 'BBCode error 2'		=>	'Отсутствует конечный тег для [code].',
 'BBCode error 3'		=>	'Отсутствует начальный тег для [/code].',
@@ -136,15 +136,15 @@ $lang_common = array(
 'Show recent posts'		=>	'Показать последние сообщения',
 'Show unanswered posts'	=>	'Показать сообщения, не имеющие ответов',
 'Show your posts'		=>	'Показать Ваши сообщения',
-'Show subscriptions'	=>	'Показать сообщения на которые Вы подписаны',
+'Show subscriptions'	=>	'Показать темы, на которые Вы подписаны',
 'Show active posts'	=> 'Показать наиболее обсуждаемые темы',
 'Jump to'				=>	'Перейти',
 'Go'					=>	' Перейти ',		// submit button in forum jump
 'Move topic'			=>  'Перенести тему',
 'Open topic'			=>  'Открыть тему',
 'Close topic'			=>  'Закрыть тему',
-'Unstick topic'			=>  'Снять выделение',
-'Stick topic'			=>  'Выделить тему',
+'Unstick topic'			=>  'Открепить тему',
+'Stick topic'			=>  'Прикрепить тему',
 'Moderate forum'		=>	'Модерировать форум',
 'Delete posts'			=>	'Модерировать сообщения',
 'Debug table'			=>	'Отладочная информация',
@@ -155,5 +155,6 @@ $lang_common = array(
 'RSS Desc Messages'  => 'Новые сообщения на',
 'RSS Site News'		=> 'Новости на', 
 'Posted'				=>	'Размещено',	// The date/time a topic was started
-'Comments'				=>	'Обсуждение'
+'Comments'				=>	'Комментарии'
+
 );

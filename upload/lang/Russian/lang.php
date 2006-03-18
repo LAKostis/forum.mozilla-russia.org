@@ -23,7 +23,7 @@ $lang['btn_cancel'] = 'Отменить';
 $lang['btn_index']  = 'Содержание';
 $lang['btn_secedit']= 'Редактировать';
 $lang['btn_login']  = 'Войти';
-$lang['btn_relogin']= 'Перезайти';
+$lang['btn_relogin']= 'Зайти заново';
 
 $lang['loggedinas'] = 'В системе под пользователем';
 
@@ -40,11 +40,11 @@ $lang['nothingfound']= 'Ничего не найдено.';
 $lang['mediaselect'] = 'Выбор медиа-файла';
 $lang['fileupload']  = 'Закачка медиа-файла';
 $lang['uploadsucc']  = 'Закачка произведена успешно';
-$lang['uploadfail']  = 'Закачка не удалась. Может быть проблемы с правами доступа?';
+$lang['uploadfail']  = 'Закачка не удалась. Возможно есть проблемы с правами доступа?';
 $lang['namespaces']  = 'Пространства имен';
-$lang['mediafiles']  = 'Доступые файлы';
+$lang['mediafiles']  = 'Доступные файлы';
 
-$lang['hits']       = 'соответствий';
+$lang['hits']       = 'Соответствий';
 $lang['quickhits']  = 'Соответствия в названиях страниц';
 $lang['toc']        = 'Список содержимого';
 $lang['current']    = 'текущий';
@@ -62,7 +62,7 @@ $lang['summary']    = 'Сводка изменений';
 $lang['mail_newpage'] = 'Страница [DokuWiki] добавлена:';
 $lang['mail_changed'] = 'Страница [DokuWiki] изменена:';
 
-$lang['nosmblinks'] = 'Ссылка на шаринги Windows работает только из Microsoft Internet Explorer.\nВы все же можете использовать copy and paste со ссылкой.';
+$lang['nosmblinks'] = 'Ссылка на расшаренные папки Windows работает только из Microsoft Internet Explorer.\nВы все же можете использовать copy and paste со ссылкой.';
 
 $lang['qb_alert']   = 'Пожалуйста, введите текст, который хотите отформатировать.\nОн будет добавлен в конец документа.';
 $lang['qb_bold']    = 'Жирный шрифт';

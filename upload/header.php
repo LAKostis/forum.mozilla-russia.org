@@ -239,6 +239,28 @@ else
 // END SUBST - <pun_announcement>
 
 
+// START SUBST - <pun_logo>
+	if (defined('PUN_WIKI')){
+		$logo_img = 'style/img/'.$pun_user['style'].'/pun_'.$pun_user['style'].'_wiki_logo.png';
+		$logo_link = 'doku.php';
+	}
+else {
+	$logo_img = 'style/img/'.$pun_user['style'].'/pun_'.$pun_user['style'].'_forum_logo.png';
+	$logo_link = 'index.php';
+}
+
+// echo $logo_img;
+
+if (!file_exists(PUN_ROOT.$logo_img))
+	$logo_img = 'img/pun_default_logo.png';
+
+$logo_size = @getimagesize(PUN_ROOT.$logo_img);
+$tpl_main = str_replace('<pun_logo>','<a href="'.$logo_link.'"><img src="'.$logo_img.'" '.$logo_size[3].' alt="'.$pun_config['o_board_title'].'" /></a>',$tpl_main);
+
+// echo $logo_img;
+
+// END SUBST - <pun_logo>
+
 // START SUBST - <pun_main>
 ob_start();
 //if (defined('PUN_WIKI') && $lang_common['lang_encoding'] != 'iso-8859-1' && $lang_common['lang_encoding'] != 'utf-8')
@@ -248,22 +270,3 @@ ob_start();
 
 define('PUN_HEADER', 1);
 
-// START SUBST - <pun_logo>
-if (defined('PUN_WIKI')){
-	$logo_img = 'style/img/'.$pun_user['style'].'/pun_'.$pun_user['style'].'_wiki_logo.png';
-//	echo $logo_img;
-	$logo_link = 'doku.php';
-}
-else{
-	$logo_img = 'style/img/'.$pun_user['style'].'/pun_'.$pun_user['style'].'_forum_logo.png';
-	$logo_link = 'index.php';
-}
-
-	if (!file_exists($logo_img))
-	{
-		$logo_img = 'img/pun_default_logo.png';
-	}
-		$logo_size = @getimagesize($logo_img);
-		$tpl_main = str_replace('<pun_logo>','<a href="'.$logo_link.'"><img src="'.$logo_img.'" '.$logo_size[3].' alt="'.$pun_config['o_board_title'].'" /></a>',$tpl_main);
-
-// END SUBST - <pun_logo>

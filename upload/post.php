@@ -24,6 +24,8 @@
 
 
 define('PUN_ROOT', './');
+// MOD AJAX post preview
+require PUN_ROOT.'post.common.php';
 require PUN_ROOT.'include/common.php';
 $mgrp_extra = multigrp_getSql($db);
 
@@ -464,6 +466,9 @@ else if (isset($_POST['preview']))
 $cur_index = 1;
 
 ?>
+<!-- MOD AJAX post preview -->
+<div id="ajaxpostpreview"></div>
+<!--// MOD AJAX post preview -->
 <div class="blockform">
 	<h2><span><?php echo $action ?></span></h2>
 	<div class="box">
@@ -533,7 +538,9 @@ if (!empty($checkboxes))
 
 ?>
 			</div>
-			<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<!-- MOD AJAX post preview -->
+		<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo	 $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p> 
+		<!--// MOD AJAX post preview -->
 		</form>
 	</div>
 </div>

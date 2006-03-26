@@ -24,6 +24,8 @@
 
 
 define('PUN_ROOT', './');
+// MOD AJAX post preview
+require PUN_ROOT.'post.common.php';
 require PUN_ROOT.'include/common.php';
 
 
@@ -40,6 +42,7 @@ if ($id < 1 && $pid < 1)
 // Load the viewtopic.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/reputation.php';
+require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 // create SQL for multigroup mod
 $mgrp_extra = multigrp_getSql($db);
 
@@ -410,6 +413,9 @@ if ($quickpost)
 {
 
 ?>
+<!-- MOD AJAX post preview -->
+<div id="ajaxpostpreview"></div>
+<!--// MOD AJAX post preview -->
 <div class="blockform">
 	<h2><span><?php echo $lang_topic['Quick post'] ?></span></h2>
 	<div class="box">
@@ -430,7 +436,7 @@ if ($quickpost)
 					</div>
 				</fieldset>
 			</div>
-			<p><input type="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /></p>
+		<p><input type="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_post['Preview'] ?>" accesskey="p" /></p>
 		</form>
 	</div>
 </div>

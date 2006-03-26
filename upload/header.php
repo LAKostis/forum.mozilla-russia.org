@@ -92,6 +92,14 @@ if (defined('PUN_WIKI')) {
 else {
 ?>
 <title><?php echo $page_title ?></title>
+
+<?php // MOD AJAX post preview
+	if(isset($xajax))
+	{
+		$xajax->printJavascript();
+	}
+?>
+
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 }

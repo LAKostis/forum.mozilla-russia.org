@@ -30,7 +30,7 @@ $lang_common = array(
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
 'lang_encoding'			=>	'utf-8',
-'lang_multibyte'		=>	false,
+'lang_multibyte'		=>	true,
 'db_lang_encoding'		=>	'utf8',
 
 // Notices

@@ -302,6 +302,13 @@ generate_admin_menu('options');
 									</td>
 								</tr>
 								<tr>
+									<th scope="row">Login timeout</th>
+									<td>
+										<input type="text" name="form[timeout_login]" size="5" maxlength="5" value="<?php echo $pun_config['o_timeout_login'] ?>" />
+										<span>Number of seconds a user must be login (for DoS attack prevention).</span>
+									</td>
+								</tr>
+								<tr>
 									<th scope="row">Visit timeout</th>
 									<td>
 										<input type="text" name="form[timeout_visit]" size="5" maxlength="5" value="<?php echo $pun_config['o_timeout_visit'] ?>" />

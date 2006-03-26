@@ -2,7 +2,7 @@
 
 	$db_type = 'mysql';
 	$db_host = 'localhost';
-	$db_name = 'punbb';
+	$db_name = 'forum_mozilla';
 	$db_username = 'root';
 	$db_password = 'testing123';
 	$db_prefix = 'punbb_';

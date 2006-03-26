@@ -43,7 +43,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$username_sql = ($db_type == 'mysql' || $db_type == 'mysqli') ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
 
 	// NeoSecurityTeam PunBB 1.2.10 Bruteforce login Patch by K4P0 (Part 1/3)
-	$logintime = time() - 10; // 10 seconds delay.
+	$logintime = time() - $pun_config['o_timeout_login']; // 10 seconds delay by default.
 	$result = $db->query('SELECT * FROM '.$db->prefix.'iptrylog WHERE ip=\''.get_remote_address().'\' and lasttry >= \''.$logintime.'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 	if ($db->num_rows($result)) error('Please wait some minutes to login again', 'login.php', '', '');
@@ -79,7 +79,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	if (!$authorized)
 	{
 		// NeoSecurityTeam PunBB 1.2.10 login Patch by K4P0 (Part 3/3)
-		$actualtime = $logintime+10;
+		$actualtime = $logintime + $pun_config['o_timeout_login'];
 		$db->query('INSERT INTO '.$db->prefix.'iptrylog (ip, lasttry) VALUES(\''.get_remote_address().'\', \''.$actualtime.'\')') or error('Unable to update user status', __FILE__, __LINE__, $db->error());
 		// End of Part 3.		
 

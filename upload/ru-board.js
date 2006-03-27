@@ -12,7 +12,14 @@ function pasteQ(){
 
 function pasteN(text){ 
 	if (text!='' && document.forms['post']['req_message'])
-		insert_text("[b]" + text, '[/b]\n','1');
+		insert_text("[b]" + text + '[/b]\n', '', '1');
+}
+
+function setCaret (textObj) {
+        if (textObj.createTextRange) {
+        textObj.caretPos = document.selection.createRange().duplicate();
+        operastart=textObj.selectionEnd;
+        }
 }
 
 <!-- menu folder js begin //-->

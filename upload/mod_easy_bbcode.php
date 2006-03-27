@@ -31,39 +31,41 @@ if (!isset($bbcode_field))
 ?>
 						<script type="text/javascript">
 						<!--
-							function insert_text(open, close, no_focus)
-							{
-								msgfield = (document.all) ? document.all.req_message : document.forms['<?php echo $bbcode_form ?>']['<?php echo $bbcode_field ?>'];
+function insert_text(open, close, no_focus)
+{
+    msgfield = (document.all) ? document.all.req_message : document.forms['post']['req_message'];
+    var bSelStart = msgfield.selectionStart, text;
 
-								// IE support
-								if (document.selection && document.selection.createRange)
-								{
-									if (no_focus != '1' ) msgfield.focus();
-									sel = document.selection.createRange();
-									sel.text = open + sel.text + close;
-									if (no_focus != '1' ) msgfield.focus();
-								}
+    // IE support
+    if (document.selection && document.selection.createRange && !bSelStart && msgfield.caretPos)
+    {
+        text = open;
+        if (close != "") text += document.selection.createRange().text;
+        text += close;
+        msgfield. caretPos. text = text;
+    }
 
-								// Moz support
-								else if (msgfield.selectionStart || msgfield.selectionStart == '0')
-								{
-									var startPos = msgfield.selectionStart;
-									var endPos = msgfield.selectionEnd;
+    // Moz support
+    else if (bSelStart || msgfield.selectionStart == '0')
+    {
+        var startPos = msgfield.selectionStart;
+        var endPos = msgfield.selectionEnd;
+        text = msgfield.value.substring(0, startPos) + open;
+        if (close != "") text += msgfield.value.substring(startPos, endPos);
+        text += close + msgfield.value.substring(endPos, msgfield.value.length);
+        msgfield.value = text;
+        msgfield.selectionStart = endPos + open.length + close.length;
+        msgfield.selectionEnd = endPos + open.length + close.length;
+    }
 
-									msgfield.value = msgfield.value.substring(0, startPos) + open + msgfield.value.substring(startPos, endPos) + close + msgfield.value.substring(endPos, msgfield.value.length);
-									msgfield.selectionStart = msgfield.selectionEnd = endPos + open.length + close.length;
-									if (no_focus != '1' ) msgfield.focus();
-								}
-
-								// Fallback support for other browsers
-								else
-								{
-									msgfield.value += open + close;
-								if (no_focus != '1' ) msgfield.focus();
-								}
-
-								return;
-							}
+    // Fallback support for other browsers
+    else
+    {
+        msgfield.value += open + close;
+    }
+    if (no_focus != '1' ) msgfield.focus();
+    return;
+}
 
 							var selected_id = null;
 

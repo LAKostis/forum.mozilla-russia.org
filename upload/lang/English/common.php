@@ -31,7 +31,8 @@ $lang_common = array(
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
 //'lang_encoding'			=>	'iso-8859-1',
 'lang_encoding'                       =>      'utf-8',
-'lang_multibyte'		=>	false,
+//'lang_multibyte'		=>	false,
+'lang_multibyte'              =>      true,
 
 // Notices
 'Bad request'			=>	'Bad request. The link you followed is incorrect or outdated.',

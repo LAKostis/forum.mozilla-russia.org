@@ -155,6 +155,8 @@ $lang_common = array(
 'RSS Desc Messages'  => 'Новые сообщения на',
 'RSS Site News'		=> 'Новости на', 
 'Posted'				=>	'Размещено',	// The date/time a topic was started
-'Comments'				=>	'Комментарии'
+'Comments'				=>	'Комментарии',
+// MOD Printable topic version string
+'Print version'                 =>      'Версия для печати'
 
 );

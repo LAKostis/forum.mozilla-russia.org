@@ -194,7 +194,13 @@ $tpl_main = str_replace('<pun_navlinks>','<div id="brdmenu" class="inbox">'."\n\
 
 // START SUBST - <pun_status>
 if ($pun_user['is_guest'])
-	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<p>'.$lang_common['Not logged in'].'</p>'."\n\t\t".'</div>';
+{
+	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li>'.$lang_common['Not logged in'].'</li></ul>'."\n\t\t\t";
+	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
+	$tpl_temp .= "\n\t\t\t".'<ul class="conr"><li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	else
+	$tpl_temp .= '<div class="clearer"></div></div>';
+}
 else
 {
 	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li>'.$lang_common['Logged in as'].' <strong>'.pun_htmlspecialchars($pun_user['username']).'</strong></li>'."\n\t\t\t\t".'<li>'.$lang_common['Last visit'].': '.format_time($pun_user['last_visit']).'</li>';
@@ -215,6 +221,9 @@ else
 	// MOD: MARK TOPICS AS READ - 2 LINES NEW CODE FOLLOW
     	else if (in_array(basename($_SERVER['PHP_SELF']), array('viewforum.php')) && isset($id))
 	        $tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	else
+	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
+		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else
 		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 }

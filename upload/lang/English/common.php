@@ -155,6 +155,8 @@ $lang_common = array(
 'RSS Desc Messages'  => 'The new messages at',
 'RSS Site News'		=> 'The news at',
 'Posted'				=>	'Posted',	// The date/time a topic was started
-'Comments'				=>	'Comments'	// The reply count for topic
+'Comments'				=>	'Comments',	// The reply count for topic
+// MOD Printable topic version string
+'Print version'                 =>      'Printable version'
 
 );

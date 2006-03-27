@@ -25,7 +25,7 @@
 
 define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
-
+$mgrp_extra = multigrp_getSql($db);
 
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view']);
@@ -43,10 +43,9 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 // Fetch some info about the topic
 if (!$pun_user['is_guest'])
 	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
-	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 else
-
-$result = $db->query('SELECT t.subject, t.num_replies, f.id AS forum_id, f.forum_name, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id WHERE t.id='.$id) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
@@ -69,9 +68,9 @@ $page_title = pun_htmlspecialchars($pun_config['o_board_title'].' / '.$cur_topic
 
 <table class="links" align="center">
 <tr><td>
-<b>&rarr;<?php echo $pun_config['o_board_title'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/index.php<br>
-<b>&rarr;<?php echo $cur_topic['forum_name'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewforum.php?id=<?php echo $cur_topic['forum_id'] ?><br>
-<b>&rarr;<?php echo $cur_topic['subject'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewtopic.php?id=<?php echo $id ?>
+<b>&gt;<?php echo $pun_config['o_board_title'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/index.php<br>
+<b>&gt;<?php echo $cur_topic['forum_name'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewforum.php?id=<?php echo $cur_topic['forum_id'] ?><br>
+<b>&gt;<?php echo $cur_topic['subject'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewtopic.php?id=<?php echo $id ?>
 </td>
 </tr>
 </table><br>
@@ -85,18 +84,17 @@ $page_title = pun_htmlspecialchars($pun_config['o_board_title'].' / '.$cur_topic
 
 require PUN_ROOT.'include/parser.php';
 
-// Retrieve the posts (and their respective poster)
-$result = $db->query('SELECT p.poster AS username, p.message, p.posted FROM '.$db->prefix.'posts AS p WHERE p.topic_id='.$id.' ORDER BY p.id', true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT p.poster AS username, p.message, p.hide_smilies, p.posted FROM '.$db->prefix.'posts AS p WHERE p.topic_id='.$id.' ORDER BY p.id DESC') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
 {
 	$username = pun_htmlspecialchars($cur_post['username']);
 
 	// Perform the main parsing of the message (BBCode, smilies, censor words etc)
-	$cur_post['message'] = parse_message($cur_post['message'], true);
+	$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 ?>
-<tr><td style="border-bottom: 0px"><b><?php echo $username ?>&nbsp;—&nbsp;<?php echo format_time($cur_post['posted']) ?></b></td></tr>
-<tr><td style="border-bottom: 1px solid #333333"><?php echo $cur_post['message']."\n" ?></td></tr>
+<tr><td style="border-bottom: 0px"><b><?php echo $username ?>&nbsp;&gt;&nbsp;<?php echo format_time($cur_post['posted']) ?></b></td></tr>
+<tr><td style="border-bottom: 1px solid #333333"><?php echo $cur_post['message'] ?></td></tr>
 <?php
 
 }

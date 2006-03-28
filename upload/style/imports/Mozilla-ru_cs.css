@@ -20,6 +20,8 @@ TD.tc2, TD.tc3, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
 
 .pun H2 {background: url('../img/Mozilla-ru/pun_h2_left_bg.png') no-repeat left top #3c6a97; color: #FFFFFF; font-weight: bold;}
 #brdmenu {background: url('../img/Mozilla-ru/pun_menu_bg.png') repeat-x top right #df731b;}
+
+#ajaxpostpreview #postreview H2 SPAN,
 #postreview H2 SPAN,
 
 .inform H2 SPAN,

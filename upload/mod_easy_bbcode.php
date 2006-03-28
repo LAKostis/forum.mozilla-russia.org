@@ -33,7 +33,7 @@ if (!isset($bbcode_field))
 						<!--
 function insert_text(open, close, no_focus)
 {
-    msgfield = (document.all) ? document.all.req_message : document.forms['post']['req_message'];
+    msgfield = (document.all) ? document.all.req_message : document.forms['post']?document.forms['post']['req_message']:document.forms['edit']['req_message'];
     var bSelStart = msgfield.selectionStart, text;
 
     // IE support

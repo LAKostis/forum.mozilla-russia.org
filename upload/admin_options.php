@@ -136,7 +136,7 @@ if (isset($_POST['form_sent']))
 }
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Options';
+$page_title = pun_htmlspecialchars(Admin.' | '.Options.' | '.$pun_config['o_board_title']);
 $form_name = 'update_options';
 require PUN_ROOT.'header.php';
 

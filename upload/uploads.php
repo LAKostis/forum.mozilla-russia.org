@@ -31,7 +31,7 @@ if ($pun_user['g_read_board'] == '0')
 
 require PUN_ROOT.'include/parser.php';
 
-$page_title=pun_htmlspecialchars($pun_config['o_board_title']).' &nbsp;&raquo;&nbsp; Uploader';
+$page_title='&nbsp;&raquo;&nbsp; Uploader | '.pun_htmlspecialchars($pun_config['o_board_title']);
 // Load the viewtopic.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/'.'topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/'.'uploads.php';
@@ -103,7 +103,7 @@ require PUN_ROOT.'header.php';
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>
 	</div>
-</div>
+</div>
 
 <?php
     $result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$pun_user['g_id']); 

@@ -144,7 +144,7 @@ else
 	$php_accelerator = 'N/A';
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin';
+$page_title = pun_htmlspecialchars(Admin.' | '.$pun_config['o_board_title']);
 require PUN_ROOT.'header.php';
 
 generate_admin_menu('index');

@@ -52,7 +52,7 @@ if (!$db->num_rows($result))
 
 $cur_topic = $db->fetch_assoc($result);
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title'].' / '.$cur_topic['subject']);
+$page_title = pun_htmlspecialchars($cur_topic['subject'].' | '.$pun_config['o_board_title']);
 
 ?>
 
@@ -84,7 +84,7 @@ $page_title = pun_htmlspecialchars($pun_config['o_board_title'].' / '.$cur_topic
 
 require PUN_ROOT.'include/parser.php';
 
-$result = $db->query('SELECT p.poster AS username, p.message, p.hide_smilies, p.posted FROM '.$db->prefix.'posts AS p WHERE p.topic_id='.$id.' ORDER BY p.id ASC') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT p.poster AS username, p.message, p.hide_smilies, p.posted FROM '.$db->prefix.'posts AS p WHERE p.topic_id='.$id.' ORDER BY p.id DESC') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
 {
 	$username = pun_htmlspecialchars($cur_post['username']);

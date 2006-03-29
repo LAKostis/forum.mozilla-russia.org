@@ -225,7 +225,7 @@ else
 	$action = $lang_pms['Send a message'];
 	$form = '<form method="post" id="post" action="message_send.php?action=send" onsubmit="return process_form(this)">';
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$action;
+	$page_title = pun_htmlspecialchars($action.' | '.$pun_config['o_board_title']);
 	$form_name = 'post';
 
 	$cur_index = 1;

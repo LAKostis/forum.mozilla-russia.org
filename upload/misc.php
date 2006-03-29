@@ -41,7 +41,7 @@ if ($action == 'rules')
 	// Load the register.php language file
 	require PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_register['Forum rules'];
+	$page_title = pun_htmlspecialchars($lang_register['Forum rules'].' | '.$pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -145,7 +145,7 @@ else if (isset($_GET['email']))
 	// Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to the users profile after the e-mail is sent)
 	$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : 'index.php';
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_misc['Send e-mail to'].' '.pun_htmlspecialchars($recipient);
+	$page_title = pun_htmlspecialchars($lang_misc['Send e-mail to'].' '.pun_htmlspecialchars($recipient).' | '.$pun_config['o_board_title']);
 	$required_fields = array('req_subject' => $lang_misc['E-mail subject'], 'req_message' => $lang_misc['E-mail message']);
 	$focus_element = array('email', 'req_subject');
 	require PUN_ROOT.'header.php';
@@ -232,7 +232,7 @@ else if (isset($_GET['report']))
 	}
 
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_misc['Report post'];
+	$page_title = pun_htmlspecialchars($lang_misc['Report post'].' | '.$pun_config['o_board_title']);
 	$required_fields = array('req_reason' => $lang_misc['Reason']);
 	$focus_element = array('report', 'req_reason');
 	require PUN_ROOT.'header.php';

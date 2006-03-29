@@ -115,7 +115,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 		message('There are no topics that are '.$prune_days.' days old. Please decrease the value of "Days old" and try again.');
 
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Prune';
+	$page_title = pun_htmlspecialchars(Admin.' | '.Prune.' | '.$pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 	generate_admin_menu('prune');
@@ -151,7 +151,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 else
 {
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Prune';
+	$page_title = pun_htmlspecialchars(Admin.' | '.Prune.' | '.$pun_config['o_board_title']);
 	$required_fields = array('req_prune_days' => 'Days old');
 	$focus_element = array('prune', 'req_prune_days');
 	require PUN_ROOT.'header.php';

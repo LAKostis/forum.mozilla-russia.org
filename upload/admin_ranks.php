@@ -112,7 +112,7 @@ else if (isset($_POST['remove']))
 }
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Ranks';
+$page_title = pun_htmlspecialchars(Admin.' | '.Ranks.' | '.$pun_config['o_board_title']);
 $focus_element = array('ranks', 'new_rank');
 require PUN_ROOT.'header.php';
 

@@ -47,7 +47,7 @@ $sort_by = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'username' && $_GET[
 $sort_dir = (!isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_GET['sort_dir']);
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['User list'];
+$page_title = pun_htmlspecialchars($lang_common['User list'].' | '.$pun_config['o_board_title']);
 if ($pun_user['g_search_users'] == '1')
 	$focus_element = array('userlist', 'username');
 

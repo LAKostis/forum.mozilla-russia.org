@@ -80,7 +80,7 @@ $start_from = $pun_user['disp_topics'] * ($p - 1);
 $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'viewforum.php?id='.$id);
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title'].' / '.$cur_forum['forum_name']);
+$page_title = pun_htmlspecialchars($cur_forum['forum_name'].' | '.$pun_config['o_board_title']);
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT.'header.php';
 

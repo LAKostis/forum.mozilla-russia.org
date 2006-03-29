@@ -126,7 +126,7 @@ if (isset($_GET['tid']))
 		}
 
 
-		$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_misc['Moderate'];
+		$page_title = pun_htmlspecialchars($lang_misc['Moderate'].' | '.$pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 ?>
@@ -180,7 +180,7 @@ if (isset($_GET['tid']))
 		$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$cur_topic['subject'];
+	$page_title = pun_htmlspecialchars($cur_topic['subject'].' | '.$pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -342,7 +342,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$action = 'single';
 	}
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Moderate';
+	$page_title = pun_htmlspecialchars(Moderate.' | '.$pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -439,7 +439,7 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 	}
 
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_misc['Moderate'];
+	$page_title = pun_htmlspecialchars($lang_misc['Moderate'].' | '.$pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -548,7 +548,7 @@ $cur_forum = $db->fetch_assoc($result);
 if ($cur_forum['redirect_url'] != '')
 	message($lang_common['Bad request']);
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.pun_htmlspecialchars($cur_forum['forum_name']);
+$page_title = pun_htmlspecialchars($cur_forum['forum_name']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 require PUN_ROOT.'header.php';
 
 // Determine the topic offset (based on $_GET['p'])

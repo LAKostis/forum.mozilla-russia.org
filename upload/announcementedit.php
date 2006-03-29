@@ -139,7 +139,7 @@ if (isset($_POST['form_sent']))
 
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_post['Edit post'];
+$page_title = pun_htmlspecialchars($lang_post['Edit post'].' | '.$pun_config['o_board_title']);
 $required_fields = array('req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
 $focus_element = array('edit', 'req_message');
 require PUN_ROOT.'header.php';

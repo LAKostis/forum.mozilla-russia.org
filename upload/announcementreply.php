@@ -252,7 +252,7 @@ else
 	message($lang_common['Bad request']);
 
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$action;
+$page_title = pun_htmlspecialchars($action.' | '.$pun_config['o_board_title']);
 $required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
 $focus_element = array('post');
 

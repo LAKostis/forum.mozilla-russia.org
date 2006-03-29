@@ -176,7 +176,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	}
 
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_login['Request pass'];
+	$page_title = pun_htmlspecialchars($lang_login['Request pass'].' | '.$pun_config['o_board_title']);
 	$required_fields = array('req_email' => $lang_common['E-mail']);
 	$focus_element = array('request_pass', 'req_email');
 	require PUN_ROOT.'header.php';
@@ -212,7 +212,7 @@ if (!$pun_user['is_guest'])
 // Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
 $redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
 
-$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Login'];
+$page_title = pun_htmlspecialchars($lang_common['Login'].' | '.$pun_config['o_board_title']);
 $required_fields = array('req_username' => $lang_common['Username'], 'req_password' => $lang_common['Password']);
 $focus_element = array('login', 'req_username');
 require PUN_ROOT.'header.php';

@@ -21,7 +21,8 @@ TD.tc2, TD.tc3, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
 .pun H2 {background: url('../img/Moz-future/pun_h2_left_bg.png') no-repeat left top #245889; color: #FFFFFF; font-weight: bold;}
 #brdmenu {background: url('../img/Moz-future/pun_menu_bg.png') repeat-x top right #FEC00A;}
 
-.blockpost H2 SPAN,
+#ajaxpostpreview #postpreview H2 SPAN,
+#postpreview H2 SPAN,
 .inform H2 SPAN,
 .blockform H2 SPAN,
 .blocktable H2 SPAN,

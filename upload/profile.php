@@ -130,7 +130,7 @@ if ($action == 'change_pass')
 		redirect('profile.php?section=essentials&amp;id='.$id, $lang_profile['Pass updated redirect']);
 	}
 
-	$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	$required_fields = array('req_old_password' => $lang_profile['Old pass'], 'req_new_password1' => $lang_profile['New pass'], 'req_new_password2' => $lang_profile['Confirm new pass']);
 	$focus_element = array('change_pass', (($pun_user['g_id'] > PUN_MOD) ? 'req_old_password' : 'req_new_password1'));
 	require PUN_ROOT.'header.php';
@@ -266,7 +266,7 @@ else if ($action == 'change_email')
 		message($lang_profile['Activate e-mail sent'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
 	}
 
-	$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	$required_fields = array('req_new_email' => $lang_profile['New e-mail'], 'req_password' => $lang_common['Password']);
 	$focus_element = array('change_email', 'req_new_email');
 	require PUN_ROOT.'header.php';
@@ -394,7 +394,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 		redirect('profile.php?section=personality&amp;id='.$id, $lang_profile['Avatar upload redirect']);
 	}
 
-	$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	$required_fields = array('req_file' => $lang_profile['File']);
 	$focus_element = array('upload_avatar', 'req_file');
 	require PUN_ROOT.'header.php';
@@ -609,7 +609,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 		redirect('index.php', $lang_profile['User delete redirect']);
 	}
 
-	$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -964,7 +964,7 @@ if ($pun_user['id'] != $id &&
 	if ($pun_user['g_search'] == '1')
 		$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a>';
 
-	$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	define('PUN_ALLOW_INDEX', 1);
 	require PUN_ROOT.'header.php';
 
@@ -1083,7 +1083,7 @@ else
 		else
 			$posts_field = '<p><a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a></p>'."\n";
 
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		$required_fields = array('req_username' => $lang_common['Username'], 'req_email' => $lang_common['E-mail']);
 		require PUN_ROOT.'header.php';
 
@@ -1221,7 +1221,7 @@ else
 		if ($pun_user['g_set_title'] == '1')
 			$title_field = '<label>'.$lang_common['Title'].'&nbsp;&nbsp;(<em>'.$lang_profile['Leave blank'].'</em>)<br /><input type="text" name="title" value="'.pun_htmlspecialchars($user['title']).'" size="30" maxlength="50" /><br /></label>'."\n";
 
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('personal');
@@ -1253,7 +1253,7 @@ else
 	else if ($section == 'messaging')
 	{
 
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('messaging');
@@ -1304,7 +1304,7 @@ else
 		else
 			$signature_preview = '<p>'.$lang_profile['No sig'].'</p>'."\n";
 
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('personality');
@@ -1356,7 +1356,7 @@ else
 	}
 	else if ($section == 'display')
 	{
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('display');
@@ -1448,7 +1448,7 @@ else
 	}
 	else if ($section == 'privacy')
 	{
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('privacy');
@@ -1496,7 +1496,7 @@ else
 		if ($pun_user['g_id'] > PUN_MOD || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '0'))
 			message($lang_common['Bad request']);
 
-		$page_title = pun_htmlspecialchars($lang_common['Profile'].' | '.$pun_config['o_board_title']);
+		$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 		require PUN_ROOT.'header.php';
 
 		generate_profile_menu('admin');

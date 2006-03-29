@@ -81,7 +81,7 @@ if (!defined('PUN_ALLOW_INDEX'))
 if (defined('PUN_WIKI')) {
 	require_once("wiki/common.php");
 	$ID = str_replace('_',' ',$ID);
-	$page_title = pun_htmlspecialchars($conf['title'].' / '.$ID.' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($conf['title']).' | '.pun_htmlspecialchars($ID).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 ?>
 <title><?php echo $page_title ?></title>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />

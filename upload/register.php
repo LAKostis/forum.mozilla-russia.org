@@ -51,7 +51,7 @@ if (isset($_GET['cancel']))
 
 else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
 {
-	$page_title = pun_htmlspecialchars($lang_register['Register'].' | '.$pun_config['o_board_title']);
+	$page_title = pun_htmlspecialchars($lang_register['Register']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -258,7 +258,7 @@ else if (isset($_POST['form_sent']))
 }
 
 
-$page_title = pun_htmlspecialchars($lang_register['Register'].' | '.$pun_config['o_board_title']);
+$page_title = pun_htmlspecialchars($lang_register['Register']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 $required_fields = array('req_username' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['E-mail'], 'req_email2' => $lang_common['E-mail'].' 2');
 $focus_element = array('register', 'req_username');
 require PUN_ROOT.'header.php';

@@ -142,7 +142,7 @@ $subscraction = '<div class="clearer"></div>'."\n";
 
 
 
-$page_title = pun_htmlspecialchars($cur_topic['subject'].' | '.$pun_config['o_board_title']);
+$page_title = pun_htmlspecialchars($cur_topic['subject']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT . 'header.php';

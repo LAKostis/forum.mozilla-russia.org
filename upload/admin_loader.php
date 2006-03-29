@@ -53,7 +53,7 @@ if (!file_exists(PUN_ROOT.'plugins/'.$plugin))
 if (!isset($_SERVER['REQUEST_URI']))
 	$_SERVER['REQUEST_URI'] = (isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '').'?'.(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '');
 
-$page_title = pun_htmlspecialchars(Admin.' | '.$plugin.' | '.$pun_config['o_board_title']);
+$page_title = 'Admin | '.pun_htmlspecialchars($plugin.' | '.$pun_config['o_board_title']);
 require PUN_ROOT.'header.php';
 
 // Attempt to load the plugin. We don't use @ here to supress error messages,

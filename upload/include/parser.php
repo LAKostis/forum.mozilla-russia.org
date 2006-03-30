@@ -28,8 +28,8 @@ if (!defined('PUN'))
 
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:');
-$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png');
+$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:', ':blush:',':usch:', ':angry:', ':angel:', ':whistle:', ':rock:', ':tongue2:', ':zzz:', ':sick:', ':music:', ':iron:', ':dumb:', ':puss:', ':beer:', ':heart:', ':couple:', ':whiteflag:', ':offtopic:', ':cry:' );
+$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png', 'blush.gif', 'usch.gif', 'angry.gif', 'angel.gif', 'whistle.gif', 'rock.gif', 'tongue2.gif', 'zzz.gif', 'sick.gif', 'music.gif', 'iron.gif', 'dumb.gif', 'puss.gif', 'beer.gif', 'heart.gif', 'couple.gif', 'whiteflag.gif', 'offtopic.gif', 'cry.gif');
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);

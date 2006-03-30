@@ -12,7 +12,7 @@
 	if (empty($posts))
 		message($lang_mod['No posts selected']);
 
-	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_misc['Moderate'];
+	$page_title = $lang_misc['Moderate'].' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require $pun_root.'header.php';
 
 	if( isset($_POST['create_topic']) )

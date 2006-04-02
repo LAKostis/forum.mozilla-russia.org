@@ -222,10 +222,15 @@ else
     	else if (in_array(basename($_SERVER['PHP_SELF']), array('viewforum.php')) && isset($id))
 	        $tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else
-	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
-		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
-	else
-		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php'){
+		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li>';
+
+		if ($cur_topic['is_subscribed'])
+			$tpl_temp .= '<li>'.$lang_topic['Is subscribed'].' - <a href="misc.php?unsubscribe='.$id.'">'.$lang_topic['Unsubscribe'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+		else
+			$tpl_temp .= '<li>'.'<a href="misc.php?subscribe='.$id.'">'.$lang_topic['Subscribe'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	}
+	else $tpl_temp .= '</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 }
 $tpl_main = str_replace('<pun_status>', $tpl_temp, $tpl_main);
 // END SUBST - <pun_status>

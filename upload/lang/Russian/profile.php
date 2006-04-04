@@ -4,13 +4,13 @@
 $lang_profile = array(
 
 // Navigation and sections
-'Profile menu'				=>	'Профиль',
-'Section essentials'		=>	'Основной',
-'Section personal'			=>	'Персональный',
-'Section messaging'			=>	'Общения',
-'Section personality'		=>	'Индивидуальный',
-'Section display'			=>	'Отображение',
-'Section privacy'			=>	'Приватность',
+'Profile menu'				=>	'Раздел',
+'Section essentials'		=>	'Основные настройки',
+'Section personal'			=>	'Персональные данные',
+'Section messaging'			=>	'Контактная информация',
+'Section personality'		=>	'Аватар / Подпись',
+'Section display'			=>	'Стилевое оформление',
+'Section privacy'			=>	'Настройки приватности',
 'Section admin'				=>	'Администрирование',
 
 // Miscellaneous

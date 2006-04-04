@@ -108,11 +108,11 @@ FORM DIV.linksb .conr {WIDTH: 32em}
 
 DIV.block2col {PADDING-BOTTOM: 1px}
 
-DIV.block2col DIV.blockform, DIV.block2col DIV.block, #viewprofile DD {MARGIN-LEFT: 14em}
+DIV.block2col DIV.blockform, DIV.block2col DIV.block, #viewprofile DD {MARGIN-LEFT: 17em}
 
 DIV.blockmenu, #viewprofile DT {
 	FLOAT:left;
-	WIDTH: 13em
+	WIDTH: 16em
 }
 
 #profileavatar IMG {

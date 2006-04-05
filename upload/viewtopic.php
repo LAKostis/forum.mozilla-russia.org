@@ -157,8 +157,8 @@ if ($pun_config['o_censoring'] == '1')
 
 $quickpost = false;
 if ($pun_config['o_quickpost'] == '1' &&
-	!$pun_user['is_guest'] &&
-	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1')) &&
+	((!$pun_user['is_guest'] &&
+	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1'))) || ($pun_user['is_guest'] && ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1'))) &&
 	($cur_topic['closed'] == '0' || $is_admmod))
 {
 	$required_fields = array('req_message' => $lang_common['Message']);
@@ -274,7 +274,8 @@ while ($cur_post = $db->fetch_assoc($result))
 				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'">'.$lang_common['E-mail'].'</a>';
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
 				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'">'.$lang_common['E-mail'].'</a>';
-			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
+			else if (!$pun_user['is_guest'])
+				require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
 			if ($cur_post['url'] != '')
 				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
 		}

@@ -305,7 +305,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	{
 		if (!$pun_user['is_guest'])
 		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>'.$lang_topic['Link separator'].'<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
-		else if ($cur_post['poster_id'] > PUN_GUEST)
+		else if ($cur_post['poster_id'] != PUN_GUEST && $quickpost)
 		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 
 		if ($cur_topic['closed'] == '0')
@@ -326,7 +326,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	}
 	else
 	{
-		if ($cur_post['poster_id'] > PUN_GUEST)
+		if (($cur_post['poster_id'] != PUN_GUEST) && $quickpost)
 			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 		
 		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover=copyQ();><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';

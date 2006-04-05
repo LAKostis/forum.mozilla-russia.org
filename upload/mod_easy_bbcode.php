@@ -197,9 +197,11 @@ for ($i = 0; $i < $num_smilies; ++$i)
 		continue;
 
 	if (!in_array($smiley_img[$i], $smiley_dups))
-	$smtext = ($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');"><img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'"/>' : 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');">'.$smiley_text[$i];
-	echo "\t\t\t\t\t\t\t".'<a href="'.$smtext.'</a>'."\n";
-
+	{
+		$smtext = ($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');"><img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'"/>' : 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');">'.$smiley_text[$i];
+		echo "\t\t\t\t\t\t\t".'<a href="'.$smtext.'</a>'."\n";
+	}
+	
 	$smiley_dups[] = $smiley_img[$i];
 }
 

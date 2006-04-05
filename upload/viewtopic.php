@@ -157,8 +157,7 @@ if ($pun_config['o_censoring'] == '1')
 
 $quickpost = false;
 if ($pun_config['o_quickpost'] == '1' &&
-	((!$pun_user['is_guest'] &&
-	($cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1'))) || ($pun_user['is_guest'] && ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1'))) &&
+	$cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') &&
 	($cur_topic['closed'] == '0' || $is_admmod))
 {
 	$required_fields = array('req_message' => $lang_common['Message']);
@@ -228,7 +227,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			else
 				$user_image_award = "\t\t\t\t\t".'<dd>Award: "'.$awardmod_name.'"</dd>';
 		} // Image Award Mod Block End
-		if ($pun_user['is_guest'])
+		if (!$quickpost)
 		{
 		$username = '<a href="profile.php?id='.$cur_post['poster_id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		} else
@@ -306,6 +305,8 @@ while ($cur_post = $db->fetch_assoc($result))
 	{
 		if (!$pun_user['is_guest'])
 		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>'.$lang_topic['Link separator'].'<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
+		else if ($cur_post['poster_id'] > PUN_GUEST)
+		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 
 		if ($cur_topic['closed'] == '0')
 		{
@@ -318,12 +319,18 @@ while ($cur_post = $db->fetch_assoc($result))
 			}
 
 			if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
-			$post_actions[] = '</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover=copyQ();><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
+			$post_actions[] = '</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>';
+			if ($quickpost)
+			$post_actions[] = '</li><li class="postquote" onmouseover=copyQ();><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
 		}
 	}
 	else
-	$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>'.$lang_topic['Link separator'].'<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover=copyQ();><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
-
+	{
+		if ($cur_post['poster_id'] > PUN_GUEST)
+			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
+		
+		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover=copyQ();><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
+	}
 
 	// Switch the background color for every message.
 	$bg_switch = ($bg_switch) ? $bg_switch = false : $bg_switch = true;

@@ -273,8 +273,7 @@ while ($cur_post = $db->fetch_assoc($result))
 				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'">'.$lang_common['E-mail'].'</a>';
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
 				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'">'.$lang_common['E-mail'].'</a>';
-			else if (!$pun_user['is_guest'])
-				require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
+			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
 			if ($cur_post['url'] != '')
 				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
 		}
@@ -305,7 +304,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	{
 		if (!$pun_user['is_guest'])
 		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>'.$lang_topic['Link separator'].'<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
-		else if ($cur_post['poster_id'] != PUN_GUEST && $quickpost)
+		else if (($cur_post['poster_id'] != PUN_GUEST) && $quickpost)
 		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 
 		if ($cur_topic['closed'] == '0')

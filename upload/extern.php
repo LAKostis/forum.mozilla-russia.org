@@ -159,6 +159,7 @@ if ($db->result($result) == '0')
 
 // Attempt to load the common language file
 @include PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/common.php';
+@include PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/polls.php';
 if (!isset($lang_common))
 	exit('There is no valid language pack \''.$pun_config['o_default_lang'].'\' installed. Please reinstall a language of that name.');
 
@@ -263,7 +264,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		// Path to news item template
 		$template_path = PUN_ROOT.'plugins/AP_News_Generator/site_news.tpl';
 		// Generate front page news
-		$result = $db->query('SELECT t.id, t.poster, t.posted, t.subject, t.num_replies FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT t.id, t.poster, t.posted, t.subject, t.num_replies, t.question FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 //Change Ragnaar line 266		$result = $db->query('SELECT t.id, t.poster, t.subject, t.num_replies FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 		
 		if (!$db->num_rows($result))
@@ -286,7 +287,10 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 				$message_truncated = trim(substr($message_truncated, 0, ($max_message_length-5))).' &hellip;';
 
 			$search = array('<news_subject>', '<news_author>', '<news_posted>', '<news_message>', '<news_comments>', '<news_link>');
- 			$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
+			if ($cur_topic['question'] != '')
+				$replace = array('<strong>'.$lang_polls['Poll'].' : '.pun_htmlspecialchars($cur_topic['subject']).'</strong>', $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
+			else
+				$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
 
 //Change Ragnaar line 289 			$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('Y-m-d H:i'),  $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>');
 //Change Ragnaar line 289 (second change)   			$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y'),  $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);

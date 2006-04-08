@@ -55,30 +55,27 @@ $cur_topic = $db->fetch_assoc($result);
 $page_title = pun_htmlspecialchars($cur_topic['subject']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html dir="<?php echo $lang_common['lang_direction']?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang_common['lang_encoding']?>" />
-<link rel="stylesheet" href="style/imports/printable.css" type="text/css">
+<link rel="stylesheet" href="style/imports/printable.css" type="text/css" />
 <title><?php echo $page_title ?></title>
 </head>
 <body>
 
-<table class="links" align="center">
+<table class="links">
 <tr><td>
-<b>&gt;<?php echo $pun_config['o_board_title'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/index.php<br>
-<b>&gt;<?php echo $cur_topic['forum_name'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewforum.php?id=<?php echo $cur_topic['forum_id'] ?><br>
-<b>&gt;<?php echo $cur_topic['subject'] ?></b><br>&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewtopic.php?id=<?php echo $id ?>
+<b>&gt;<?php echo $pun_config['o_board_title'] ?></b><br />&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/index.php<br />
+<b>&gt;<?php echo $cur_topic['forum_name'] ?></b><br />&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewforum.php?id=<?php echo $cur_topic['forum_id'] ?><br />
+<b>&gt;<?php echo $cur_topic['subject'] ?></b><br />&nbsp;&nbsp;&nbsp;<?php echo $pun_config['o_base_url']?>/viewtopic.php?id=<?php echo $id ?>
 </td>
 </tr>
-</table><br>
+</table><br />
 
-<table align="center" cellspacing=0 cellpadding=3>
+<table class="posts">
 <tbody>
-
-
 <?php
 
 
@@ -93,8 +90,8 @@ while ($cur_post = $db->fetch_assoc($result))
 	$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 ?>
-<tr><td style="border-bottom: 0px"><b><?php echo $username ?>&nbsp;&gt;&nbsp;<?php echo format_time($cur_post['posted']) ?></b></td></tr>
-<tr><td style="border-bottom: 1px solid #333333"><?php echo $cur_post['message'] ?></td></tr>
+<tr><td class="links"><b><?php echo $username ?>&nbsp;&gt;&nbsp;<?php echo format_time($cur_post['posted']) ?></b></td></tr>
+<tr><td class="border"><?php echo $cur_post['message'] ?></td></tr>
 <?php
 
 }

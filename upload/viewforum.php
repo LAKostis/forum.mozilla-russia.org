@@ -154,13 +154,13 @@ if ($db->num_rows($result))
 			$last_post = '<a href="viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else if ($cur_topic['announcement'] == '1')
 			$last_post = '<a href="viewannouncement.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
-		else if ($cur_topic['question'] && $cur_topic['moved_to'] != 0){
-			$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-			  $icon_text = $lang_common['Redirect icon'];
-			  $item_status = 'iredirect';
-		}
-		else
+		else if ($cur_topic['question'] != '')
+			$last_post = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a> <br /> <span class="byuser"><b>'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
+		else {
 			$last_post = '&nbsp;';
+	  		$icon_text = $lang_common['Redirect icon'];
+			$item_status = 'iredirect';
+		}
 
 		if ($pun_config['o_censoring'] == '1')
 			$cur_topic['subject'] = censor_words($cur_topic['subject']);
@@ -170,13 +170,14 @@ if ($db->num_rows($result))
 				$cur_topic['question'] = censor_words($cur_topic['question']);
 				
 			if ($cur_topic['moved_to'] != 0)
-				$subject = $lang_forum['Moved'].': '.$lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = $lang_forum['Moved'].': <b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else if ($cur_topic['closed'] == '0')
-				$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-			else
-				$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-			$icon_text = $lang_common['Closed icon'];
-			$item_status = 'iclosed';
+				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			else if ($cur_topic['closed'] == '1') {
+				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$icon_text = $lang_common['Closed icon'];
+				$item_status = 'iclosed';
+			}
 			// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 			if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null)
 			{

@@ -165,6 +165,6 @@ if (isset($_POST['form_sent']))
 	// Update the database.
 	$db->query('UPDATE '.$db->prefix.'polls SET votes=\''.$votes_serialized.'\', voters=\''.$voters_serialized.'\' WHERE pollid='.$pollid) or error('Unable to update poll', __FILE__, __LINE__, $db->error());
 
-	redirect('viewpoll.php?id='.$pollid, $lang_polls['Vote success']);
+	redirect('viewtopic.php?id='.$pollid.'&action=viewpoll', $lang_polls['Vote success']);
 } else
 	message($lang_common['Bad request']);

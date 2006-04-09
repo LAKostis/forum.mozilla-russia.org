@@ -64,9 +64,11 @@ if ($cur_forum['moderators'] != '')
 $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
 
 // Can we or can we not post new topics?
-if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod)
-$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a> <BR /> <a href="poll.php?fid='.$id.'">'.$lang_polls['New poll'].'</a></p>'."\n";
-else
+if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod) {
+	$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a>'."\n";
+	if (!$pun_user['is_guest']) 
+		$post_link .= '<a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a></p>'."\n";
+} else
 	$post_link = '';
 
 
@@ -152,8 +154,8 @@ if ($db->num_rows($result))
 			$last_post = '<a href="viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else if ($cur_topic['announcement'] == '1')
 			$last_post = '<a href="viewannouncement.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
-		else if ($cur_topic['moved_to'] != 0){
-			$subject = $lang_polls['Poll'].': <a href="viewpoll.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+		else if ($cur_topic['question'] && $cur_topic['moved_to'] != 0){
+			$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			  $icon_text = $lang_common['Redirect icon'];
 			  $item_status = 'iredirect';
 		}
@@ -168,12 +170,12 @@ if ($db->num_rows($result))
 				$cur_topic['question'] = censor_words($cur_topic['question']);
 				
 			if ($cur_topic['moved_to'] != 0)
-				$subject = $lang_forum['Moved'].': '.$lang_polls['Poll'].': <a href="viewpoll.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = $lang_forum['Moved'].': '.$lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else if ($cur_topic['closed'] == '0')
-				$subject = $lang_polls['Poll'].': <a href="viewpoll.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else
 			{
-					$subject = $lang_polls['Poll'].': <a href="viewpoll.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+					$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 					$icon_text = $lang_common['Closed icon'];
 					$item_status = 'iclosed';
 			}
@@ -185,7 +187,7 @@ if ($db->num_rows($result))
 
 
 				$subject = '<strong>'.$subject.'</strong>';
-				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewpoll.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 			}
 			else
 			$subject_new_posts = null;
@@ -262,10 +264,6 @@ if ($db->num_rows($result))
 		{
 				if ($cur_topic['announcement'] == '1')
 					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewannouncement.php?id='.$cur_topic['id']).' ]';
-				else
-					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
-				if ($cur_topic['question'] != '')
-					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewpoll.php?id='.$cur_topic['id']).' ]';
 				else
 					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
 		}

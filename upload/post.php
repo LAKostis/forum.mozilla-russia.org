@@ -35,6 +35,9 @@ if ($pun_user['g_read_board'] == '0')
 
 $tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+// MOD poll
+$ptype = isset($_POST['ptype']) ? intval($_POST['ptype']) : 0;
+// MOD END
 if ($tid < 1 && $fid < 1 || $tid > 0 && $fid > 0)
 	message($lang_common['Bad request']);
 
@@ -66,6 +69,9 @@ if ((($tid && (($cur_posting['post_replies'] == '' && $pun_user['g_post_replies'
 
 // Load the post.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
+// MOD poll
+require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
+// MOD END
 
 // Start with a clean slate
 $errors = array();
@@ -287,8 +293,16 @@ if (isset($_POST['form_sent']))
 		else if ($fid)
 		{
 			// Create the topic
-			$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid.')') or error('Unable to create topic', __FILE__, __LINE__, $db->error());
+			// MOD poll
+			require PUN_ROOT.'include/polls/postpoll.php';
+			if ($ptype == 3)
+				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question, yes, no) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\', \'' . $db->escape($yesval) . '\', \'' . $db->escape($noval) . '\')') or error('Unable to create topic w/ poll 3', __FILE__, __LINE__, $db->error());
+			if ($question && $ptype < 3)
+				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\')') or error('Unable to create topic w/ poll', __FILE__, __LINE__, $db->error());
+			else
+				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ')') or error('Unable to create topic w/ null poll', __FILE__, __LINE__, $db->error());
 			$new_tid = $db->insert_id();
+			$db->query('INSERT INTO ' . $db->prefix . 'polls (pollid, options, ptype) VALUES(' . $new_tid . ', \'' . $db->escape(serialize($option)) . '\', ' . $ptype . ')') or error('Unable to create poll', __FILE__, __LINE__, $db->error());
 
 			if (!$pun_user['is_guest'])
 			{
@@ -380,6 +394,15 @@ if ($tid)
 
 	$forum_name = '<a href="viewforum.php?id='.$cur_posting['id'].'">'.pun_htmlspecialchars($cur_posting['forum_name']).'</a>';
 }
+// MOD poll
+else if ($fid && isset($_GET['action']) && $_GET['action'] == 'newpoll')
+{
+	$action = $lang_polls['Create new poll'];
+	$form = '<form id="post" method="post" action="post.php?action=post&amp;fid=' . $fid . '" onsubmit="return process_form(this)">';
+
+	$forum_name = pun_htmlspecialchars($cur_posting['forum_name']);
+}
+// MOD END
 // If a forum_id was specified in the url (new topic).
 else if ($fid)
 {
@@ -393,18 +416,24 @@ else
 
 
 $page_title = pun_htmlspecialchars($action).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
-$focus_element = array('post');
+// MOD poll
+$cur_index = 1;
 
-if (!$pun_user['is_guest'])
+if ($fid && (isset($_GET['action']) && $_GET['action'] == 'newpoll') || $ptype > 0)
+	require PUN_ROOT.'include/polls/poll.php';
+else {
+	$required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
+	$focus_element = array('post');
+
+	if (!$pun_user['is_guest'])
 	$focus_element[] = ($fid) ? 'req_subject' : 'req_message';
-else
-{
-	$required_fields['req_username'] = $lang_post['Guest name'];
-	$focus_element[] = 'req_username';
-}
+	else
+	{
+		$required_fields['req_username'] = $lang_post['Guest name'];
+		$focus_element[] = 'req_username';
+	}
 
-require PUN_ROOT.'header.php';
+	require PUN_ROOT.'header.php';
 
 ?>
 <div class="linkst">
@@ -462,8 +491,11 @@ else if (isset($_POST['preview']))
 
 }
 
+}
 
-$cur_index = 1;
+if (!isset($_GET['action']) || $ptype != 0)
+{
+$cur_index = 1; 
 
 ?>
 <!-- MOD AJAX post preview -->
@@ -477,6 +509,7 @@ $cur_index = 1;
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
 					<div class="infldset txtarea">
+						<?php if (($fid) && $ptype != 0): ?><input type="hidden" name="create_poll" value="1" /> <?php echo "\n"; endif; ?>
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 <?php
@@ -538,15 +571,19 @@ if (!empty($checkboxes))
 
 ?>
 			</div>
-			<!-- MOD AJAX post preview -->
+		<?php if ($ptype == 0) { ?>
+		<!-- MOD AJAX post preview -->
 		<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo	 $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p> 
 		<!--// MOD AJAX post preview -->
+	<?php } else { ?>
+	<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p> <?php } ?>
 		</form>
 	</div>
 </div>
 
 <?php
-
+}
+	
 // Check to see if the topic review is to be displayed.
 if ($tid && $pun_config['o_topic_review'] != '0')
 {
@@ -601,3 +638,4 @@ if ($tid && $pun_config['o_topic_review'] != '0')
 }
 
 require PUN_ROOT.'footer.php';
+

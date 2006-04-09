@@ -378,6 +378,9 @@ function delete_topic($topic_id)
 
 		// Delete posts in topic
 		$db->query('DELETE FROM '.$db->prefix.'posts WHERE topic_id='.$topic_id) or error('Unable to delete posts', __FILE__, __LINE__, $db->error());
+		// MOD Poll
+		$db->query('DELETE FROM '.$db->prefix.'polls WHERE pollid='.$topic_id) or error('Unable to delete polls', __FILE__, __LINE__, $db->error());
+		// MOD END
 	}
 
 	// Delete any subscriptions for this topic

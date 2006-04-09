@@ -174,23 +174,23 @@ if ($db->num_rows($result))
 			else if ($cur_topic['closed'] == '0')
 				$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else
-			{
-					$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-					$icon_text = $lang_common['Closed icon'];
-					$item_status = 'iclosed';
-			}
-			if (!$pun_user['is_guest'] && $cur_topic['last_post'] > $pun_user['last_visit'] && $cur_topic['moved_to'] == null)
+				$subject = $lang_polls['Poll'].': <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser"><b>'.pun_htmlspecialchars($cur_topic['subject']).'</b> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$icon_text = $lang_common['Closed icon'];
+			$item_status = 'iclosed';
+			// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
+			if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null)
 			{
 				$icon_text .= ' '.$lang_common['New icon'];
 				$item_status .= ' inew';
 				$icon_type = 'icon inew';
-
-
 				$subject = '<strong>'.$subject.'</strong>';
-				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+				if ($cur_topic['announcement'] == '1')
+					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewannouncement.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+				else
+					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 			}
 			else
-			$subject_new_posts = null;
+				$subject_new_posts = null;
 
 			// Should we display the dot or not? :)
 			if (!$pun_user['is_guest'] && $pun_config['o_show_dot'] == '1')

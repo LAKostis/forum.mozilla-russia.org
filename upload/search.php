@@ -566,7 +566,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($search_set[$i]['question'] == "")
 					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
 				else
-					$subject = '<a href="viewpoll.php?id='.$search_set[$i]['tid'].'">
+					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">
 					<b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
 				if (!$pun_user['is_guest'] && $search_set[$i]['last_post'] > $pun_user['last_visit'])
 					$icon = '<div class="icon inew"><div class="nosize">'.$lang_common['New icon'].'</div></div>'."\n";
@@ -627,7 +627,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($search_set[$i]['question'] == "")
 					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				else
-					$subject = '<a href="viewpoll.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				if ($search_set[$i]['closed'] != '0')
 				{
 					$icon_text = $lang_common['Closed icon'];
@@ -654,7 +654,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 						$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).' ]';
 					else
 						$subject_multipage = '[ '.paginate($num_pages_topic, -1,
-'viewpoll.php?id='.$search_set[$i]['tid']).' ]';
+'viewtopic.php?id='.$search_set[$i]['tid']).' ]';
 				}
 				else
 					$subject_multipage = null;
@@ -686,7 +686,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					}
 					else
 					{
-					?><td class="tcr"><?php echo '<a href="viewpoll.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td></tr><?php
+					?><td class="tcr"><?php echo '<a href="viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td></tr><?php
 					} ?>
 				</tr>
 		<?php

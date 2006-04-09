@@ -297,7 +297,7 @@ if (isset($_POST['form_sent']))
 			require PUN_ROOT.'include/polls/postpoll.php';
 			if ($ptype == 3)
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question, yes, no) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\', \'' . $db->escape($yesval) . '\', \'' . $db->escape($noval) . '\')') or error('Unable to create topic w/ poll 3', __FILE__, __LINE__, $db->error());
-			if ($question && $ptype < 3)
+			if ($question && $ptype < 3 && $ptype != 0)
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\')') or error('Unable to create topic w/ poll', __FILE__, __LINE__, $db->error());
 			else
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ')') or error('Unable to create topic w/ null poll', __FILE__, __LINE__, $db->error());

@@ -42,14 +42,14 @@ $page_title = pun_htmlspecialchars($lang_help['Help']).' | '.pun_htmlspecialchar
 require PUN_ROOT.'header.php';
 
 ?>
-<h2><?php echo $lang_common['BBCode'] ?></h2>
+<h2><span><?php echo $lang_common['BBCode'] ?></span></h2>
 <div class="box">
 	<div class="inbox">
 		<p><a name="bbcode"></a><?php echo $lang_help['BBCode info 1'] ?></p><br />
 		<p><?php echo $lang_help['BBCode info 2'] ?></p>
 	</div>
 </div>
-<h2><?php echo $lang_help['Text style'] ?></h2>
+<h2><span><?php echo $lang_help['Text style'] ?></span></h2>
 <div class="box">
 	<p><?php echo $lang_help['Text style info'] ?></p><br />
 	<div style="padding-left: 4px">
@@ -60,7 +60,7 @@ require PUN_ROOT.'header.php';
 		[color=blue]<?php echo $lang_help['Blue text'] ?>[/color] <?php echo $lang_help['produces'] ?> <span style="color: blue"><?php echo $lang_help['Blue text'] ?></span>
 	</div>
 </div>
-<h2><?php echo $lang_help['Links and images'] ?></h2>
+<h2><span><?php echo $lang_help['Links and images'] ?></span></h2>
 <div class="box">
 	<p><?php echo $lang_help['Links info'] ?></p><br />
 	<div style="padding-left: 4px">
@@ -72,7 +72,7 @@ require PUN_ROOT.'header.php';
 	<p><a name="img"></a><?php echo $lang_help['Images info'] ?></p>
 	<div>[img]http://www.punbb.org/img/small_logo.png[/img] <?php echo $lang_help['produces'] ?> <img src="http://www.punbb.org/img/small_logo.png" alt="http://www.punbb.org/img/small_logo.png" /></div>
 </div>
-<h2><?php echo $lang_help['Quotes'] ?></h2>
+<h2><span><?php echo $lang_help['Quotes'] ?></span></h2>
 <div class="box">
 	<div style="padding-left: 4px">
 		<?php echo $lang_help['Quotes info'] ?><br /><br />
@@ -90,7 +90,7 @@ require PUN_ROOT.'header.php';
 		</div>
 	</div>
 </div>
-<h2><?php echo $lang_help['Code'] ?></h2>
+<h2><span><?php echo $lang_help['Code'] ?></span></h2>
 <div class="box">
 	<div style="padding-left: 4px">
 		<?php echo $lang_help['Code info'] ?><br /><br />
@@ -101,14 +101,14 @@ require PUN_ROOT.'header.php';
 		</div>
 	</div>
 </div>
-<h2><?php echo $lang_help['Nested tags'] ?></h2>
+<h2><span><?php echo $lang_help['Nested tags'] ?></span></h2>
 <div class="box">
 	<div style="padding-left: 4px">
 		<?php echo $lang_help['Nested tags info'] ?><br /><br />
 		&nbsp;&nbsp;&nbsp;&nbsp;[b][u]<?php echo $lang_help['Bold, underlined text'] ?>[/u][/b] <?php echo $lang_help['produces'] ?> <span class="bbu"><b><?php echo $lang_help['Bold, underlined text'] ?></b></span><br /><br />
 	</div>
 </div>
-<h2><?php echo $lang_common['Smilies'] ?></h2>
+<h2><span><?php echo $lang_common['Smilies'] ?></span></h2>
 <div class="box">
 	<div style="padding-left: 4px">
 		<a name="smilies"></a><?php echo $lang_help['Smilies info'] ?><br /><br />

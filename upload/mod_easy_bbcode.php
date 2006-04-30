@@ -54,8 +54,9 @@ function insert_text(open, close, no_focus)
         if (close != "") text += msgfield.value.substring(startPos, endPos);
         text += close + msgfield.value.substring(endPos, msgfield.value.length);
         msgfield.value = text;
-        msgfield.selectionStart = endPos + open.length + close.length;
-        msgfield.selectionEnd = endPos + open.length + close.length;
+		endPos = close. length? endPos: startPos;
+		msgfield.selectionStart = endPos + open.length + close.length;
+		msgfield.selectionEnd = endPos + open.length + close.length;
     }
 
     // Fallback support for other browsers

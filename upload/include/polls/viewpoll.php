@@ -31,7 +31,7 @@ if ($db->num_rows($result))
 	if ((!$pun_user['is_guest']) && (!in_array($pun_user['id'], $voters)) && ($cur_topic['closed'] == '0')) {
 		$showsubmit = true;
 		?>
-			<form id="post" method="post" action="vote.php">
+			<form id="poll" method="post" action="vote.php">
 			<div class="inform">
 			<div class="rbox" align="center">
 			<input type="hidden" name="poll_id" value="<?php echo $id; ?>" />
@@ -45,7 +45,7 @@ if ($db->num_rows($result))
 				while (list($key, $value) = each($options)) {
 
 					?>
-						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="vote" <?php if (!$firstcheck) { echo "checked"; $firstcheck = true; }; ?> type="radio" value="<?php echo $key ?>"></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
+						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="vote" <?php if (!$firstcheck) { echo "checked"; $firstcheck = true; }; ?> type="radio" value="<?php echo $key ?>" /></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
 
 					?></span></td></tr>
 						<?php
@@ -53,7 +53,7 @@ if ($db->num_rows($result))
 			} elseif ($ptype == 2) {
 				while (list($key, $value) = each($options)) {
 					?>
-						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="options[<?php echo $key ?>]" type="checkbox" value="1"></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
+						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="options[<?php echo $key ?>]" type="checkbox" value="1" /></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
 
 					?></span></td></tr>
 						<?php
@@ -61,7 +61,7 @@ if ($db->num_rows($result))
 			} elseif ($ptype == 3) {
 				while (list($key, $value) = each($options)) {
 					?>
-						<tr><td style="WIDTH: auto; BORDER: 0;"><?php echo pun_htmlspecialchars($value); ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" checked type="radio" value="yes"> <?php echo $cur_topic['yes']; ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" type="radio" value="no"> <?php echo $cur_topic['no']; ?></td></tr>
+						<tr><td style="WIDTH: auto; BORDER: 0;"><?php echo pun_htmlspecialchars($value); ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" checked type="radio" value="yes" /> <?php echo $cur_topic['yes']; ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" type="radio" value="no" /> <?php echo $cur_topic['no']; ?></td></tr>
 						<?php
 				} 
 			} else
@@ -72,7 +72,7 @@ if ($db->num_rows($result))
 			<div class="inform">
 			<div class="rbox" align="center">
 			<strong><?php echo pun_htmlspecialchars($cur_topic['question']) ?></strong><br /><br />
-			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; CELLSPACING: 0; CELLPADDING: 0;">
+			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; PADDING: 0;">
 			<?php
 			if (!empty($cur_poll['votes']))
 				$votes = unserialize($cur_poll['votes']);

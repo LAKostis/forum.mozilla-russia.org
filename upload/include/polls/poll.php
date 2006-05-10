@@ -5,7 +5,7 @@ if (!defined('PUN_ROOT'))
 if ($fid)
 {
 	if ($ptype == 0) {
-		$form = '<form id="post" method="post" action="post.php?&amp;fid=' . $fid . '">';
+		$form = '<form id="poll" method="post" action="post.php?&amp;fid=' . $fid . '">';
 
 		require PUN_ROOT . 'header.php';
 	?>
@@ -104,7 +104,7 @@ if ($fid)
 					if (!empty($value)) {
 
 					?>
-					<input type="radio"> <?php echo pun_htmlspecialchars($value);
+					<input type="radio" /> <?php echo pun_htmlspecialchars($value);
 
 					?> <br />
 					<?php
@@ -127,7 +127,7 @@ if ($fid)
 					if (!empty($value)) {
 
 					?>
-					<input type="checkbox"> <?php echo pun_htmlspecialchars($value);
+					<input type="checkbox" /> <?php echo pun_htmlspecialchars($value);
 
 					?> <br />
 					<?php
@@ -153,9 +153,9 @@ if ($fid)
 					<strong>
 					<?php echo pun_htmlspecialchars($value);
 
-					?></strong><br /><input type="radio"> <?php echo pun_htmlspecialchars($yesval);
+					?></strong><br /><input type="radio" /> <?php echo pun_htmlspecialchars($yesval);
 
-					?><input type="radio"> <?php echo pun_htmlspecialchars($noval);
+					?><input type="radio" /> <?php echo pun_htmlspecialchars($noval);
 
 					?><br />
 					<?php

@@ -276,7 +276,6 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
 	if (!isset($conditions))
 		message('You didn\'t enter any search terms.');
 
-	echo "$conditions";	
         // Fetch user count
         $result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u'.(!empty($conditions) ? ' WHERE u.id>1 AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
         $num_users = $db->result($result);

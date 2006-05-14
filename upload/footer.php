@@ -70,33 +70,6 @@ if ($footer_style == 'index' || $footer_style == 'search')
 	}
 }
 
-else if ($footer_style == 'viewannouncement')
-{
-	echo "\n\t\t\t".'<div class="conl">'."\n";
-
-	// Display the "Jump to" drop list
-	if ($pun_config['o_quickjump'] == '1')
-	{
-		// Load cached quickjump
-		@include PUN_ROOT.'cache/cache_quickjump_'.$pun_user['g_id'].'.php';
-		if (!defined('PUN_QJ_LOADED'))
-		{
-			require_once PUN_ROOT.'include/cache.php';
-			generate_quickjump_cache($pun_user['g_id']);
-			require PUN_ROOT.'cache/cache_quickjump_'.$pun_user['g_id'].'.php';
-		}
-	}
-
-	echo "\t\t\t".'<dl id="modcontrols"><dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderateannouncement.php?tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
-
-	if ($cur_topic['closed'] == '1')
-		echo "\t\t\t".'<dd><a href="moderateannouncement.php?open='.$id.'">'.$lang_common['Open topic'].'</a></dd>'."\n";
-	else
-		echo "\t\t\t".'<dd><a href="moderateannouncement.php?close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";
-
-	echo "\t\t\t".'</div>'."\n";
-}
-
 else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 {
 	echo "\n\t\t\t".'<div class="conl">'."\n";
@@ -119,17 +92,21 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 	else if ($footer_style == 'viewtopic' && $is_admmod)
 	{
 		echo "\t\t\t".'<dl id="modcontrols"><dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
-		echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
+		if ($cur_topic['announcement'] != '1')
+			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
 
 		if ($cur_topic['closed'] == '1')
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'">'.$lang_common['Open topic'].'</a></dd>'."\n";
 		else
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";
 
-		if ($cur_topic['sticky'] == '1')
-			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a></dd></dl>'."\n";
-		else
-			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd></dl>'."\n";
+		if ($cur_topic['announcement'] != '1')
+		{
+			if ($cur_topic['sticky'] == '1')
+				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a></dd></dl>'."\n";
+			else
+				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd></dl>'."\n";
+		}
 	}
 
 	echo "\t\t\t".'</div>'."\n";

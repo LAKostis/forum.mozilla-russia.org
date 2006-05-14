@@ -203,11 +203,11 @@ else if (isset($_GET['report']))
 		$topic_id = $db->result($result);
 
 		// Get the subject and forum ID
-		$result = $db->query('SELECT subject, forum_id FROM '.$db->prefix.'topics WHERE id='.$topic_id) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT subject, forum_id, announcement FROM '.$db->prefix.'topics WHERE id='.$topic_id) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 		if (!$db->num_rows($result))
 			message($lang_common['Bad request']);
 
-		list($subject, $forum_id) = $db->fetch_row($result);
+		list($subject, $forum_id, $announcement) = $db->fetch_row($result);
 
 		// Should we use the internal report handling?
 		if ($pun_config['o_report_method'] == 0 || $pun_config['o_report_method'] == 2)
@@ -219,6 +219,9 @@ else if (isset($_GET['report']))
 			// We send it to the complete mailing-list in one swoop
 			if ($pun_config['o_mailing_list'] != '')
 			{
+				if ($announcement == '1')
+					$forum_id = 'announcement';
+
 				$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
 				$mail_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/viewtopic.php?pid='.$post_id.'#p'.$post_id."\n\n".'Reason:'."\n".$reason;
 

@@ -1,4 +1,4 @@
-<?
+<?php
 	if(!$pun_user['is_guest']){
 		require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
 		

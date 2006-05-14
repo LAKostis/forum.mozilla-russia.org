@@ -107,15 +107,27 @@ else if ($action == 'last')
 
 // Fetch some info about the topic
 if (!$pun_user['is_guest'])
+{
+	// MOD Announcement: CODE FOLLOWS
+	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $id . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
-	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	if (!$db->num_rows($result))
+		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+}	
 else
-	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+{
+	// MOD Announcement: CODE FOLLOWS
+	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $id . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	if (!$db->num_rows($result))
+		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+}
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
 
 $cur_topic = $db->fetch_assoc($result);
+
+$forum_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['forum_id'];
 
 // MOD: MARK TOPICS AS READ - 1 LINE NEW CODE FOLLOWS
 if (!$pun_user['is_guest']) mark_topic_read($id, $cur_topic['forum_id'], $cur_topic['last_post']);
@@ -459,6 +471,5 @@ if ($quickpost)
 $low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
 $db->query('UPDATE '.$low_prio.$db->prefix.'topics SET num_views=num_views+1 WHERE id='.$id) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
-$forum_id = $cur_topic['forum_id'];
 $footer_style = 'viewtopic';
 require PUN_ROOT.'footer.php';

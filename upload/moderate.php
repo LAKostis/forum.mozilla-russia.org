@@ -58,18 +58,27 @@ if (isset($_GET['get_host']))
 
 
 // All other functions require moderator/admin access
-$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
-if ($fid < 1)
-	message($lang_common['Bad request']);
+// MOD Announcement: CODE FOLLOWS
+if ($_GET['fid'] == 'announcement')
+{
+	$fid = $_GET['fid'];
+	if ($pun_user['g_id'] != PUN_ADMIN)
+		message($lang_common['No permission']);
+}
+else 
+{
+	$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+	if ($fid < 1)
+		message($lang_common['Bad request']);
 
-$result = $db->query('SELECT moderators FROM '.$db->prefix.'forums WHERE id='.$fid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT moderators FROM '.$db->prefix.'forums WHERE id='.$fid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 
-$moderators = $db->result($result);
-$mods_array = ($moderators != '') ? unserialize($moderators) : array();
+	$moderators = $db->result($result);
+	$mods_array = ($moderators != '') ? unserialize($moderators) : array();
 
-if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_id'] != PUN_MOD || !array_key_exists($pun_user['username'], $mods_array)))
-	message($lang_common['No permission']);
-
+	if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_id'] != PUN_MOD || !array_key_exists($pun_user['username'], $mods_array)))
+		message($lang_common['No permission']);
+}
 
 // Load the misc.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
@@ -83,7 +92,10 @@ if (isset($_GET['tid']))
 		message($lang_common['Bad request']);
 
 	// Fetch some info about the topic
-	$result = $db->query('SELECT t.subject, t.num_replies, f.id AS forum_id, forum_name FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND f.id='.$fid.' AND t.id='.$tid.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	// MOD Announcement: CODE FOLLOWS
+	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $tid . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	if (!$db->num_rows($result))
+		$result = $db->query('SELECT t.subject, t.num_replies, f.id AS forum_id, forum_name FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND f.id='.$fid.' AND t.id='.$tid.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
 		message($lang_common['Bad request']);
 
@@ -120,7 +132,8 @@ if (isset($_GET['tid']))
 			// Update the topic
 			$db->query('UPDATE '.$db->prefix.'topics SET last_post='.$last_post['posted'].', last_post_id='.$last_post['id'].', last_poster=\''.$db->escape($last_post['poster']).'\', num_replies=num_replies-'.$num_posts_deleted.' WHERE id='.$tid) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
-			update_forum($fid);
+			if ($fid != 'announcement')
+				update_forum($fid);
 
 			redirect('viewtopic.php?id='.$tid, $lang_misc['Delete posts redirect']);
 		}
@@ -151,11 +164,8 @@ if (isset($_GET['tid']))
 
 		require PUN_ROOT.'footer.php';
 	}
-
-	else if( isset($_POST['create_topic']) || isset($_POST['create_topic_comply']))
-	{
+	else if (isset($_POST['create_topic']) || isset($_POST['create_topic_comply']))
 		require PUN_ROOT.'include/splittopic/mod_moderate.php';
-	}
 	
 	// Show the delete multiple posts view
 
@@ -196,7 +206,7 @@ if (isset($_GET['tid']))
 <?php
 
 	require PUN_ROOT.'include/parser.php';
-	require PUN_ROOT.'lang/'.$language.'/splittopic.php';
+	require PUN_ROOT.'lang/'.$pun_user['language'].'/splittopic.php';
 
 	$bg_switch = true;	// Used for switching background color in posts
 	$post_count = 0;	// Keep track of post numbers
@@ -269,8 +279,8 @@ if (isset($_GET['tid']))
 ?>
 <div class="postlinksb">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $paging_links ?></p>
-		<p class="conr"><input type="submit" name="create_topic" value="<?php echo $lang_mod['Create topic'] ?>"<?php echo $button_status ?> /></p>
+	<p class="pagelink conl"><?php echo $paging_links ?></p><?php if ($fid != 'announcement') { ?>
+	<p class="conr"><input type="submit" name="create_topic" value="<?php echo $lang_mod['Create topic'] ?>"<?php echo $button_status ?> /></p> <?php } ?>
 		<p class="conr"><input type="submit" name="delete_posts" value="<?php echo $lang_misc['Delete'] ?>"<?php echo $button_status ?> /></p>
 		<div class="clearer"></div>
 	</div>

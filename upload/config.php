@@ -1,19 +1,17 @@
 <?php
 
-	$db_type = 'mysql';
-	$db_host = 'localhost';
-	$db_name = 'forum_mozilla';
-	$db_username = 'root';
-	$db_password = 'testing123';
-	$db_prefix = 'punbb_';
-	$p_connect = false;
+$db_type = 'sqlite';
+$db_host = 'localhost';
+$db_name = 'forum_db';
+$db_username = '';
+$db_password = '';
+$db_prefix = 'punbb_';
+$p_connect = false;
 
-	$cookie_name = 'punbb_cookie';
-	$cookie_domain = '';
-	$cookie_path = '/';
-	$cookie_secure = 0;
-	$cookie_seed = 'nn0qwe34';
+$cookie_name = 'punbb_cookie';
+$cookie_domain = '';
+$cookie_path = '/';
+$cookie_secure = 0;
+$cookie_seed = 'cbc7bd26';
 
-	$language = 'Russian';
-	
-	define('PUN', 1);
+define('PUN', 1);

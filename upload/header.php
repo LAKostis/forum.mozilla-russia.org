@@ -52,8 +52,8 @@ $tpl_main = str_replace('<pun_content_direction>', $lang_common['lang_direction'
 
 // START SUBST - <pun_char_encoding>
 if (defined('PUN_WIKI')) {
-	include PUN_ROOT.'lang/English/lang.php';
-	include PUN_ROOT.'lang/'.$pun_user['language'].'/lang.php';
+	require PUN_ROOT.'lang/English/lang.php';
+	require PUN_ROOT.'lang/'.$pun_user['language'].'/lang.php';
 	$tpl_main = str_replace('<pun_char_encoding>', $lang['encoding'], $tpl_main);
 }
 else {
@@ -278,8 +278,6 @@ if (!file_exists(PUN_ROOT.$logo_img))
 
 $logo_size = @getimagesize(PUN_ROOT.$logo_img);
 $tpl_main = str_replace('<pun_logo>','<a href="'.$logo_link.'"><img src="'.$logo_img.'" '.$logo_size[3].' alt="'.$pun_config['o_board_title'].'" /></a>',$tpl_main);
-
-// echo $logo_img;
 
 // END SUBST - <pun_logo>
 

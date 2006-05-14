@@ -11,7 +11,7 @@
   or (at your option) any later version.
 
   PunBB is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
+ eWITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
@@ -24,7 +24,7 @@
 
 
 // The PunBB version this script installs
-$punbb_version = '1.2.10';
+$punbb_version = '1.2.11';
 
 
 define('PUN_ROOT', './');
@@ -590,6 +590,7 @@ else
 					last_poster VARCHAR(200),
 					sort_by TINYINT(1) NOT NULL DEFAULT 0,
 					disp_position INT(10) NOT NULL DEFAULT 0,
+					closed TINYINT(1) NOT NULL DEFAULT '0',
 					cat_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
@@ -609,6 +610,7 @@ else
 					last_poster VARCHAR(200),
 					sort_by SMALLINT NOT NULL DEFAULT 0,
 					disp_position INT NOT NULL DEFAULT 0,
+					closed INT NOT NULL DEFAULT 0,
 					cat_id INT NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
@@ -628,6 +630,7 @@ else
 					last_poster VARCHAR(200),
 					sort_by INTEGER NOT NULL DEFAULT 0,
 					disp_position INTEGER NOT NULL DEFAULT 0,
+					closed INTEGER NOT NULL DEFAULT 0,
 					cat_id INTEGER NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
@@ -659,6 +662,7 @@ else
 					g_edit_subjects_interval SMALLINT(6) NOT NULL DEFAULT 300,
 					g_post_flood SMALLINT(6) NOT NULL DEFAULT 30,
 					g_search_flood SMALLINT(6) NOT NULL DEFAULT 30,
+					g_wiki_level SMALLINT(1) NOT NULL DEFAULT 1,
 					PRIMARY KEY (g_id)
 					) TYPE=MyISAM;";
 			break;
@@ -681,6 +685,7 @@ else
 					g_edit_subjects_interval SMALLINT NOT NULL DEFAULT 300,
 					g_post_flood SMALLINT NOT NULL DEFAULT 30,
 					g_search_flood SMALLINT NOT NULL DEFAULT 30,
+					g_wiki_level SMALLINT NOT NULL DEFAULT 1,
 					PRIMARY KEY (g_id)
 					)";
 			break;
@@ -703,6 +708,7 @@ else
 					g_edit_subjects_interval INTEGER NOT NULL DEFAULT 300,
 					g_post_flood INTEGER NOT NULL DEFAULT 30,
 					g_search_flood INTEGER NOT NULL DEFAULT 30,
+					g_wiki_level INTEGER NOT NULL DEFAULT 1,
 					PRIMARY KEY (g_id)
 					)";
 			break;
@@ -711,6 +717,89 @@ else
 	$db->query($sql) or error('Unable to create table '.$db_prefix.'groups. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
 
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = 'CREATE TABLE '.$db_prefix."iptrylog (
+					ip VARCHAR(255) DEFAULT NULL,
+					lasttry INT(10) UNSIGNED NOT NULL DEFAULT 0
+					) TYPE=HEAP;";
+			break;
+
+		case 'pgsql':
+			$sql = 'CREATE TABLE '.$db_prefix."iptrylog (
+					ip VARCHAR(255) DEFAULT NULL,
+					lasttry INT NOT NULL DEFAULT 0
+					)";
+			break;
+
+		case 'sqlite':
+			$sql = 'CREATE TABLE '.$db_prefix."iptrylog (
+					ip VARCHAR(255) DEFAULT NULL,
+					lasttry INTEGER NOT NULL DEFAULT 0
+					)";
+			break;
+	}
+
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'iptrylog. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+
+
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = 'CREATE TABLE '.$db_prefix."messages (
+					id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+					owner INT(10) NOT NULL DEFAULT '0',
+					subject VARCHAR(120) NOT NULL DEFAULT '',
+					message TEXT,
+					sender VARCHAR(120) NOT NULL DEFAULT '',
+					sender_id INT(10) NOT NULL DEFAULT 0,
+					posted INT(10) NOT NULL DEFAULT 0,
+					sender_ip VARCHAR(120) DEFAULT NULL,
+					smileys TINYINT(4) DEFAULT 1,
+					status TINYINT(4) DEFAULT 0,
+					showed TINYINT(4) DEFAULT 0,
+					PRIMARY KEY  (id)
+					) TYPE=MyISAM;";
+		case 'pgsql':
+		case 'pgsql':
+		         $sql = 'CREATE TABLE '.$db->prefix."messages (
+                                        id SERIAL,
+                                        owner INT NOT NULL DEFAULT 0,
+                                        subject VARCHAR(120) NOT NULL DEFAULT 0,
+                                        message TEXT,
+                                        sender VARCHAR(120) NOT NULL DEFAULT '',
+                                        sender_id INT NOT NULL DEFAULT 0,
+                                        posted INT NOT NULL DEFAULT 0,
+                                        sender_ip VARCHAR(120),
+                                        smileys SMALLINT DEFAULT 1,
+                                        status SMALLINT DEFAULT 0,
+                                        showed SMALLINT DEFAULT 0,
+                                        PRIMARY KEY (id)
+                                        ) ";
+			break;
+
+		case 'sqlite':
+		         $sql = 'CREATE TABLE '.$db->prefix."messages (
+                                        id INTEGER NOT NULL,
+                                        owner INTEGER NOT NULL DEFAULT 0,
+                                        subject VARCHAR(120) NOT NULL DEFAULT 0,
+                                        message TEXT,
+                                        sender VARCHAR(120) NOT NULL DEFAULT '',
+                                        sender_id INTEGER NOT NULL DEFAULT 0,
+                                        posted INTEGER NOT NULL DEFAULT 0,
+                                        sender_ip VARCHAR(120),
+                                        smileys INTERGER DEFAULT 1,
+                                        status INTEGER DEFAULT 0,
+                                        showed INTEGER DEFAULT 0,
+                                        PRIMARY KEY (id)
+                                        ) ";
+			break;
+	}
+
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'messages. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
 	switch ($db_type)
 	{
@@ -720,7 +809,8 @@ else
 					user_id INT(10) UNSIGNED NOT NULL DEFAULT 1,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
 					logged INT(10) UNSIGNED NOT NULL DEFAULT 0,
-					idle TINYINT(1) NOT NULL DEFAULT 0
+					idle TINYINT(1) NOT NULL DEFAULT 0,
+					show_online TINYINT(1) NOT NULL DEFAULT 1
 					) TYPE=HEAP;";
 			break;
 
@@ -729,7 +819,8 @@ else
 					user_id INT NOT NULL DEFAULT 1,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
 					logged INT NOT NULL DEFAULT 0,
-					idle SMALLINT NOT NULL DEFAULT 0
+					idle SMALLINT NOT NULL DEFAULT 0,
+					show_online SMALLINT NOT NULL DEFAULT 1
 					)";
 			break;
 
@@ -738,7 +829,8 @@ else
 					user_id INTEGER NOT NULL DEFAULT 1,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
 					logged INTEGER NOT NULL DEFAULT 0,
-					idle INTEGER NOT NULL DEFAULT 0
+					idle INTEGER NOT NULL DEFAULT 0,
+					show_online INTEGER NOT NULL DEFAULT 1
 					)";
 			break;
 	}
@@ -746,6 +838,47 @@ else
 	$db->query($sql) or error('Unable to create table '.$db_prefix.'online. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
 
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = 'CREATE TABLE '.$db->prefix."polls (
+					id INT(11) NOT NULL AUTO_INCREMENT,
+					pollid INT(11) NOT NULL default '0',
+					options LONGTEXT NOT NULL,
+					voters LONGTEXT NOT NULL,
+					ptype tinyint(4) NOT NULL default '0',
+					votes LONGTEXT NOT NULL,
+					PRIMARY KEY (id)
+					) TYPE=MyISAM;";
+			break;
+
+		case 'pgsql':
+			$sql = 'CREATE TABLE '.$db->prefix."polls (
+					id SERIAL,
+					pollid INTEGER NOT NULL default 0,
+					options TEXT NOT NULL,
+					voters TEXT NOT NULL,
+					ptype SMALLINT NOT NULL default 0,
+					votes TEXT NOT NULL,
+					PRIMARY KEY (id)
+					)";
+			break;
+
+		case 'sqlite':
+			$sql = 'CREATE TABLE '.$db->prefix."polls (
+					id INTEGER NOT NULL,
+					pollid INTEGER NOT NULL default 0,
+					options TEXT NOT NULL,
+					voters TEXT NOT NULL,
+					ptype INTEGER NOT NULL default 0,
+					votes TEXT NOT NULL,
+					PRIMARY KEY (id)
+					)";
+			break;
+	}
+	$db->query($sql) or error('Unable to create table '.$db->prefix.'polls. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	
 
 	switch ($db_type)
 	{
@@ -1045,6 +1178,10 @@ else
 					sticky TINYINT(1) NOT NULL DEFAULT 0,
 					moved_to INT(10) UNSIGNED,
 					forum_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
+					question VARCHAR(255) NOT NULL DEFAULT '',
+					yes VARCHAR(30) NOT NULL DEFAULT '',
+					no VARCHAR(30) NOT NULL DEFAULT '',
+					announcement TINYINT(1) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -1064,6 +1201,10 @@ else
 					sticky SMALLINT NOT NULL DEFAULT 0,
 					moved_to INT,
 					forum_id INT NOT NULL DEFAULT 0,
+					question VARCHAR(255) NOT NULL DEFAULT '',
+					yes VARCHAR(30) NOT NULL DEFAULT '',
+					no VARCHAR(30) NOT NULL DEFAULT '',
+					announcement SMALLINT NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1083,6 +1224,10 @@ else
 					sticky INTEGER NOT NULL DEFAULT 0,
 					moved_to INTEGER,
 					forum_id INTEGER NOT NULL DEFAULT 0,
+					question VARCHAR(255) NOT NULL DEFAULT '',
+					yes VARCHAR(30) NOT NULL DEFAULT '',
+					no VARCHAR(30) NOT NULL DEFAULT '',
+					announcement INTEGER NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1090,6 +1235,80 @@ else
 
 	$db->query($sql) or error('Unable to create table '.$db_prefix.'topics. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
+
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = 'CREATE TABLE '.$db_prefix."uploaded (
+					id INT(11) NOT NULL DEFAULT 0,
+					file TEXT NOT NULL,
+					user TEXT NOT NULL
+					) ENGINE=MyISAM;";
+			break;
+
+		case 'pgsql':
+			$sql = 'CREATE TABLE '.$db_prefix."uploaded (
+					id INT(11) NOT NULL DEFAULT 0,
+					file TEXT NOT NULL,
+					user TEXT NOT NULL
+					)";
+			break;
+
+		case 'sqlite':
+			$sql = 'CREATE TABLE '.$db_prefix."uploaded (
+					id INTEGER NOT NULL DEFAULT 0,
+					file TEXT NOT NULL,
+					user TEXT NOT NULL
+					)";
+			break;
+	}
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploaded. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+
+
+	switch ($db_type)
+	{
+		case 'mysql':
+		case 'mysqli':
+			$sql = 'CREATE TABLE '.$db_prefix."uploads_conf (
+					g_id SMALLINT(6) NOT NULL DEFAULT 0,
+					u_fsize INT(10) UNSIGNED NOT NULL DEFAULT 0,
+					p_view TINYINT(4) NOT NULL DEFAULT 0,
+					p_globalview TINYINT(4) NOT NULL DEFAULT 0,
+					p_upload TINYINT(4) NOT NULL DEFAULT 0,
+					p_delete TINYINT(4) NOT NULL DEFAULT 0,
+					p_globaldelete TINYINT(4) NOT NULL DEFAULT 0,
+					p_setop TINYINT(4) NOT NULL DEFAULT 0
+					) ENGINE=MyISAM;";
+			break;
+
+		case 'pgsql':
+			$sql = 'CREATE TABLE '.$db_prefix."uploads_conf (
+					g_id SMALLINT NOT NULL DEFAULT 0,
+					u_fsize INT(10) UNSIGNED NOT NULL DEFAULT 0,
+					p_view SMALLINT NOT NULL DEFAULT 0,
+					p_globalview SMALLINT NOT NULL DEFAULT 0,
+					p_upload SMALLINT NOT NULL DEFAULT 0,
+					p_delete SMALLINT NOT NULL DEFAULT 0,
+					p_globaldelete SMALLINT NOT NULL DEFAULT 0,
+					p_setop SMALLINT NOT NULL DEFAULT 0
+					)";
+			break;
+		
+		case 'sqlite':
+			$sql = 'CREATE TABLE '.$db_prefix."uploads_conf (
+					g_id INTEGER NOT NULL DEFAULT 0,
+					u_fsize INTEGER UNSIGNED NOT NULL DEFAULT 0,
+					p_view INTEGER NOT NULL DEFAULT 0,
+					p_globalview INTEGER NOT NULL DEFAULT 0,
+					p_upload INTEGER NOT NULL DEFAULT 0,
+					p_delete INTEGER NOT NULL DEFAULT 0,
+					p_globaldelete INTEGER NOT NULL DEFAULT 0,
+					p_setop INTEGER NOT NULL DEFAULT 0
+					)";
+			break;
+	}
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploads_conf. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -1099,6 +1318,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."users (
 					id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 					group_id INT(10) UNSIGNED NOT NULL DEFAULT 4,
+					membergroupids VARCHAR(64) DEFAULT NULL,
 					username VARCHAR(200) NOT NULL DEFAULT '',
 					password VARCHAR(40) NOT NULL DEFAULT '',
 					email VARCHAR(50) NOT NULL DEFAULT '',
@@ -1134,6 +1354,12 @@ else
 					admin_note VARCHAR(30),
 					activate_string VARCHAR(50),
 					activate_key VARCHAR(8),
+					show_online TINYINT(1) NOT NULL DEFAULT 1,
+					read_topics MEDIUMTEXT,
+					reputation_minus INT(11) UNSIGNED DEFAULT 0,
+					reputation_plus INT(11) UNSIGNED DEFAULT 0,
+					last_reputation_voice INT(10) UNSIGNED DEFAULT NULL,
+					imgaward varchar(255) NOT NULL DEFAULT '',
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -1142,6 +1368,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."users (
 					id SERIAL,
 					group_id INT NOT NULL DEFAULT 4,
+					membergroupids VARCHAR(64) DEFAULT NULL,
 					username VARCHAR(200) NOT NULL DEFAULT '',
 					password VARCHAR(40) NOT NULL DEFAULT '',
 					email VARCHAR(50) NOT NULL DEFAULT '',
@@ -1177,6 +1404,12 @@ else
 					admin_note VARCHAR(30),
 					activate_string VARCHAR(50),
 					activate_key VARCHAR(8),
+					show_online SMALLINT NOT NULL DEFAULT 1,
+					read_topics TEXT,
+					reputation_minus INT NOT NULL DEFAULT 0,
+					reputation_plus INT NOT NULL DEFAULT 0,
+					last_reputation_voice INT,
+					imgaward varchar(255) NOT NULL DEFAULT '',
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1185,6 +1418,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."users (
 					id INTEGER NOT NULL,
 					group_id INTEGER NOT NULL DEFAULT 4,
+					membergroupids VARCHAR(64) DEFAULT NULL,
 					username VARCHAR(200) NOT NULL DEFAULT '',
 					password VARCHAR(40) NOT NULL DEFAULT '',
 					email VARCHAR(50) NOT NULL DEFAULT '',
@@ -1220,6 +1454,12 @@ else
 					admin_note VARCHAR(30),
 					activate_string VARCHAR(50),
 					activate_key VARCHAR(8),
+					show_online INTEGER NOT NULL DEFAULT 1,
+					read_topics TEXT,
+					reputation_minus INTEGER NOT NULL DEFAULT 0,
+					reputation_plus INTEGER NOT NULL DEFAULT 0,
+					last_reputation_voice INTEGER,
+					imgaward varchar(255) NOT NULL DEFAULT '',
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1284,6 +1524,10 @@ else
 	$db->query('INSERT INTO '.$db_prefix."users (group_id, username, password, email, num_posts, last_post, registered, registration_ip, last_visit) VALUES(1, '".$db->escape($username)."', '".pun_hash($password1)."', '$email', 1, ".$now.", ".$now.", '127.0.0.1', ".$now.')')
 		or error('Unable to add administrator user. Please check your configuration and try again.');
 
+
+	// Insert initial uploader user
+	$db->query('INSERT INTO '.$db_prefix."uploads_conf (g_id, u_fsize, p_view, p_globalview, p_upload, p_delete, p_globaldelete, p_setop) VALUES(1, 0, 1, 1, 1, 1, 1, 1)") or error('Unable to add uploader config', __FILE__, __LINE__, $db->error());
+
 	// Insert config data
 	$config = array(
 		'o_cur_version'				=> "'$punbb_version'",
@@ -1322,8 +1566,8 @@ else
 		'o_mailing_list'			=> "'$email'",
 		'o_avatars'					=> "'1'",
 		'o_avatars_dir'				=> "'img/avatars'",
-		'o_avatars_width'			=> "'60'",
-		'o_avatars_height'			=> "'60'",
+		'o_avatars_width'			=> "'72'",
+		'o_avatars_height'			=> "'72'",
 		'o_avatars_size'			=> "'10240'",
 		'o_search_all_forums'		=> "'1'",
 		'o_base_url'				=> "'$base_url'",
@@ -1356,7 +1600,19 @@ else
 		'p_sig_lines'				=> "'4'",
 		'p_allow_banned_email'		=> "'1'",
 		'p_allow_dupe_email'		=> "'0'",
-		'p_force_guest_email'		=> "'1'"
+		'p_force_guest_email'		=> "'1'",
+		'o_pms_enabled' 		=> "'1'",
+		'o_pms_messages' 		=> "'50'",
+		'o_pms_mess_per_page' 		=> "'10'",
+		'o_polls' 			=> "'0'",
+		'o_poll_change' 		=> "'1'",
+		'o_poll_multi' 			=> "'0'",
+		'p_guests_poll'			=> "'0'",
+		'o_regs_verify_image' 		=> "'0'",
+		'poll_max_fields' 		=> "'10'",
+		'o_reputation_enabled' 		=> "'0'",
+		'o_reputation_timeout' 		=> "'120'",
+		'o_timeout_login' 		=> "'10'",
 	);
 
 	while (list($conf_name, $conf_value) = @each($config))

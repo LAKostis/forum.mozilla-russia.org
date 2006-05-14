@@ -1,4 +1,4 @@
-<?
+<?php
 	require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
 
 	if($pun_config['o_pms_enabled'])

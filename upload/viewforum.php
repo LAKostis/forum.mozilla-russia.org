@@ -150,10 +150,8 @@ if ($db->num_rows($result))
 		$item_status = '';
 		$icon_type = 'icon';
 
-		if ($cur_topic['moved_to'] == null && $cur_topic['announcement'] != '1')
+		if ($cur_topic['moved_to'] == null)
 			$last_post = '<a href="viewtopic.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
-		else if ($cur_topic['announcement'] == '1')
-			$last_post = '<a href="viewannouncement.php?pid='.$cur_topic['last_post_id'].'#p'.$cur_topic['last_post_id'].'">'.format_time($cur_topic['last_post']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else if ($cur_topic['question'] != '')
 			$last_post = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a> <br /> <span class="byuser"><b>'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else {
@@ -178,17 +176,16 @@ if ($db->num_rows($result))
 				$icon_text = $lang_common['Closed icon'];
 				$item_status = 'iclosed';
 			}
+			$f_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['id'];
+
 			// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
-			if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null)
+			if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null && $f_id != 'announcement')
 			{
 				$icon_text .= ' '.$lang_common['New icon'];
 				$item_status .= ' inew';
 				$icon_type = 'icon inew';
 				$subject = '<strong>'.$subject.'</strong>';
-				if ($cur_topic['announcement'] == '1')
-					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewannouncement.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
-				else
-					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 			}
 			else
 				$subject_new_posts = null;
@@ -206,32 +203,23 @@ if ($db->num_rows($result))
 			$subject = $lang_forum['Moved'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else if ($cur_topic['closed'] == '0')
 		{
-			if ($cur_topic['announcement'] == '1')
-				$subject = '<a href="viewannouncement.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-			else
-				$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		}
 		else
 		{
-			if ($cur_topic['announcement'] == '1')
-				$subject = '<a href="viewannouncement.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-			else
-				$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
-				$icon_text = $lang_common['Closed icon'];
-				$item_status = 'iclosed';
+			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$icon_text = $lang_common['Closed icon'];
+			$item_status = 'iclosed';
 		}
 
     		// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
-		if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null)
+		if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $f_id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null && $f_id != 'announcement')
 		{
 			$icon_text .= ' '.$lang_common['New icon'];
 			$item_status .= ' inew';
 			$icon_type = 'icon inew';
 			$subject = '<strong>'.$subject.'</strong>';
-			if ($cur_topic['announcement'] == '1')
-				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewannouncement.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
-			else
-				$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+			$subject_new_posts = '<span class="newtext">[&nbsp;<a href="viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 		}
 		else
 			$subject_new_posts = null;
@@ -262,12 +250,7 @@ if ($db->num_rows($result))
 		$num_pages_topic = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
 		if ($num_pages_topic > 1)
-		{
-				if ($cur_topic['announcement'] == '1')
-					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewannouncement.php?id='.$cur_topic['id']).' ]';
-				else
-					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
-		}
+			$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$cur_topic['id']).' ]';
 		else
 			$subject_multipage = null;
 

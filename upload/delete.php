@@ -36,7 +36,10 @@ if ($id < 1)
 	message($lang_common['Bad request']);
 
 // Fetch some info about the post, the topic and the forum
-$result = $db->query('SELECT f.id AS fid, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.id AS tid, t.subject, t.posted, t.closed, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+// MOD Announcement: CODE FOLLOWS
+$result = $db->query('SELECT t.id AS tid, t.subject, t.posted, t.closed, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE t.announcement=\'1\' AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+if (!$db->num_rows($result))
+	$result = $db->query('SELECT f.id AS fid, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.id AS tid, t.subject, t.posted, t.closed, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
 
@@ -75,15 +78,19 @@ if (isset($_POST['delete']))
 	{
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid']);
-		update_forum($cur_post['fid']);
-
-		redirect('viewforum.php?id='.$cur_post['fid'], $lang_delete['Topic del redirect']);
+		if ($cur_post['announcement'] == '0')
+		{
+			update_forum($cur_post['fid']);
+			redirect('viewforum.php?id='.$cur_post['fid'], $lang_delete['Topic del redirect']);
+		}
+		else redirect('index.php', $lang_delete['Topic del redirect']);
 	}
 	else
 	{
 		// Delete just this one post
 		delete_post($id, $cur_post['tid']);
-		update_forum($cur_post['fid']);
+		if ($cur_post['announcement'] == '0')
+			update_forum($cur_post['fid']);
 
 		redirect('viewtopic.php?id='.$cur_post['tid'], $lang_delete['Post del redirect']);
 	}

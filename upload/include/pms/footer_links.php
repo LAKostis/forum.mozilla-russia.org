@@ -1,4 +1,8 @@
 <?php
+// Make sure no one attempts to run this script "directly"
+if (!defined('PUN'))
+	exit;
+
 if ($footer_style == 'message_list')
 {
 	if (!isset($_GET['box']))

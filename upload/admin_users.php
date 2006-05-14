@@ -36,9 +36,9 @@ if ($pun_user['g_id'] > PUN_MOD)
 
 
 // Show IP statistics for a certain user ID
-if (isset($_GET['ip_stats']))
+if (isset($_POST['ip_stats']))
 {
-	$ip_stats = intval($_GET['ip_stats']);
+	$ip_stats = intval($_POST['ip_stats']);
 	if ($ip_stats < 1)
 		message($lang_common['Bad request']);
 
@@ -108,9 +108,9 @@ if (isset($_GET['ip_stats']))
 }
 
 
-if (isset($_GET['show_users']))
+if (isset($_POST['show_users']))
 {
-	$ip = $_GET['show_users'];
+	$ip = $_POST['show_users'];
 
 	if (!preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $ip))
 		message('The supplied IP address is not correctly formatted.');
@@ -210,31 +210,48 @@ if (isset($_GET['show_users']))
 	require PUN_ROOT.'footer.php';
 }
 
-
-else if (isset($_GET['action']) || isset($_GET['find_user']))
+if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
 {
-	$form = $_GET['form'];
-	$form['username'] = $_GET['username'];
+	if (isset($_POST['delete_users_comply']))
+	{
+		//Check this is legit
+		confirm_referrer('admin_users.php');
+
+		$idlist = $_POST['users_array'];
+
+		@reset($idlist);
+
+		while (list(, $user) = @each($idlist))
+			delete_user($user,1);
+
+		redirect('admin_users.php', 'User delete redirect');
+	}
+}
+
+else if (isset($_POST['action']) || isset($_POST['find_user']))
+{
+	$form = $_POST['form'];
+	$form['username'] = $_POST['username'];
 
 	// trim() all elements in $form
 	$form = array_map('trim', $form);
 
-	$posts_greater = trim($_GET['posts_greater']);
-	$posts_less = trim($_GET['posts_less']);
-	$last_post_after = trim($_GET['last_post_after']);
-	$last_post_before = trim($_GET['last_post_before']);
-	$registered_after = trim($_GET['registered_after']);
-	$registered_before = trim($_GET['registered_before']);
-	$order_by = $_GET['order_by'];
-	$direction = $_GET['direction'];
-	$user_group = $_GET['user_group'];
+	$posts_greater = trim($_POST['posts_greater']);
+	$posts_less = trim($_POST['posts_less']);
+	$last_post_after = trim($_POST['last_post_after']);
+	$last_post_before = trim($_POST['last_post_before']);
+	$registered_after = trim($_POST['registered_after']);
+	$registered_before = trim($_POST['registered_before']);
+	$order_by = $_POST['order_by'];
+	$direction = $_POST['direction'];
+	$user_group = $_POST['user_group'];
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
 
 	// Try to convert date/time to timestamps
 	// if it not post to page
-	if (!isset($_GET['p']))
+	if (!isset($_POST['p']))
 	{
 		if ($last_post_after != '')
 			$last_post_after = strtotime($last_post_after);
@@ -280,14 +297,14 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
         $result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u'.(!empty($conditions) ? ' WHERE u.id>1 AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
         $num_users = $db->result($result);
         
-        // Determine the user offset (based on $_GET['p'])
+        // Determine the user offset (based on $_POST['p'])
         $num_pages = ceil($num_users / 50);
         
-        $p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+        $p = (!isset($_POST['p']) || $_POST['p'] <= 1 || $_POST['p'] > $num_pages) ? 1 : $_POST['p'];
         $start_from = 50 * ($p - 1);
 
         // Generate paging links
-        $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'admin_users.php?action=find_user?username='.urlencode($_GET['username']).'&amp;posts_greater='.$posts_greater.'&amp;posts_less='.$posts_less.'&amp;last_post_after='.$last_post_after.'&amp;last_post_before='.$last_post_before.'&amp;registered_after='.$registered_after.'&amp;registered_before='.$registered_before.'&amp;order_by='.$order_by.'&amp;direction='.$direction.'&amp;user_group='.$user_group);
+        $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'admin_users.php?action=find_user?username='.urlencode($_POST['username']).'&amp;posts_greater='.$posts_greater.'&amp;posts_less='.$posts_less.'&amp;last_post_after='.$last_post_after.'&amp;last_post_before='.$last_post_before.'&amp;registered_after='.$registered_after.'&amp;registered_before='.$registered_before.'&amp;order_by='.$order_by.'&amp;direction='.$direction.'&amp;user_group='.$user_group);
 
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
@@ -300,6 +317,7 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
 	</div>
 </div>
 
+<form method="post" action="admin_users.php?delete_users=1">
 <div id="users2" class="blocktable">
 	<h2><span>Users</span></h2>
 	<div class="box">
@@ -321,6 +339,8 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
 	$result = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND '.implode(' AND ', $conditions).' ORDER BY '.$db->escape($order_by).' '.$db->escape($direction).' LIMIT '.$start_from.', 50') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))
 	{
+		$button_status = '';
+
 		while ($user_data = $db->fetch_assoc($result))
 		{
 			$user_title = get_title($user_data);
@@ -333,6 +353,7 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
 
 ?>
 				<tr>
+					<input type="hidden" name="users_array[]" value="<?php echo $user_data['id']; ?>">
 					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
@@ -345,14 +366,22 @@ else if (isset($_GET['action']) || isset($_GET['find_user']))
 		}
 	}
 	else
+	{
 		echo "\t\t\t\t".'<tr><td class="tcl" colspan="6">No match.</td></tr>'."\n";
-
+		$button_status = ' disabled';
+	}
 ?>
 			</tbody>
 			</table>
 		</div>
 	</div>
 </div>
+<div class="postlinksb">
+<div class="inbox">
+<p class="conr"><input type="submit" name="delete_users_comply" value="Mass Delete" <?php echo $button_status ?>/></p>
+</div>
+</div>
+</form>
 
 <div class="linksb">
 	<div class="inbox">
@@ -381,7 +410,7 @@ else
 	<div class="blockform">
 		<h2><span>User search</span></h2>
 		<div class="box">
-			<form id="find_user" method="get" action="admin_users.php?action=find_user">
+			<form id="find_user" method="post" action="admin_users.php?action=find_user">
 				<p class="submittop"><input type="submit" name="find_user" value="Submit search" tabindex="1" /></p>
 				<div class="inform">
 					<fieldset>

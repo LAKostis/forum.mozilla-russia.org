@@ -96,7 +96,7 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 else if (isset($_GET['action']) && $_GET['action'] == 'markall')
 {
 	$db->query('UPDATE '.$db->prefix.'messages SET showed=1 WHERE owner='.$pun_user['id']) or error('Unable to update message status', __FILE__, __LINE__, $db->error());
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : $_GET['p'];
+	$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1) ? 1 : intval($_GET['p']);
 	redirect('message_list.php?box='.$box.'&p='.$p, $lang_pms['Read redirect']);
 }
 
@@ -108,7 +108,7 @@ list($num_messages) = $db->fetch_row($result);
 
 //What page are we on?
 $num_pages = ceil($num_messages / $pun_config['o_pms_mess_per_page']);
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1 || intval($_GET['p']) > $num_pages) ? 1 : intval($_GET['p']);
 $start_from = $pun_config['o_pms_mess_per_page'] * ($p - 1);
 $limit = $start_from.','.$pun_config['o_pms_mess_per_page'];
 

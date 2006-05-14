@@ -541,73 +541,11 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 
 	confirm_referrer('profile.php');
 
-	// Get the username and group of the user we are deleting
-	$result = $db->query('SELECT group_id, username FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
-	list($group_id, $username) = $db->fetch_row($result);
-
-	if ($group_id == PUN_ADMIN)
-		message('Administrators cannot be deleted. In order to delete this user, you must first move him/her to a different user group.');
-
+	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : 0;
 	if (isset($_POST['delete_user_comply']))
-	{
-		// If the user is a moderator or an administrator, we remove him/her from the moderator list in all forums as well
-		if ($group_id < PUN_GUEST)
-		{
-			$result = $db->query('SELECT id, moderators FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
-
-			while ($cur_forum = $db->fetch_assoc($result))
-			{
-				$cur_moderators = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
-
-				if (in_array($id, $cur_moderators))
-				{
-					unset($cur_moderators[$username]);
-					$cur_moderators = (!empty($cur_moderators)) ? '\''.$db->escape(serialize($cur_moderators)).'\'' : 'NULL';
-
-					$db->query('UPDATE '.$db->prefix.'forums SET moderators='.$cur_moderators.' WHERE id='.$cur_forum['id']) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
-				}
-			}
-		}
-
-		// Delete any subscriptions
-		$db->query('DELETE FROM '.$db->prefix.'subscriptions WHERE user_id='.$id) or error('Unable to delete subscriptions', __FILE__, __LINE__, $db->error());
-
-		// Remove him/her from the online list (if they happen to be logged in)
-		$db->query('DELETE FROM '.$db->prefix.'online WHERE user_id='.$id) or error('Unable to remove user from online list', __FILE__, __LINE__, $db->error());
-
-		// Should we delete all posts made by this user?
-		if (isset($_POST['delete_posts']))
-		{
-			require PUN_ROOT.'include/search_idx.php';
-			@set_time_limit(0);
-
-			// Find all posts made by this user
-			$result = $db->query('SELECT p.id, p.topic_id, t.forum_id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id WHERE p.poster_id='.$id) or error('Unable to fetch posts', __FILE__, __LINE__, $db->error());
-			if ($db->num_rows($result))
-			{
-				while ($cur_post = $db->fetch_assoc($result))
-				{
-					// Determine whether this post is the "topic post" or not
-					$result2 = $db->query('SELECT id FROM '.$db->prefix.'posts WHERE topic_id='.$cur_post['topic_id'].' ORDER BY posted LIMIT 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
-
-					if ($db->result($result2) == $cur_post['id'])
-						delete_topic($cur_post['topic_id']);
-					else
-						delete_post($cur_post['id'], $cur_post['topic_id']);
-
-					update_forum($cur_post['forum_id']);
-				}
-			}
-		}
-		else
-			// Set all his/her posts to guest
-			$db->query('UPDATE '.$db->prefix.'posts SET poster_id=1 WHERE poster_id='.$id) or error('Unable to update posts', __FILE__, __LINE__, $db->error());
-
-		// Delete the user
-		$db->query('DELETE FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to delete user', __FILE__, __LINE__, $db->error());
-		require(PUN_ROOT.'include/pms/profile_delete.php');
-		redirect('index.php', $lang_profile['User delete redirect']);
-	}
+		delete_user($id,$delete_posts);
+	
+	redirect('index.php', $lang_profile['User delete redirect']);
 
 	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';

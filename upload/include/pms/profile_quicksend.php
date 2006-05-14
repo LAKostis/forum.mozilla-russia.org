@@ -1,4 +1,8 @@
-<?
+<?php
+// Make sure no one attempts to run this script "directly"
+if (!defined('PUN'))
+	exit;
+
 	require $pun_root.'lang/'.$language.'/'.$language.'_pms.php';
 
 	if($pun_config['o_pms_enabled']){ ?>

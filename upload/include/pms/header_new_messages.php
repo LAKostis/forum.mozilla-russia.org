@@ -1,4 +1,8 @@
 <?php
+// Make sure no one attempts to run this script "directly"
+if (!defined('PUN'))
+	exit;
+
 	if(!$pun_user['is_guest']){
 		require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
 		

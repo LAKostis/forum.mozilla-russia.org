@@ -268,7 +268,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$order_by = $_POST['order_by'];
 	$direction = $_POST['direction'];
 	$user_group = intval($_POST['user_group']);
-	$search_limit = intval($_POST['search_limit']);
+	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -318,6 +318,8 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$num_users = $db->result($result);
 
 	$start_from = 0;
+	if (($search_limit == '0') || ($search_limit > $num_users))
+		$search_limit = $num_users;
 	$percent_shows = ($search_limit / $num_users) * 100;
 
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);

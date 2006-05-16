@@ -1,4 +1,4 @@
-# $Id: TODO,v 1.20 2006/05/16 22:04:03 cvs_lakostis Exp $ 
+# $Id: TODO,v 1.21 2006/05/16 22:06:17 cvs_lakostis Exp $ 
 
 Данный список является моим (lakostis) личным TODO. Официальный список
 ошибок/исправлений/FR см. в bugzilla.mozilla.ru, компонент forum.mozilla.ru
@@ -19,4 +19,4 @@
  - Переписать uploader
  - Сделать mod для перехода с обычного PunBB.
 ~~ Проверка работоспособности с PostgreSQL.
-
+ - Обновить движок DokuWiki (из-за проблем с short_open_tag).

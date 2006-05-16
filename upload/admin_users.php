@@ -25,6 +25,8 @@
 
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
+// Tell common.php that we don't want output buffering
+define('PUN_DISABLE_BUFFERING', 1);
 
 define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
@@ -36,9 +38,9 @@ if ($pun_user['g_id'] > PUN_MOD)
 
 
 // Show IP statistics for a certain user ID
-if (isset($_POST['ip_stats']))
+if (isset($_GET['ip_stats']))
 {
-	$ip_stats = intval($_POST['ip_stats']);
+	$ip_stats = intval($_GET['ip_stats']);
 	if ($ip_stats < 1)
 		message($lang_common['Bad request']);
 
@@ -108,9 +110,9 @@ if (isset($_POST['ip_stats']))
 }
 
 
-if (isset($_POST['show_users']))
+if (isset($_GET['show_users']))
 {
-	$ip = $_POST['show_users'];
+	$ip = $_GET['show_users'];
 
 	if (!preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $ip))
 		message('The supplied IP address is not correctly formatted.');
@@ -210,22 +212,43 @@ if (isset($_POST['show_users']))
 	require PUN_ROOT.'footer.php';
 }
 
-if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
+if (isset($_POST['delete_users_comply']))
 {
-	if (isset($_POST['delete_users_comply']))
+	//Check this is legit
+	confirm_referrer('admin_users.php');
+
+	$idlist = $_POST['users_array'];
+
+	@reset($idlist);
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Mass users deleting in progress &hellip;</title>
+<style type="text/css">
+body {
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	color: #333333;
+	background-color: #FFFFFF
+}
+</style>
+</head>
+<body>
+
+Mass users deleting in progress&hellip; This might be a good time to put on some coffee :-)<br /><br />
+
+<?php
+
+	while (list(, $user) = @each($idlist))
 	{
-		//Check this is legit
-		confirm_referrer('admin_users.php');
-
-		$idlist = $_POST['users_array'];
-
-		@reset($idlist);
-
-		while (list(, $user) = @each($idlist))
-			delete_user($user,1);
-
-		redirect('admin_users.php', 'User delete redirect');
+		echo 'Processing user <strong>'.$user.'</strong><br />'."\n";
+		delete_user($user,1);
 	}
+
+		exit('<script type="text/javascript">history.go(-2)</script><br />JavaScript redirect unsuccessful. Click <a href="admin_users.php">here</a> to continue.');
 }
 
 else if (isset($_POST['action']) || isset($_POST['find_user']))
@@ -244,24 +267,21 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$registered_before = trim($_POST['registered_before']);
 	$order_by = $_POST['order_by'];
 	$direction = $_POST['direction'];
-	$user_group = $_POST['user_group'];
+	$user_group = intval($_POST['user_group']);
+	$search_limit = intval($_POST['search_limit']);
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
 
 	// Try to convert date/time to timestamps
-	// if it not post to page
-	if (!isset($_POST['p']))
-	{
-		if ($last_post_after != '')
-			$last_post_after = strtotime($last_post_after);
-		if ($last_post_before != '')
-			$last_post_before = strtotime($last_post_before);
-		if ($registered_after != '')
-			$registered_after = strtotime($registered_after);
-		if ($registered_before != '')
-			$registered_before = strtotime($registered_before);
-	}
+        if ($last_post_after != '')
+        	$last_post_after = strtotime($last_post_after);
+        if ($last_post_before != '')
+        	$last_post_before = strtotime($last_post_before);
+        if ($registered_after != '')
+        	$registered_after = strtotime($registered_after);
+        if ($registered_before != '')
+        	$registered_before = strtotime($registered_before);
 
 	if ($last_post_after == -1 || $last_post_before == -1 || $registered_after == -1 || $registered_before == -1)
 		message('You entered an invalid date/time.');
@@ -292,19 +312,13 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 
 	if (!isset($conditions))
 		message('You didn\'t enter any search terms.');
+	
+	// Fetch user count
+	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id>1'.(!empty($conditions) ? ' AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
+	$num_users = $db->result($result);
 
-        // Fetch user count
-        $result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u'.(!empty($conditions) ? ' WHERE u.id>1 AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
-        $num_users = $db->result($result);
-        
-        // Determine the user offset (based on $_POST['p'])
-        $num_pages = ceil($num_users / 50);
-        
-        $p = (!isset($_POST['p']) || $_POST['p'] <= 1 || $_POST['p'] > $num_pages) ? 1 : $_POST['p'];
-        $start_from = 50 * ($p - 1);
-
-        // Generate paging links
-        $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'admin_users.php?action=find_user?username='.urlencode($_POST['username']).'&amp;posts_greater='.$posts_greater.'&amp;posts_less='.$posts_less.'&amp;last_post_after='.$last_post_after.'&amp;last_post_before='.$last_post_before.'&amp;registered_after='.$registered_after.'&amp;registered_before='.$registered_before.'&amp;order_by='.$order_by.'&amp;direction='.$direction.'&amp;user_group='.$user_group);
+	$start_from = 0;
+	$percent_shows = ($search_limit / $num_users) * 100;
 
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
@@ -312,13 +326,12 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)">Go back</a></div>
-		<p class="pagelink"><?php echo $paging_links ?></p>
+	<div><a href="javascript:history.go(-1)">Go back</a> Total searches found = <?php echo $num_users.', '; printf("%.2f",$percent_shows); ?>% displayed.</div>
 	</div>
 </div>
 
-<form method="post" action="admin_users.php?delete_users=1">
-<div id="users2" class="blocktable">
+<form id="users2" method="post" action="admin_users.php?action=find_user">
+<div class="blocktable">
 	<h2><span>Users</span></h2>
 	<div class="box">
 		<div class="inbox">
@@ -336,7 +349,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 			<tbody>
 <?php
 
-	$result = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND '.implode(' AND ', $conditions).' ORDER BY '.$db->escape($order_by).' '.$db->escape($direction).' LIMIT '.$start_from.', 50') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND '.implode(' AND ', $conditions).' ORDER BY '.$db->escape($order_by).' '.$db->escape($direction).' LIMIT '.$start_from.', '.$search_limit) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))
 	{
 		$button_status = '';
@@ -385,13 +398,11 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 
 <div class="linksb">
 	<div class="inbox">
-		<p class="pagelink"><?php echo $paging_links ?></p>
-	</div>
-	<div class="inbox">
 		<div><a href="javascript:history.go(-1)">Go back</a></div>
-		
 	</div>
 </div>
+
+
 <?php
 
 	require PUN_ROOT.'footer.php';
@@ -524,6 +535,11 @@ else
 ?>
 										</select>
 									</td>
+								</tr>
+								<tr>
+									<th scope="row">Search limit</th>
+									<td><input type="text" name="search_limit" size="5" maxlength="8" tabindex="14" value="50" />
+									<span>(blank - no limit, not recommended)</span></td>
 								</tr>
 							</table>
 						</div>

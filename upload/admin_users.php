@@ -526,13 +526,14 @@ else
 									<th scope="row">User group</th>
 									<td>
 										<select name="user_group" tabindex="22">
-												<option value="all" selected="selected">All groups</option>
+												<option value="all">All groups</option>
 <?php
 
 	$result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups WHERE g_id!='.PUN_GUEST.' ORDER BY g_title') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 
 	while ($cur_group = $db->fetch_assoc($result))
 		echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_group['g_id'].'">'.pun_htmlspecialchars($cur_group['g_title']).'</option>'."\n";
+	echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value="'.PUN_UNVERIFIED.'" selected="selected">Not Verified</option>'."\n";
 
 ?>
 										</select>

@@ -41,7 +41,7 @@ if ($id < 1)
 // MOD Annoucement: CODE FOLLOWS
 $result = $db->query('SELECT t.id AS tid, t.subject, t.posted, t.closed, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE t.announcement=\'1\' AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 if (!$db->num_rows($result))
-	$result = $db->query('SELECT f.id AS fid, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.id AS tid, t.subject, t.posted, t.closed, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT f.id AS fid, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.id AS tid, t.subject, t.posted, t.closed, t.question, p.poster, p.poster_id, p.message, p.hide_smilies FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
 
@@ -66,10 +66,12 @@ if (($pun_user['g_edit_posts'] == '0' ||
 
 // Load the post.php/edit.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
+// MOD Poll
+require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
+// MOD END
 
 // Start with a clean slate
 $errors = array();
-
 
 if (isset($_POST['form_sent']))
 {
@@ -79,6 +81,19 @@ if (isset($_POST['form_sent']))
 	// If it is a topic it must contain a subject
 	if ($can_edit_subject)
 	{
+		// MOD Poll addon
+		if ($cur_post['question'] != '')
+		{
+			$question = pun_trim($_POST['req_question']);
+			if ($question == '')
+				$errors[] = $lang_polls['No question'];
+			else if (pun_strlen($question) > 70)
+				$errors[] = $lang_polls['Too long question'];
+			else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($question) == $question && ($pun_user['g_id'] > PUN_MOD && !$pun_user['g_global_moderation']))
+			$question = ucwords(strtolower($question)); 
+		}
+		else $question = '';
+
 		$subject = pun_trim($_POST['req_subject']);
 
 		if ($subject == '')
@@ -120,7 +135,9 @@ if (isset($_POST['form_sent']))
 		if ($can_edit_subject)
 		{
 			// Update the topic and any redirect topics
-			$db->query('UPDATE '.$db->prefix.'topics SET subject=\''.$db->escape($subject).'\' WHERE id='.$cur_post['tid'].' OR moved_to='.$cur_post['tid']) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
+			// MOD Poll addon
+			$sql_question = ($question != '') ? ', question=\''.$db->escape($question).'\'' : '';
+			$db->query('UPDATE '.$db->prefix.'topics SET subject=\''.$db->escape($subject).'\''.$sql_question.' WHERE id='.$cur_post['tid'].' OR moved_to='.$cur_post['tid']) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
 			// We changed the subject, so we need to take that into account when we update the search words
 			update_search_index('edit', $id, $message, $subject);
@@ -139,7 +156,11 @@ if (isset($_POST['form_sent']))
 
 $page_title = pun_htmlspecialchars($lang_post['Edit post']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 $required_fields = array('req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
+// MOD Poll
+if ($cur_post['question'] != '') $required_fields['req_question'] = $lang_polls['Question'];
 $focus_element = array('edit', 'req_message');
+// MOD Poll
+if ($cur_post['question'] != '') $focus_element[] = 'req_question';
 require PUN_ROOT.'header.php';
 
 $cur_index = 1;
@@ -213,7 +234,12 @@ else if (isset($_POST['preview']))
 					<legend><?php echo $lang_post['Edit post legend'] ?></legend>
 					<input type="hidden" name="form_sent" value="1" />
 					<div class="infldset txtarea">
-<?php if ($can_edit_subject): ?>						<label><?php echo $lang_common['Subject'] ?><br />
+<?php if ($can_edit_subject): ?>
+<?php if ($cur_post['question'] != ''): ?>
+						<label><?php echo $lang_polls['Question'] ?><br />
+						<input class="longinput" type="text" name="req_question" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars(isset($_POST['req_question']) ? $_POST['req_question'] : $cur_post['question']) ?>" /><br /></label>
+<?php endif; ?>
+						<label><?php echo $lang_common['Subject'] ?><br />
 						<input class="longinput" type="text" name="req_subject" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" /><br /></label>
 <?php endif; $bbcode_form = 'edit'; $bbcode_field = 'req_message'; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label><?php echo $lang_common['Message'] ?><br />
 						<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea><br /></label>

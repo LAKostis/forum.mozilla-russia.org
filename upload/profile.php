@@ -745,9 +745,9 @@ else if (isset($_POST['form_sent']))
 			$form = extract_elements(array('disp_topics', 'disp_posts', 'show_smilies', 'show_img', 'show_img_sig', 'show_avatars', 'show_sig', 'style'));
 
 			if ($form['disp_topics'] != '' && intval($form['disp_topics']) < 3) $form['disp_topics'] = 3;
-			if ($form['disp_topics'] != '' && intval($form['disp_topics']) > 75) $form['disp_topics'] = 75;
+			if ($form['disp_topics'] != '' && ((intval($form['disp_topics']) > 75) && ($pun_user['g_id'] > PUN_ADMIN))) $form['disp_topics'] = 75;
 			if ($form['disp_posts'] != '' && intval($form['disp_posts']) < 3) $form['disp_posts'] = 3;
-			if ($form['disp_posts'] != '' && intval($form['disp_posts']) > 75) $form['disp_posts'] = 75;
+			if ($form['disp_posts'] != '' && ((intval($form['disp_posts']) > 75) && ($pun_user['g_id'] > PUN_ADMIN))) $form['disp_posts'] = 75;
 
 			if (!isset($form['show_smilies']) || $form['show_smilies'] != '1') $form['show_smilies'] = '0';
 			if (!isset($form['show_img']) || $form['show_img'] != '1') $form['show_img'] = '0';

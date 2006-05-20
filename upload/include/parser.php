@@ -344,7 +344,7 @@ function do_bbcode($text)
  					 '<li>$1</li>',
  					 '<span style="color: $1">$2</span>',
 					 '<span style="font-family: $1">$2</span>',
- 					 '<div align="$1">$2</span>',
+ 					 '<div align="$1">$2</div>',
  					 '<span style="$1">$2</span>',
  					 '<hr />',
  					 '<hr />',

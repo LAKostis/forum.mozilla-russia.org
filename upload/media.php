@@ -36,11 +36,11 @@ html_media_head();
 ?>
 <body>
   <?html_msgarea()?>
-  <h1><?php =$lang['mediaselect']?></h1>
+  <h1><?php echo $lang['mediaselect']?></h1>
 
   <div class="mediaselect">
     <div class="mediaselect-left">
-      <?php =media_html_namespaces()?>
+      <?php echo media_html_namespaces()?>
     </div>
     <div class="mediaselect-right">
       <?php
@@ -94,13 +94,13 @@ function media_html_uploadform($ns){
   global $lang;
 ?>
   <div class="uploadform">
-  <form action="<?php =$_SERVER['PHP_SELF']?>" name="upload" method="post" enctype="multipart/form-data">
-  <?php =$lang['txt_upload']?>:<br />
+  <form action="<?php echo $_SERVER['PHP_SELF']?>" name="upload" method="post" enctype="multipart/form-data">
+  <?php echo $lang['txt_upload']?>:<br />
   <input type="file" name="upload" class="edit" onchange="suggestWikiname();" />
-  <input type="hidden" name="ns" value="<?php =htmlspecialchars($ns)?>" /><br />
-  <?php =$lang['txt_filename']?>:<br />
+  <input type="hidden" name="ns" value="<?php echo htmlspecialchars($ns)?>" /><br />
+  <?php echo $lang['txt_filename']?>:<br />
   <input type="text" name="id" class="edit" />
-  <input type="submit" class="button" value="<?php =$lang['btn_upload']?>" accesskey="s" />
+  <input type="submit" class="button" value="<?php echo $lang['btn_upload']?>" accesskey="s" />
   </form>
   </div>
 <?php

@@ -3,7 +3,7 @@
 // Language definitions used in index.php
 $lang_index = array(
 
-'Topics'				=>  'Темы',
+'Topics'				=>  'Тем',
 'Moderators'			=>  'Модераторы',
 'Link to'				=>	'Ссылка на',	// As in "Link to http://www.punbb.org/"
 'Empty board'			=>	'Нет форумов.',

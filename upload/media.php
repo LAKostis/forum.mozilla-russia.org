@@ -2,7 +2,6 @@
 define('PUN_ROOT', './');
 define('PUN_QUIET_VISIT', 1);
 require PUN_ROOT.'include/common.php';
-ini_set('short_open_tag',"1");
 require_once("wiki/conf/dokuwiki.php");
 require_once("wiki/inc/common.php");
 require_once("lang/English/lang.php");

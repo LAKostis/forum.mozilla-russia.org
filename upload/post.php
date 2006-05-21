@@ -218,7 +218,7 @@ if (isset($_POST['form_sent']))
 
 			update_search_index('post', $new_pid, $message);
 
-			if ($cur_posting['announcement'] == '0')
+			if ($cur_posting['announcement'] > 0)
 				update_forum($cur_posting['id']);
 
 			// Should we send out notifications?

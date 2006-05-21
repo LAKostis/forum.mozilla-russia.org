@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Common DokuWiki functions
  *

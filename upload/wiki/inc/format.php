@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * link format functions
  *

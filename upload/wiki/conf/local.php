@@ -1,4 +1,4 @@
-<?
+<?php
 $conf['syntax']       = 'syntaxru';
 ?>
 

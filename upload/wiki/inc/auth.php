@@ -1,4 +1,4 @@
-<?
+<?php
 
 // some ACL level defines
 define('AUTH_NONE',0);

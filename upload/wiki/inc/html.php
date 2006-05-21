@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * HTML output functions
  *
@@ -41,27 +41,27 @@ function html_login(){
 	print parsedLocale('login');
 	?>
 		<div align="center">
-		<form action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" method="post">
+		<form action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" method="post">
 			<fieldset>
-				<legend><?=$lang['btn_login']?></legend>
-				<input type="hidden" name="id" value="<?=$ID?>" />
+				<legend><?php echo $lang['btn_login']?></legend>
+				<input type="hidden" name="id" value="<?php echo $ID?>" />
 				<input type="hidden" name="do" value="login" />
 				<label>
-					<span><?=$lang['user']?></span>
-					<input type="text" name="u" value="<?=formText($_REQUEST['u'])?>" class="edit" />
+					<span><?php echo $lang['user']?></span>
+					<input type="text" name="u" value="<?php echo formText($_REQUEST['u'])?>" class="edit" />
 				</label><br />
 				<label>
-					<span><?=$lang['pass']?></span>
+					<span><?php echo $lang['pass']?></span>
 					<input type="password" name="p" class="edit" />
 				</label><br />
-				<input type="submit" value="<?=$lang['btn_login']?>" class="button" />
+				<input type="submit" value="<?php echo $lang['btn_login']?>" class="button" />
 				<label for="remember" class="simple">
 					<input type="checkbox" name="r" id="remember" value="1" />
-					<span><?=$lang['remember']?></span>
+					<span><?php echo $lang['remember']?></span>
 				</label>
 			</fieldset>
 		</form>
-	<?
+	<?php
 		if($conf['openregister']){
 			print '<p>';
 			print $lang['reghere'];
@@ -70,7 +70,7 @@ function html_login(){
 		}
 	?>
 		</div>
-	<?
+	<?php
 	if(@file_exists('includes/login.txt')){
 		print io_cacheParse('includes/login.txt');
 	}
@@ -179,14 +179,14 @@ function html_head(){
 	global $lang;
 
 ?>
-<meta name="generator" content="DokuWiki <?=getVersion()?>" />
-<link rel="start" href="<?=wl()?>" />
-<link rel="contents" href="<?=wl($ID,'do=index')?>" title="<?=$lang['index']?>" />
-<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?=getBaseURL()?>feed.php" />
-<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?=getBaseURL()?>feed.php?mode=list&amp;ns=<?=$INFO['namespace']?>" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="<?=wl($ID,'do=export_html')?>" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="<?=wl($ID, 'do=export_raw')?>" />
-<?
+<meta name="generator" content="DokuWiki <?php echo getVersion()?>" />
+<link rel="start" href="<?php echo wl()?>" />
+<link rel="contents" href="<?php echo wl($ID,'do=index')?>" title="<?php echo $lang['index']?>" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?php echo getBaseURL()?>feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?php echo getBaseURL()?>feed.php?mode=list&amp;ns=<?php echo $INFO['namespace']?>" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="<?php echo wl($ID,'do=export_html')?>" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="<?php echo wl($ID, 'do=export_raw')?>" />
+<?php
 if( ($ACT=='show' || $ACT=='export_html') && !$REV){
 	if($INFO['exists']){
 		print '	<meta name="robots" content="index,follow" />'."\n";
@@ -200,19 +200,19 @@ if( ($ACT=='show' || $ACT=='export_html') && !$REV){
 ?>
 
 <script type="text/javascript">
-	var alertText	 = '<?=$lang['qb_alert']?>';
-	var notSavedYet = '<?=$lang['notsavedyet']?>';
-	var baseURL		 = '<?=getBaseURL()?>';
+	var alertText	 = '<?php echo $lang['qb_alert']?>';
+	var notSavedYet = '<?php echo $lang['notsavedyet']?>';
+	var baseURL		 = '<?php echo getBaseURL()?>';
 </script>
-<script type="text/javascript" src="<?=getBaseURL()?>wiki/script.js"></script>
+<script type="text/javascript" src="<?php echo getBaseURL()?>wiki/script.js"></script>
 
 <!--[if gte IE 5]>
 <style type="text/css">
 	/* that IE 5+ conditional comment makes this only visible in IE 5+ */
-	img { behavior: url("<?=getBaseURL()?>wiki/pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
+	img { behavior: url("<?php echo getBaseURL()?>wiki/pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
 </style>
 <![endif]-->
-<?
+<?php
 
 }
 
@@ -234,19 +234,19 @@ function html_media_head(){
   print ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
   print "\n";
 ?>
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=$conf['lang']?>" lang="<?=$conf['lang']?>" dir="ltr">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $conf['lang']?>" lang="<?php echo $conf['lang']?>" dir="ltr">
   <head>
-    <title><?=$ID?> [<?=$conf['title']?>]</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?=$lang['encoding']?>" />
-    <meta name="generator" content="DokuWiki <?=getVersion()?>" />
-    <link rel="stylesheet" media="screen" type="text/css" href="<?=getBaseURL()?>wiki/style.css" />
-    <link rel="start" href="<?=wl()?>" />
-    <link rel="contents" href="<?=wl($ID,'do=index')?>" title="<?=$lang['index']?>" />
-    <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?=getBaseURL()?>feed.php" />
-    <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?=getBaseURL()?>feed.php?mode=list&amp;ns=<?=$INFO['namespace']?>" />
-    <link rel="alternate" type="text/html" title="Plain HTML" href="<?=wl($ID,'do=export_html')?>" />
-    <link rel="alternate" type="text/plain" title="Wiki Markup" href="<?=wl($ID, 'do=export_raw')?>" />
-<?
+    <title><?php echo $ID?> [<?php echo $conf['title']?>]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['encoding']?>" />
+    <meta name="generator" content="DokuWiki <?php echo getVersion()?>" />
+    <link rel="stylesheet" media="screen" type="text/css" href="<?php echo getBaseURL()?>wiki/style.css" />
+    <link rel="start" href="<?php echo wl()?>" />
+    <link rel="contents" href="<?php echo wl($ID,'do=index')?>" title="<?php echo $lang['index']?>" />
+    <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="<?php echo getBaseURL()?>feed.php" />
+    <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="<?php echo getBaseURL()?>feed.php?mode=list&amp;ns=<?php echo $INFO['namespace']?>" />
+    <link rel="alternate" type="text/html" title="Plain HTML" href="<?php echo wl($ID,'do=export_html')?>" />
+    <link rel="alternate" type="text/plain" title="Wiki Markup" href="<?php echo wl($ID, 'do=export_raw')?>" />
+<?php
   if( ($ACT=='show' || $ACT=='export_html') && !$REV){
     if($INFO['exists']){
       print '    <meta name="robots" content="index,follow" />'."\n";
@@ -260,21 +260,21 @@ function html_media_head(){
 ?>
 
     <script language="JavaScript" type="text/javascript">
-      var alertText   = '<?=$lang['qb_alert']?>';
-      var notSavedYet = '<?=$lang['notsavedyet']?>';
-      var baseURL     = '<?=getBaseURL()?>';
+      var alertText   = '<?php echo $lang['qb_alert']?>';
+      var notSavedYet = '<?php echo $lang['notsavedyet']?>';
+      var baseURL     = '<?php echo getBaseURL()?>';
     </script>
-    <script language="JavaScript" type="text/javascript" src="<?=getBaseURL()?>wiki/script.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?php echo getBaseURL()?>wiki/script.js"></script>
 
   <!--[if gte IE 5]>
     <style type="text/css">
       /* that IE 5+ conditional comment makes this only visible in IE 5+ */
-      img { behavior: url("<?=getBaseURL()?>wiki/pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
+      img { behavior: url("<?php echo getBaseURL()?>wiki/pngbehavior.htc"); } /* IE bugfix for transparent PNGs */
     </style>
     <![endif]-->
 
   </head>
-<?
+<?php
 
 }
 
@@ -351,45 +351,45 @@ function html_header(){
 ?>
 	</div></div>
 	<div class="all">
-	<?
+	<?php
 		html_msgarea();
 	?>
 	<div class="stylehead">
 		<div class="header">
 			<div class="pagename">
-				[[<a href="<?=wl($ID,'do=backlink')?>" onclick="return svchk()" onkeypress="return svchk()"><?=$ID?></a>]]
+				[[<a href="<?php echo wl($ID,'do=backlink')?>" onclick="return svchk()" onkeypress="return svchk()"><?php echo $ID?></a>]]
 			</div>
 			<div class="logo">
-				<a href="<?=wl()?>" name="top" accesskey="h" title="[ALT+H]" onclick="return svchk()" onkeypress="return svchk()"><?=$conf['title']?></a>
+				<a href="<?php echo wl()?>" name="top" accesskey="h" title="[ALT+H]" onclick="return svchk()" onkeypress="return svchk()"><?php echo $conf['title']?></a>
 			</div>
 		</div>
 
 		<div class="bar" id="bar_top">
 			<div class="bar-left" id="bar_topleft">
-				<?=html_editbutton()?>
-				<?=html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
+				<?php echo html_editbutton()?>
+				<?php echo html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
 			</div>
 
 			<div class="bar-right" id="bar_topright">
-				<?=html_btn(recent,'','r',array('do' => 'recent'))?>
-				<form action="<?=wl()?>" accept-charset="<?=$lang['encoding']?>">
+				<?php echo html_btn(recent,'','r',array('do' => 'recent'))?>
+				<form action="<?php echo wl()?>" accept-charset="<?php echo $lang['encoding']?>">
 				<div class="inlineform">
 					<input type="hidden" name="do" value="search" />
 					<input type="text" accesskey="f" name="id" class="edit" />
-					<input type="submit" value="<?=$lang['btn_search']?>" class="button" />
+					<input type="submit" value="<?php echo $lang['btn_search']?>" class="button" />
 				</div>
 				</form>&nbsp;
 			</div>
 		</div>
 	
-		<?
+		<?php
 			flush();
 			html_breadcrumbs();
 		?>
 	</div>
 	<div class="page">
 	<!-- wikipage start -->
-<?
+<?php
 }
 
 /**
@@ -459,27 +459,27 @@ function html_footer(){
 	</div>
 	<div class="clearer">&nbsp;</div>
 	<div class="stylefoot">
-		<?
+		<?php
 			flush();
 			@include("includes/pagefooter.html");
 			html_metainfo();
 		?>
 		<div class="bar" id="bar_bottom">
 			<div class="bar-left" id="bar_bottomleft">
-				<?=html_editbutton()?>
-				<?=html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
+				<?php echo html_editbutton()?>
+				<?php echo html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
 			</div>
 		
 			<div class="bar-right" id="bar_bottomright">
-				<?=html_btn(index,$ID,'x',array('do' => 'index'))?>
-				<a href="#top"><input type="button" class="button" value="<?=$lang['btn_top']?>" /></a>&nbsp;
+				<?php echo html_btn(index,$ID,'x',array('do' => 'index'))?>
+				<a href="#top"><input type="button" class="button" value="<?php echo $lang['btn_top']?>" /></a>&nbsp;
 			</div>
 		</div>
 	</div>
 	</div>
 	<div id="punwrapfoot">
 	<div class="pun">
-<?
+<?php
 }
 
 /**
@@ -920,15 +920,15 @@ function html_diff($text='',$intro=true){
 		<table class="diff" width="100%">
 			<tr>
 				<td colspan="2" width="50%" class="diff-header">
-					<?=$left?>
+					<?php echo $left?>
 				</td>
 				<td colspan="2" width="50%" class="diff-header">
-					<?=$right?>
+					<?php echo $right?>
 				</td>
 			</tr>
-			<?=$tdf->format($df)?>
+			<?php echo $tdf->format($df)?>
 		</table>
-	<?
+	<?php
 }
 
 /**
@@ -942,18 +942,18 @@ function html_conflict($text,$summary){
 
 	print parsedLocale('conflict');
 	?>
-	<form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>">
-	<input type="hidden" name="id" value="<?=$ID?>" />
-	<input type="hidden" name="wikitext" value="<?=formText($text)?>" />
-	<input type="hidden" name="summary" value="<?=formText($summary)?>" />
+	<form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>">
+	<input type="hidden" name="id" value="<?php echo $ID?>" />
+	<input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
+	<input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
 	
 	<div align="center">
-		<input class="button" type="submit" name="do" value="<?=$lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
-		<input class="button" type="submit" name="do" value="<?=$lang['btn_cancel']?>" />
+		<input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
+		<input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
 	</div>
 	</form>
 	<br /><br /><br /><br />
-	<?
+	<?php
 }
 
 /**
@@ -985,28 +985,28 @@ function html_register(){
 	print parsedLocale('register');
 ?>
 	<div align="center">
-	<form name="register" method="post" action="<?=wl($ID)?>" accept-charset="<?=$lang['encoding']?>">
+	<form name="register" method="post" action="<?php echo wl($ID)?>" accept-charset="<?php echo $lang['encoding']?>">
 	<input type="hidden" name="do" value="register" />
 	<input type="hidden" name="save" value="1" />
 	<fieldset>
-		<legend><?=$lang['register']?></legend>
+		<legend><?php echo $lang['register']?></legend>
 		<label>
-			<?=$lang['user']?>
-			<input type="text" name="login" class="edit" size="50" value="<?=formText($_POST['login'])?>" />
+			<?php echo $lang['user']?>
+			<input type="text" name="login" class="edit" size="50" value="<?php echo formText($_POST['login'])?>" />
 		</label><br />
 		<label>
-			<?=$lang['fullname']?>
-			<input type="text" name="fullname" class="edit" size="50" value="<?=formText($_POST['fullname'])?>" />
+			<?php echo $lang['fullname']?>
+			<input type="text" name="fullname" class="edit" size="50" value="<?php echo formText($_POST['fullname'])?>" />
 		</label><br />
 		<label>
-			<?=$lang['email']?>
-			<input type="text" name="email" class="edit" size="50" value="<?=formText($_POST['email'])?>" />
+			<?php echo $lang['email']?>
+			<input type="text" name="email" class="edit" size="50" value="<?php echo formText($_POST['email'])?>" />
 		</label><br />
-		<input type="submit" class="button" value="<?=$lang['register']?>" />
+		<input type="submit" class="button" value="<?php echo $lang['register']?>" />
 	</fieldset>
 	</form>
 	</div>
-<?
+<?php
 }
 
 /**
@@ -1060,81 +1060,81 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 	}
 	if(!$DATE) $DATE = $INFO['lastmod'];
 ?>
-	<form name="editform" method="post" action="<?=script()?>" accept-charset="<?=$lang['encoding']?>" onsubmit="return svchk()">
-	<input type="hidden" name="id"	 value="<?=$ID?>" />
-	<input type="hidden" name="rev"	value="<?=$REV?>" />
-	<input type="hidden" name="date" value="<?=$DATE?>" />
-	<input type="hidden" name="prefix" value="<?=formText($PRE)?>" />
-	<input type="hidden" name="suffix" value="<?=formText($SUF)?>" />
+	<form name="editform" method="post" action="<?php echo script()?>" accept-charset="<?php echo $lang['encoding']?>" onsubmit="return svchk()">
+	<input type="hidden" name="id"	 value="<?php echo $ID?>" />
+	<input type="hidden" name="rev"	value="<?php echo $REV?>" />
+	<input type="hidden" name="date" value="<?php echo $DATE?>" />
+	<input type="hidden" name="prefix" value="<?php echo formText($PRE)?>" />
+	<input type="hidden" name="suffix" value="<?php echo formText($SUF)?>" />
 	<table style="width:99%">
 		<tr>
 			<td class="toolbar" colspan="3">
-				<?if($wr){?>
+				<?php if($wr){?>
 				<script language="JavaScript" type="text/javascript">
-					<?/* sets changed to true when previewed */?>
-					textChanged = <? ($pr) ? print 'true' : print 'false' ?>;
+					<?php /* sets changed to true when previewed */?>
+					textChanged = <?php  ($pr) ? print 'true' : print 'false' ?>;
 					
-					formatButton('wiki/images/bold.png','<?=$lang['qb_bold']?>','**','**','<?=$lang['qb_bold']?>','b');
-					formatButton('wiki/images/italic.png','<?=$lang['qb_italic']?>',"\/\/","\/\/",'<?=$lang['qb_italic']?>','i');
-					formatButton('wiki/images/underline.png','<?=$lang['qb_underl']?>','__','__','<?=$lang['qb_underl']?>','u');
-					formatButton('wiki/images/code.png','<?=$lang['qb_code']?>','\'\'','\'\'','<?=$lang['qb_code']?>','c');
+					formatButton('wiki/images/bold.png','<?php echo $lang['qb_bold']?>','**','**','<?php echo $lang['qb_bold']?>','b');
+					formatButton('wiki/images/italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');
+					formatButton('wiki/images/underline.png','<?php echo $lang['qb_underl']?>','__','__','<?php echo $lang['qb_underl']?>','u');
+					formatButton('wiki/images/code.png','<?php echo $lang['qb_code']?>','\'\'','\'\'','<?php echo $lang['qb_code']?>','c');
 
-					formatButton('wiki/images/fonth1.png','<?=$lang['qb_h1']?>','====== ',' ======\n','<?=$lang['qb_h1']?>','1');
-					formatButton('wiki/images/fonth2.png','<?=$lang['qb_h2']?>','===== ',' =====\n','<?=$lang['qb_h2']?>','2');
-					formatButton('wiki/images/fonth3.png','<?=$lang['qb_h3']?>','==== ',' ====\n','<?=$lang['qb_h3']?>','3');
-					formatButton('wiki/images/fonth4.png','<?=$lang['qb_h4']?>','=== ',' ===\n','<?=$lang['qb_h4']?>','4');
-					formatButton('wiki/images/fonth5.png','<?=$lang['qb_h5']?>','== ',' ==\n','<?=$lang['qb_h5']?>','5');
+					formatButton('wiki/images/fonth1.png','<?php echo $lang['qb_h1']?>','====== ',' ======\n','<?php echo $lang['qb_h1']?>','1');
+					formatButton('wiki/images/fonth2.png','<?php echo $lang['qb_h2']?>','===== ',' =====\n','<?php echo $lang['qb_h2']?>','2');
+					formatButton('wiki/images/fonth3.png','<?php echo $lang['qb_h3']?>','==== ',' ====\n','<?php echo $lang['qb_h3']?>','3');
+					formatButton('wiki/images/fonth4.png','<?php echo $lang['qb_h4']?>','=== ',' ===\n','<?php echo $lang['qb_h4']?>','4');
+					formatButton('wiki/images/fonth5.png','<?php echo $lang['qb_h5']?>','== ',' ==\n','<?php echo $lang['qb_h5']?>','5');
 
-					formatButton('wiki/images/link.png','<?=$lang['qb_link']?>','[[',']]','<?=$lang['qb_link']?>','l');
-					formatButton('wiki/images/extlink.png','<?=$lang['qb_extlink']?>','[[',']]','http://www.example.com|<?=$lang['qb_extlink']?>');
+					formatButton('wiki/images/link.png','<?php echo $lang['qb_link']?>','[[',']]','<?php echo $lang['qb_link']?>','l');
+					formatButton('wiki/images/extlink.png','<?php echo $lang['qb_extlink']?>','[[',']]','http://www.example.com|<?php echo $lang['qb_extlink']?>');
 
-					formatButton('wiki/images/list.png','<?=$lang['qb_ol']?>','	- ','\n','<?=$lang['qb_ol']?>');
-					formatButton('wiki/images/list_ul.png','<?=$lang['qb_ul']?>','	* ','\n','<?=$lang['qb_ul']?>');
+					formatButton('wiki/images/list.png','<?php echo $lang['qb_ol']?>','	- ','\n','<?php echo $lang['qb_ol']?>');
+					formatButton('wiki/images/list_ul.png','<?php echo $lang['qb_ul']?>','	* ','\n','<?php echo $lang['qb_ul']?>');
 
-					insertButton('wiki/images/rule.png','<?=$lang['qb_hr']?>','----\n');
-					mediaButton('wiki/images/image.png','<?=$lang['qb_media']?>','m','<?=$INFO['namespace']?>');
+					insertButton('wiki/images/rule.png','<?php echo $lang['qb_hr']?>','----\n');
+					mediaButton('wiki/images/image.png','<?php echo $lang['qb_media']?>','m','<?php echo $INFO['namespace']?>');
 
-					<?
+					<?php
 					if($conf['useacl'] && $_SERVER['REMOTE_USER']){
 						echo "insertButton('wiki/images/sig.png','".$lang['qb_sig']."','".html_signature()."','y');";
 					}
 					?>
 				</script>
-				<?}?>
+				<?php }?>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="3">
-				<textarea name="wikitext" id="wikitext" <?=$ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?="\n".formText($text)?></textarea>
+				<textarea name="wikitext" id="wikitext" <?php echo $ro?> cols="80" rows="10" class="edit" onchange="textChanged = true;" onkeyup="summaryCheck();" tabindex="1"><?php echo "\n".formText($text)?></textarea>
 			</td>
 		</tr>
 		<tr>
 			<td>
-			<?if($wr){?>
-				<input class="button" type="submit" name="do" value="<?=$lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
-				<input class="button" type="submit" name="do" value="<?=$lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
-				<input class="button" type="submit" name="do" value="<?=$lang['btn_cancel']?>" tabindex="5" />
-			<?}?>
+			<?php if($wr){?>
+				<input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="3" />
+				<input class="button" type="submit" name="do" value="<?php echo $lang['btn_preview']?>" accesskey="p" title="[ALT+P]" onclick="textChanged=false" onkeypress="textChanged=false" tabindex="4" />
+				<input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" tabindex="5" />
+			<?php }?>
 			</td>
 			<td>
-			<?if($wr){?>
-				<?=$lang['summary']?>:
-				<input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?=formText($SUM)?>" tabindex="2" />
-			<?}?>
+			<?php if($wr){?>
+				<?php echo $lang['summary']?>:
+				<input type="text" class="edit" name="summary" id="summary" size="50" onkeyup="summaryCheck();" value="<?php echo formText($SUM)?>" tabindex="2" />
+			<?php }?>
 			</td>
 			<td align="right">
 				<script type="text/javascript">
 					showSizeCtl();
-					<?if($wr){?>
-						init_locktimer(<?=$conf['locktime']-60?>,'<?=$lang['willexpire']?>');
+					<?php if($wr){?>
+						init_locktimer(<?php echo $conf['locktime']-60?>,'<?php echo $lang['willexpire']?>');
 						document.editform.wikitext.focus();
-					<?}?>
+					<?php }?>
 				</script>
 			</td>
 		</tr>
 	</table>
 	</form>
-<?
+<?php
 }
 
 /**

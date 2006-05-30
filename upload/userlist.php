@@ -116,7 +116,7 @@ if ($show_group > -1)
 	$where_sql[] = 'u.group_id='.$show_group;
 
 // Fetch user count
-$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u'.(!empty($where_sql) ? ' WHERE u.id>1 AND '.implode(' AND ', $where_sql) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id>1'.(!empty($where_sql) ? ' AND '.implode(' AND ', $where_sql) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
 $num_users = $db->result($result);
 
 

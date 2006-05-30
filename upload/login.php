@@ -96,7 +96,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$expire = ($save_pass == '1') ? time() + 31536000 : 0;
 	pun_setcookie($user_id, $form_password_hash, $expire);
 
-	redirect($_POST['redirect_url'], $lang_login['Login redirect']);
+	redirect(htmlspecialchars($_POST['redirect_url']), $lang_login['Login redirect']);
 }
 
 

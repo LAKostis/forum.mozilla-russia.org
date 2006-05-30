@@ -138,7 +138,7 @@ else if (isset($_GET['email']))
 		$cur_username = '"'.str_replace('"', '', $pun_user['username']).'"';
 		pun_mail($recipient_email, $mail_subject, $mail_message, encode($cur_username).' <'.$pun_user['email'].'>');
 
-		redirect($_POST['redirect_url'], $lang_misc['E-mail sent redirect']);
+		redirect(htmlspecialchars($_POST['redirect_url']), $lang_misc['E-mail sent redirect']);
 	}
 
 

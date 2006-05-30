@@ -2,8 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
 
-  This file is part of PunBB.
+  This file is part of Mozilla.ru Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -40,7 +41,6 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 
 // FIXME
 $files_per_page = 30;
-$local_encoding = "cp1251";
 
 $filename = (isset($_GET['filename'])) ? $_GET['filename'] : '';
 $sort_by = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'user' ) ? 'file' : $_GET['sort_by'];
@@ -149,9 +149,7 @@ require PUN_ROOT.'header.php';
 		</div>
 	</div>
 <?php }
-	elseif (!$_POST) { 
-	$_POST['act']='';
-	
+	elseif (!isset($_POST['act'])) { 
 	
 ?>
 		<h2><span><?php echo $lang_uploads['File list'] ?></span></h2>
@@ -175,14 +173,13 @@ require PUN_ROOT.'header.php';
 	?>
         			<tr class="puntopic">
     <?php
-	    		$local_file = iconv($lang['encoding'],$local_encoding, $info['file']);
 			$ext = strtolower(strrchr($info['file'],'.'));
 			if(in_array($ext,$pics))
-				echo'					<td class="puncon1"><a href="uploaded/'.$local_file.'">'.$info['file'].'</td>';
+				echo'					<td class="puncon1"><a href="uploaded/'.$info['file'].'">'.$info['file'].'</td>';
             else
-				echo'					<td class="puncon1"><a href="./uploaded/'.$local_file.'">'.$info['file'].'</td>';
+				echo'					<td class="puncon1"><a href="./uploaded/'.$info['file'].'">'.$info['file'].'</td>';
 	?>
-					<td class="puncon2"><?php echo round(filesize('./uploaded/'.$local_file) / 1024).'KB'; ?></td>
+					<td class="puncon2"><?php echo round(filesize('./uploaded/'.$info['file']) / 1024).'KB'; ?></td>
 					<td class="puncon1"><?php echo '<a href="profile.php?id='.$info['id'].'">'.$info['user'].'</a>'; ?></td>
 	<?php
 			if($upl_conf['p_globaldelete'])
@@ -202,14 +199,14 @@ require PUN_ROOT.'header.php';
 </div>
 <?php } 
   
-elseif ($_POST['act']=='Upload')  {
+elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_FILES))  {
 
     setlocale (LC_ALL, 'en_US');
-    $temp_name = $_FILES['file']['tmp_name'];
-    $file_name = $_FILES['file']['name'];
-    $file_type = $_FILES['file']['type'];
+    $temp_name = pun_trim($_FILES['file']['tmp_name']);
+    $file_name = pun_trim($_FILES['file']['name']);
+    $file_type = pun_trim($_FILES['file']['type']);
     $file_size = intval($_FILES['file']['size']);
-    $result    = $_FILES['file']['error']; 	
+    $result    = pun_trim($_FILES['file']['error']); 	
 	if(($upl_conf['p_upload'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
     $ext = strtolower(strrchr($file_name,'.'));
     if($file_name == "")
@@ -223,7 +220,7 @@ elseif ($_POST['act']=='Upload')  {
     else if(!in_array($ext,$allowed))
       error('File is not a valid file type', __FILE__, __LINE__, $db->error());
     else {
-    	$result = $db->query('INSERT INTO '.$db->prefix.'uploaded(`file`,`user`,`id`) VALUES(\''.$file_name.'\',\''.$_POST['user_name'].'\',\''.$_POST['user_id'].'\')') or error('Unable to add upload data', __FILE__, __LINE__, $db->error());
+    	$result = $db->query('INSERT INTO '.$db->prefix.'uploaded(`file`,`user`,`id`) VALUES(\''.$file_name.'\',\''.pun_trim($_POST['user_name']).'\',\''.intval($_POST['user_id']).'\')') or error('Unable to add upload data', __FILE__, __LINE__, $db->error());
     	@copy($temp_name, './uploaded/'.$file_name) or error('Could not copy file to server', __FILE__, __LINE__, $db->error());
 
 ?>    	
@@ -239,23 +236,22 @@ elseif ($_POST['act']=='Upload')  {
 
     }
 }
-elseif($_POST['act']=='Delete') {
+elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_POST['delfile'])) {
 	
-	$delfile = pun_htmlspecialchars($_POST['delfile']);
-	$local_del = iconv($lang['encoding'],$local_encoding,$delfile);
+	$delfile = pun_trim($_POST['delfile']);
 	if(($upl_conf['p_delete'] <> 1)&&($upl_conf['p_globaldelete'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
 
-    if(!file_exists('./uploaded/'.$local_del))
+    if(!file_exists('./uploaded/'.$delfile))
       error('File doesn\'t exist', __FILE__, __LINE__, $db->error());
     else {
-    	unlink('./uploaded/'.$local_del);
+    	unlink('./uploaded/'.$delfile);
 	$result = $db->query('DELETE FROM '.$db->prefix.'uploaded WHERE file=\''.$db->escape($delfile).'\'') or error('Unable to delete data', __FILE__, __LINE__, $db->error());
 ?>
 <div class="inform">
 	<fieldset>
 		<legend>Deleting...</legend>
 		<div class="infldset">
-			<div><?php	echo $_POST['delfile'].' removed from the uploader.'; ?></div>
+			<div><?php	echo $delfile.' removed from the uploader.'; ?></div>
 
 		</div>
 	</fieldset>

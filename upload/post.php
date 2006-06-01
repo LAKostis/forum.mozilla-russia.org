@@ -218,7 +218,8 @@ if (isset($_POST['form_sent']))
 
 			update_search_index('post', $new_pid, $message);
 
-			if ($cur_posting['announcement'] > 0)
+			// MOD announcement - announces haven't forum id
+			if ($cur_posting['id'] > 0)
 				update_forum($cur_posting['id']);
 
 			// Should we send out notifications?
@@ -229,9 +230,10 @@ if (isset($_POST['form_sent']))
 				$previous_post_time = $db->result($result);
 
 				// Get any subscribed users that should be notified (banned users are excluded)
-				if ($cur_posting['announcement'] == '0')
+				if ($cur_posting['id'] > '0')
 					$result = $db->query('SELECT u.id, u.email, u.notify_with_post, u.language FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'subscriptions AS s ON u.id=s.user_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id='.$cur_posting['id'].' AND fp.group_id=u.group_id) LEFT JOIN '.$db->prefix.'online AS o ON u.id=o.user_id LEFT JOIN '.$db->prefix.'bans AS b ON u.username=b.username WHERE b.username IS NULL AND COALESCE(o.logged, u.last_visit)>'.$previous_post_time.' AND (fp.read_forum IS NULL OR fp.read_forum=1) AND s.topic_id='.$tid.' AND u.id!='.intval($pun_user['id'])) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
-				if ($db->num_rows($result) && ($cur_posting['announcement'] == '0'))
+				// MOD announcement - announces haven't forum id
+				if ($db->num_rows($result) && ($cur_posting['id'] > '0'))
 				{
 					require_once PUN_ROOT.'include/email.php';
 

@@ -78,7 +78,8 @@ if (isset($_POST['delete']))
 	{
 		// Delete the topic and all of it's posts
 		delete_topic($cur_post['tid']);
-		if ($cur_post['announcement'] == '0')
+		// MOD announcement - announces haven't forum id
+		if ($cur_post['fid'] > 0)
 		{
 			update_forum($cur_post['fid']);
 			redirect('viewforum.php?id='.$cur_post['fid'], $lang_delete['Topic del redirect']);
@@ -89,7 +90,8 @@ if (isset($_POST['delete']))
 	{
 		// Delete just this one post
 		delete_post($id, $cur_post['tid']);
-		if ($cur_post['announcement'] == '0')
+		// MOD announcement - announces haven't forum id
+		if ($cur_post['fid'] > 0)
 			update_forum($cur_post['fid']);
 
 		redirect('viewtopic.php?id='.$cur_post['tid'], $lang_delete['Post del redirect']);

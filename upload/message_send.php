@@ -2,8 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002, 2003, 2004  Rickard Andersson (rickard@punbb.org)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
 
-  This file is part of PunBB.
+  This file is part of Mozilla.ru Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published

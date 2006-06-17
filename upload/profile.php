@@ -762,13 +762,15 @@ else if (isset($_POST['form_sent']))
 
 		case 'privacy':
 		{
-			$form = extract_elements(array('email_setting', 'save_pass', 'notify_with_post', 'show_online'));
+			$form = extract_elements(array('email_setting', 'save_pass', 'notify_with_post', 'pm_email_notify', 'show_online'));
 
 			$form['email_setting'] = intval($form['email_setting']);
+			$form['pm_email_notify'] = intval($form['pm_email_notify']);
 			if ($form['email_setting'] < 0 && $form['email_setting'] > 2) $form['email_setting'] = 1;
 
 			if (!isset($form['save_pass']) || $form['save_pass'] != '1') $form['save_pass'] = '0';
 			if (!isset($form['notify_with_post']) || $form['notify_with_post'] != '1') $form['notify_with_post'] = '0';
+			if ($form['pm_email_notify'] < 0 && $form['pm_email_notify'] > 2) $form['pm_email_notify'] = '1';
 			if (!isset($form['show_online']) || $form['show_online'] != '1') $form['show_online'] = '0';
 		
 			// If the save_pass setting has changed, we need to set a new cookie with the appropriate expire date
@@ -838,7 +840,7 @@ else if (isset($_POST['form_sent']))
 }
 
 
-$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.pm_email_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
@@ -1416,6 +1418,10 @@ else
 							<p><?php echo $lang_profile['Notify full info'] ?></p>
 							<div class="rbox">
 								<label><input type="checkbox" name="form[notify_with_post]" value="1"<?php if ($user['notify_with_post'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Notify full'] ?><br /></label>
+							</div>
+							<p><?php echo $lang_profile['Notify PM by email info'] ?></p>
+							<div class="rbox">
+								<label><input type="checkbox" name="form[pm_email_notify]" value="1"<?php if ($user['pm_email_notify'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Notify PM by email'] ?><br /></label>
 							</div>
 							<p><?php echo $lang_prof_reg['Show online'] ?></p>
 							<div class="rbox">

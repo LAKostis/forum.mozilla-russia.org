@@ -16,7 +16,10 @@ if ($footer_style == 'message_list')
 if ($new_messages)
 	echo "\t\t\t\t\t\t".'<dd><a href="message_list.php?action=markall&amp;box='.$_GET['box'].'&amp;p='.$_GET['p'].'">'.$lang_pms['Mark all'].'</a></dd>'."\n";
 if ($messages_exist)
-	echo "\t\t\t\t\t\t".'<dd><a href="message_list.php?action=multidelete&amp;box='.$_GET['box'].'&amp;p='.$_GET['p'].'">'.$lang_pms['Multidelete'].'</a></dd>'."\n";
+{
+		echo "\t\t\t\t\t\t".'<dd><a href="message_list.php?action=multidelete&amp;box='.$_GET['box'].'&amp;p='.$_GET['p'].'">'.$lang_pms['Multidelete'].'</a></dd>'."\n";
+		echo "\t\t\t\t\t\t".'<dd><a href="message_list.php?action=deleteall&amp;box='.$_GET['box'].'">'.$lang_pms['Delete all'].'</a></dd>'."\n";
+}		
 ?>
 			</dl>
 <?php

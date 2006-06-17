@@ -25,6 +25,7 @@ $lang_pms = array(
 	'Private Messages'=> 	'Private Messages',
 	'New message'		=>		'Send new message',
 	'Multidelete'		=>		'Delete multiple messages',
+	'Delete all'	    =>		'Delete all messages',
 	'Delete messages comply'	=> 'Are you sure you want to delete the selected messages?',
 	'Deleted redirect'			=> 'Messages deleted. Redirecting ...',
 	'Read redirect'				=> 'All messages marked as read. Redirecting...',

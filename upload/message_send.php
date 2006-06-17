@@ -82,10 +82,10 @@ if (isset($_POST['form_sent']))
 		message($errors[0]);
 
 	// Get userid
-	$result = $db->query('SELECT id, username, group_id FROM '.$db->prefix.'users WHERE id!=1 AND username=\''.addslashes($_POST['req_username']).'\'') or error('Unable to get user id', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT id, username, group_id, pm_email_notify FROM '.$db->prefix.'users WHERE id!=1 AND username=\''.addslashes($_POST['req_username']).'\'') or error('Unable to get user id', __FILE__, __LINE__, $db->error());
 
 	// Send message
-	if(list($id,$user,$status) = $db->fetch_row($result)){
+	if(list($id,$user,$status,$user_notify) = $db->fetch_row($result)){
 
 		// Check inbox status
 		if($pun_config['o_pms_messages'] != 0 && $pun_user['g_id'] > PUN_GUEST && $status > PUN_GUEST)
@@ -134,7 +134,7 @@ if (isset($_POST['form_sent']))
 		}
 
 		// Should we send out notifications?
-		if ($pun_config['o_subscriptions'] == '1')
+		if ($pun_config['o_subscriptions'] == '1' && $user_notify == '1')
 		{
 			// Get userid
 			$result = $db->query('SELECT email, language FROM '.$db->prefix.'users WHERE id!=1 AND id=\''.$id.'\'') or error('Unable to get user email', __FILE__, __LINE__, $db->error());

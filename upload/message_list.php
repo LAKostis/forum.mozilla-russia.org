@@ -59,7 +59,11 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 	{
 		//Check this is legit
 		confirm_referrer('message_list.php');
-		
+
+		// Delete all messages
+		if( isset($_POST['deleteall']) )
+			$db->query('DELETE FROM '.$db->prefix.'messages WHERE owner=\''.$pun_user['id'].'\'') or error('Unable to delete messages.', __FILE__, __LINE__, $db->error());
+		else
 		// Delete messages 
 		$db->query('DELETE FROM '.$db->prefix.'messages WHERE id IN('.$_POST['messages'].') AND owner=\''.$pun_user['id'].'\'') or error('Unable to delete messages.', __FILE__, __LINE__, $db->error());
 		
@@ -92,13 +96,42 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 		require PUN_ROOT.'footer.php';
 	}
 }
-
-// Mark all messages as read
-else if (isset($_GET['action']) && $_GET['action'] == 'markall')
+else 
 {
-	$db->query('UPDATE '.$db->prefix.'messages SET showed=1 WHERE owner='.$pun_user['id']) or error('Unable to update message status', __FILE__, __LINE__, $db->error());
-	$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1) ? 1 : intval($_GET['p']);
-	redirect('message_list.php?box='.$box.'&p='.$p, $lang_pms['Read redirect']);
+	// Delete all messages
+	if (isset($_GET['action']) && $_GET['action'] == 'deleteall')
+	{
+			$page_title = pun_htmlspecialchars($lang_pms['Delete all']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
+			require PUN_ROOT.'header.php';
+	?>
+	<div class="blockform">
+		<h2><span><?php echo $lang_pms['Delete all'] ?></span></h2>
+		<div class="box">
+			<form method="post" action="message_list.php">
+				<input type="hidden" name="deleteall" value="1">
+				<input type="hidden" name="box" value="<?php echo $_POST['box']; ?>">
+				<div class="inform">
+					<fieldset>
+						<div class="infldset">
+							<p class="warntext"><strong><?php echo $lang_pms['Delete messages comply'] ?></strong></p>
+						</div>
+					</fieldset>
+				</div>
+				<p><input type="submit" name="delete_messages_comply" value="<?php echo $lang_pms['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			</form>
+		</div>
+	</div>
+	<?php
+			require PUN_ROOT.'footer.php';
+	}
+	
+	// Mark all messages as read
+	if (isset($_GET['action']) && $_GET['action'] == 'markall')
+	{
+		$db->query('UPDATE '.$db->prefix.'messages SET showed=1 WHERE owner='.$pun_user['id']) or error('Unable to update message status', __FILE__, __LINE__, $db->error());
+		$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1) ? 1 : intval($_GET['p']);
+		redirect('message_list.php?box='.$box.'&p='.$p, $lang_pms['Read redirect']);
+	}
 }
 
 $page_title = pun_htmlspecialchars($lang_pms['Private Messages']).' | '.pun_htmlspecialchars($name).' | '.pun_htmlspecialchars($pun_config['o_board_title']);

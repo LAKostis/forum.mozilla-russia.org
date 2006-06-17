@@ -544,9 +544,10 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 
 	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : 0;
 	if (isset($_POST['delete_user_comply']))
+	{
 		delete_user($id,$delete_posts);
-	
-	redirect('index.php', $lang_profile['User delete redirect']);
+		redirect('index.php', $lang_profile['User delete redirect']);
+	}
 
 	$page_title = pun_htmlspecialchars($lang_common['Profile']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';

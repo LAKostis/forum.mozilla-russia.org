@@ -845,10 +845,10 @@ else
 		case 'mysqli':
 			$sql = 'CREATE TABLE '.$db->prefix."polls (
 					id INT(11) NOT NULL AUTO_INCREMENT,
-					pollid INT(11) NOT NULL default '0',
+					pollid INT(11) NOT NULL DEFAULT '0',
 					options LONGTEXT NOT NULL,
 					voters LONGTEXT NOT NULL,
-					ptype tinyint(4) NOT NULL default '0',
+					ptype tinyint(4) NOT NULL DEFAULT '0',
 					votes LONGTEXT NOT NULL,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
@@ -857,10 +857,10 @@ else
 		case 'pgsql':
 			$sql = 'CREATE TABLE '.$db->prefix."polls (
 					id SERIAL,
-					pollid INTEGER NOT NULL default 0,
+					pollid INTEGER NOT NULL DEFAULT 0,
 					options TEXT NOT NULL,
 					voters TEXT NOT NULL,
-					ptype SMALLINT NOT NULL default 0,
+					ptype SMALLINT NOT NULL DEFAULT 0,
 					votes TEXT NOT NULL,
 					PRIMARY KEY (id)
 					)";
@@ -869,11 +869,11 @@ else
 		case 'sqlite':
 			$sql = 'CREATE TABLE '.$db->prefix."polls (
 					id INTEGER NOT NULL,
-					pollid INTEGER NOT NULL default 0,
+					pollid INTEGER NOT NULL DEFAULT 0,
 					options TEXT NOT NULL,
-					voters TEXT NOT NULL,
-					ptype INTEGER NOT NULL default 0,
-					votes TEXT NOT NULL,
+					voters TEXT NOT NULL DEFAULT '',
+					ptype INTEGER NOT NULL DEFAULT 0,
+					votes TEXT NOT NULL DEFAULT '',
 					PRIMARY KEY (id)
 					)";
 			break;

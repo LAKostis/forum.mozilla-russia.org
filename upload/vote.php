@@ -44,7 +44,7 @@ if ($pollid < 1)
 	message($lang_common['Bad request']);
 
 // Fetch some info about the poll
-$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.subject, t.closed, poll.ptype, poll.options, poll.voters, poll.votes FROM '.$db->prefix.'polls AS poll RIGHT JOIN '.$db->prefix.'topics AS t ON poll.pollid=t.id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$pollid) or error('Unable to fetch topic and poll info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.subject, t.closed, poll.ptype, poll.options, poll.voters, poll.votes FROM '.$db->prefix.'polls AS poll LEFT JOIN '.$db->prefix.'topics AS t ON poll.pollid=t.id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$pollid) or error('Unable to fetch topic and poll info', __FILE__, __LINE__, $db->error());
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);

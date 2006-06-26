@@ -36,6 +36,7 @@ function insert_text(open, close, no_focus)
 {
     msgfield = (document.all) ? document.all.req_message : document.forms['post']?document.forms['post']['req_message']:document.forms['edit']['req_message'];
     var bSelStart = msgfield.selectionStart, text;
+    var st = msgfield. scrollTop, sh = msgfield. scrollHeight;
 
     // IE support
     if (document.selection && document.selection.createRange && !bSelStart && msgfield.caretPos)
@@ -65,6 +66,7 @@ function insert_text(open, close, no_focus)
     {
         msgfield.value += open + close;
     }
+    msgfield. scrollTop = st + msgfield. scrollHeight - sh;
     if (no_focus != '1' ) msgfield.focus();
     return;
 }

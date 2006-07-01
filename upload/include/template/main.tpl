@@ -22,7 +22,7 @@
     <a href="http://www.mozilla.ru">Mozilla.ru</a>&nbsp;
     <a href="http://nvu.mozilla.ru">Nvu.mozilla.ru</a>&nbsp;
     <a href="http://www.kmeleon.ru">Kmeleon.ru</a>&nbsp;
-    <a href="http://bugzilla.mozilla.ru">Bugzilla.mozilla.ru</a>&nbsp;
+    <a href="https://bugzilla.mozilla.ru">Bugzilla.mozilla.ru</a>&nbsp;
     <a href="http://backup.mozilla.ru">Backup.mozilla.ru</a>&nbsp;
   </div>
   <div class="search">

@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -55,7 +55,7 @@ function split_words($text)
 	$patterns[] = '#&[\#a-z0-9]+?;#i';
 	$patterns[] = '#\b[\w]+:\/\/[a-z0-9\.\-]+(\/[a-z0-9\?\.%_\-\+=&\/~]+)?#';
 	$patterns[] = '#\[\/?[a-z\*=\+\-]+(\:?[0-9a-z]+)?:[a-z0-9]{10,}(\:[a-z0-9]+)?=?.*?\]#';
-	$text = preg_replace($patterns, ' ', ' '.strtolower($text).' ');
+	$text = preg_replace($patterns, ' ', ' '.pun_strtolower($text).' ');
 
 	// Filter out junk
 	$text = str_replace($noise_match, $noise_replace, $text);

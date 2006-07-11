@@ -42,7 +42,7 @@ function getpreview($postform)
 	else if (strlen($message) > 65535)
 		$errors[] = $lang_post['Too long message'];
 	else if ($pun_config['p_message_all_caps'] == '0' && strtoupper($message) == $message && $pun_user['g_id'] > PUN_MOD)
-		$message = ucwords(strtolower($message));
+		$message = ucwords(pun_strtolower($message));
 
     // Validate BBCode syntax
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($message, '[') !== false && strpos($message, ']') !== false)

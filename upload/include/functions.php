@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -562,7 +562,7 @@ function get_title($user)
 	if ($user['title'] != '')
 		$user_title = pun_htmlspecialchars($user['title']);
 	// If the user is banned
-	else if (in_array(strtolower($user['username']), $ban_list))
+	else if (in_array(pun_strtolower($user['username']), $ban_list))
 		$user_title = $lang_common['Banned'];
 	// If the user group has a default user title
 	else if ($user['g_user_title'] != '')
@@ -1299,5 +1299,17 @@ function get_user_ua() {
 	}
 
 	return $user_ua;
+}
+
+//
+// More portable strtolower
+//
+function pun_strtolower($string) {
+	global $lang_common;
+
+	if ($lang_common['lang_encoding'] == 'utf-8')
+		$string = mb_strtolower($string,'utf-8');
+	else $string = strtolower($string);
+	return $string;
 }
 

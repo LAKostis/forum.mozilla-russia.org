@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -104,7 +104,7 @@ if (isset($_POST['form_sent']))
 		else if (pun_strlen($subject) > 70)
 			$errors[] = $lang_post['Too long subject'];
 		else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_MOD)
-			$subject = ucwords(strtolower($subject));
+			$subject = ucwords(pun_strtolower($subject));
 	}
 
 	// If the user is logged in we get the username and e-mail from $pun_user
@@ -165,7 +165,7 @@ if (isset($_POST['form_sent']))
 	else if (strlen($message) > 65535)
 		$errors[] = $lang_post['Too long message'];
 	else if ($pun_config['p_message_all_caps'] == '0' && strtoupper($message) == $message && $pun_user['g_id'] > PUN_MOD)
-		$message = ucwords(strtolower($message));
+		$message = ucwords(pun_strtolower($message));
 
 	// Validate BBCode syntax
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($message, '[') !== false && strpos($message, ']') !== false)

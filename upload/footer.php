@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -114,7 +114,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 }
 
 ?>
-			<p class="conr">Powered by <a href="http://www.punbb.org/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />&copy; Copyright 2002&#8211;2005 Rickard Andersson<br />Modified by LAKostis<br />Mozilla.ru theme by <a href="profile.php?id=57">ragnaar</a></p>
+			<p class="conr">Powered by <a href="http://www.punbb.org/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />&copy; Copyright 2002&#8211;2005 Rickard Andersson<br />Modified by LAKostis<br />Russian Mozilla theme by <a href="profile.php?id=57">ragnaar</a></p>
 <?php
 
 // Display debug info (if enabled/defined)

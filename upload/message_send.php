@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002, 2003, 2004  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -59,7 +59,7 @@ if (isset($_POST['form_sent']))
 	else if (pun_strlen($subject) > 70)
 		message($lang_post['Too long subject']);
 	else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_GUEST)
-		$subject = ucwords(strtolower($subject));
+		$subject = ucwords(pun_strtolower($subject));
 
 	// Clean up message from POST
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));

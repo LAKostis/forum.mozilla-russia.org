@@ -24,7 +24,7 @@ if (isset($_POST['form_sent']))
 	else if (pun_strlen($subject) > 70)
 		$errors[] = "Your subject is to long";
 	else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($subject) == $subject)
-		$subject = ucwords(strtolower($subject));
+		$subject = ucwords(pun_strtolower($subject));
 
 
 	$username = $pun_user['username'];
@@ -38,7 +38,7 @@ if (isset($_POST['form_sent']))
 	else if (strlen($message) > 65535)
 		$errors[] = "Your message is to long";
 	else if ($pun_config['p_message_all_caps'] == '0' && strtoupper($message) == $message)
-		$message = ucwords(strtolower($message));
+		$message = ucwords(pun_strtolower($message));
 
 	// Validate BBCode syntax
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($message, '[') !== false && strpos($message, ']') !== false)

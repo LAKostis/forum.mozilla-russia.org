@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -226,7 +226,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		echo "\t".'<link>'.$pun_config['o_base_url'].'/</link>'."\r\n";
 		echo "\t".'<description>'.pun_htmlspecialchars($rss_description.' '.$pun_config['o_board_title']).'</description>'."\r\n";
 		echo '<image>'."\r\n";
-		echo '<url>http://www.mozilla.ru/images/M_images/logo.png</url>'."\r\n";
+		echo '<url>http://www.mozilla-russian.org/images/M_images/logo.png</url>'."\r\n";
 		echo "\t".'<title>'.pun_htmlspecialchars($pun_config['o_board_title']).'</title>'."\r\n";
 		echo "\t".'<link>'.$pun_config['o_base_url'].'/</link>'."\r\n";
 		echo "\t".'<description>'.pun_htmlspecialchars($rss_description.' '.$pun_config['o_board_title']).'</description>'."\r\n";

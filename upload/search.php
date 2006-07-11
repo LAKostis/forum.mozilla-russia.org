@@ -2,9 +2,9 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla.ru)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Mozilla.ru Team PunBB modification.
+  This file is part of Russian Mozilla Team PunBB modification.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -65,8 +65,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	// If it's a regular search (keywords and/or author)
 	else if ($action == 'search')
 	{
-		$keywords = (isset($_GET['keywords'])) ? strtolower(trim($_GET['keywords'])) : null;
-		$author = (isset($_GET['author'])) ? strtolower(trim($_GET['author'])) : null;
+		$keywords = (isset($_GET['keywords'])) ? pun_strtolower(trim($_GET['keywords'])) : null;
+		$author = (isset($_GET['author'])) ? pun_strtolower(trim($_GET['author'])) : null;
 
 		if (preg_match('#^[\*%]+$#', $keywords) || strlen(str_replace(array('*', '%'), '', $keywords)) < 3)
 			$keywords = '';

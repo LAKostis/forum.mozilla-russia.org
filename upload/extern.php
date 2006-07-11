@@ -226,7 +226,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		echo "\t".'<link>'.$pun_config['o_base_url'].'/</link>'."\r\n";
 		echo "\t".'<description>'.pun_htmlspecialchars($rss_description.' '.$pun_config['o_board_title']).'</description>'."\r\n";
 		echo '<image>'."\r\n";
-		echo '<url>http://www.mozilla-russian.org/style/img/header_logo.gif</url>'."\r\n";
+		echo '<url>http://www.mozilla-russia.org/style/img/header_logo.gif</url>'."\r\n";
 		echo "\t".'<title>'.pun_htmlspecialchars($pun_config['o_board_title']).'</title>'."\r\n";
 		echo "\t".'<link>'.$pun_config['o_base_url'].'/</link>'."\r\n";
 		echo "\t".'<description>'.pun_htmlspecialchars($rss_description.' '.$pun_config['o_board_title']).'</description>'."\r\n";

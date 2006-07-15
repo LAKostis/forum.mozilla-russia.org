@@ -22,7 +22,8 @@ switch (PHP_OS)
 
 // Attempt to set the locale
 setlocale(LC_CTYPE, $locale);
-
+// hcs merge update
+setlocale(LC_TIME, $locale);
 
 // Language definitions for frequently used strings
 $lang_common = array(

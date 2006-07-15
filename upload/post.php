@@ -48,7 +48,7 @@ if ($tid)
 	// MOD Announcement: CODE FOLLOWS
 	$result = $db->query('SELECT t.subject, t.closed FROM '.$db->prefix.'topics AS t WHERE t.announcement=\'1\' AND t.id='.$tid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
-		$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.subject, t.closed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$tid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.subject, t.closed, p.id AS post_id, p.poster_id, p.message, p.posted FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'posts AS p ON (t.last_post_id=p.id AND p.poster_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$tid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 }	
 else
 	$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics FROM '.$db->prefix.'forums AS f '.$mgrp_extra.' AND f.id='.$fid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
@@ -159,6 +159,14 @@ if (isset($_POST['form_sent']))
 
 	// Clean up message from POST
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));
+	// hcs merge posts
+	$merged=false;
+	if (!$pun_user['is_guest'] && !$fid && isset($_POST['merge']) && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
+	{
+		$message= pun_linebreaks(pun_trim("[color=#808080][i]".$lang_post['Added']." ".strftime("%c")." : [/i][/color]")) . "\n" . $message;
+		$merged=true;
+	}
+	// end merge posts
 
 	if ($message == '')
 		$errors[] = $lang_post['No message'];
@@ -190,12 +198,23 @@ if (isset($_POST['form_sent']))
 		{
 			if (!$pun_user['is_guest'])
 			{
-				// Insert the new post
-				$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_id, poster_ip, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', '.$pun_user['id'].', \''.get_remote_address().'\', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
-				$new_pid = $db->insert_id();
+				// hcs merge update
+				if ($merged)
+				{
+					$message = $cur_posting['message'] . "\n\n" . $message;
+					$db->query('UPDATE '.$db->prefix.'posts SET message=\''.$db->escape($message).'\' WHERE  id='.$cur_posting['post_id']) or error('Unable to merge post', __FILE__, __LINE__, $db->error());
+					$new_pid=$cur_posting['post_id'];
+				}
+				else
+				{
+					// Insert the new post
+					$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_id, poster_ip, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', '.$pun_user['id'].', \''.get_remote_address().'\', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
+					$new_pid = $db->insert_id();
+				}
 
 				// To subscribe or not to subscribe, that ...
-				if ($pun_config['o_subscriptions'] == '1' && $subscribe)
+				// hcs merge update
+				if ($pun_config['o_subscriptions'] == '1' && !$merged)
 				{
 					$result = $db->query('SELECT 1 FROM '.$db->prefix.'subscriptions WHERE user_id='.$pun_user['id'].' AND topic_id='.$tid) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
 					if (!$db->num_rows($result))
@@ -215,7 +234,9 @@ if (isset($_POST['form_sent']))
 			$num_replies = $db->result($result, 0) - 1;
 
 			// Update topic
-			$db->query('UPDATE '.$db->prefix.'topics SET num_replies='.$num_replies.', last_post='.$now.', last_post_id='.$new_pid.', last_poster=\''.$db->escape($username).'\' WHERE id='.$tid) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
+			// hcs merge update
+			if (!$merged)
+				$db->query('UPDATE '.$db->prefix.'topics SET num_replies='.$num_replies.', last_post='.$now.', last_post_id='.$new_pid.', last_poster=\''.$db->escape($username).'\' WHERE id='.$tid) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
 			update_search_index('post', $new_pid, $message);
 
@@ -342,10 +363,14 @@ if (isset($_POST['form_sent']))
 		}
 
 		// If the posting user is logged in, increment his/her post count
+		// hcs merge update
 		if (!$pun_user['is_guest'])
 		{
 			$low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
-			$db->query('UPDATE '.$low_prio.$db->prefix.'users SET num_posts=num_posts+1, last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
+			if ($merged)
+				$db->query('UPDATE '.$low_prio.$db->prefix.'users SET last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
+			else
+				$db->query('UPDATE '.$low_prio.$db->prefix.'users SET num_posts=num_posts+1, last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 		}
 
 		redirect('viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $lang_post['Post redirect']);
@@ -562,6 +587,8 @@ if (!$pun_user['is_guest'])
 }
 else if ($pun_config['o_smilies'] == '1')
 	$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];
+// hcs merge update
+$checkboxes[] = '<label><input type="checkbox" name="merge" value="1" checked="checked" />'.$lang_post['Merge posts'];
 
 if (!empty($checkboxes))
 {

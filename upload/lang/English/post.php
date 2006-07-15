@@ -28,6 +28,10 @@ $lang_post = array(
 'Edit post legend'		=>	'Edit the post and submit changes',
 'Silent edit'			=>	'Silent edit (don\'t display "Edited by ..." in topic view)',
 'Edit post'				=>	'Edit post',
-'Edit redirect'			=>	'Post updated. Redirecting &hellip;'
+'Edit redirect'			=>	'Post updated. Redirecting &hellip;',
+
+// Merge post
+'Added'                		=>    'Added',
+'Merge posts'                   =>    'Merge with previous if it yours'
 
 );

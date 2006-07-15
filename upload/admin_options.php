@@ -330,6 +330,13 @@ generate_admin_menu('options');
 										<span>Number of seconds to wait when redirecting. If set to 0, no redirect page will be displayed (not recommended).</span>
 									</td>
 								</tr>
+								<tr>
+									<th scope="row">Merge time</th>
+									<td>
+										<input type="text" name="form[merge_timeout]" size="5" maxlength="5" value="<?php echo $pun_config['o_merge_timeout'] ?>" />
+									<span>Time of merge of the post.</span>
+									</td>
+								</tr>
 							</table>
 						</div>
 					</fieldset>

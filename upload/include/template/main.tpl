@@ -19,11 +19,12 @@
 <div class="top-menu">
   <div class="projects">
     <b>Наши проекты:</b><img src="http://counter.rambler.ru/top100.cnt?648851" width=1 height=1 border=0 alt="" />
-    <a href="http://www.mozilla.ru">Mozilla.ru</a>&nbsp;
-    <a href="http://nvu.mozilla.ru">Nvu.mozilla.ru</a>&nbsp;
+    <a href="http://www.mozilla-russia.org">Mozilla-Russia.org</a>&nbsp;
+    <a href="http://nvu.mozilla-russia.org">Nvu.mozilla-russia.org</a>&nbsp;
     <a href="http://www.kmeleon.ru">Kmeleon.ru</a>&nbsp;
-    <a href="https://bugzilla.mozilla.ru">Bugzilla.mozilla.ru</a>&nbsp;
+    <a href="https://bugzilla.mozilla-russia.org">Bugzilla.mozilla-russia.org</a>&nbsp;
     <a href="http://backup.mozilla.ru">Backup.mozilla.ru</a>&nbsp;
+    <a href="http://flock.mozilla-russia.org">Flock.mozilla-russia.org</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="search.php" style="margin: 3px">

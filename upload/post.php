@@ -161,7 +161,7 @@ if (isset($_POST['form_sent']))
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));
 	// hcs merge posts
 	$merged=false;
-	if (!$pun_user['is_guest'] && !$fid && isset($_POST['merge']) && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
+	if (!$pun_user['is_guest'] && !$fid && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
 	{
 		$message= pun_linebreaks(pun_trim("[color=#808080][i]".$lang_post['Added']." ".strftime("%c")." : [/i][/color]")) . "\n" . $message;
 		$merged=true;
@@ -214,7 +214,7 @@ if (isset($_POST['form_sent']))
 
 				// To subscribe or not to subscribe, that ...
 				// hcs merge update
-				if ($pun_config['o_subscriptions'] == '1' && !$merged)
+				if ($pun_config['o_subscriptions'] == '1')
 				{
 					$result = $db->query('SELECT 1 FROM '.$db->prefix.'subscriptions WHERE user_id='.$pun_user['id'].' AND topic_id='.$tid) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
 					if (!$db->num_rows($result))
@@ -237,6 +237,8 @@ if (isset($_POST['form_sent']))
 			// hcs merge update
 			if (!$merged)
 				$db->query('UPDATE '.$db->prefix.'topics SET num_replies='.$num_replies.', last_post='.$now.', last_post_id='.$new_pid.', last_poster=\''.$db->escape($username).'\' WHERE id='.$tid) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
+			else
+				$db->query('UPDATE '.$db->prefix.'topics SET last_post='.$now.' WHERE id='.$tid) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
 			update_search_index('post', $new_pid, $message);
 
@@ -245,7 +247,7 @@ if (isset($_POST['form_sent']))
 				update_forum($cur_posting['id']);
 
 			// Should we send out notifications?
-			if ($pun_config['o_subscriptions'] == '1')
+			if ($pun_config['o_subscriptions'] == '1' && !$merged)
 			{
 				// Get the post time for the previous post in this topic
 				$result = $db->query('SELECT posted FROM '.$db->prefix.'posts WHERE topic_id='.$tid.' ORDER BY id DESC LIMIT 1, 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
@@ -587,8 +589,6 @@ if (!$pun_user['is_guest'])
 }
 else if ($pun_config['o_smilies'] == '1')
 	$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];
-// hcs merge update
-$checkboxes[] = '<label><input type="checkbox" name="merge" value="1" checked="checked" />'.$lang_post['Merge posts'];
 
 if (!empty($checkboxes))
 {

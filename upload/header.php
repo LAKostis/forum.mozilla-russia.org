@@ -2,9 +2,8 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
 
-  This file is part of Russian Mozilla Team PunBB modification.
+  This file is part of PunBB.
 
   PunBB is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -53,8 +52,10 @@ $tpl_main = str_replace('<pun_content_direction>', $lang_common['lang_direction'
 
 // START SUBST - <pun_char_encoding>
 if (defined('PUN_WIKI')) {
-	require PUN_ROOT.'lang/English/lang.php';
-	require PUN_ROOT.'lang/'.$pun_user['language'].'/lang.php';
+	if (!isset($pun_user['language']) || $pun_user['is_guest'])
+		require PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/lang.php';
+	else
+		require PUN_ROOT.'lang/'.$pun_user['language'].'/lang.php';
 	$tpl_main = str_replace('<pun_char_encoding>', $lang['encoding'], $tpl_main);
 }
 else {

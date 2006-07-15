@@ -138,9 +138,11 @@ function set_default_user()
 	// idea by rowlad at mail.ru
 	if(isset($_COOKIE['lang']))
 		$pun_user['language']=$_COOKIE['lang'];
-	if(isset($_GET['lang']))
+	if(isset($_GET['lang'])) 
+	{
 		$pun_user['language']=$_GET['lang'];
-	setcookie("lang", $_GET['lang']);
+		setcookie("lang", $_GET['lang']);
+	}
 	$pun_user['style'] = $pun_config['o_default_style'];
 	$pun_user['is_guest'] = true;
 }

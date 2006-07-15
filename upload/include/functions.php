@@ -134,6 +134,13 @@ function set_default_user()
 	$pun_user['disp_posts'] = $pun_config['o_disp_posts_default'];
 	$pun_user['timezone'] = $pun_config['o_server_timezone'];
 	$pun_user['language'] = $pun_config['o_default_lang'];
+	// set the language from cookie or _GET value
+	// idea by rowlad at mail.ru
+	if(isset($_COOKIE['lang']))
+		$pun_user['language']=$_COOKIE['lang'];
+	if(isset($_GET['lang']))
+		$pun_user['language']=$_GET['lang'];
+	setcookie("lang", $_GET['lang']);
 	$pun_user['style'] = $pun_config['o_default_style'];
 	$pun_user['is_guest'] = true;
 }

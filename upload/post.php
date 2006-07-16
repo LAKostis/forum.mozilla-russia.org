@@ -214,7 +214,7 @@ if (isset($_POST['form_sent']))
 
 				// To subscribe or not to subscribe, that ...
 				// hcs merge update
-				if ($pun_config['o_subscriptions'] == '1')
+				if ($pun_config['o_subscriptions'] == '1' && $subscribe)
 				{
 					$result = $db->query('SELECT 1 FROM '.$db->prefix.'subscriptions WHERE user_id='.$pun_user['id'].' AND topic_id='.$tid) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
 					if (!$db->num_rows($result))

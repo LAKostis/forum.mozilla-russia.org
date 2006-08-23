@@ -764,6 +764,8 @@ else
 					showed TINYINT(4) DEFAULT 0,
 					PRIMARY KEY  (id)
 					) TYPE=MyISAM;";
+			break;
+
 		case 'pgsql':
 		case 'pgsql':
 		         $sql = 'CREATE TABLE '.$db->prefix."messages (

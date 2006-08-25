@@ -317,11 +317,12 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	// Fetch user count
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id>1'.(!empty($conditions) ? ' AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
 	$num_users = $db->result($result);
-
+	
 	$start_from = 0;
 	if (($search_limit == '0') || ($search_limit > $num_users))
 		$search_limit = $num_users;
-	$percent_shows = ($search_limit / $num_users) * 100;
+
+	$percent_shows = $num_users > 0 ? (($search_limit / $num_users) * 100) : 100;
 
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';

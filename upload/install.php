@@ -1103,7 +1103,7 @@ else
 		case 'mysqli':
 			$sql = 'CREATE TABLE '.$db_prefix."search_words (
 					id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-					word VARCHAR(20) BINARY NOT NULL DEFAULT '',
+					word VARCHAR(40) BINARY NOT NULL DEFAULT '',
 					PRIMARY KEY (word),
 					KEY ".$db_prefix."search_words_id_idx (id)
 					) TYPE=MyISAM;";
@@ -1112,7 +1112,7 @@ else
 		case 'pgsql':
 			$sql = 'CREATE TABLE '.$db_prefix."search_words (
 					id SERIAL,
-					word VARCHAR(20) NOT NULL DEFAULT '',
+					word VARCHAR(40) NOT NULL DEFAULT '',
 					PRIMARY KEY (word)
 					)";
 			break;
@@ -1120,7 +1120,7 @@ else
 		case 'sqlite':
 			$sql = 'CREATE TABLE '.$db_prefix."search_words (
 					id INTEGER NOT NULL,
-					word VARCHAR(20) NOT NULL DEFAULT '',
+					word VARCHAR(40) NOT NULL DEFAULT '',
 					PRIMARY KEY (id),
 					UNIQUE (word)
 					)";

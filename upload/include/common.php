@@ -93,6 +93,9 @@ require PUN_ROOT.'include/dblayer/common_db.php';
 // set db encoding
 if ($db_type == 'mysql')
 {
+	// FIXME - just a hack :(
+	if (!isset($language))
+		$language='English';
 	require PUN_ROOT.'lang/'.$language.'/common.php';
 	// FIXME - we need more accurate charset handling
 	if (strpos($lang_common['lang_encoding'], '8859') == false)

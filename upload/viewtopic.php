@@ -44,6 +44,7 @@ if ($id < 1 && $pid < 1)
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/reputation.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
+
 // create SQL for multigroup mod
 $mgrp_extra = multigrp_getSql($db);
 

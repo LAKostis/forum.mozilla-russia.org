@@ -33,6 +33,7 @@ $lang_common = array(
 'lang_encoding'                       =>      'utf-8',
 //'lang_multibyte'		=>	false,
 'lang_multibyte'              =>      true,
+'db_lang_encoding'              =>      'utf8',
 
 // Notices
 'Bad request'			=>	'Bad request. The link you followed is incorrect or outdated.',

@@ -4,7 +4,11 @@
   Caleb Champlin (med_mediator@hotmail.com)
 
 ************************************************************************/
+define('PUN_ROOT', './');
+require PUN_ROOT.'include/functions.php';
+
 session_start();
+
 require_once('ran.class.php');
 $im=&new ran;
 

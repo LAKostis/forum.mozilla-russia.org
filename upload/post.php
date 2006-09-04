@@ -121,7 +121,7 @@ if (isset($_POST['form_sent']))
 
 		// Load the register.php/profile.php language files
 		require PUN_ROOT.'lang/'.$pun_user['language'].'/prof_reg.php';
-		require PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
+		require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
 
 		// It's a guest, so we have to validate the username
 		if (strlen($username) < 2)
@@ -140,6 +140,15 @@ if (isset($_POST['form_sent']))
 		$temp = censor_words($username);
 		if ($temp != $username)
 			$errors[] = $lang_register['Username censor'];
+
+		// Image verifcation
+		if ($pun_config['o_regs_verify_image'] == '1')
+		{
+			session_start();
+			// Make sure what they submitted is not empty
+			if ((trim($_POST['req_image']) == '') || (strtolower(trim($_POST['req_image'])) != strtolower($_SESSION['text'])))
+				$errors[] = $lang_register['Text mismatch'];
+		}
 
 		// Check that the username (or a too similar username) is not already registered
 		$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE username=\''.$db->escape($username).'\' OR username=\''.$db->escape(preg_replace('/[^\w]/', '', $username)).'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
@@ -575,6 +584,19 @@ if ($fid): ?>
 						</ul>
 					</div>
 				</fieldset>
+<?php if ($pun_config['o_regs_verify_image'] == '1'): ?>
+<?php require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php' ?>
+	<div class="inform">
+		<fieldset>
+			<legend><?php echo $lang_register['Image verification'] ?></legend>
+			<div class="infldset">
+				<img src=ran.php><br />
+			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" name="req_image" size="16" maxlength="16" /><br /></label>
+			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
+			</div>
+		</fieldset>
+	</div>
+<?php endif; ?>
 <?php
 
 $checkboxes = array();

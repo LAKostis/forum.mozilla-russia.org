@@ -30,7 +30,7 @@ class ran
 		$white=imagecolorallocate($im,255,255,255);
             $other=imagecolorallocate($im,0,0,255);
 		// get a random number to start drawing out grid from
-		$num=rand(0,5);
+		$num=mt_rand(0,5);
 
 		// draw vertical bars
 		for($i=$num;$i<=$width;$i+=10)
@@ -41,7 +41,7 @@ class ran
 			imageline($im,0,$i,135,$i,$other);
 
 		// generate a random string
-		$string=substr(strtolower(md5(uniqid(rand(),1))),0,7);
+		$string=substr(strtolower(pun_hash(uniqid(mt_rand(),1))),0,7);
 		
 		$string=str_replace('2','a',$string);
 		$string=str_replace('l','p',$string);

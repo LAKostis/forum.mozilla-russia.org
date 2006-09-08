@@ -570,6 +570,19 @@ if ($pun_user['is_guest'])
 						<label class="conl"><?php echo $email_label ?><br /><input type="text" name="<?php echo $email_form_name ?>" value="<?php if (isset($_POST[$email_form_name])) echo pun_htmlspecialchars($email); ?>" size="50" maxlength="50" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 						<div class="clearer"></div>
 <?php
+if ($pun_config['o_regs_verify_image'] == '1'): ?>
+<?php require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php' ?>
+	<div class="inform">
+		<fieldset>
+			<legend><?php echo $lang_register['Image verification'] ?></legend>
+			<div class="infldset">
+				<img src=ran.php><br />
+			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" name="req_image" size="16" maxlength="16" /><br /></label>
+			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
+			</div>
+		</fieldset>
+	</div>
+<?php endif;
 
 }
 
@@ -584,19 +597,6 @@ if ($fid): ?>
 						</ul>
 					</div>
 				</fieldset>
-<?php if ($pun_config['o_regs_verify_image'] == '1'): ?>
-<?php require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php' ?>
-	<div class="inform">
-		<fieldset>
-			<legend><?php echo $lang_register['Image verification'] ?></legend>
-			<div class="infldset">
-				<img src=ran.php><br />
-			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" name="req_image" size="16" maxlength="16" /><br /></label>
-			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
-			</div>
-		</fieldset>
-	</div>
-<?php endif; ?>
 <?php
 
 $checkboxes = array();

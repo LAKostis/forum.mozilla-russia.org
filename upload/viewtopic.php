@@ -88,7 +88,7 @@ else if ($action == 'new' && !$pun_user['is_guest'])
 	if ($first_new_post_id)
 		header('Location: viewtopic.php?pid='.$first_new_post_id.'#p'.$first_new_post_id);
 	else	// If there is no new post, we go to the last post
-		header('Location: viewtopic.php?id='.$id.'&amp;action=last');
+		header('Location: viewtopic.php?id='.$id.'&action=last');
 
 	exit;
 }

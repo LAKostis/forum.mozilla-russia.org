@@ -83,7 +83,7 @@ else if ($action == 'markforumread')
 
 	$pun_user['read_topics']['f'][$id] = time();
 
-	$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].', read_topics=\''.$db->escape(serialize($pun_user['read_topics'])).'\' WHERE id='.$pun_user['id']) or error('Unable to update read-topic data', __FILE__, __LINE__, $db->error());
+	$db->query('UPDATE '.$db->prefix.'users SET read_topics=\''.$db->escape(serialize($pun_user['read_topics'])).'\' WHERE id='.$pun_user['id']) or error('Unable to update read-topic data', __FILE__, __LINE__, $db->error());
 
 	redirect('viewforum.php?id='.$id, $lang_misc['Mark forum read redirect']);
 }

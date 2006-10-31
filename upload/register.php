@@ -179,8 +179,17 @@ else if (isset($_POST['form_sent']))
 			$dupe_list[] = $cur_dupe['username'];
 	}
 
+	// Make sure we got a valid language string
+	if (isset($_POST['language']))
+	{
+		$language = preg_replace('#[\.\\\/]#', '', $_POST['language']);
+		if (!file_exists(PUN_ROOT.'lang/'.$language.'/common.php'))
+				message($lang_common['Bad request']);
+	}
+	else
+		$language = $pun_config['o_default_lang'];
+
 	$timezone = intval($_POST['timezone']);
-	$language = isset($_POST['language']) ? $_POST['language'] : $pun_config['o_default_lang'];
 	$save_pass = (!isset($_POST['save_pass']) || $_POST['save_pass'] != '1') ? '0' : '1';
 
 	$email_setting = intval($_POST['email_setting']);

@@ -194,6 +194,8 @@ else if (isset($_POST['add_edit_ban']))
 
 	if ($ban_user == '' && $ban_ip == '' && $ban_email == '')
 		message('You must enter either a username, an IP address or an e-mail address (at least).');
+	else if (strtolower($ban_user) == 'guest')
+		message('The guest user cannot be banned.');
 
 	// Validate IP/IP range (it's overkill, I know)
 	if ($ban_ip != '')

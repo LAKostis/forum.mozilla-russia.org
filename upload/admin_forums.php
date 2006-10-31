@@ -141,7 +141,7 @@ else if (isset($_POST['update_positions']))
 		if (!preg_match('#^\d+$#', $disp_position))
 			message('Position must be a positive integer value.');
 
-		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.$forum_id) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.intval($forum_id)) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 	}
 
 	// Regenerate the quickjump cache
@@ -187,9 +187,9 @@ else if (isset($_GET['edit_forum']))
 			$result = $db->query('SELECT g_id, g_read_board, g_post_replies, g_post_topics FROM '.$db->prefix.'groups WHERE g_id!='.PUN_ADMIN) or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 			while ($cur_group = $db->fetch_assoc($result))
 			{
-				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? $_POST['read_forum_new'][$cur_group['g_id']] : '0' : $_POST['read_forum_old'][$cur_group['g_id']];
-				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? $_POST['post_replies_new'][$cur_group['g_id']] : '0';
-				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? $_POST['post_topics_new'][$cur_group['g_id']] : '0';
+				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? '1' : '0' : intval($_POST['read_forum_old'][$cur_group['g_id']]);
+				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? '1' : '0';
+				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? '1' : '0';
 
 				// Check if the new settings differ from the old
 				if ($read_forum_new != $_POST['read_forum_old'][$cur_group['g_id']] || $post_replies_new != $_POST['post_replies_old'][$cur_group['g_id']] || $post_topics_new != $_POST['post_topics_old'][$cur_group['g_id']])

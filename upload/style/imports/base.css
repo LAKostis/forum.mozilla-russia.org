@@ -43,12 +43,19 @@ DIV.blockpost DIV.box, DIV.postleft, DIV.postsignature, DIV.postmsg {OVERFLOW: h
 
 DIV>DIV>DIV.postfootleft, DIV>DIV>DIV.postfootright {PADDING-TOP: 1px; MARGIN-TOP: -1px}
 
-/* 3.2 This is only visible to IE Windows and cures various bugs. Do not alter comments */
+/* 3.2 This is only visible to IE6 Windows and cures various bugs. Do not alter comments */
 
-/* Begin IEWin Fix \*/
-* HTML .inbox, * HTML .inform, * HTML .pun, * HTML .intd, * HTML .tclcon, * HTML h2 {HEIGHT: 1px}
+/* Begin IE6Win Fix \*/
+* HTML .inbox, * HTML .inform, * HTML .pun, * HTML .intd, * HTML .tclcon {HEIGHT: 1px}
 * HTML .inbox DIV.postmsg {WIDTH: 98%}
-/* End of IEWin Fix */
+/* End of IE6Win Fix */
+
+/* 3.3 This is the equivelant of 3.2 but for IE7. It is visible to other browsers
+but does no harm */
+
+/*Begin IE7Win Fix */
+.pun, .pun .inbox, .pun .inform, .pun .intd, .pun .tclcon {min-height: 1px}
+/* End of IE7Win Fix */
 
 /****************************************************************/
 /* 4. HIDDEN ELEMENTS */

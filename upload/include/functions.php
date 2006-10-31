@@ -149,7 +149,10 @@ function pun_setcookie($user_id, $password_hash, $expire)
 	// Enable sending of a P3P header by removing // from the following line (try this if login is failing in IE6)
 	@header('P3P: CP="CUR ADM"');
 
-	setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, $cookie_secure);
+	if (version_compare(PHP_VERSION, '5.2.0', '>='))
+		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+	else
+		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
 }
 
 
@@ -1180,7 +1183,10 @@ function unregister_globals()
 	foreach ($input as $k => $v)
 	{
 		if (!in_array($k, $no_unset) && isset($GLOBALS[$k]))
+		{
 			unset($GLOBALS[$k]);
+			unset($GLOBALS[$k]);	// Double unset to circumvent the zend_hash_del_key_or_index hole in PHP <4.4.3 and <5.1.4
+		}
 	}
 }
 

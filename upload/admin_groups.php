@@ -265,7 +265,7 @@ else if (isset($_POST['set_default_group']))
 	confirm_referrer('admin_groups.php');
 
 	$group_id = intval($_POST['default_group']);
-	if ($group_id < 1)
+	if ($group_id < 4)
 		message($lang_common['Bad request']);
 
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value='.$group_id.' WHERE conf_name=\'o_default_user_group\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());

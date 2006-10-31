@@ -47,6 +47,9 @@ if (isset($_POST['form_sent']))
 	if ($form['board_title'] == '')
 		message('You must enter a board title.');
 
+	// Clean default_lang
+	$form['default_lang'] = preg_replace('#[\.\\\/]#', '', $form['default_lang']);
+
 	require PUN_ROOT.'include/email.php';
 
 	$form['admin_email'] = strtolower($form['admin_email']);
@@ -63,6 +66,9 @@ if (isset($_POST['form_sent']))
 	// Make sure base_url doesn't end with a slash
 	if (substr($form['base_url'], -1) == '/')
 		$form['base_url'] = substr($form['base_url'], 0, -1);
+
+	// Clean avatars_dir
+	$form['avatars_dir'] = str_replace("\0", '', $form['avatars_dir']);
 
 	// Make sure avatars_dir doesn't end with a slash
 	if (substr($form['avatars_dir'], -1) == '/')

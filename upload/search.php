@@ -172,6 +172,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 				$word_count = 0;
 				$match_type = 'and';
+				$result_list = array();
 				@reset($keywords_array);
 				while (list(, $cur_word) = @each($keywords_array))
 				{
@@ -478,7 +479,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$sql = 'SELECT p.id AS pid, p.poster AS pposter, p.posted AS pposted, p.poster_id, '.$substr_sql.'(p.message, 1, 1000) AS message, t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.forum_id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE p.id IN('.$search_results.') ORDER BY '.$sort_by_sql;
 		}
 		else
-			$sql = 'SELECT t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE t.id IN('.$search_results.') GROUP BY t.id, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id'.$group_by_sql.' ORDER BY '.$sort_by_sql;
+			$sql = 'SELECT t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id FROM '.$db->prefix.'topics AS t WHERE t.id IN('.$search_results.') GROUP BY t.id, t.poster, t.subject, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id'.$group_by_sql.' ORDER BY '.$sort_by_sql;
 
 
 		// Determine the topic or post offset (based on $_GET['p'])

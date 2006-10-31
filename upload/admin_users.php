@@ -299,7 +299,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
 	while (list($key, $input) = @each($form))
 	{
-		if ($input != '')
+		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note')))
 			$conditions[] = 'u.'.$db->escape($key).' '.$like_command.' \''.$db->escape(str_replace('*', '%', $input)).'\'';
 	}
 
@@ -309,7 +309,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 		$conditions[] = 'u.num_posts<'.$posts_less;
 
 	if ($user_group != 'all')
-		$conditions[] = 'u.group_id='.$db->escape($user_group).' OR membergroupids LIKE \'%,'.$db->escape($user_group).',%\' OR membergroupids LIKE \''.$db->escape($user_group).',%\' OR membergroupids LIKE \'%,'.$db->escape($user_group).'\'';
+		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
 	if (!isset($conditions))
 		message('You didn\'t enter any search terms.');

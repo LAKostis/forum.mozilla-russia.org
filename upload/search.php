@@ -249,7 +249,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			}
 
 			// If it's a search for author name (and that author name isn't Guest)
-			if ($author && strcasecmp($author, 'Guest') && strcasecmp($author, $lang_common['Guest']))
+			if ($author && strcasecmp($author, 'Guest') && pun_strcasecmp($author, $lang_common['Guest']))
 			{
 				switch ($db_type)
 				{

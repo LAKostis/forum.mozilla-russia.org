@@ -634,7 +634,7 @@ else if (isset($_POST['form_sent']))
 						message($lang_prof_reg['Username too short']);
 					else if (pun_strlen($form['username']) > 25)	// This usually doesn't happen since the form element only accepts 25 characters
 					    message($lang_common['Bad request']);
-					else if (!strcasecmp($form['username'], 'Guest') || !strcasecmp($form['username'], $lang_common['Guest']))
+					else if (!strcasecmp($form['username'], 'Guest') || !pun_strcasecmp($form['username'], $lang_common['Guest']))
 						message($lang_prof_reg['Username guest']);
 					else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $form['username']))
 						message($lang_prof_reg['Username IP']);

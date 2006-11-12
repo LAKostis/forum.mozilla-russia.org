@@ -108,7 +108,7 @@ else if (isset($_POST['form_sent']))
 		message($lang_prof_reg['Pass too short']);
 	else if ($password1 != $password2)
 		message($lang_prof_reg['Pass not match']);
-	else if (!strcasecmp($username, 'Guest') || !strcasecmp($username, $lang_common['Guest']))
+	else if (!strcasecmp($username, 'Guest') || !pun_strcasecmp($username, $lang_common['Guest']))
 		message($lang_prof_reg['Username guest']);
 	else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username))
 		message($lang_prof_reg['Username IP']);

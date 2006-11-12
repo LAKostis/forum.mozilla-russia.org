@@ -181,7 +181,7 @@ function check_bans()
 			continue;
 		}
 
-		if ($cur_ban['username'] != '' && !strcasecmp($pun_user['username'], $cur_ban['username']))
+		if ($cur_ban['username'] != '' && !pun_strcasecmp($pun_user['username'], $cur_ban['username']))
 		{
 			$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 			message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
@@ -546,7 +546,7 @@ function get_title($user)
 		$ban_list = array();
 
 		foreach ($pun_bans as $cur_ban)
-			$ban_list[] = strtolower($cur_ban['username']);
+			$ban_list[] = ((function_exists('utf8_strtolower')) ? utf8_strtolower($cur_ban['username']) : strtolower($cur_ban['username']));
 	}
 
 	// If not already loaded in a previous call, load the cached ranks
@@ -1313,9 +1313,21 @@ function get_user_ua() {
 function pun_strtolower($string) {
 	global $lang_common;
 
-	if ($lang_common['lang_encoding'] == 'utf-8')
-		$string = mb_strtolower($string,'utf-8');
+	if (function_exists('utf8_strtolower'))
+		$string = utf8_strtolower($string);
 	else $string = strtolower($string);
+	return $string;
+}
+
+//
+// More portable strcasecmp
+//
+function pun_strcasecmp($string1, $string2) {
+	global $lang_common;
+	$string = '';
+	if (function_exists('utf8_strcasecmp'))
+		$string = utf8_strcasecmp($string1,$string2);
+	else $string = strcasecmp($string1,$string2);
 	return $string;
 }
 

@@ -126,7 +126,7 @@ if (isset($_POST['form_sent']))
 		// It's a guest, so we have to validate the username
 		if (strlen($username) < 2)
 			$errors[] = $lang_prof_reg['Username too short'];
-		else if (!strcasecmp($username, 'Guest') || !strcasecmp($username, $lang_common['Guest']))
+		else if (!strcasecmp($username, 'Guest') || !pun_strcasecmp($username, $lang_common['Guest']))
 			$errors[] = $lang_prof_reg['Username guest'];
 		else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $username))
 			$errors[] = $lang_prof_reg['Username IP'];

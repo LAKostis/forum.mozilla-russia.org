@@ -1,0 +1,17 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Форум | Mozilla Россия</os:ShortName>
+<os:Description>Поиск по российскому форуму Mozilla</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABeklEQVQ4jbWRvWobQRSFPxyEnW5QJReBeYWLAmpcbeEXGMgT7CsMLNMlCwt5Ar2CiB/AWKlTqXDpxkhFGjXC7uzYoJNiZ6W1iVzFFy7zA+ece86F/1zHdV0/e+9VgMxMdV0/VVV1ORwOP72JnEwm52amArQAzUC3oBJU5E4pzf8JbprmN6CQgQEUQVtrzwDy3suBDg2gjmALugItrCWLoAWmEIK895qBRqORfwGu6/qJrL4Fbdgrd0Sb3FfZ1is7rvVuLcE0E/XJZjmb7n+WbXUTPE9fATa9t4HAKYSw+78FlWb6AHxdrVbfft3fcwp8Br4Dd8AZ8BFYAic88nhzwzJGLh4eOFmvWa7XbQZVVV2CU5PZF1m5yd0F22T/MUbhUVmWAjgGhNuHuO2N6ZyTB4UQFGPUFJMZyqvfbyGlNC+yyqY3iXWKrdDhijGq6Kk3oKntkj4IPuoug8Hg550ZP/L7C3BxDePxGODPm+r9SinNm7xKcLug3q3+AoQBAvkRVjyAAAAAAElFTkSuQmCC</os:Image>
+<os:Url type="text/html" method="GET" template="http://forum.mozilla-russia.org/search.php">
+  <os:Param name="action" value="search"/>
+  <os:Param name="keywords" value="{searchTerms}"/>
+  <os:Param name="author" value=""/>
+  <os:Param name="forum" value="-1"/>
+  <os:Param name="search_in" value="all"/>
+  <os:Param name="sort_by" value="0"/>
+  <os:Param name="sort_dir" value="DESC"/>
+  <os:Param name="show_as" value="topics"/>
+  <os:Param name="search" value="Отправить"/>
+</os:Url>
+</SearchPlugin>

@@ -1,0 +1,11 @@
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+<os:ShortName>Wiki | Mozilla Россия</os:ShortName>
+<os:Description>Поиск по российской базе знаний по Mozilla</os:Description>
+<os:InputEncoding>UTF-8</os:InputEncoding>
+<os:Image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABeklEQVQ4jbWRvWobQRSFPxyEnW5QJReBeYWLAmpcbeEXGMgT7CsMLNMlCwt5Ar2CiB/AWKlTqXDpxkhFGjXC7uzYoJNiZ6W1iVzFFy7zA+ece86F/1zHdV0/e+9VgMxMdV0/VVV1ORwOP72JnEwm52amArQAzUC3oBJU5E4pzf8JbprmN6CQgQEUQVtrzwDy3suBDg2gjmALugItrCWLoAWmEIK895qBRqORfwGu6/qJrL4Fbdgrd0Sb3FfZ1is7rvVuLcE0E/XJZjmb7n+WbXUTPE9fATa9t4HAKYSw+78FlWb6AHxdrVbfft3fcwp8Br4Dd8AZ8BFYAic88nhzwzJGLh4eOFmvWa7XbQZVVV2CU5PZF1m5yd0F22T/MUbhUVmWAjgGhNuHuO2N6ZyTB4UQFGPUFJMZyqvfbyGlNC+yyqY3iXWKrdDhijGq6Kk3oKntkj4IPuoug8Hg550ZP/L7C3BxDePxGODPm+r9SinNm7xKcLug3q3+AoQBAvkRVjyAAAAAAElFTkSuQmCC</os:Image>
+<os:Url type="text/html" method="GET" template="http://forum.mozilla-russia.org/doku.php">
+  <os:Param name="id" value=""/>
+  <os:Param name="do" value="search"/>
+  <os:Param name="id" value="{searchTerms}"/>
+</os:Url>
+</SearchPlugin>

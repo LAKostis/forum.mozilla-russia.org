@@ -6,6 +6,7 @@
 <meta name="robots" content="index,follow" />
 <meta name="keywords" content="russian localization, localization, extensions, extension, ext, xpi, jar, mozilla, firefox, thunderbird, sunbird, seamonkey, nvu, xul, xulrunner, rhino, suite, plugins, mirror, install, extend, browser, email, forum" />
 <pun_head>
+<link rel="search" type="application/opensearchdescription+xml" title="Wiki | Mozilla Россия" href="/plugins/mz_wiki.xml" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=15" title="<rss site news>" />

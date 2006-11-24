@@ -6,13 +6,14 @@
 <meta name="robots" content="index,follow" />
 <meta name="keywords" content="russian localization, localization, extensions, extension, ext, xpi, jar, mozilla, firefox, thunderbird, sunbird, seamonkey, nvu, xul, xulrunner, rhino, suite, plugins, mirror, install, extend, browser, email, forum" />
 <pun_head>
+<link rel="search" type="application/opensearchdescription+xml" title="Форум | Mozilla Россия" href="/plugins/mz_forum.xml" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=15" title="<rss site news>" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 <!-- -->
 <style type="text/css">
-.reminder {position: fixed; width: 100%; height: 28px; left: 0; top: 0; background: #ffffe1; margin: 0; color: black; font-family: "Tahoma", arial; font-size: 11px; border-bottom: 1px solid #A7A6AA; z-index: 101;}
+.reminder {position: fixed; width: 100%; height: 28px; left: 0; top: 0; background: #ffdbcc; margin: 0; color: black; font-family: "Tahoma", arial; font-size: 11px; border-bottom: 1px solid #A7A6AA; z-index: 101;}
 * html .reminder {position: absolute;}
 .reminder table{width: 100%; border:0; font-size: 11px}
 .reminder td{verical-align: middle; border:0;}
@@ -33,7 +34,7 @@
         <img src="./img/idea.png" width="16" height="16" alt="" />
       </td>
       <td>
-        Друзья, нам нужна ваша помощь. Голосуйте за наш проект <b>Mozilla-Russia.org</b> 
+        Друзья, нам очень нужна ваша помощь. Голосуйте за наш проект <b>Mozilla-Russia.org</b> 
         в <a href="http://www.premiaruneta.ru">Премии Рунета 2006</a>. Вместе мы победим!
       </td>
       <td style="text-align: right">

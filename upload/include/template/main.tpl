@@ -11,44 +11,8 @@
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=15" title="<rss site news>" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
-<!-- -->
-<style type="text/css">
-.reminder {position: fixed; width: 100%; height: 28px; left: 0; top: 0; background: #ffdbcc; margin: 0; color: black; font-family: "Tahoma", arial; font-size: 11px; border-bottom: 1px solid #A7A6AA; z-index: 101;}
-* html .reminder {position: absolute;}
-.reminder table{width: 100%; border:0; font-size: 11px}
-.reminder td{verical-align: middle; border:0;}
-.reminder img{border: 0;}
-.reminder a{text-decoration: underline;}
-.reminderplace {height: 30px;}
-* html .reminderplace {height: 14px;}
-</style>
-<!-- / -->
 </head>
 <body>
-
-<!-- start RuNet Vote -->
-<div class="reminder" id="reminderDiv">
-  <table>
-    <tr>
-      <td style="padding-left: 7px">
-        <img src="./img/idea.png" width="16" height="16" alt="" />
-      </td>
-      <td>
-        Друзья, нам очень нужна ваша помощь. Голосуйте за наш проект <b>Mozilla-Russia.org</b> 
-        в <a href="http://www.premiaruneta.ru">Премии Рунета 2006</a>. Вместе мы победим!
-      </td>
-      <td style="text-align: right">
-        <input type="button" onClick='document.location.href="http://www.premiaruneta.ru/narod/premium/#item_137"' value="Голосовать!" />
-      </td>
-      <td>
-        <img src="./img/close16x16.png" width="16" height="16" alt="" onClick="document.getElementById('reminderDiv').style.display='none'; document.getElementById('reminderplaceDiv').style.display='none';" />
-      </td>
-    </tr>
-  </table>
-</div>
-<div class="reminderplace" id="reminderplaceDiv"></div>
-<!-- end RuNet Vote -->
-
 <div id="punwrap">
 <div id="pun<pun_page>" class="pun">
 

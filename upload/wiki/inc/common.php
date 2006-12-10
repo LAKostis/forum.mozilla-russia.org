@@ -6,10 +6,15 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-  require_once("wiki/conf/dokuwiki.php");
-  require_once("wiki/inc/io.php");
-  require_once('wiki/inc/utf8.php');
-  require_once('wiki/inc/mail.php');
+if (!defined('PUN_ROOT'))
+	exit('The constant PUN_ROOT must be defined and point to a valid PunBB installation root directory.');
+  require_once PUN_ROOT.'include/utf8/utf8.php';
+  require_once PUN_ROOT.'include/utf8/utils/unicode.php';
+  require_once PUN_ROOT.'include/utf8/utils/specials.php';
+  require_once PUN_ROOT.'wiki/conf/dokuwiki.php';
+  require_once PUN_ROOT.'wiki/inc/io.php';
+  require_once PUN_ROOT.'wiki/inc/utf8.php';
+  require_once PUN_ROOT.'wiki/inc/mail.php';
 
   //set up error reporting to sane values
   //error_reporting(E_ALL ^ E_NOTICE);
@@ -456,7 +461,7 @@ function cleanID($id){
 
   //remove specials
   //$id = preg_replace('#[\x00-\x20 ¡!"§$%&()\[\]{}¿\\?`\'\#~*+=,<>\|^°@µ¹²³¼½¬]#u','_',$id);
-  $id = utf8_stripspecials($id,'_','_:.-');
+  $id = utf8_strip_specials($id,'_','_:.-');
 
   //clean up
   $id = preg_replace('#__#','_',$id);

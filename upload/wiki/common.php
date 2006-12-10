@@ -1,14 +1,15 @@
 <?php
 
 	//gets all the wiki stuff to use in header.php :D
-	
-	require_once("wiki/conf/dokuwiki.php");
-	require_once("wiki/inc/common.php");
-	require_once("wiki/inc/html.php");
-	require_once("wiki/inc/parser.php");
-	require_once("lang/English/lang.php");
-	@include("lang/".$pun_user['language']."/lang.php");
-	require_once("wiki/inc/auth.php");
+	define('PUN_ROOT', './');
+
+	require_once PUN_ROOT.'wiki/conf/dokuwiki.php';
+	require_once PUN_ROOT.'wiki/inc/common.php';
+	require_once PUN_ROOT.'wiki/inc/html.php';
+	require_once PUN_ROOT.'wiki/inc/parser.php';
+	require_once PUN_ROOT.'lang/English/lang.php';
+	@include PUN_ROOT.'lang/'.$pun_user['language'].'/lang.php';
+	require_once PUN_ROOT.'wiki/inc/auth.php';
 
 	//import variables
 	$QUERY = trim($_REQUEST['id']);

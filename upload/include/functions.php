@@ -1320,6 +1320,30 @@ function pun_strtolower($string) {
 }
 
 //
+// More portable strtoupper
+//
+function pun_strtoupper($string) {
+	global $lang_common;
+
+	if (function_exists('utf8_strtoupper'))
+		$string = utf8_strtoupper($string);
+	else $string = strtoupper($string);
+	return $string;
+}
+
+//
+// More portable ucwords
+//
+function pun_ucwords($string) {
+	global $lang_common;
+
+	if (function_exists('utf8_ucwords'))
+		$string = utf8_ucwords($string);
+	else $string = ucwords($string);
+	return $string;
+}
+
+//
 // More portable strcasecmp
 //
 function pun_strcasecmp($string1, $string2) {

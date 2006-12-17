@@ -147,6 +147,7 @@ if (strpos($lang_common['lang_encoding'], 'utf-8') !== false)
 {
 	require_once PUN_ROOT.'include/utf8/utf8.php';
 	require_once PUN_ROOT.'include/utf8/strcasecmp.php';
+	require_once PUN_ROOT.'include/utf8/ucwords.php';
 }
 
 // Load cached bans

@@ -58,8 +58,8 @@ if (isset($_POST['form_sent']))
 		message($lang_post['No subject']);
 	else if (pun_strlen($subject) > 70)
 		message($lang_post['Too long subject']);
-	else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_GUEST)
-		$subject = ucwords(pun_strtolower($subject));
+	else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_GUEST)
+		$subject = pun_ucwords(pun_strtolower($subject));
 
 	// Clean up message from POST
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));
@@ -69,8 +69,8 @@ if (isset($_POST['form_sent']))
 		message($lang_post['No message']);
 	else if (strlen($message) > 65535)
 		message($lang_post['Too long message']);
-	else if ($pun_config['p_message_all_caps'] == '0' && strtoupper($message) == $message && $pun_user['g_id'] > PUN_GUEST)
-		$message = ucwords(strtolower($message));
+	else if ($pun_config['p_message_all_caps'] == '0' && pun_strtoupper($message) == $message && $pun_user['g_id'] > PUN_GUEST)
+		$message = pun_ucwords(pun_strtolower($message));
 
 	// Validate BBCode syntax
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($message, '[') !== false && strpos($message, ']') !== false)

@@ -103,8 +103,8 @@ if (isset($_POST['form_sent']))
 			$errors[] = $lang_post['No subject'];
 		else if (pun_strlen($subject) > 70)
 			$errors[] = $lang_post['Too long subject'];
-		else if ($pun_config['p_subject_all_caps'] == '0' && strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_MOD)
-			$subject = ucwords(pun_strtolower($subject));
+		else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($subject) == $subject && $pun_user['g_id'] > PUN_MOD)
+			$subject = pun_ucwords(pun_strtolower($subject));
 	}
 
 	// If the user is logged in we get the username and e-mail from $pun_user
@@ -181,8 +181,8 @@ if (isset($_POST['form_sent']))
 		$errors[] = $lang_post['No message'];
 	else if (strlen($message) > 65535)
 		$errors[] = $lang_post['Too long message'];
-	else if ($pun_config['p_message_all_caps'] == '0' && strtoupper($message) == $message && $pun_user['g_id'] > PUN_MOD)
-		$message = ucwords(pun_strtolower($message));
+	else if ($pun_config['p_message_all_caps'] == '0' && pun_strtoupper($message) == $message && $pun_user['g_id'] > PUN_MOD)
+		$message = pun_ucwords(pun_strtolower($message));
 
 	// Validate BBCode syntax
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($message, '[') !== false && strpos($message, ']') !== false)

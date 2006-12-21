@@ -25,6 +25,7 @@
     <a href="http://mozutil.mozilla-russia.org">MozUtil</a>&nbsp;
     <a href="http://flock.mozilla-russia.org">Flock</a>&nbsp;
     <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
+    <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="search.php" style="margin: 3px">

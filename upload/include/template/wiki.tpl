@@ -26,6 +26,7 @@
     <a href="http://mozutil.mozilla-russia.org">MozUtil</a>&nbsp;
     <a href="http://flock.mozilla-russia.org">Flock</a>&nbsp;
     <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
+    <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="doku.php?id=" accept-charset="utf-8" style="margin: 3px">

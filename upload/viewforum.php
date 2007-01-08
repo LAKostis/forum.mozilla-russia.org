@@ -68,7 +68,7 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod) {
 	$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a>'."\n";
 	if (!$pun_user['is_guest']) 
-		$post_link .= '<a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a></p>'."\n";
+		$post_link .= '<br /><a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a></p>'."\n";
 } else
 	$post_link = '';
 

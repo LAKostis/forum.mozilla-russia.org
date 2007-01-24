@@ -1355,3 +1355,40 @@ function pun_strcasecmp($string1, $string2) {
 	return $string;
 }
 
+//
+// For show User Agent in users info
+//
+function pun_get_browser($uagent){
+   $known_bw = array('firefox',
+                     'mozilla',
+                     'opera',
+                     'ie',
+                     'konqueror',
+                     'safari',
+                     'camino',
+                     'k-meleon',
+                     'flock',
+                     'netscape',
+                     'seamonkey');
+   $ua = get_browser($uagent,true);
+   $ua_browser = pun_strtolower($ua['browser']);
+   $ua_version = $ua['version'];
+   $ua_browser_alt = pun_ucwords($ua_browser);
+   
+   if (!in_array($ua_browser,$known_bw)){
+      $ua_browser = "unknown";
+      $ua_version = "0.0";
+      $ua_browser_alt = "unknown";
+   }
+   else{
+      if($ua_browser == "ie" && $ua_version == "7.0"){
+        $ua_browser = "ie7";
+        $ua_browser_alt = "IE";
+      }
+      if($ua_browser == "ie"){
+      	$ua_browser_alt = "IE";
+      }
+   }
+   
+   return array($ua_browser,$ua_version,$ua_browser_alt);
+}

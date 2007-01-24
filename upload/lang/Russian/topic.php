@@ -13,6 +13,7 @@ $lang_topic = array(
 'Offline'			=>	'Отсутствует',
 'Last edit'			=>	'Отредактировано',
 'Report'			=>	'Сообщить модератору',
+'User agent'		=>	'UA: ',
 'Delete'			=>	'Удалить',
 'Edit'				=>	'Редактировать',
 'Reply'           => 'Ответить',

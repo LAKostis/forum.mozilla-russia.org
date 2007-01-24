@@ -13,6 +13,7 @@ $lang_topic = array(
 'Offline'			=>	'Offline',
 'Last edit'			=>	'Last edited by',
 'Report'			=>	'Report',
+'User agent'		=>	'UA: ',
 'Delete'			=>	'Delete',
 'Edit'				=>	'Edit',
 'Reply'				=>	'Reply',

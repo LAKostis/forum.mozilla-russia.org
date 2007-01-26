@@ -653,10 +653,10 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($num_pages_topic > 1)
 				{
 					if ($search_set[$i]['question'] == "")
-						$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).' ]';
+						$subject_multipage = '[&nbsp;'.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).'&nbsp;]';
 					else
-						$subject_multipage = '[ '.paginate($num_pages_topic, -1,
-'viewtopic.php?id='.$search_set[$i]['tid']).' ]';
+						$subject_multipage = '[&nbsp;'.paginate($num_pages_topic, -1,
+'viewtopic.php?id='.$search_set[$i]['tid']).'&nbsp;]';
 				}
 				else
 					$subject_multipage = null;

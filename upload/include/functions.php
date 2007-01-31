@@ -1369,7 +1369,8 @@ function pun_get_browser($uagent){
                      'k-meleon',
                      'flock',
                      'netscape',
-                     'seamonkey');
+                     'seamonkey',
+                     'swift');
    $ua = get_browser($uagent,true);
    $ua_browser = pun_strtolower($ua['browser']);
    $ua_version = $ua['version'];

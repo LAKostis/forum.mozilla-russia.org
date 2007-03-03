@@ -1370,7 +1370,7 @@ function pun_get_browser($uagent){
                      'flock',
                      'netscape',
                      'seamonkey',
-                     'lolifox'),
+                     'lolifox',
                      'swift');
    $ua = get_browser($uagent,true);
    $ua_browser = pun_strtolower($ua['browser']);

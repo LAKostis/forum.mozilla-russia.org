@@ -797,8 +797,8 @@ while ($cur_forum = $db->fetch_assoc($result))
 						<br /></label>
 						<label class="conl"><?php echo $lang_search['Show as'] ?>
 						<br /><select name="show_as">
-							<option value="topics"><?php echo $lang_search['Show as topics'] ?></option>
 							<option value="posts"><?php echo $lang_search['Show as posts'] ?></option>
+							<option value="topics"><?php echo $lang_search['Show as topics'] ?></option>
 						</select>
 						<br /></label>
 						<p class="clearb"><?php echo $lang_search['Search results info'] ?></p>

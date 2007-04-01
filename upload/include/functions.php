@@ -1371,6 +1371,8 @@ function pun_get_browser($uagent){
                      'netscape',
                      'seamonkey',
                      'lolifox',
+                     'shiira',
+                     'songbird',
                      'swift');
    $ua = get_browser($uagent,true);
    $ua_browser = pun_strtolower($ua['browser']);

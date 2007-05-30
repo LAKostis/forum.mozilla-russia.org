@@ -115,7 +115,7 @@ function pun_mail($to, $subject, $message, $from = '')
 	$mailer_name = $lang_common['Mailer'];
 	// Default sender/return address
 	if (!$from)
-		$from = '"'.str_replace('"', '', encode($mailer_name).' '.$pun_config['o_board_title']).'" <'.$pun_config['o_webmaster_email'].'>';
+		$from = '"'.str_replace('"', '', encode($mailer_name).' '.encode($pun_config['o_board_title'])).'" <'.$pun_config['o_webmaster_email'].'>';
 
 	// Do a little spring cleaning
 	$to = trim(preg_replace('#[\n\r]+#s', '', $to));

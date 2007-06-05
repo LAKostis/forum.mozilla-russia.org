@@ -588,7 +588,7 @@ if ($pun_config['o_regs_verify_image'] == '1'): ?>
 
 if ($fid): ?>
 						<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo pun_htmlspecialchars($subject); ?>" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
-<?php endif; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label><strong><?php echo $lang_common['Message'] ?></strong><br />
+<?php endif; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label>
 						<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 						<?php echo '<input type="hidden" name="uagent" value="'.get_user_ua().'" />' ?>
 						<ul class="bblinks">

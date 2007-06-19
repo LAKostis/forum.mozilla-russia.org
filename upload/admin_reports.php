@@ -2,7 +2,7 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russian.org)
+  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russia.org)
 
   This file is part of Russian Mozilla Team PunBB modification.
 

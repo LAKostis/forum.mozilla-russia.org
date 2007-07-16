@@ -216,7 +216,7 @@ require PUN_ROOT.'include/polls/viewpoll.php';
 // END MOD
 
 // Retrieve the posts (and their respective poster/online status)
-$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.poster_uagent, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
 {
 	$post_count++;
@@ -382,9 +382,6 @@ while ($cur_post = $db->fetch_assoc($result))
 <?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?></dd>
 <?php if (strlen($user_image_award)>0) echo $user_image_award;  ## Image Award Mod ?>
 <?php if (count($user_info)) echo "\t\t\t\t\t".implode('</dd>'."\n\t\t\t\t\t", $user_info).'</dd>'."\n"; ?>
-<?php if ($cur_post['poster_uagent']) {$ua = pun_get_browser($cur_post['poster_uagent']); ?>
-					<dd class="useragent" title="<?php echo $cur_post['poster_uagent'] ?>"><?php echo $lang_topic['User agent'] ?><img src="img/browsers/<?php echo $ua[0].".png" ?>" alt="<?php echo $ua[2] ?>" /> <span><?php echo $ua[1] ?></span></dd>
-<?php } ?>
 					<dd>
 	  <?php
 		  //Is rep. system enabled
@@ -455,7 +452,6 @@ if ($quickpost)
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 						<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>	
 						<label><textarea name="req_message" rows="7" cols="75" tabindex="1" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);"></textarea></label>
-						<?php echo '<input type="hidden" name="uagent" value="'.get_user_ua().'" />' ?>
 						<ul class="bblinks">
 							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>

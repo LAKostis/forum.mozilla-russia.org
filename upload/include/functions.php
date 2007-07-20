@@ -1397,3 +1397,19 @@ function pun_get_browser($uagent){
    
    return array($ua_browser,$ua_version,$ua_browser_alt);
 }
+
+//
+// Format RE: RE: RE: RE: to Re(4):
+// written by francev.nikolay @ gmail<.>com
+//
+function pun_increment_pm($str) {
+  if (preg_match('/^Re\(\d+\): /i', $str)) {
+    $arr = preg_split('/^Re\(|\): /i', $str, 3);
+    return 'Re('.(++$arr[1]).'): '.$arr[2];
+  }
+  elseif (preg_match('/^(Re: )+/i', $str, $matches))
+    return preg_replace('/^(Re: )+/i', 'Re('.sizeof(split(' ',$matches[0])).'): ', $str);
+  else
+    return 'Re: '.$str;
+}
+

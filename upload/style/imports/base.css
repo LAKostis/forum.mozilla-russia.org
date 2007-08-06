@@ -176,7 +176,8 @@ DIV.blockmenu, #viewprofile DT {
 DIV.postleft, DIV.postfootleft {
 	FLOAT:left;
 	WIDTH: 18em;
-	OVERFLOW: hidden
+	OVERFLOW: hidden;
+	POSITION: relative;
 }
 	
 DIV.postright, DIV.postfootright {

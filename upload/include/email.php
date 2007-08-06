@@ -126,8 +126,8 @@ function pun_mail($to, $subject, $message, $from = '')
 
 	$subject = encode($subject);
 
-	// Make sure all linebreaks are CRLF in message
-	$message = str_replace("\n", "\r\n", pun_linebreaks($message));
+	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
+	$message = str_replace(array("\n", "\0"), array("\r\n", ''), pun_linebreaks($message));
 
 	if ($pun_config['o_smtp_host'] != '')
 		smtp_mail($to, $subject, $message, $headers);

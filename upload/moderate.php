@@ -39,7 +39,7 @@ if (isset($_GET['get_host']))
 		message($lang_common['No permission']);
 
 	// Is get_host an IP address or a post ID?
-	if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $_GET['get_host']))
+	if (@preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $_GET['get_host']))
 		$ip = $_GET['get_host'];
 	else
 	{
@@ -114,7 +114,13 @@ if (isset($_GET['tid']))
 		{
 			confirm_referrer('moderate.php');
 
-			if (preg_match('/[^0-9,]/', $posts))
+			if (@preg_match('/[^0-9,]/', $posts))
+				message($lang_common['Bad request']);
+
+			// Verify that the post IDs are valid
+			$result = $db->query('SELECT 1 FROM '.$db->prefix.'posts WHERE id IN('.$posts.') AND topic_id='.$tid) or error('Unable to check posts', __FILE__, __LINE__, $db->error());
+
+			if ($db->num_rows($result) != substr_count($posts, ',') + 1)
 				message($lang_common['Bad request']);
 
 			// Delete the posts
@@ -300,12 +306,18 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	{
 		confirm_referrer('moderate.php');
 
-		if (preg_match('/[^0-9,]/', $_POST['topics']))
+		if (@preg_match('/[^0-9,]/', $_POST['topics']))
 			message($lang_common['Bad request']);
 
 		$topics = explode(',', $_POST['topics']);
 		$move_to_forum = isset($_POST['move_to_forum']) ? intval($_POST['move_to_forum']) : 0;
 		if (empty($topics) || $move_to_forum < 1)
+			message($lang_common['Bad request']);
+
+		// Verify that the topic IDs are valid
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.implode(',',$topics).') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+
+		if ($db->num_rows($result) != count($topics))
 			message($lang_common['Bad request']);
 
 		// Delete any redirect topics if there are any (only if we moved/copied the topic back to where it where it was once moved from)
@@ -419,10 +431,16 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 	{
 		confirm_referrer('moderate.php');
 
-		if (preg_match('/[^0-9,]/', $topics))
+		if (@preg_match('/[^0-9,]/', $topics))
 			message($lang_common['Bad request']);
 
 		require PUN_ROOT.'include/search_idx.php';
+
+		// Verify that the topic IDs are valid
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.$topics.') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+
+		if ($db->num_rows($result) != substr_count($topics, ',') + 1)
+			message($lang_common['Bad request']);
 
 		// Delete the topics and any redirect topics
 		$db->query('DELETE FROM '.$db->prefix.'topics WHERE id IN('.$topics.') OR moved_to IN('.$topics.')') or error('Unable to delete topic', __FILE__, __LINE__, $db->error());
@@ -491,7 +509,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
-		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id IN('.implode(',', $topics).')') or error('Unable to close topics', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id IN('.implode(',', $topics).') AND forum_id='.$fid) or error('Unable to close topics', __FILE__, __LINE__, $db->error());
 
 		$redirect_msg = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
 		redirect('moderate.php?fid='.$fid, $redirect_msg);
@@ -505,7 +523,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		if ($topic_id < 1)
 			message($lang_common['Bad request']);
 
-		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id='.$topic_id) or error('Unable to close topic', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id='.$topic_id.' AND forum_id='.$fid) or error('Unable to close topic', __FILE__, __LINE__, $db->error());
 
 		$redirect_msg = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
 		redirect('viewtopic.php?id='.$topic_id, $redirect_msg);
@@ -522,7 +540,7 @@ else if (isset($_GET['stick']))
 	if ($stick < 1)
 		message($lang_common['Bad request']);
 
-	$db->query('UPDATE '.$db->prefix.'topics SET sticky=\'1\' WHERE id='.$stick) or error('Unable to stick topic', __FILE__, __LINE__, $db->error());
+	$db->query('UPDATE '.$db->prefix.'topics SET sticky=\'1\' WHERE id='.$stick.' AND forum_id='.$fid) or error('Unable to stick topic', __FILE__, __LINE__, $db->error());
 
 	redirect('viewtopic.php?id='.$stick, $lang_misc['Stick topic redirect']);
 }
@@ -537,7 +555,7 @@ else if (isset($_GET['unstick']))
 	if ($unstick < 1)
 		message($lang_common['Bad request']);
 
-	$db->query('UPDATE '.$db->prefix.'topics SET sticky=\'0\' WHERE id='.$unstick) or error('Unable to unstick topic', __FILE__, __LINE__, $db->error());
+	$db->query('UPDATE '.$db->prefix.'topics SET sticky=\'0\' WHERE id='.$unstick.' AND forum_id='.$fid) or error('Unable to unstick topic', __FILE__, __LINE__, $db->error());
 
 	redirect('viewtopic.php?id='.$unstick, $lang_misc['Unstick topic redirect']);
 }

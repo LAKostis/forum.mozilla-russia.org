@@ -53,7 +53,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		// This is the only potentially "dangerous" thing we can do here, so we check the referer
 		confirm_referrer('admin_maintenance.php');
 
-		$truncate_sql = ($db_type != 'sqlite') ? 'TRUNCATE TABLE ' : 'DELETE FROM ';
+		$truncate_sql = ($db_type != 'sqlite' && $db_type != 'pgsql') ? 'TRUNCATE TABLE ' : 'DELETE FROM ';
 		$db->query($truncate_sql.$db->prefix.'search_matches') or error('Unable to empty search index match table', __FILE__, __LINE__, $db->error());
 		$db->query($truncate_sql.$db->prefix.'search_words') or error('Unable to empty search index words table', __FILE__, __LINE__, $db->error());
 
@@ -66,7 +66,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 				break;
 
 			case 'pgsql';
-				$result = $db->query('SELECT setval(\'search_words_id_seq\', 1, false)') or error('Unable to update sequence', __FILE__, __LINE__, $db->error());
+				$result = $db->query('SELECT setval(\''.$db->prefix.'search_words_id_seq\', 1, false)') or error('Unable to update sequence', __FILE__, __LINE__, $db->error());
 		}
 	}
 

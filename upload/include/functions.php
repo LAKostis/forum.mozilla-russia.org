@@ -28,7 +28,7 @@
 //
 function check_cookie(&$pun_user)
 {
-	global $db, $pun_config, $cookie_name, $cookie_seed;
+	global $db, $db_type, $pun_config, $cookie_name, $cookie_seed;
 
 	$now = time();
 	$expire = $now + 31536000;	// The cookie expires after a year
@@ -84,8 +84,21 @@ function check_cookie(&$pun_user)
 			if (!$pun_user['logged'])
 			{
 				$show_online = ($pun_user['show_online']);
-				$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$now.',\''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
-			}
+ 				$pun_user['logged'] = $now;
+ 
+ 				// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
+ 				switch ($db_type)
+ 				{
+ 					case 'mysql':
+ 					case 'mysqli':
+ 						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].'\', '.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+ 						break;
+ 
+ 					default:
+ 						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].'\', '.$db->escape($show_online).'\)') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+ 						break;
+ 				}
+ 			}
 			else
 			{
 				// Special case: We've timed out, but no other user has browsed the forums since we timed out
@@ -113,7 +126,7 @@ function check_cookie(&$pun_user)
 //
 function set_default_user()
 {
-	global $db, $pun_user, $pun_config;
+	global $db, $db_type, $pun_user, $pun_config;
 
 	$remote_addr = get_remote_address();
 
@@ -126,7 +139,22 @@ function set_default_user()
 
 	// Update online list
 	if (!$pun_user['logged'])
-		$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.time().')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+	{
+		$pun_user['logged'] = time();
+
+		// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
+		switch ($db_type)
+		{
+			case 'mysql':
+			case 'mysqli':
+				$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+				break;
+
+			default:
+				$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged) VALUES(1, \''.$db->escape($remote_addr).'\', '.$pun_user['logged'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+				break;
+		}
+	}
 	else
 		$db->query('UPDATE '.$db->prefix.'online SET logged='.time().' WHERE ident=\''.$db->escape($remote_addr).'\'') or error('Unable to update online list', __FILE__, __LINE__, $db->error());
 
@@ -887,6 +915,21 @@ function maintenance_message()
 	$tpl_maint = trim(file_get_contents(PUN_ROOT.'include/template/maintenance.tpl'));
 
 
+	// START SUBST - <pun_include "*">
+	while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $tpl_maint, $cur_include))
+	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2]))
+			error('Unable to process user include '.htmlspecialchars($cur_include[0]).' from template maintenance.tpl. There is no such file in folder /include/user/');
+
+		ob_start();
+		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
+		$tpl_temp = ob_get_contents();
+		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
+	    ob_end_clean();
+	}
+	// END SUBST - <pun_include "*">
+
+
 	// START SUBST - <pun_content_direction>
 	$tpl_maint = str_replace('<pun_content_direction>', $lang_common['lang_direction'], $tpl_maint);
 	// END SUBST - <pun_content_direction>
@@ -925,21 +968,6 @@ function maintenance_message()
 	$db->end_transaction();
 
 
-	// START SUBST - <pun_include "*">
-	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_maint, $cur_include))
-	{
-		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template maintenance.tpl. There is no such file in folder /include/user/');
-
-		ob_start();
-		include PUN_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
-	    ob_end_clean();
-	}
-	// END SUBST - <pun_include "*">
-
-
 	// Close the db connection (and free up any result data)
 	$db->close();
 
@@ -964,6 +992,21 @@ function redirect($destination_url, $message)
 
 	// Load the redirect template
 	$tpl_redir = trim(file_get_contents(PUN_ROOT.'include/template/redirect.tpl'));
+
+
+	// START SUBST - <pun_include "*">
+	while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $tpl_redir, $cur_include))
+	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2]))
+			error('Unable to process user include '.htmlspecialchars($cur_include[0]).' from template redirect.tpl. There is no such file in folder /include/user/');
+
+		ob_start();
+		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
+		$tpl_temp = ob_get_contents();
+		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
+	    ob_end_clean();
+	}
+	// END SUBST - <pun_include "*">
 
 
 	// START SUBST - <pun_content_direction>
@@ -1018,21 +1061,6 @@ function redirect($destination_url, $message)
 	// END SUBST - <pun_footer>
 
 
-	// START SUBST - <pun_include "*">
-	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_redir, $cur_include))
-	{
-		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
-			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template redirect.tpl. There is no such file in folder /include/user/');
-
-		ob_start();
-		include PUN_ROOT.'include/user/'.$cur_include[1];
-		$tpl_temp = ob_get_contents();
-		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
-	    ob_end_clean();
-	}
-	// END SUBST - <pun_include "*">
-
-
 	// Close the db connection (and free up any result data)
 	$db->close();
 
@@ -1060,7 +1088,7 @@ function error($message, $file, $line, $db_error = false)
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Error</title>
@@ -1171,6 +1199,10 @@ function display_saved_queries()
 //
 function unregister_globals()
 {
+	$register_globals = @ini_get('register_globals');
+	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals === "off"))
+		return;
+
 	// Prevent script.php?GLOBALS[foo]=bar
 	if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']))
 		exit('I\'ll have a steak sandwich and... a steak sandwich.');

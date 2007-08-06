@@ -47,7 +47,7 @@ if (isset($_POST['add_rank']))
 	if ($rank == '')
 		message('You must enter a rank title.');
 
-	if (!preg_match('#^\d+$#', $min_posts))
+	if (!@preg_match('#^\d+$#', $min_posts))
 		message('Minimum posts must be a positive integer value.');
 
 	// Make sure there isn't already a rank with the same min_posts value
@@ -78,11 +78,11 @@ else if (isset($_POST['update']))
 	if ($rank == '')
 		message('You must enter a rank title.');
 
-	if (!preg_match('#^\d+$#', $min_posts))
+	if (!@preg_match('#^\d+$#', $min_posts))
 		message('Minimum posts must be a positive integer value.');
 
 	// Make sure there isn't already a rank with the same min_posts value
-	$result = $db->query('SELECT 1 FROM '.$db->prefix.'ranks WHERE id!='.$id.' && min_posts='.$min_posts) or error('Unable to fetch rank info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT 1 FROM '.$db->prefix.'ranks WHERE id!='.$id.' AND min_posts='.$min_posts) or error('Unable to fetch rank info', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))
 		message('There is already a rank with a minimun posts value of '.$min_posts.'.');
 

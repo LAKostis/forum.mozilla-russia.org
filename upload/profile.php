@@ -191,7 +191,7 @@ else if ($action == 'change_email')
 		$result = $db->query('SELECT activate_string, activate_key FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch activation data', __FILE__, __LINE__, $db->error());
 		list($new_email, $new_email_key) = $db->fetch_row($result);
 
-		if ($key != $new_email_key)
+		if ($key == '' || $key != $new_email_key)
 			message($lang_profile['E-mail key bad'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.');
 		else
 		{
@@ -698,7 +698,7 @@ else if (isset($_POST['form_sent']))
 			}
 
 			// Add http:// if the URL doesn't contain it already
-			if ($form['url'] != '' && !stristr($form['url'], 'http://'))
+			if ($form['url'] != '' && strpos(strtolower($form['url']), 'http://') !== 0)
 				$form['url'] = 'http://'.$form['url'];
 
 			break;
@@ -709,7 +709,7 @@ else if (isset($_POST['form_sent']))
 			$form = extract_elements(array('jabber', 'icq', 'msn', 'aim', 'yahoo'));
 
 			// If the ICQ UIN contains anything other than digits it's invalid
-			if ($form['icq'] != '' && preg_match('/[^0-9]/', $form['icq']))
+			if ($form['icq'] != '' && @preg_match('/[^0-9]/', $form['icq']))
 				message($lang_prof_reg['Bad ICQ']);
 
 			break;

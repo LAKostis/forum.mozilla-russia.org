@@ -189,7 +189,7 @@ else if (isset($_POST['form_sent']))
 	else
 		$language = $pun_config['o_default_lang'];
 
-	$timezone = intval($_POST['timezone']);
+	$timezone = round($_POST['timezone'], 1);
 	$save_pass = (!isset($_POST['save_pass']) || $_POST['save_pass'] != '1') ? '0' : '1';
 
 	$email_setting = intval($_POST['email_setting']);

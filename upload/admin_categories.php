@@ -119,7 +119,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 					<fieldset>
 						<legend>Confirm delete category</legend>
 						<div class="infldset">
-							<p>Are you sure that you want to delete the category "<?php echo $cat_name ?>"?</p>
+							<p>Are you sure that you want to delete the category "<?php echo pun_htmlspecialchars($cat_name) ?>"?</p>
 							<p>WARNING! Deleting a category will delete all forums and posts (if any) in that category!</p>
 						</div>
 					</fieldset>
@@ -152,7 +152,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 		if ($cat_name[$i] == '')
 			message('You must enter a category name.');
 
-		if (!preg_match('#^\d+$#', $cat_order[$i]))
+		if (!@preg_match('#^\d+$#', $cat_order[$i]))
 			message('Position must be an integer value.');
 
 		list($cat_id, $position) = $db->fetch_row($result);

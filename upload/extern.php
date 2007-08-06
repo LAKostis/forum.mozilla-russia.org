@@ -164,6 +164,10 @@ if ($db->result($result) == '0')
 if (!isset($lang_common))
 	exit('There is no valid language pack \''.$pun_config['o_default_lang'].'\' installed. Please reinstall a language of that name.');
 
+// Check if we are to display a maintenance message
+if ($pun_config['o_maintenance'] && !defined('PUN_TURN_OFF_MAINT'))
+	maintenance_message();
+
 if (!isset($_GET['action']))
 	exit('No parameters supplied. See extern.php for instructions.');
 

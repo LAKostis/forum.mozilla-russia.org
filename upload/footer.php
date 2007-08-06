@@ -147,21 +147,6 @@ ob_end_clean();
 // END SUBST - <pun_footer>
 
 
-// START SUBST - <pun_include "*">
-while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_main, $cur_include))
-{
-	if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
-		error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template main.tpl. There is no such file in folder /include/user/');
-
-	ob_start();
-	include PUN_ROOT.'include/user/'.$cur_include[1];
-	$tpl_temp = ob_get_contents();
-	$tpl_main = str_replace($cur_include[0], $tpl_temp, $tpl_main);
-    ob_end_clean();
-}
-// END SUBST - <pun_include "*">
-
-
 // Close the db connection (and free up any result data)
 $db->close();
 

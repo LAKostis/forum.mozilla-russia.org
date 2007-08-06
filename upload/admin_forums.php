@@ -138,7 +138,7 @@ else if (isset($_POST['update_positions']))
 
 	while (list($forum_id, $disp_position) = @each($_POST['position']))
 	{
-		if (!preg_match('#^\d+$#', $disp_position))
+		if (!@preg_match('#^\d+$#', $disp_position))
 			message('Position must be a positive integer value.');
 
 		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.intval($forum_id)) or error('Unable to update forum', __FILE__, __LINE__, $db->error());

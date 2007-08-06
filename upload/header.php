@@ -45,6 +45,21 @@ else
 	$tpl_main = file_get_contents(PUN_ROOT.'include/template/main.tpl');
 
 
+// START SUBST - <pun_include "*">
+while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $tpl_main, $cur_include))
+{
+	if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2]))
+		error('Unable to process user include '.htmlspecialchars($cur_include[0]).' from template main.tpl. There is no such file in folder /include/user/');
+
+	ob_start();
+	include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
+	$tpl_temp = ob_get_contents();
+	$tpl_main = str_replace($cur_include[0], $tpl_temp, $tpl_main);
+    ob_end_clean();
+}
+// END SUBST - <pun_include "*">
+
+
 // START SUBST - <pun_content_direction>
 $tpl_main = str_replace('<pun_content_direction>', $lang_common['lang_direction'], $tpl_main);
 // END SUBST - <pun_content_direction>

@@ -85,7 +85,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 
 	$prune_days = $_POST['req_prune_days'];
-	if (!preg_match('#^\d+$#', $prune_days))
+	if (!@preg_match('#^\d+$#', $prune_days))
 		message('Days to prune must be a positive integer.');
 
 	$prune_date = time() - ($prune_days*86400);

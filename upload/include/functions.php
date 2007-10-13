@@ -1402,8 +1402,10 @@ function pun_get_browser($uagent){
                      'flock',
                      'netscape',
                      'seamonkey',
+                     'google',
                      'links',
                      'lolifox',
+                     'lynx',
                      'shiira',
                      'songbird',
                      'swift');

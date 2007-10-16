@@ -127,7 +127,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 		while (list($mod_username, $mod_id) = @each($mods_array))
 			$moderators[] = '<a href="profile.php?id='.$mod_id.'">'.pun_htmlspecialchars($mod_username).'</a>';
 
-		$moderators = "\t\t\t\t\t\t\t\t".'<p><em>('.$lang_common['Moderated by'].'</em> '.implode(', ', $moderators).')</p>'."\n";
+		$moderators = "\t\t\t\t\t\t\t\t".'<p>(<em>'.$lang_common['Moderated by'].'</em> '.implode(', ', $moderators).')</p>'."\n";
 	}
 
 ?>

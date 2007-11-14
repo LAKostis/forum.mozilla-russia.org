@@ -143,9 +143,9 @@ DIV.blockmenu, #viewprofile DT {
 
 .tcl {TEXT-ALIGN: left; WIDTH: 50%}
 
-.tc2, .tc3, .tcmod {WIDTH: 9%; TEXT-ALIGN: center}
+.tc2, .tc3, .tc4, .tcmod {WIDTH: 7%; TEXT-ALIGN: center}
 
-.tcr {WIDTH: 32%; TEXT-ALIGN: left}
+.tcr {WIDTH: 30%; TEXT-ALIGN: left}
 
 #punsearch #vf .tcl, #punmoderate #vf .tcl {WIDTH: 41%}
 

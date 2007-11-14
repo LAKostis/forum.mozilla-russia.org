@@ -35,6 +35,7 @@ $mgrp_extra = multigrp_getSql($db);
 
 // Load the search.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
+require PUN_ROOT.'lang/'.$pun_user['language'].'/forum.php';
 
 
 if ($pun_user['g_read_board'] == '0')
@@ -472,7 +473,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$sql = 'SELECT p.id AS pid, p.poster AS pposter, p.posted AS pposted, p.poster_id, '.$substr_sql.'(p.message, 1, 1000) AS message, t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.forum_id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE p.id IN('.$search_results.') ORDER BY '.$sort_by_sql;
 		}
 		else
-			$sql = 'SELECT t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id FROM '.$db->prefix.'topics AS t WHERE t.id IN('.$search_results.') ORDER BY '.$sort_by_sql;
+			$sql = 'SELECT t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.closed, t.forum_id, t.num_views FROM '.$db->prefix.'topics AS t WHERE t.id IN('.$search_results.') ORDER BY '.$sort_by_sql;
 
 
 		// Determine the topic or post offset (based on $_GET['p'])
@@ -526,6 +527,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					<th class="tcl" scope="col"><?php echo $lang_common['Topic']; ?></th>
 					<th class="tc2" scope="col"><?php echo $lang_common['Forum'] ?></th>
 					<th class="tc3" scope="col"><?php echo $lang_common['Replies'] ?></th>
+					<th class="tc4" scope="col"><?php echo $lang_forum['Views'] ?></th>
 					<th class="tcr" scope="col"><?php echo $lang_common['Last post'] ?></th>
 				</tr>
 			</thead>
@@ -673,7 +675,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					</td>
 					<td class="tc2"><?php echo $forum ?></td>
 					<td class="tc3"><?php echo $search_set[$i]['num_replies'] ?></td>
-					
+					<td class="tc4"><?php echo $search_set[$i]['num_views'] ?></td>
 					<?php
 					if ($search_set[$i]['question'] == "")
 					{

@@ -7,7 +7,7 @@ BODY {background: url('../img/Mozilla-ru/pun_body_bg.gif') repeat-x top #FFFFFF;
 DIV.box, .pun BLOCKQUOTE, DIV.codebox, #adminconsole FIELDSET TH, .rowodd, .roweven {BACKGROUND-COLOR: #f4f6f9}
 #adminconsole TD, #adminconsole TH {BORDER-COLOR: #F1F1F1}
 /* 1. 2 Darker background colours */
-TD.tc2, TD.tc3, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
+TD.tc2, TD.tc3, TD.tc4, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
 #adminconsole FIELDSET TD, DIV.blockmenu DIV.box, #adstats DD {BACKGROUND-COLOR: #b5c7d8}
 /* 1.3 Main headers and navigation bar background and text colour */
 .pun H2 {background: url('../img/Mozilla-ru/pun_h2_left_bg.png') no-repeat left top #3c6a97; color: #FFFFFF; font-weight: bold;}
@@ -96,9 +96,9 @@ TR.isticky DIV.icon {background: url('../img/Mozilla-ru/pun_icon_sticky.png') no
 TR.iclosed DIV.icon {background: url('../img/Mozilla-ru/pun_icon_close.png') no-repeat #DDDDDD;}
 TR.iredirect DIV.icon{background: url('../img/Mozilla-ru/pun_icon_redirect.png') no-repeat #B5C7D8;}
 TR.iclosed{background-color: #f2f2f2;}
-TR.iclosed TD.tc2, TR.iclosed TD.tc3{background-color: #cacaca;}
+TR.iclosed TD.tc2, TR.iclosed TD.tc3, TR.iclosed TD.tc4{background-color: #cacaca;}
 TR.isticky{background-color: #f9e3d1;}
-TR.isticky TD.tc2, TR.isticky TD.tc3{background-color: #f4d0b2;}
+TR.isticky TD.tc2, TR.isticky TD.tc3, TR.isticky TD.tc4{background-color: #f4d0b2;}
 /****************************************************************/
 /* 11. ADDITIONAL STYLES */
 /****************************************************************/

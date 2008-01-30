@@ -151,7 +151,7 @@ $lang_common = array(
 'Debug table'			=>	'Отладочная информация',
 
 // For extern.php RSS feed
-'RSS Desc Active'		=>	'Наиболее активные обсужения на',	// board_title will be appended to this string
+'RSS Desc Active'		=>	'Наиболее активные обсуждения на',	// board_title will be appended to this string
 'RSS Desc New'			=>	'Новые темы на',					// board_title will be appended to this string
 'RSS Desc Messages'  => 'Новые сообщения на',
 'RSS Site News'		=> 'Новости на', 

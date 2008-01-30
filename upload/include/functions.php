@@ -1409,6 +1409,7 @@ function pun_get_browser($uagent){
                      'omniweb',
                      'shiira',
                      'songbird',
+                     'sunrise',
                      'swift');
    $ua = get_browser($uagent,true);
    $ua_browser = pun_strtolower($ua['browser']);

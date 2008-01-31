@@ -91,11 +91,11 @@ function check_cookie(&$pun_user)
  				{
  					case 'mysql':
  					case 'mysqli':
- 						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].'\', '.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+ 						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
  						break;
  
  					default:
- 						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].'\', '.$db->escape($show_online).'\)') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+ 						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
  						break;
  				}
  			}

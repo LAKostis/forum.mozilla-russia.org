@@ -27,6 +27,7 @@
     <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
     <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
     <a href="http://wiki.mozilla-russia.org">Wiki</a>&nbsp;
+    <a href="http://news.mozilla-russia.org">News</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="search.php" style="margin: 3px">

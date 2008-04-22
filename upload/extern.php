@@ -272,7 +272,8 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		if ($show < 1 || $show > 50)
 			$show = 15;
 		// Path to news item template
-		$template_path = PUN_ROOT.'plugins/AP_News_Generator/site_news.tpl';
+		$templ_name = isset($_GET['tpl']) ? preg_replace('/\//', '', $_GET['tpl']) : 'site_news.tpl';
+		$template_path = PUN_ROOT.'plugins/AP_News_Generator/'.$templ_name;
 		// Generate front page news
 		$result = $db->query('SELECT t.id, t.poster, t.posted, t.subject, t.num_replies, t.question FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 //Change Ragnaar line 266		$result = $db->query('SELECT t.id, t.poster, t.subject, t.num_replies FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());

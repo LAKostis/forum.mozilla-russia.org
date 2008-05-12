@@ -13,7 +13,7 @@ DIV.box, .pun BLOCKQUOTE, DIV.codebox, #adminconsole FIELDSET TH, .rowodd, .rowe
 
 /* 1. 2 Darker background colours */
 
-TD.tc2, TD.tc3, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
+TD.tc2, TD.tc3, TD.tc4, TD.tcmod, #postpreview, #viewprofile DD, DIV.forminfo,
 #adminconsole FIELDSET TD, DIV.blockmenu DIV.box, #adstats DD {BACKGROUND-COLOR: #b5c7d8}
 
 /* 1.3 Main headers and navigation bar background and text colour */

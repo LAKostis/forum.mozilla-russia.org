@@ -1398,6 +1398,7 @@ function pun_get_browser($uagent){
                      'epiphany',
                      'flock',
                      'google',
+                     'iceweasel',
                      'k-meleon',
                      'konqueror',
                      'links',

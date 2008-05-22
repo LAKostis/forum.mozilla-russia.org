@@ -13,7 +13,7 @@ DIV.box,  #adminconsole FIELDSET TH, .rowodd, .roweven {BACKGROUND-COLOR: #38383
 
 /* 1. 2 Darker background colours */
 
-TD.tc2, TD.tc3, TD.tcmod, #brdfooter DIV.box {BACKGROUND-COLOR: #424242}
+TD.tc2, TD.tc3, TD.tc4, TD.tcmod, #brdfooter DIV.box {BACKGROUND-COLOR: #424242}
 #adminconsole FIELDSET TD, #viewprofile DD, DIV.forminfo, DIV.blockmenu DIV.box, #adstats DD {BACKGROUND-COLOR: #484848}
 
 .pun BLOCKQUOTE, DIV.codebox {BACKGROUND-COLOR: #353533}

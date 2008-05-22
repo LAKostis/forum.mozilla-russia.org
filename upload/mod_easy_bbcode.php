@@ -136,11 +136,11 @@ function insert_text(open, close, no_focus)
 							<input type="button" value="Img" name="Img" onclick="insert_text('[img]','[/img]')" />
 							<input type="button" value="Horiz. Line" name="HR" onclick="insert_text('[hr /]','')" />
 							<input type="button" value="Quote" name="Quote" onclick="insert_text('[quote]','[/quote]')" />
-							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote= USER ]','[/quote]')" /><br />
+							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote= USER ]','[/quote]')" />
 							<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style= STYLE]','[/style]')" />
 							<?php echo "".'<input type="button" value="User Agent" name="UA" onclick="insert_text(\'::::&nbsp;'.get_user_ua().'\',\'\')" />'."\n"; ?>
+							<input type="button" value="Show More" name="More" onclick="javascript:toggleSpan('q1');" />
 						</div>
-						<a href="javascript:toggleSpan('q1');"><u>Дополнительно&hellip;</u></a><br />
 						<div class="inform" style="display: none;" id="q1Span" >
 						<table style="border: 0;">
 							<tr>

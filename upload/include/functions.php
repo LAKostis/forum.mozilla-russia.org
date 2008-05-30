@@ -1394,6 +1394,7 @@ function pun_get_browser($uagent){
    $known_bw = array('firefox',
                      'opera',
                      'ie',
+                     'arora',
                      'camino',
                      'elinks',
                      'epiphany',

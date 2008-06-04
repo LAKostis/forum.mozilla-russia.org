@@ -167,12 +167,7 @@ function process_form(the_form)
 
 }
 
-echo '<script type="text/javascript" src="uncrypt_email.js"></script>';
-echo '<script type="text/javascript" src="ru-board.js"></script>';
-
-$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
-if (strpos($user_agent, 'msie') !== false && strpos($user_agent, 'windows') !== false && strpos($user_agent, 'opera') === false)
-	echo '<script type="text/javascript" src="style/imports/minmax.js"></script>';
+echo '<script type="text/javascript" src="scripts.js"></script>';
 
 $tpl_temp = trim(ob_get_contents());
 $tpl_main = str_replace('<pun_head>', $tpl_temp, $tpl_main);

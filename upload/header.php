@@ -191,7 +191,7 @@ if (isset($focus_element))
 
 // START SUBST - <pun_page>
 $tpl_main = str_replace('<pun_page>', htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php')), $tpl_main);
-// END SUBST - <pun_title>
+// END SUBST - <pun_page>
 
 
 // START SUBST - <pun_title>

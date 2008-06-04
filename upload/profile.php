@@ -88,6 +88,9 @@ if ($action == 'change_pass')
 
 	if (isset($_POST['form_sent']))
 	{
+		if ($pun_user['g_id'] < PUN_GUEST)
+			confirm_referrer('profile.php');
+
 		$old_password = isset($_POST['req_old_password']) ? trim($_POST['req_old_password']) : '';
 		$new_password1 = trim($_POST['req_new_password1']);
 		$new_password2 = trim($_POST['req_new_password2']);

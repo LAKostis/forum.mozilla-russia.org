@@ -49,7 +49,7 @@ function check_cookie(&$pun_user)
 		// If user authorisation failed
 		if (!isset($pun_user['id']) || md5($cookie_seed.$pun_user['password']) !== $cookie['password_hash'])
 		{
-			pun_setcookie(0, random_pass(8), $expire);
+			pun_setcookie(1, md5(uniqid(rand(), true)), $expire);
 			set_default_user();
 
 			return;
@@ -306,7 +306,7 @@ function generate_navlinks()
 
 			$links[] = '<li id="navprofile"><a href="profile.php?id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
 			require(PUN_ROOT.'include/pms/functions_navlinks.php');
-			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'&amp;csrf_token='.sha1($pun_user['id'].sha1(get_remote_address())).'">'.$lang_common['Logout'].'</a>';
 		}
 		else
 		{
@@ -314,7 +314,7 @@ function generate_navlinks()
 			$links[] = '<li id="navprofile"><a href="profile.php?id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
 			$links[] = '<li id="navadmin"><a href="admin_index.php">'.$lang_common['Admin'].'</a>';
 			require(PUN_ROOT.'include/pms/functions_navlinks.php');
-			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'&amp;csrf_token='.sha1($pun_user['id'].sha1(get_remote_address())).'">'.$lang_common['Logout'].'</a>';
 		}
 	}
 
@@ -364,13 +364,13 @@ function generate_profile_menu($page = '')
 
 
 //
-// Update posts, topics, last_post, last_post_id and last_poster for a forum (redirect topics are not included)
+// Update posts, topics, last_post, last_post_id and last_poster for a forum
 //
 function update_forum($forum_id)
 {
 	global $db;
 
-	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE moved_to IS NULL AND forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
 	list($num_topics, $num_posts) = $db->fetch_row($result);
 
 	$num_posts = $num_posts + $num_topics;		// $num_posts is only the sum of all replies (we have to add the topic posts)
@@ -383,7 +383,7 @@ function update_forum($forum_id)
 		$db->query('UPDATE '.$db->prefix.'forums SET num_topics='.$num_topics.', num_posts='.$num_posts.', last_post='.$last_post.', last_post_id='.$last_post_id.', last_poster=\''.$db->escape($last_poster).'\' WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
 	}
 	else	// There are no topics
-		$db->query('UPDATE '.$db->prefix.'forums SET num_topics=0, num_posts=0, last_post=NULL, last_post_id=NULL, last_poster=NULL WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'forums SET num_topics='.$num_topics.', num_posts='.$num_posts.', last_post=NULL, last_post_id=NULL, last_poster=NULL WHERE id='.$forum_id) or error('Unable to update last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
 }
 
 
@@ -982,8 +982,14 @@ function redirect($destination_url, $message)
 {
 	global $db, $pun_config, $lang_common, $pun_user;
 
-	if ($destination_url == '')
-		$destination_url = 'index.php';
+	// Prefix with o_base_url (unless there's already a valid URI)
+	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0)
+		$destination_url = $pun_config['o_base_url'].'/'.$destination_url;
+	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0)
+		$destination_url = $pun_config['o_base_url'].'/'.$destination_url;
+
+	// Do a little spring cleaning
+	$destination_url = preg_replace('/([\r\n])|(%0[ad])|(;[\s]*data[\s]*:)/i', '', $destination_url);
 
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($pun_config['o_redirect_delay'] == '0')
@@ -1200,7 +1206,7 @@ function display_saved_queries()
 function unregister_globals()
 {
 	$register_globals = @ini_get('register_globals');
-	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals === "off"))
+	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals) === "off")
 		return;
 
 	// Prevent script.php?GLOBALS[foo]=bar

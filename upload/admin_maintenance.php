@@ -70,8 +70,6 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		}
 	}
 
-	$end_at = $start_at + $per_page;
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -96,7 +94,7 @@ Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br
 	require PUN_ROOT.'include/search_idx.php';
 
 	// Fetch posts to process
-	$result = $db->query('SELECT DISTINCT t.id, p.id, p.message FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id WHERE t.id>='.$start_at.' AND t.id<'.$end_at.' ORDER BY t.id') or error('Unable to fetch topic/post info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT DISTINCT t.id, p.id, p.message FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id WHERE t.id>='.$start_at.' ORDER BY t.id LIMIT '.$per_page) or error('Unable to fetch topic/post info', __FILE__, __LINE__, $db->error());
 
 	$cur_topic = 0;
 	while ($cur_post = $db->fetch_row($result))
@@ -119,9 +117,9 @@ Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br
 	}
 
 	// Check if there is more work to do
-	$result = $db->query('SELECT id FROM '.$db->prefix.'topics WHERE id>'.$end_at) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT id FROM '.$db->prefix.'topics WHERE id>'.$cur_topic.' ORDER BY id ASC LIMIT 1') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 
-	$query_str = ($db->num_rows($result)) ? '?i_per_page='.$per_page.'&i_start_at='.$end_at : '';
+	$query_str = ($db->num_rows($result)) ? '?i_per_page='.$per_page.'&i_start_at='.$db->result($result) : '';
 
 	$db->end_transaction();
 	$db->close();

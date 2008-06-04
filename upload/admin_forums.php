@@ -267,11 +267,17 @@ else if (isset($_GET['edit_forum']))
 <?php
 
 	$result = $db->query('SELECT id, cat_name FROM '.$db->prefix.'categories ORDER BY disp_position') or error('Unable to fetch category list', __FILE__, __LINE__, $db->error());
-	while ($cur_cat = $db->fetch_assoc($result))
+
+	if ($db->num_rows($result) > 0)
 	{
-		$selected = ($cur_cat['id'] == $cur_forum['cat_id']) ? ' selected="selected"' : '';
-		echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'"'.$selected.'>'.pun_htmlspecialchars($cur_cat['cat_name']).'</option>'."\n";
+		while ($cur_cat = $db->fetch_assoc($result))
+		{
+			$selected = ($cur_cat['id'] == $cur_forum['cat_id']) ? ' selected="selected"' : '';
+			echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'"'.$selected.'>'.pun_htmlspecialchars($cur_cat['cat_name']).'</option>'."\n";
+		}
 	}
+	else
+		echo "\t\t\t\t\t\t\t\t\t".'<option value="0" disabled="disabled">No categories exist</option>'."\n";
 
 ?>
 										</select>
@@ -401,6 +407,15 @@ generate_admin_menu('forums');
 			</form>
 		</div>
 
+<?php
+
+// Display all the categories and forums
+$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id ORDER BY c.disp_position, c.id, f.disp_position') or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
+
+if ($db->num_rows($result) > 0)
+{
+
+?>
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
 			<form id="edforum" method="post" action="admin_forums.php?action=edit">
@@ -408,9 +423,6 @@ generate_admin_menu('forums');
 <?php
 
 $tabindex_count = 4;
-
-// Display all the categories and forums
-$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.disp_position FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id ORDER BY c.disp_position, c.id, f.disp_position') or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 
 $cur_category = 0;
 while ($cur_forum = $db->fetch_assoc($result))
@@ -450,6 +462,11 @@ while ($cur_forum = $db->fetch_assoc($result))
 				<p class="submitend"><input type="submit" name="update_positions" value="Update positions" tabindex="<?php echo $tabindex_count ?>" /></p>
 			</form>
 		</div>
+<?php
+
+}
+
+?>
 	</div>
 	<div class="clearer"></div>
 </div>

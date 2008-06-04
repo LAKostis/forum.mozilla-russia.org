@@ -25,7 +25,7 @@
 
 
 // The PunBB version this script installs
-$punbb_version = '1.2.15';
+$punbb_version = '1.2.17';
 
 
 define('PUN_ROOT', './');
@@ -1668,7 +1668,7 @@ else
 
 
 	/// Display config.php and give further instructions
-	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(md5(time()), -8)."';\n\ndefine('PUN', 1);";
+	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(sha1(uniqid(rand(), true)), 0, 16)."';\n\ndefine('PUN', 1);";
 
 
 ?>

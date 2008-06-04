@@ -39,7 +39,7 @@ if (isset($_GET['get_host']))
 		message($lang_common['No permission']);
 
 	// Is get_host an IP address or a post ID?
-	if (@preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $_GET['get_host']))
+	if (@preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $_GET['get_host']))
 		$ip = $_GET['get_host'];
 	else
 	{
@@ -314,8 +314,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		if (empty($topics) || $move_to_forum < 1)
 			message($lang_common['Bad request']);
 
-		// Verify that the topic IDs are valid
-		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.implode(',',$topics).') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+                // Verify that the topic IDs are valid
+                $result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.implode(',',$topics).') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
 
 		if ($db->num_rows($result) != count($topics))
 			message($lang_common['Bad request']);
@@ -436,10 +436,10 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 
 		require PUN_ROOT.'include/search_idx.php';
 
-		// Verify that the topic IDs are valid
-		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.$topics.') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+                // Verify that the topic IDs are valid
+                $result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.$topics.') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
 
-		if ($db->num_rows($result) != substr_count($topics, ',') + 1)
+                if ($db->num_rows($result) != substr_count($topics, ',') + 1)
 			message($lang_common['Bad request']);
 
 		// Delete the topics and any redirect topics

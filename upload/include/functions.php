@@ -1406,6 +1406,7 @@ function pun_get_browser($uagent){
                      'links',
                      'lolifox',
                      'lynx',
+                     'midori',
                      'mozilla',
                      'netscape',
                      'omniweb',

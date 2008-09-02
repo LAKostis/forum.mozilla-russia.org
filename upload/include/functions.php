@@ -1396,6 +1396,7 @@ function pun_get_browser($uagent){
                      'ie',
                      'arora',
                      'camino',
+                     'chrome',
                      'demobrowser',
                      'elinks',
                      'epiphany',

@@ -1401,6 +1401,7 @@ function pun_get_browser($uagent){
                      'elinks',
                      'epiphany',
                      'flock',
+                     'foxware',
                      'google',
                      'iceweasel',
                      'k-meleon',

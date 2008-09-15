@@ -1412,6 +1412,8 @@ function pun_get_browser($uagent){
                      'flock',
                      'foxware',
                      'google',
+                     'iceape',
+                     'icecat',
                      'iceweasel',
                      'k-meleon',
                      'kazehakase',

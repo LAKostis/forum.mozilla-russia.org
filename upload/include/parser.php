@@ -35,6 +35,8 @@ $smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
+$browser_text = array('[fx]');
+$browser_img = array('firefox.png');
 
 //
 // Make sure all BBCodes are lower case and do a little cleanup
@@ -376,13 +378,17 @@ function do_clickable($text)
 //
 function do_smilies($text)
 {
-	global $smiley_text, $smiley_img;
+	global $smiley_text, $smiley_img, $browser_text, $browser_img;
 
 	$text = ' '.$text.' ';
 
 	$num_smilies = count($smiley_text);
 	for ($i = 0; $i < $num_smilies; ++$i)
 		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/smilies/'.$smiley_img[$i].'" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
+
+	$num_browsers = count($browser_text);
+	for ($i = 0; $i < $num_browsers; ++$i)
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" alt="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
 }

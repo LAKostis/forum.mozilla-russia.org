@@ -5,9 +5,10 @@ if (!defined('PUN'))
 
 	require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
 
-	if($pun_config['o_pms_enabled'] && !$pun_user['is_guest'] && ($cur_post['poster_id'] != $pun_user['id']))
+	if($pun_config['o_pms_enabled'] && !$pun_user['is_guest'])
 	{
 		$pid = isset($cur_post['poster_id']) ? $cur_post['poster_id'] : $cur_post['id'];
-		$user_contacts[] = '<a href="message_send.php?id='.$pid.'&amp;tid='.$id.'">'.$lang_pms['PM'].'</a>';
+		if($pid != $pun_user['id'])
+		  $user_contacts[] = '<a href="message_send.php?id='.$pid.'&amp;tid='.$id.'">'.$lang_pms['PM'].'</a>';
 	}
 ?>

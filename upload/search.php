@@ -53,7 +53,7 @@ $multibyte = (isset($lang_common['lang_multibyte']) && $lang_common['lang_multib
 if (isset($_GET['action']) || isset($_GET['search_id']))
 {
 	$action = (isset($_GET['action'])) ? $_GET['action'] : null;
-	$forum = (isset($_GET['forum'])) ? intval($_GET['forum']) : -1;
+	$forum = (isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum'])) ? $_GET['forum'] : -1;
 	$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
 	if (isset($search_id)) unset($search_id);
 
@@ -127,7 +127,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$keyword_results = $author_results = array();
 
 		// Search a specific forum?
-		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id = '.$forum : '';
+		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id IN('.$forum.')' : '';
 
 		if (!empty($author) || !empty($keywords))
 		{
@@ -746,22 +746,27 @@ if ($pun_config['o_search_all_forums'] == '1' || $pun_user['g_id'] < PUN_GUEST)
 
 	$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id '.$mgrp_extra.' AND f.redirect_url IS NULL ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 $cur_category = 0;
+$categories = array ('', '', '');
 while ($cur_forum = $db->fetch_assoc($result))
 {
 	if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
 	{
 		if ($cur_category)
-			echo "\t\t\t\t\t\t\t".'</optgroup>'."\n";
+		{
+			echo "\t\t\t\t\t\t\t".'<option value="'.$categories[0].'">'.$categories[1].'</option>'."\n".$categories[2];
+			$categories = array ('', '', '');
+    }
 
-		echo "\t\t\t\t\t\t\t".'<optgroup label="'.pun_htmlspecialchars($cur_forum['cat_name']).'">'."\n";
+		$categories[1] = pun_htmlspecialchars($cur_forum['cat_name']);
 		$cur_category = $cur_forum['cid'];
 	}
 
-	echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.pun_htmlspecialchars($cur_forum['forum_name']).'</option>'."\n";
+	$categories[2] .= "\t\t\t\t\t\t\t".'<option value="'.$cur_forum['fid'].'"> &nbsp; &nbsp; '.pun_htmlspecialchars($cur_forum['forum_name']).'</option>'."\n";
+	$categories[0] .= $categories[0] ? ','.$cur_forum['fid'] : $cur_forum['fid'];
 }
+echo "\t\t\t\t\t\t\t".'<option value="'.$categories[0].'">'.$categories[1].'</option>'."\n".$categories[2];
 
 ?>
-							</optgroup>
 						</select>
 						<br /></label>
 						<label class="conl"><?php echo $lang_search['Search in'] ?>

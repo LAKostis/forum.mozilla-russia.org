@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html dir="<pun_content_direction>">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="<pun_content_direction>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<pun_char_encoding>" />
 <meta name="robots" content="index,follow" />
@@ -9,9 +9,8 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Wiki | Mozilla Россия" href="/plugins/mz_wiki.xml" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
-<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=15" title="<rss site news>" />
+<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=21" title="<rss site news>" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
-
 </head>
 <body>
 <div id="punwrap">
@@ -27,6 +26,7 @@
     <a href="http://flock.mozilla-russia.org">Flock</a>&nbsp;
     <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
     <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
+    <a href="http://wiki.mozilla-russia.org">Wiki</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="doku.php?id=" accept-charset="utf-8" style="margin: 3px">

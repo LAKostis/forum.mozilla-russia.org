@@ -9,7 +9,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Форум | Mozilla Россия" href="/plugins/mz_forum.xml" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
-<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=15" title="<rss site news>" />
+<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=21" title="<rss site news>" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 </head>
 <body>
@@ -27,7 +27,6 @@
     <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
     <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
     <a href="http://wiki.mozilla-russia.org">Wiki</a>&nbsp;
-    <a href="http://news.mozilla-russia.org">News</a>&nbsp;
   </div>
   <div class="search">
     <form id="search" method="get" action="search.php" style="margin: 3px">

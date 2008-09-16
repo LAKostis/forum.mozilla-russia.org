@@ -71,8 +71,9 @@ if (get_magic_quotes_gpc())
 	$_COOKIE = stripslashes_array($_COOKIE);
 }
 
-// Seed the random number generator
-mt_srand((double)microtime()*1000000);
+// Seed the random number generator (PHP <4.2.0 only)
+if (version_compare(PHP_VERSION, '4.2.0', '<'))
+	mt_srand((double)microtime()*1000000);
 
 // If a cookie name is not specified in config.php, we use the default (punbb_cookie)
 if (empty($cookie_name))

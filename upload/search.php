@@ -127,7 +127,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$keyword_results = $author_results = array();
 
 		// Search a specific forum?
-		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0')) ? ' AND t.forum_id = '.$forum : '';
+		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id = '.$forum : '';
 
 		if (!empty($author) || !empty($keywords))
 		{
@@ -165,7 +165,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					{
 						$num_chars = pun_strlen($word);
 
-						if ($num_chars < 3 || $num_chars > 20 || in_array($word, $stopwords))
+						if ($word !== 'or' && ($num_chars < 3 || $num_chars > 20 || in_array($word, $stopwords)))
 							unset($keywords_array[$i]);
 					}
 
@@ -204,7 +204,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 							}
 							else
 							{
-								$cur_word = str_replace('*', '%', $cur_word);
+								$cur_word = $db->escape(str_replace('*', '%', $cur_word));
 								$sql = 'SELECT m.post_id FROM '.$db->prefix.'search_words AS w INNER JOIN '.$db->prefix.'search_matches AS m ON m.word_id = w.id WHERE w.word LIKE \''.$cur_word.'\''.$search_in_cond;
 							}
 

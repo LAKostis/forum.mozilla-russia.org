@@ -172,7 +172,7 @@ if (isset($_POST['form_sent']))
 	$merged=false;
 	if (!$pun_user['is_guest'] && !$fid && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
 	{
-		$message= pun_linebreaks(pun_trim("[color=#808080][i]".$lang_post['Added']." ".strftime("%c")." : [/i][/color]")) . "\n" . $message;
+		$message = pun_linebreaks(pun_trim('[color=#808080][i][added='.time().'][/i][/color]')) . "\n" . $message;
 		$merged=true;
 	}
 	// end merge posts

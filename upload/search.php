@@ -37,7 +37,6 @@ $mgrp_extra = multigrp_getSql($db);
 require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/forum.php';
 
-require_once PUN_ROOT.'include/parser.php';
 
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view']);
@@ -115,7 +114,6 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$sort_by = $temp['sort_by'];
 			$sort_dir = $temp['sort_dir'];
 			$show_as = $temp['show_as'];
-			$highlight = $temp['highlight'];
 
 			unset($temp);
 		}
@@ -424,7 +422,6 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$temp['sort_by'] = $sort_by;
 		$temp['sort_dir'] = $sort_dir;
 		$temp['show_as'] = $show_as;
-		$temp['highlight'] = $keywords;
 		$temp = serialize($temp);
 		$search_id = mt_rand(1, 2147483647);
 
@@ -575,7 +572,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($pun_config['o_censoring'] == '1')
 					$search_set[$i]['message'] = censor_words($search_set[$i]['message']);
 
-				$message = parse_message(str_replace($highlight, '[h]'.$highlight.'[/h]', pun_htmlspecialchars($search_set[$i]['message'])), 1);
+				$message = str_replace("\n", '<br />', pun_htmlspecialchars($search_set[$i]['message']));
 				$pposter = pun_htmlspecialchars($search_set[$i]['pposter']);
 
 				if ($search_set[$i]['poster_id'] > 1)

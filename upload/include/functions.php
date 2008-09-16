@@ -527,6 +527,15 @@ function delete_user($user_id,$delete_posts)
 	// Delete the user
 	$db->query('DELETE FROM '.$db->prefix.'users WHERE id='.$user_id) or error('Unable to delete user', __FILE__, __LINE__, $db->error());
 	require(PUN_ROOT.'include/pms/profile_delete.php');
+
+	// Delete user avatar
+      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.gif'))
+      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.gif');
+      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.jpg'))
+      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.jpg');
+      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.png'))
+      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.png');
+
 }
 
 

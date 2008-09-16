@@ -101,11 +101,6 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 			message($lang_prof_reg['Signature quote/code']);
 	}
 
-	if (preg_match('#\[url\](.*?)([\[]+?)(.*?)\[/url\]#', $text) || preg_match('#\[url=(.*?)([\[]+?)(.*?)\](.*?)\[/url\]#', $text) || preg_match('#\[url=(.*?)\](.*?)([\[]+?)(.*?)\[/url\]#', $text))
-		message('BBCode can not be nested within [url] tags.');
-	if (preg_match('#\[email\](.*?)([\[]+?)(.*?)\[/email\]#', $text) || preg_match('#\[email=(.*?)([\[]+?)(.*?)\](.*?)\[/email\]#', $text) || preg_match('#\[email=(.*?)\](.*?)([\[]+?)(.*?)\[/email\]#', $text))
-		message('BBCode can not be nested within [email] tags.');
-
 	return trim($text);
 }
 
@@ -313,29 +308,11 @@ function do_bbcode($text)
 	$pattern = array('#\[b\](.*?)\[/b\]#s',
 					 '#\[i\](.*?)\[/i\]#s',
 					 '#\[u\](.*?)\[/u\]#s',
- 					 '#\[url\]([^\[]*?)\[/url\]#e',
- 					 '#\[url=([^\[]*?)\](.*?)\[/url\]#e',
- 					 '#\[email\]([^\[]*?)\[/email\]#',
- 					 '#\[email=([^\[]*?)\](.*?)\[/email\]#',
-					 '#\[ul\](.*?)\[/ul\]#',
-					 '#\[ol\](.*?)\[/ol\]#',
-					 '#\[uli\](.*?)\[/uli\]#',
-					 '#\[oli\](.*?)\[/oli\]#',
-					 '#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})](.*?)\[/color\]#s',
-					 '#\[font=(.*?)](.*?)\[/font\]#',
-					 '#\[align=(.*?)\](.*?)\[/align\]#',
-					 '#\[style="(.*?)"\](.*?)\[/style\]#',
-					 '#\[hr /\]#',
-					 '#\[hr\]#',
-					 '#\[table\](.*?)\[/table\]#',
-					 '#\[caption\](.*?)\[/caption\]#',
-					 '#\[tr\](.*?)\[/tr\]#',
-					 '#\[td\](.*?)\[/td\]#',
-					 '#\[s\](.*?)\[/s\]#',
-					 '#\[pre\](.*?)\[/pre\]#',
-					 '#\[sup\](.*?)\[/sup\]#',
-					 '#\[sub\](.*?)\[/sub\]#',
-					 '#\[h\](.*?)\[/h\]#');
+					 '#\[url\]([^\[<]*?)\[/url\]#e',
+					 '#\[url=([^\[<]*?)\](.*?)\[/url\]#e',
+					 '#\[email\]([^\[<]*?)\[/email\]#',
+					 '#\[email=([^\[<]*?)\](.*?)\[/email\]#',
+					 '#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})](.*?)\[/color\]#s');
 
 	$replace = array('<strong>$1</strong>',
 					 '<em>$1</em>',

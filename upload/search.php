@@ -576,9 +576,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					$search_set[$i]['message'] = censor_words($search_set[$i]['message']);
 
 				$message = $search_set[$i]['message'];
-				foreach ($highlight as $highword)
-				  if($highword != 'and' && $highword != 'or' && $highword != 'not')
-				    $message = preg_replace('#('.str_replace('*', '[^\s]+', $highword).')#i', '[h]$1[/h]', $message);
+				if (!empty($highlight))
+				{
+					foreach ($highlight as $highword)
+				  		if ($highword != 'and' && $highword != 'or' && $highword != 'not')
+				    			$message = preg_replace('#('.str_replace('*', '[^\s]+', $highword).')#i', '[h]$1[/h]', $message);
+				}
 				$message = parse_message(pun_htmlspecialchars($message), 1);
 				$pposter = pun_htmlspecialchars($search_set[$i]['pposter']);
 

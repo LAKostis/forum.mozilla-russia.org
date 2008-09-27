@@ -24,11 +24,11 @@
 ************************************************************************/
 
 // Enable DEBUG mode by removing // from the following line
-define('PUN_DEBUG', 1);
+//define('PUN_DEBUG', 1);
 
 // This displays all executed queries in the page footer.
 // DO NOT enable this in a production environment!
-define('PUN_SHOW_QUERIES', 1);
+//define('PUN_SHOW_QUERIES', 1);
 
 if (!defined('PUN_ROOT'))
 	exit('The constant PUN_ROOT must be defined and point to a valid PunBB installation root directory.');

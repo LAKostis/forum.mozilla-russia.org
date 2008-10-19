@@ -1416,6 +1416,7 @@ function pun_get_browser($uagent){
                      'dillo',
                      'elinks',
                      'epiphany',
+                     'fennec',
                      'flock',
                      'foxware',
                      'google',

@@ -129,8 +129,9 @@ $lang_common = array(
 'Last visit'			=>	'Last visit',
 'Show new posts'		=>	'Show new posts since last visit',
 'Mark all as read'		=>	'Mark all topics as read',
-'Mark forum as read'	=>	'Mark this forum as read', // MOD: MARK TOPICS AS READ
 'Link separator'		=>	'',	// The text that separates links in the navigator
+'Mark forum as read'	=>	'Mark this forum as read', // MOD: MARK TOPICS AS READ
+'New reports'			=> 'There are new reports',
 
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',

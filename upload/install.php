@@ -394,6 +394,7 @@ else
 					email VARCHAR(50),
 					message VARCHAR(255),
 					expire INT(10) UNSIGNED,
+					initiator INT(10) UNSIGNED,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -408,6 +409,7 @@ else
 					email VARCHAR(50),
 					message VARCHAR(255),
 					expire INT,
+					initiator INT,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -422,6 +424,7 @@ else
 					email VARCHAR(50),
 					message VARCHAR(255),
 					expire INTEGER,
+					initiator INTEGER,
 					PRIMARY KEY (id)
 					)";
 			break;

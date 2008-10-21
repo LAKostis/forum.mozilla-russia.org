@@ -162,6 +162,11 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 									<th scope="row">Expire date</th>
 									<td>
 										<input type="text" name="ban_expire" size="17" maxlength="10" value="<?php if (isset($ban_expire)) echo $ban_expire; ?>" tabindex="5" />
+										<input type="button" value="3 Days" onclick="document.getElementById('bans2').ban_expire.value='<?php echo date('Y-m-d', strtotime('+3 days')); ?>'"/>
+										<input type="button" value="1 Week" onclick="document.getElementById('bans2').ban_expire.value='<?php echo date('Y-m-d', strtotime('+1 week')); ?>'"/>
+										<input type="button" value="2 Weeks" onclick="document.getElementById('bans2').ban_expire.value='<?php echo date('Y-m-d', strtotime('+2 weeks')); ?>'"/>
+										<input type="button" value="1 Month" onclick="document.getElementById('bans2').ban_expire.value='<?php echo date('Y-m-d', strtotime('+1 month')); ?>'"/>
+										<input type="button" value="Clear" onclick="document.getElementById('bans2').ban_expire.value=''"/>
 										<span>The date when this ban should be automatically removed (format: YYYY-MM-DD). Leave blank to remove manually.</span>
 									</td>
 								</tr>

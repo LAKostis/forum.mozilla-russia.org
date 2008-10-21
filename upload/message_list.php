@@ -79,6 +79,7 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 	<h2><span><?php echo $lang_pms['Multidelete'] ?></span></h2>
 	<div class="box">
 		<form method="post" action="message_list.php">
+			<p><input type="submit" name="delete_messages_comply" value="<?php echo $lang_pms['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p><br/>
 			<input type="hidden" name="messages" value="<?php echo implode(',', array_values($idlist)) ?>">
 			<input type="hidden" name="box" value="<?php echo $_POST['box']; ?>">
 			<div class="inform">
@@ -88,7 +89,6 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 					</div>
 				</fieldset>
 			</div>
-			<p><input type="submit" name="delete_messages_comply" value="<?php echo $lang_pms['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		</form>
 	</div>
 </div>
@@ -108,6 +108,7 @@ else
 		<h2><span><?php echo $lang_pms['Delete all'] ?></span></h2>
 		<div class="box">
 			<form method="post" action="message_list.php">
+				<p><input type="submit" name="delete_messages_comply" value="<?php echo $lang_pms['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p><br/>
 				<input type="hidden" name="deleteall" value="1">
 				<input type="hidden" name="box" value="<?php echo $_POST['box']; ?>">
 				<div class="inform">
@@ -117,7 +118,6 @@ else
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="delete_messages_comply" value="<?php echo $lang_pms['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 			</form>
 		</div>
 	</div>

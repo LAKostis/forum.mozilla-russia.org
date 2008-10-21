@@ -77,8 +77,9 @@ else
 	<h2><span><?php echo $lang_pms['Delete message'] ?></span></h2>
 	<div class="box">
 		<form method="post" action="message_delete.php?id=<?php echo $id ?>">
-		<input type="hidden" name="box" value="<?php echo (int)$_GET['box'] ?>">
-		<input type="hidden" name="p" value="<?php echo (int)$_GET['p'] ?>">
+			<p><input type="submit" name="delete" value="<?php echo $lang_delete['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p><br/>
+			<input type="hidden" name="box" value="<?php echo (int)$_GET['box'] ?>">
+			<input type="hidden" name="p" value="<?php echo (int)$_GET['p'] ?>">
 			<div class="inform">
 				<fieldset>
 					<div class="infldset">
@@ -89,7 +90,6 @@ else
 					</div>
 				</fieldset>
 			</div>
-			<p><input type="submit" name="delete" value="<?php echo $lang_delete['Delete'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		</form>
 	</div>
 </div>

@@ -1,7 +1,8 @@
 var txt = '', selected_id = null;
 
-function copyQ() {
+function copyQ(obj) {
 	txt = window.getSelection ? window.getSelection() : document.selection ? document.selection.createRange().text : '';
+	obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
 }
 
 function pasteQ() {

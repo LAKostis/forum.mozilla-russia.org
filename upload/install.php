@@ -1577,6 +1577,7 @@ else
 		'o_report_method'			=> "'0'",
 		'o_regs_report'				=> "'0'",
 		'o_mailing_list'			=> "'$email'",
+		'o_jabber_list'				=> "''",
 		'o_avatars'					=> "'1'",
 		'o_avatars_dir'				=> "'img/avatars'",
 		'o_avatars_width'			=> "'72'",

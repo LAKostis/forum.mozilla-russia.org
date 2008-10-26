@@ -63,6 +63,9 @@ if (isset($_POST['form_sent']))
 	if ($form['mailing_list'] != '')
 		$form['mailing_list'] = strtolower(preg_replace('/[\s]/', '', $form['mailing_list']));
 
+	if ($form['jabber_list'] != '')
+		$form['jabber_list'] = strtolower(preg_replace('/[\s]/', '', $form['jabber_list']));
+
 	// Make sure base_url doesn't end with a slash
 	if (substr($form['base_url'], -1) == '/')
 		$form['base_url'] = substr($form['base_url'], 0, -1);
@@ -508,7 +511,7 @@ generate_admin_menu('options');
 								<tr>
 									<th scope="row">Report method</th>
 									<td>
-										<input type="radio" name="form[report_method]" value="0"<?php if ($pun_config['o_report_method'] == '0') echo ' checked="checked"' ?> />&nbsp;Internal&nbsp;&nbsp;&nbsp;<input type="radio" name="form[report_method]" value="1"<?php if ($pun_config['o_report_method'] == '1') echo ' checked="checked"' ?> />&nbsp;E-mail&nbsp;&nbsp;&nbsp;<input type="radio" name="form[report_method]" value="2"<?php if ($pun_config['o_report_method'] == '2') echo ' checked="checked"' ?> />&nbsp;Both
+										<input type="radio" name="form[report_method]" value="0"<?php if ($pun_config['o_report_method'] == '0') echo ' checked="checked"' ?> />&nbsp;Internal&nbsp;&nbsp;&nbsp;<input type="radio" name="form[report_method]" value="1"<?php if ($pun_config['o_report_method'] == '1') echo ' checked="checked"' ?> />&nbsp;E-mail & Jabber&nbsp;&nbsp;&nbsp;<input type="radio" name="form[report_method]" value="2"<?php if ($pun_config['o_report_method'] == '2') echo ' checked="checked"' ?> />&nbsp;Both
 										<span>Select the method for handling topic/post reports. You can choose whether topic/post reports should be handled by the internal report system,  e-mailed to the addresses on the mailing list (see below) or both.</span>
 									</td>
 								</tr>
@@ -523,7 +526,14 @@ generate_admin_menu('options');
 									<th scope="row">Mailing list</th>
 									<td>
 										<textarea name="form[mailing_list]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_mailing_list']) ?></textarea>
-										<span>A comma separated list of subscribers. The people on this list are the recipients of reports.</span>
+										<span>A comma separated list of subscribers. The people on this list are the recipients of reports via e-mail.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Jabber list</th>
+									<td>
+										<textarea name="form[jabber_list]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_jabber_list']) ?></textarea>
+										<span>A comma separated list of subscribers. The people on this list are the recipients of reports via jabber.</span>
 									</td>
 								</tr>
 							</table>

@@ -150,6 +150,9 @@ else if (isset($_POST['form_sent']))
 	// Validate e-mail
 	require PUN_ROOT.'include/email.php';
 
+	// ... and jabber
+	require PUN_ROOT.'include/jabber.php';
+
 	if (!is_valid_email($email1))
 		message($lang_common['Invalid e-mail']);
 	else if ($pun_config['o_regs_verify'] == '1' && $email1 != $email2)
@@ -213,30 +216,60 @@ else if (isset($_POST['form_sent']))
 
 
 	// If we previously found out that the e-mail was banned
-	if ($banned_email && $pun_config['o_mailing_list'] != '')
+	if ($banned_email)
 	{
-		$mail_subject = 'Alert - Banned e-mail detected';
-		$mail_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+		if ($pun_config['o_mailing_list'] != '')
+		{
+			$mail_subject = 'Alert - Banned e-mail detected';
+			$mail_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
-		pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+			pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+		}
+
+		if ($pun_config['o_jabber_list'] != '')
+		{
+			$jabber_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid;
+
+			pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+		}
 	}
 
 	// If we previously found out that the e-mail was a dupe
-	if (!empty($dupe_list) && $pun_config['o_mailing_list'] != '')
+	if (!empty($dupe_list))
 	{
-		$mail_subject = 'Alert - Duplicate e-mail detected';
-		$mail_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+		if ($pun_config['o_mailing_list'] != '')
+		{
+			$mail_subject = 'Alert - Duplicate e-mail detected';
+			$mail_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
-		pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+			pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+		}
+
+		if ($pun_config['o_jabber_list'] != '')
+		{
+			$jabber_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid;
+
+			pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+		}
 	}
 
 	// Should we alert people on the admin mailing list that a new user has registered?
 	if ($pun_config['o_regs_report'] == '1')
 	{
-		$mail_subject = 'Alert - New registration';
-		$mail_message = 'User \''.$username.'\' registered in the forums at '.$pun_config['o_base_url']."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+		if ($pun_config['o_mailing_list'] != '')
+		{
+			$mail_subject = 'Alert - New registration';
+			$mail_message = 'User \''.$username.'\' registered in the forums at '.$pun_config['o_base_url']."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
-		pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+			pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+		}
+
+		if ($pun_config['o_jabber_list'] != '')
+		{
+			$jabber_message = 'User \''.$username.'\' registered in the forums at '.$pun_config['o_base_url']."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$new_uid;
+
+			pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+		}
 	}
 
 	// Must the user verify the registration or do we log him/her in right now?

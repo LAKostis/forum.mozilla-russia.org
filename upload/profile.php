@@ -209,6 +209,7 @@ else if ($action == 'change_email')
 			message($lang_profile['Wrong pass']);
 
 		require PUN_ROOT.'include/email.php';
+		require PUN_ROOT.'include/jabber.php';
 
 		// Validate the email-address
 		$new_email = strtolower(trim($_POST['req_new_email']));
@@ -220,12 +221,22 @@ else if ($action == 'change_email')
 		{
 			if ($pun_config['p_allow_banned_email'] == '0')
 				message($lang_prof_reg['Banned e-mail']);
-			else if ($pun_config['o_mailing_list'] != '')
+			else
 			{
-				$mail_subject = 'Alert - Banned e-mail detected';
-				$mail_message = 'User \''.$pun_user['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				if ($pun_config['o_mailing_list'] != '')
+				{
+					$mail_subject = 'Alert - Banned e-mail detected';
+					$mail_message = 'User \''.$pun_user['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
-				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+					pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+				}
+
+				if ($pun_config['o_jabber_list'] != '')
+				{
+					$jabber_message = 'User \''.$pun_user['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id;
+
+					pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+				}
 			}
 		}
 
@@ -235,15 +246,25 @@ else if ($action == 'change_email')
 		{
 			if ($pun_config['p_allow_dupe_email'] == '0')
 				message($lang_prof_reg['Dupe e-mail']);
-			else if ($pun_config['o_mailing_list'] != '')
+			else
 			{
 				while ($cur_dupe = $db->fetch_assoc($result))
 					$dupe_list[] = $cur_dupe['username'];
 
-				$mail_subject = 'Alert - Duplicate e-mail detected';
-				$mail_message = 'User \''.$pun_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				if ($pun_config['o_mailing_list'] != '')
+				{
+					$mail_subject = 'Alert - Duplicate e-mail detected';
+					$mail_message = 'User \''.$pun_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
-				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+					pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
+				}
+
+				if ($pun_config['o_jabber_list'] != '')
+				{
+					$jabber_message = 'User \''.$pun_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id;
+
+					pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+				}
 			}
 		}
 

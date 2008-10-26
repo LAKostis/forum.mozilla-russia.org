@@ -249,12 +249,11 @@ else if (isset($_POST['add_edit_ban']))
 	$ban_ip = ($ban_ip != '') ? '\''.$db->escape($ban_ip).'\'' : 'NULL';
 	$ban_email = ($ban_email != '') ? '\''.$db->escape($ban_email).'\'' : 'NULL';
 	$ban_message = ($ban_message != '') ? '\''.$db->escape($ban_message).'\'' : 'NULL';
-	$ban_initiator = $pun_user['id'];
 
 	if ($_POST['mode'] == 'add')
-		$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire, initiator) VALUES('.$ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.$ban_initiator.')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
+		$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire, initiator) VALUES('.$ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.$pun_user['id'].')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
 	else
-		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.', initiator='.$ban_initiator.' WHERE id='.intval($_POST['ban_id'])) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.', initiator='.$pun_user['id'].' WHERE id='.intval($_POST['ban_id'])) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
 
 	// Regenerate the bans cache
 	require_once PUN_ROOT.'include/cache.php';
@@ -318,7 +317,7 @@ generate_admin_menu('bans');
 			<div class="fakeform">
 <?php
 
-$result = $db->query('SELECT id, username, ip, email, message, expire, initiator FROM '.$db->prefix.'bans ORDER BY id') or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, b.initiator, u.username AS admin FROM '.$db->prefix.'bans AS b LEFT JOIN '.$db->prefix.'users AS u ON b.initiator = u.id ORDER BY b.id') or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
 if ($db->num_rows($result))
 {
 	while ($cur_ban = $db->fetch_assoc($result))
@@ -328,7 +327,7 @@ if ($db->num_rows($result))
 ?>
 				<div class="inform">
 					<fieldset>
-						<legend>Ban expires: <?php echo $expire ?></legend>
+						<legend>Ban expires: <?php echo $expire ?><?php if ($cur_ban['initiator'] != ''): ?> | Ban initiator: <a href="profile.php?id=<?php echo $cur_ban['initiator'] ?>"><?php echo $cur_ban['admin'] ?></a><?php endif; ?></legend>
 						<div class="infldset">
 							<table cellspacing="0">
 <?php if ($cur_ban['username'] != ''): ?>								<tr>
@@ -348,11 +347,7 @@ if ($db->num_rows($result))
 									<td><?php echo pun_htmlspecialchars($cur_ban['message']) ?></td>
 								</tr>
 <?php endif; ?>							</table>
-							<p class="linkactions"><a href="admin_bans.php?edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="admin_bans.php?del_ban=<?php echo $cur_ban['id'] ?>">Remove</a>
-<?php if ($cur_ban['initiator'] != ''): ?>
- - <a href="profile.php?id=<?php echo $cur_ban['initiator'] ?>">Initiator</a>
-<?php endif; ?>		
-							</p>
+							<p class="linkactions"><a href="admin_bans.php?edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="admin_bans.php?del_ban=<?php echo $cur_ban['id'] ?>">Remove</a></p>
 						</div>
 					</fieldset>
 				</div>

@@ -6,7 +6,7 @@ function copyQ() {
 
 function pasteQ() {
 	if (txt != '' && document.forms['post']['req_message'])
-		insert_text('[quote]' + txt + '[/quote]\n', '');
+		insert_text('[quote]' + txt + '[/quote]\n', '', true);
 }
 
 function pasteN(text) {
@@ -19,7 +19,7 @@ function setCaret (textObj) {
 		textObj.caretPos = document.selection.createRange().duplicate();
 }
 
-function insert_text(open, close)
+function insert_text(open, close, nofocus)
 {
 	var msgfield = document.all ? document.all.req_message : document.forms['post'] ? document.forms['post']['req_message'] : document.forms['edit']['req_message'];
 	var ss = msgfield.selectionStart, st = msgfield.scrollTop, sh = msgfield.scrollHeight;
@@ -44,7 +44,8 @@ function insert_text(open, close)
 	else
 		msgfield.value += open + close;
 	msgfield.scrollTop = st + msgfield.scrollHeight - sh;
-	msgfield.focus();
+	if(!nofocus)
+		msgfield.focus();
 }
 
 function toggleSpan(id) {

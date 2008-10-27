@@ -390,14 +390,11 @@ else if ($_GET['action'] == 'stats')
 	require PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/index.php';
 
 	// Collect some statistics from the database
-	$result = $db->query('SELECT id, username FROM '.$db->prefix.'users ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $db->error());
-	$stats['last_user'] = $db->fetch_assoc($result);
-
 	$result = $db->query('SELECT SUM(num_topics), SUM(num_posts) FROM '.$db->prefix.'forums') or error('Unable to fetch topic/post count', __FILE__, __LINE__, $db->error());
 	list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 
 	echo $lang_index['No of users'].': '.$pun_users_count.'<br />';
-	echo $lang_index['Newest user'].': <a href="'.$pun_config['o_base_url'].'/profile.php?id='.$stats['last_user']['id'].'">'.pun_htmlspecialchars($stats['last_user']['username']).'</a><br />';
+	echo $lang_index['Newest user'].': <a href="'.$pun_config['o_base_url'].'/profile.php?id='.$pun_last_user['id'].'">'.pun_htmlspecialchars($pun_last_user['username']).'</a><br />';
 	echo $lang_index['No of topics'].': '.$stats['total_topics'].'<br />';
 	echo $lang_index['No of posts'].': '.$stats['total_posts'];
 

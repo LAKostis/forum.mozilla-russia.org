@@ -168,6 +168,15 @@ if (!defined('PUN_USERS_COUNT_LOADED'))
 	require PUN_ROOT.'cache/cache_users_count.php';
 }
 
+// Load cached last user
+@include PUN_ROOT.'cache/cache_last_user.php';
+if (!defined('PUN_LAST_USER_LOADED'))
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_last_user_cache();
+	require PUN_ROOT.'cache/cache_last_user.php';
+}
+
 // Check if current user is banned
 check_bans();
 

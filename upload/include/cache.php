@@ -227,3 +227,26 @@ function generate_users_count_cache()
 
 	fclose($fh);
 }
+
+
+//
+// Generate the last user cache PHP script
+//
+function generate_last_user_cache()
+{
+	global $db;
+
+	// Collect some statistics from the database
+	$result = $db->query('SELECT id, username FROM '.$db->prefix.'users ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $db->error());
+
+	$output = $db->fetch_assoc($result);
+
+	// Output last user as PHP code
+	$fh = @fopen(PUN_ROOT.'cache/cache_last_user.php', 'wb');
+	if (!$fh)
+		error('Unable to write last user cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_LAST_USER_LOADED\', 1);'."\n\n".'$pun_last_user = '.var_export($output, true).';'."\n\n".'?>');
+
+	fclose($fh);
+}

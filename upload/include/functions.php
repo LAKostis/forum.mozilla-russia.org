@@ -531,6 +531,10 @@ function delete_user($user_id,$delete_posts)
 	require_once PUN_ROOT.'include/cache.php';
 	generate_users_count_cache();
 
+	// Regenerate the last user cache
+	require_once PUN_ROOT.'include/cache.php';
+	generate_last_user_cache();
+
 	require(PUN_ROOT.'include/pms/profile_delete.php');
 
 	// Delete user avatar

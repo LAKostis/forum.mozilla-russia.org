@@ -218,6 +218,10 @@ else if (isset($_POST['form_sent']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_users_count_cache();
 
+	// Regenerate the last user cache
+	require_once PUN_ROOT.'include/cache.php';
+	generate_last_user_cache();
+
 	// If we previously found out that the e-mail was banned
 	if ($banned_email)
 	{

@@ -250,3 +250,28 @@ function generate_last_user_cache()
 
 	fclose($fh);
 }
+
+
+//
+// Generate the forums cache PHP script
+//
+function generate_forums_cache()
+{
+	global $db;
+
+	// Collect some statistics from the database
+	$result = $db->query('SELECT id, forum_name FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+
+	$output = array();
+	while ($output[] = $db->fetch_row($result))
+		;
+
+	// Output last user as PHP code
+	$fh = @fopen(PUN_ROOT.'cache/cache_forums.php', 'wb');
+	if (!$fh)
+		error('Unable to write last user cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_FORUMS_LOADED\', 1);'."\n\n".'$pun_forums = '.var_export($output, true).';'."\n\n".'?>');
+
+	fclose($fh);
+}

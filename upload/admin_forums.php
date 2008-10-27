@@ -47,6 +47,10 @@ if (isset($_POST['add_forum']))
 
 	$db->query('INSERT INTO '.$db->prefix.'forums (cat_id) VALUES('.$add_to_cat.')') or error('Unable to create forum', __FILE__, __LINE__, $db->error());
 
+	// Regenerate the forums cache
+	require_once PUN_ROOT.'include/cache.php';
+	generate_forums_cache();
+
 	// Regenerate the quickjump cache
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
@@ -86,6 +90,10 @@ else if (isset($_GET['del_forum']))
 		// Delete the forum and any forum specific group permissions
 		$db->query('DELETE FROM '.$db->prefix.'forums WHERE id='.$forum_id) or error('Unable to delete forum', __FILE__, __LINE__, $db->error());
 		$db->query('DELETE FROM '.$db->prefix.'forum_perms WHERE forum_id='.$forum_id) or error('Unable to delete group forum permissions', __FILE__, __LINE__, $db->error());
+
+		// Regenerate the forums cache
+		require_once PUN_ROOT.'include/cache.php';
+		generate_forums_cache();
 
 		// Regenerate the quickjump cache
 		require_once PUN_ROOT.'include/cache.php';
@@ -143,6 +151,10 @@ else if (isset($_POST['update_positions']))
 
 		$db->query('UPDATE '.$db->prefix.'forums SET disp_position='.$disp_position.' WHERE id='.intval($forum_id)) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 	}
+
+	// Regenerate the forums cache
+	require_once PUN_ROOT.'include/cache.php';
+	generate_forums_cache();
 
 	// Regenerate the quickjump cache
 	require_once PUN_ROOT.'include/cache.php';
@@ -207,6 +219,10 @@ else if (isset($_GET['edit_forum']))
 				}
 			}
 		}
+
+		// Regenerate the forums cache
+		require_once PUN_ROOT.'include/cache.php';
+		generate_forums_cache();
 
 		// Regenerate the quickjump cache
 		require_once PUN_ROOT.'include/cache.php';

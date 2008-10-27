@@ -177,6 +177,15 @@ if (!defined('PUN_LAST_USER_LOADED'))
 	require PUN_ROOT.'cache/cache_last_user.php';
 }
 
+// Load cached forums
+@include PUN_ROOT.'cache/cache_forums.php';
+if (!defined('PUN_FORUMS_LOADED'))
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_forums_cache();
+	require PUN_ROOT.'cache/cache_forums.php';
+}
+
 // Check if current user is banned
 check_bans();
 

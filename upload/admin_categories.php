@@ -93,6 +93,10 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		// Delete the category
 		$db->query('DELETE FROM '.$db->prefix.'categories WHERE id='.$cat_to_delete) or error('Unable to delete category', __FILE__, __LINE__, $db->error());
 
+		// Regenerate the forums cache
+		require_once PUN_ROOT.'include/cache.php';
+		generate_forums_cache();
+
 		// Regenerate the quickjump cache
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();

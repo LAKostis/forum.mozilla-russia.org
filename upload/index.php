@@ -156,6 +156,8 @@ if ($cur_category > 0)
 else
 	echo '<div id="idx0" class="block"><div class="box"><div class="inbox"><p>'.$lang_index['Empty board'].'</p></div></div></div>';
 
+
+// Collect some statistics from the database
 $result = $db->query('SELECT id, username FROM '.$db->prefix.'users ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $db->error());
 $stats['last_user'] = $db->fetch_assoc($result);
 

@@ -214,6 +214,9 @@ else if (isset($_POST['form_sent']))
 	$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($username).'\', '.$intial_group_id.', \''.$password_hash.'\', \''.$email1.'\', '.$email_setting.', '.$save_pass.', '.$timezone.' , \''.$db->escape($language).'\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
 	$new_uid = $db->insert_id();
 
+	// Regenerate the users count cache
+	require_once PUN_ROOT.'include/cache.php';
+	generate_users_count_cache();
 
 	// If we previously found out that the e-mail was banned
 	if ($banned_email)

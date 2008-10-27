@@ -156,11 +156,6 @@ if ($cur_category > 0)
 else
 	echo '<div id="idx0" class="block"><div class="box"><div class="inbox"><p>'.$lang_index['Empty board'].'</p></div></div></div>';
 
-
-// Collect some statistics from the database
-$result = $db->query('SELECT COUNT(id)-1 FROM '.$db->prefix.'users') or error('Unable to fetch total user count', __FILE__, __LINE__, $db->error());
-$stats['total_users'] = $db->result($result);
-
 $result = $db->query('SELECT id, username FROM '.$db->prefix.'users ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $db->error());
 $stats['last_user'] = $db->fetch_assoc($result);
 
@@ -174,7 +169,7 @@ list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 		<div class="inbox">
 			<dl class="conr">
 				<dt><strong><?php echo $lang_index['Board stats'] ?></strong></dt>
-				<dd><?php echo $lang_index['No of users'].': <strong>'. $stats['total_users'] ?></strong></dd>
+				<dd><?php echo $lang_index['No of users'].': <strong>'. $pun_users_count ?></strong></dd>
 				<dd><?php echo $lang_index['No of topics'].': <strong>'.$stats['total_topics'] ?></strong></dd>
 				<dd><?php echo $lang_index['No of posts'].': <strong>'.$stats['total_posts'] ?></strong></dd>
 			</dl>

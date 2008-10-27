@@ -159,6 +159,15 @@ if (!defined('PUN_BANS_LOADED'))
 	require PUN_ROOT.'cache/cache_bans.php';
 }
 
+// Load cached users count
+@include PUN_ROOT.'cache/cache_users_count.php';
+if (!defined('PUN_USERS_COUNT_LOADED'))
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_users_count_cache();
+	require PUN_ROOT.'cache/cache_users_count.php';
+}
+
 // Check if current user is banned
 check_bans();
 

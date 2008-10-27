@@ -204,3 +204,26 @@ function generate_quickjump_cache($group_id = false)
 		fclose($fh);
 	}
 }
+
+
+//
+// Generate the users count cache PHP script
+//
+function generate_users_count_cache()
+{
+	global $db;
+
+	// Collect some statistics from the database
+	$result = $db->query('SELECT COUNT(id)-1 FROM '.$db->prefix.'users') or error('Unable to fetch total user count', __FILE__, __LINE__, $db->error());
+
+	$output = $db->result($result);
+
+	// Output users count as PHP code
+	$fh = @fopen(PUN_ROOT.'cache/cache_users_count.php', 'wb');
+	if (!$fh)
+		error('Unable to write users count cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_USERS_COUNT_LOADED\', 1);'."\n\n".'$pun_users_count = '.var_export($output, true).';'."\n\n".'?>');
+
+	fclose($fh);
+}

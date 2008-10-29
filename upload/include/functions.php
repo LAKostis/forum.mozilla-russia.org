@@ -1448,7 +1448,8 @@ function pun_get_browser($uagent){
                      'shiira',
                      'songbird',
                      'sunrise',
-                     'swift');
+                     'swift',
+                     'wyzo');
    $ua = get_browser($uagent,true);
    $ua_browser = pun_strtolower($ua['browser']);
    $ua_version = $ua['version'];

@@ -130,7 +130,7 @@ $lang_common = array(
 'Mark all as read'		=>	'Пометить все форумы как прочитанные',
 'Link separator'		=>	'',	// The text that separates links in the navigator
 'Mark forum as read'	=> 	'Пометить форум как прочитанный', // MOD: MARK TOPICS AS READ
-'New reports'			=> 'Есть новые репорты',
+'New reports'			=> 'Есть новые жалобы',
 
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',

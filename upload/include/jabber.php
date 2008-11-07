@@ -49,10 +49,11 @@ function pun_jabber($to, $message)
 			$printlog=false, $loglevel=XMPPHP_Log::LEVEL_ERROR
 	);
 
+	$jabber->autoSubscribe();
+
 	try {
 		$jabber->connect();
 		$jabber->processUntil('session_start');
-		$jabber->presence();
 		foreach ($to as $value)
 			$jabber->message($value, $message);
 		$jabber->disconnect();

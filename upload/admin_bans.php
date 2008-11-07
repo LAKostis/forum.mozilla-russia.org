@@ -317,7 +317,7 @@ generate_admin_menu('bans');
 			<div class="fakeform">
 <?php
 
-$result = $db->query('SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, b.initiator, u.username AS admin FROM '.$db->prefix.'bans AS b LEFT JOIN '.$db->prefix.'users AS u ON b.initiator = u.id ORDER BY b.id') or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, b.initiator, u.username AS admin FROM '.$db->prefix.'bans AS b LEFT JOIN '.$db->prefix.'users AS u ON b.initiator = u.id ORDER BY b.id DESC') or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
 if ($db->num_rows($result))
 {
 	while ($cur_ban = $db->fetch_assoc($result))

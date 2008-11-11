@@ -373,13 +373,13 @@ function do_bbcode($text)
 
 	if (strpos($text, 'added') !== false)
 	{
-		preg_match_all('#\[added=(\d+)\]#i', $text, $added, PREG_SET_ORDER);
+		preg_match_all('#\[added=((\d){9,11})\]#i', $text, $added, PREG_SET_ORDER);
 		if(count($added))
 		{
 			$diff = ($pun_user['timezone'] - $pun_config['o_server_timezone']) * 3600;
 			foreach ($added as $match)
 				if(isset($match[1]))
-					$text = str_replace($match[0], $lang_post['Added'].' '.strftime('%c', $match[1] + $diff), $text);
+					$text = str_replace($match[0], '<span style="color: #808080"><em><i>' . $lang_post['Added'].' '.format_time($match[1] + $diff) . '</i></em></span>', $text);
 		}
 	}
 

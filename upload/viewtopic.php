@@ -250,7 +250,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		{
 		$username = '<a href="profile.php?id='.$cur_post['poster_id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		} else
-		$username = '<a href="javascript:pasteN(\''.$cur_post['username'].'\')">'.pun_htmlspecialchars($cur_post['username']).'</a>';
+		$username = '<a href="javascript:pasteN(\''.$cur_post['username'].'\')" onmouseover="copyQ(this);">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		$user_title = get_title($cur_post);
 
 		if ($pun_config['o_censoring'] == '1')
@@ -339,7 +339,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
 			$post_actions[] = '</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>';
 			if ($quickpost)
-			$post_actions[] = '</li><li class="postquote" onmouseover="copyQ(this);"><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
+			$post_actions[] = '</li><li class="postquote" onmouseover="copyQ(this, true);"><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
 		}
 	}
 	else
@@ -347,7 +347,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		if (($cur_post['poster_id'] != '1') && $quickpost)
 			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 		
-		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover="copyQ(this);"><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
+		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover="copyQ(this, true);"><a href="javascript:pasteQ();">'.$lang_topic['Quote'].'</a>';
 	}
 
 	// Switch the background color for every message.

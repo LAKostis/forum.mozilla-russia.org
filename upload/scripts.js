@@ -1,17 +1,20 @@
 var txt = '', selected_id = null;
 
-function copyQ(obj) {
+function copyQ(obj, cursor) {
 	txt = window.getSelection ? window.getSelection() : document.selection ? document.selection.createRange().text : '';
-	obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
+	if(cursor)
+		obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
 }
 
 function pasteQ() {
 	if (txt != '' && document.forms['post']['req_message'])
-		insert_text('[quote]' + txt + '[/quote]\n', '', true);
+		insert_text('[quote]' + txt + '[/quote]\n', '');
 }
 
 function pasteN(text) {
-	if (text !='' && document.forms['post']['req_message'])
+	if (txt != '' && document.forms['post']['req_message'])
+		insert_text('[quote=' + text + ']' + txt + '[/quote]\n', '');
+	else
 		insert_text('[b]' + text + '[/b]\n', '');
 }
 
@@ -20,7 +23,7 @@ function setCaret (textObj) {
 		textObj.caretPos = document.selection.createRange().duplicate();
 }
 
-function insert_text(open, close, nofocus)
+function insert_text(open, close, focus)
 {
 	var msgfield = document.all ? document.all.req_message : document.forms['post'] ? document.forms['post']['req_message'] : document.forms['edit']['req_message'];
 	var ss = msgfield.selectionStart, st = msgfield.scrollTop, sh = msgfield.scrollHeight;
@@ -45,7 +48,7 @@ function insert_text(open, close, nofocus)
 	else
 		msgfield.value += open + close;
 	msgfield.scrollTop = st + msgfield.scrollHeight - sh;
-	if(!nofocus)
+	if(focus)
 		msgfield.focus();
 }
 

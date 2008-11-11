@@ -9,7 +9,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Wiki | Mozilla Россия" href="/plugins/mz_wiki.xml" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
-<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=21" title="<rss site news>" />
+<link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=21&amp;res=site" title="<rss site news>" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 </head>
 <body>

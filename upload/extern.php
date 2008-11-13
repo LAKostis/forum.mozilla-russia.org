@@ -241,7 +241,8 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		$result = $db->query('SELECT t.id, t.poster, t.subject, t.posted, t.last_post, t.num_replies, f.id AS fid, f.forum_name FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT 15') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 
 		require PUN_ROOT.'include/parser.php';
-		
+
+		$site = $_GET['res'] == "site";
 		while ($cur_topic = $db->fetch_assoc($result))
 		{
 			if ($pun_config['o_censoring'] == '1')
@@ -251,14 +252,14 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 			$cur_message = $db->fetch_assoc($result2);
 
 			echo "\t".'<item>'."\r\n";
-			if($_GET['res'] == "site"){
+			if($site){
 				echo "\t\t".'<title>'.pun_htmlspecialchars($cur_topic['subject']).'</title>'."\r\n";
 			}
 			else{
 				echo "\t\t".'<title>'.pun_htmlspecialchars($cur_topic['forum_name']).' : '.pun_htmlspecialchars($cur_topic['subject']).'</title>'."\r\n";
 			}
 			echo "\t\t".'<link>'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].$url_action.'</link>'."\r\n";
-			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].'<br />'."\r\n".$lang_common['Posted'].': '.date('r', $cur_topic['posted']).'<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', $cur_topic['last_post'])).'<br />'."\r\n".parse_message($cur_message['message'], $cur_message['hide_smilies']).']]></description>'."\r\n";
+			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].'<br />'."\r\n".$lang_common['Posted'].': '.date('r', $cur_topic['posted']).($site ? '' : '<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', $cur_topic['last_post'])).'<br />')."\r\n".parse_message($cur_message['message'], $cur_message['hide_smilies']).']]></description>'."\r\n";
 			echo "\t".'</item>'."\r\n";
 		}
 

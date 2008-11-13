@@ -168,6 +168,15 @@ if (isset($_POST['form_sent']))
 
 	// Clean up message from POST
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));
+
+	// Dupe and spam protection
+	if (!$pun_user['is_guest'] && !isset($_POST['preview']) && $pun_user['last_post'] != '')
+	{
+		$result = $db->query('SELECT MAX(id), message FROM '.$db->prefix.'posts WHERE poster_id='.$pun_user['id'].' ORDER BY id DESC LIMIT 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+		if ($db->num_rows($result) && ($last_message = $db->fetch_assoc($result)) && $last_message['message'] == $message)
+			$errors[] = $lang_post['Dupe message'];
+	}
+
 	// hcs merge posts
 	$merged=false;
 	if (!$pun_user['is_guest'] && !$fid && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])

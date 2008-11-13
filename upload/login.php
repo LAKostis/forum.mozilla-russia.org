@@ -137,7 +137,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 		if (!is_valid_email($email))
 			message($lang_common['Invalid e-mail']);
 
-		$result = $db->query('SELECT id, username FROM '.$db->prefix.'users WHERE email=\''.$db->escape($email).'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT id, username FROM '.$db->prefix.'users WHERE email=\''.$db->escape($email).'\' AND group_id > 2') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 		if ($db->num_rows($result))
 		{

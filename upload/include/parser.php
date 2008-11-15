@@ -413,11 +413,11 @@ function do_smilies($text)
 
 	$num_smilies = count($smiley_text);
 	for ($i = 0; $i < $num_smilies; ++$i)
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/smilies/'.$smiley_img[$i].'" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
 
 	$num_browsers = count($browser_text);
 	for ($i = 0; $i < $num_browsers; ++$i)
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" alt="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" alt="'.$smiley_text[$i].'" title="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
 }

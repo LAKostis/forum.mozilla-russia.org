@@ -239,6 +239,15 @@ if (isset($_POST['form_sent']))
 			}
 			else
 			{
+
+				if(is_banned_email($email))
+					message($lang_common['Ban message'], true);
+
+				$username_tmp = $pun_user['username'];
+				$pun_user['username'] = $username;
+				check_bans();
+				$pun_user['username'] = $username_tmp;
+
 				// It's a guest. Insert the new post
 				$email_sql = ($pun_config['p_force_guest_email'] == '1' || $email != '') ? '\''.$email.'\'' : 'NULL';
 				$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_ip, poster_email, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', \''.get_remote_address().'\', '.$email_sql.', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
@@ -367,6 +376,15 @@ if (isset($_POST['form_sent']))
 			else
 			{
 				// Create the post ("topic post")
+
+				if(is_banned_email($email))
+					message($lang_common['Ban message'], true);
+
+				$username_tmp = $pun_user['username'];
+				$pun_user['username'] = $username;
+				check_bans();
+				$pun_user['username'] = $username_tmp;
+
 				$email_sql = ($pun_config['p_force_guest_email'] == '1' || $email != '') ? '\''.$email.'\'' : 'NULL';
 				$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_ip, poster_email, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', \''.get_remote_address().'\', '.$email_sql.', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$new_tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
 			}

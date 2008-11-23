@@ -23,7 +23,6 @@ $lang_post = array(
 'Flood start'			=>	'At least',
 'flood end'				=>	'seconds have to pass between posts. Please wait a little while and try posting again.',
 'Preview'				=>	'Preview',	// submit button to preview message
-'Dupe message'			=>	'You cannot make another post with the exact same text as your last.',
 
 // Edit post
 'Edit post legend'		=>	'Edit the post and submit changes',

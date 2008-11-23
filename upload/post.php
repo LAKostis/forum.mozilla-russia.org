@@ -172,9 +172,9 @@ if (isset($_POST['form_sent']))
 	// Dupe and spam protection
 	if (!$pun_user['is_guest'] && !isset($_POST['preview']) && $pun_user['last_post'] != '')
 	{
-		$result = $db->query('SELECT MAX(id), message FROM '.$db->prefix.'posts WHERE poster_id='.$pun_user['id'].' ORDER BY id DESC LIMIT 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT id, message FROM '.$db->prefix.'posts WHERE poster_id='.$pun_user['id'].' ORDER BY id DESC LIMIT 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result) && ($last_message = $db->fetch_assoc($result)) && $last_message['message'] == $message)
-			$errors[] = $lang_post['Dupe message'];
+			redirect('viewtopic.php?pid='.$last_message['id'].'#p'.$last_message['id'], $lang_post['Post redirect']);
 	}
 
 	// hcs merge posts

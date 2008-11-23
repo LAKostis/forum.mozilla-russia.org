@@ -268,6 +268,28 @@ if ($pun_config['o_announcement'] == '1')
 	$tpl_main = str_replace('<pun_announcement>', $tpl_temp, $tpl_main);
 	ob_end_clean();
 }
+elseif ($pun_config['o_rannouncement'] == '1')
+{
+	ob_start();
+
+	$pun_rannouncements = split("\n", $pun_config['o_rannouncement_message']);
+	$pun_rannouncement = $pun_rannouncements[mt_rand(0, count($pun_rannouncements) - 1)];
+
+?>
+<div id="announce" class="block">
+	<h2><span><?php echo $lang_common['Announcement'] ?></span></h2>
+	<div class="box">
+		<div class="inbox">
+			<div><?php echo $pun_rannouncement ?></div>
+		</div>
+	</div>
+</div>
+<?php
+
+	$tpl_temp = trim(ob_get_contents());
+	$tpl_main = str_replace('<pun_announcement>', $tpl_temp, $tpl_main);
+	ob_end_clean();
+}
 else
 	$tpl_main = str_replace('<pun_announcement>', '', $tpl_main);
 // END SUBST - <pun_announcement>

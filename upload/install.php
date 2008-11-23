@@ -1595,6 +1595,8 @@ else
 		'o_regs_verify'				=> "'0'",
 		'o_announcement'			=> "'0'",
 		'o_announcement_message'	=> "'Enter your announcement here.'",
+		'o_rannouncement'			=> "'0'",
+		'o_rannouncement_message'	=> "'Enter your first announcement here.\nEnter your second announcement here.'",
 		'o_rules'					=> "'0'",
 		'o_rules_message'			=> "'Enter your rules here.'",
 		'o_maintenance'				=> "'0'",

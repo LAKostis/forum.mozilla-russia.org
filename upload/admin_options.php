@@ -90,6 +90,16 @@ if (isset($_POST['form_sent']))
 			$form['announcement'] = '0';
 	}
 
+	if ($form['rannouncement_message'] != '')
+		$form['rannouncement_message'] = pun_linebreaks($form['rannouncement_message']);
+	else
+	{
+		$form['rannouncement_message'] = 'Enter your first announcement here.\nEnter your second announcement here.';
+
+		if ($form['rannouncement'] == '1')
+			$form['rannouncement'] = '0';
+	}
+
 	if ($form['rules_message'] != '')
 		$form['rules_message'] = pun_linebreaks($form['rules_message']);
 	else
@@ -702,6 +712,35 @@ generate_admin_menu('options');
 						</div>
 					</fieldset>
 				</div>
+
+
+
+				<div class="inform">
+					<fieldset>
+						<legend>Random announcements</legend>
+						<div class="infldset">
+							<table class="aligntop" cellspacing="0">
+								<tr>
+									<th scope="row">Display announcements</th>
+									<td>
+										<input type="radio" name="form[rannouncement]" value="1"<?php if ($pun_config['o_rannouncement'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[rannouncement]" value="0"<?php if ($pun_config['o_rannouncement'] == '0') echo ' checked="checked"' ?> />&nbsp;<strong>No</strong>
+										<span>Enable this to display the <b>random line</b> of below message in the forums, <b>if common announcement disabled</b>.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Announcement messages</th>
+									<td>
+										<textarea name="form[rannouncement_message]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_rannouncement_message']) ?></textarea>
+										<span>One line for <b>one announcement</b>. This text will not be parsed like regular posts and thus may contain HTML.</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+
+
+
 				<div class="inform">
 					<fieldset>
 						<legend>Maintenance</legend>

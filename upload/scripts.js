@@ -1,8 +1,10 @@
-var txt = '', selected_id = null;
+var txt = '', nick = '', selected_id = null;
 
-function copyQ(obj, cursor) {
+function copyQ(obj, nickname, cursor) {
 	txt = window.getSelection ? window.getSelection() : document.selection ? document.selection.createRange().text : '';
-	if(cursor)
+	if (nickname)
+		nick = obj.textContent;
+	if (cursor)
 		obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
 }
 
@@ -11,11 +13,11 @@ function pasteQ() {
 		insert_text('[quote]' + txt + '[/quote]\n', '');
 }
 
-function pasteN(text) {
+function pasteN() {
 	if (txt != '' && document.forms['post']['req_message'])
-		insert_text('[quote=' + text + ']' + txt + '[/quote]\n', '');
+		insert_text('[quote=' + nick + ']' + txt + '[/quote]\n', '');
 	else
-		insert_text('[b]' + text + '[/b]\n', '');
+		insert_text('[b]' + nick + '[/b]\n', '');
 }
 
 function setCaret (textObj) {
@@ -48,7 +50,7 @@ function insert_text(open, close, focus)
 	else
 		msgfield.value += open + close;
 	msgfield.scrollTop = st + msgfield.scrollHeight - sh;
-	if(focus)
+	if (focus)
 		msgfield.focus();
 }
 

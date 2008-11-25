@@ -249,7 +249,7 @@ DIV.postfootright LI, UL.bblinks LI {
 
 /* 9.1 Makes textareas and long text inputs shrink with page */
 
-DIV.txtarea {WIDTH: 75%}
+DIV.txtarea {WIDTH: 85%}
 
 DIV.txtarea TEXTAREA, INPUT.longinput {WIDTH: 100%}
 
@@ -310,3 +310,6 @@ form input#search-submit {font-size: 85%; font-weight: bold; padding: 1px 4px;}
 /* 11.4 User agent mod */
 .useragent span{font-family: "Georgia", verdana, sans-serif; font-weight: normal;}
 .useragent img{margin-bottom: -4px;}
+
+/* 11.5 Misc */
+.bbincrement{float: right;}

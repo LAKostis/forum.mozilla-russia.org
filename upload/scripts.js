@@ -81,6 +81,18 @@ function mail_to(s)
 	location.href = r;
 }
 
+function incrementForm()
+{
+	if(document.forms['post']['req_message'].rows < 49)
+		document.forms['post']['req_message'].rows += 7;
+}
+
+function decrementForm()
+{
+	if(document.forms['post']['req_message'].rows > 7)
+		document.forms['post']['req_message'].rows -= 7;
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

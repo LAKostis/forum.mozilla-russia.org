@@ -730,7 +730,7 @@ generate_admin_menu('options');
 								<tr>
 									<th scope="row">Announcement messages</th>
 									<td>
-										<textarea name="form[rannouncement_message]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_rannouncement_message']) ?></textarea>
+										<textarea name="form[rannouncement_message]" rows="5" cols="55" wrap="off"><?php echo pun_htmlspecialchars($pun_config['o_rannouncement_message']) ?></textarea>
 										<span>One line for <b>one announcement</b>. This text will not be parsed like regular posts and thus may contain HTML.</span>
 									</td>
 								</tr>

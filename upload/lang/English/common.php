@@ -49,7 +49,8 @@ $lang_common = array(
 
 // Miscellaneous
 'Announcement'			=>	'Announcement',
-'Announcements'                 =>      'Announcements',
+'Announcements'			=>	'Announcements',
+'Helpful info'			=>	'Helpful info',
 'Options'				=>	'Options',
 'Actions'				=>	'Actions',
 'Submit'				=>	'Submit',	// "name" of submit buttons

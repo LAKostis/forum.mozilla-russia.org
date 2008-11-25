@@ -277,7 +277,7 @@ elseif ($pun_config['o_rannouncement'] == '1')
 
 ?>
 <div id="announce" class="block">
-	<h2><span><?php echo $lang_common['Announcement'] ?></span></h2>
+	<h2><span><?php echo $lang_common['Helpful info'] ?></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div><?php echo $pun_rannouncement ?></div>

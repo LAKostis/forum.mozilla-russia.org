@@ -48,7 +48,8 @@ $lang_common = array(
 
 // Miscellaneous
 'Announcement'			=>	'Объявление',
-'Announcements'                 =>      'Объявления',
+'Announcements'			=>	'Объявления',
+'Helpful info'			=>	'Полезная информация',
 'Options'				=>	'Параметры',
 'Actions'				=>	'Действия',
 'Submit'				=>	'Отправить',	// "name" of submit buttons

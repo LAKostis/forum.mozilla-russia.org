@@ -241,11 +241,11 @@ elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_PO
 	$delfile = pun_trim($_POST['delfile']);
 	if(($upl_conf['p_delete'] <> 1)&&($upl_conf['p_globaldelete'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
 
+	$result = $db->query('DELETE FROM '.$db->prefix.'uploaded WHERE file=\''.$db->escape($delfile).'\'') or error('Unable to delete data', __FILE__, __LINE__, $db->error());
     if(!file_exists('./uploaded/'.$delfile))
       error('File doesn\'t exist', __FILE__, __LINE__, $db->error());
     else {
     	unlink('./uploaded/'.$delfile);
-	$result = $db->query('DELETE FROM '.$db->prefix.'uploaded WHERE file=\''.$db->escape($delfile).'\'') or error('Unable to delete data', __FILE__, __LINE__, $db->error());
 ?>
 <div class="inform">
 	<fieldset>

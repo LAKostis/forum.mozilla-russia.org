@@ -320,10 +320,10 @@ while ($cur_post = $db->fetch_assoc($result))
 	// Generation post action array (quote, edit, delete etc.)
 	if (!$is_admmod)
 	{
+		if (($cur_post['poster_id'] != '1') && $quickpost)
+			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
 		if (!$pun_user['is_guest'])
-		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>'.$lang_topic['Link separator'].'<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
-		else if (($cur_post['poster_id'] != '1') && $quickpost)
-		$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
+			$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
 
 		if ($cur_topic['closed'] == '0')
 		{

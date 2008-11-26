@@ -548,7 +548,7 @@ function handle_email_tag($email,$text = '')
 	{
 		$text = str_replace('@','@<span style="display:none">remove-this.</span>',$email);
 	}
-	return '<a href="javascript:mail_to(\''.$enc_email.'\')">'.$text.'</a>';
+	return '<a href="#" onclick="mail_to(\''.$enc_email.'\');return false;">'.$text.'</a>';
 }
 
 		

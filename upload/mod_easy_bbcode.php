@@ -43,7 +43,7 @@ if (!isset($bbcode_field))
 							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote= USER ]','[/quote]')" />
 							<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style= STYLE]','[/style]')" />
 							<?php echo "".'<input type="button" value="User Agent" name="UA" onclick="insert_text(\'::::&nbsp;'.get_user_ua().'\',\'\')" />'."\n"; ?>
-							<input type="button" value="Show More" name="More" onclick="javascript:toggleSpan('q1');" />
+							<input type="button" value="Show More" name="More" onclick="toggleSpan('q1');" />
 						</div>
 						<div class="inform" style="display: none;" id="q1Span" >
 						<table style="border: 0;">
@@ -105,10 +105,7 @@ for ($i = 0; $i < $num_smilies; ++$i)
 		continue;
 
 	if (!in_array($smiley_img[$i], $smiley_dups))
-	{
-		$smtext = ($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');"><img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'"/>' : 'javascript:insert_text(\''.$smiley_text[$i].'\',\'\');">'.$smiley_text[$i];
-		echo "\t\t\t\t\t\t\t".'<a href="'.$smtext.'</a>'."\n";
-	}
+		echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'"/>' : $smiley_text[$i]).'</a>'."\n";
 	
 	$smiley_dups[] = $smiley_img[$i];
 }

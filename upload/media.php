@@ -126,7 +126,7 @@ function media_html_media($ns){
   print '<ul>';
   foreach($data as $item){
     print '<li>';
-    print '<a href="javascript:mediaSelect(\''.$item['id'].'\')">';
+    print '<a href="#" onclick="mediaSelect(\''.$item['id'].'\');return false;">';
     print utf8_decodeFN($item['file']);
     print '</a>';
     if($item['isimg']){

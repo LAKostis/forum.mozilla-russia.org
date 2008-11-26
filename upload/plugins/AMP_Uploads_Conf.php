@@ -30,7 +30,7 @@ if (isset($_POST['save_options']))
 		<div class="box">
 			<div class="inbox">
 				<p></p>
-				<p><a href="javascript: history.go(-1)">Go back</a></p>
+				<p><a href="javascript:history.go(-1)">Go back</a></p>
 
 	<div class="inform">
 		<fieldset>

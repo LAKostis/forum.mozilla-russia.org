@@ -83,14 +83,18 @@ function mail_to(s)
 
 function incrementForm()
 {
-	if(document.forms['post']['req_message'].rows < 49)
+	if(document.forms['post'] && document.forms['post']['req_message'].rows < 49)
 		document.forms['post']['req_message'].rows += 7;
+	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows < 49)
+		document.forms['edit']['req_message'].rows += 7;
 }
 
 function decrementForm()
 {
-	if(document.forms['post']['req_message'].rows > 7)
+	if(document.forms['post'] && document.forms['post']['req_message'].rows > 7)
 		document.forms['post']['req_message'].rows -= 7;
+	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows > 7)
+		document.forms['edit']['req_message'].rows -= 7;
 }
 
 /*@cc_on

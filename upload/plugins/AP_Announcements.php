@@ -108,7 +108,7 @@ $cur_index = 1;
 						<label><strong>Subject</strong><br /><input class="longinput" type="text" name="req_subject" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 						<label><strong>Message</strong><br />
 						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"></textarea><br /></label>
-						<div class="bbincrement"><a href="javascript:incrementForm();">[ + ]</a> <a href="javascript:decrementForm();">[ - ]</a></div>
+						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
 						<ul class="bblinks">
 							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;">BBCode</a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 							<li><a href="help.php#img" onclick="window.open(this.href); return false;">Img tag</a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>

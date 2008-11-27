@@ -31,25 +31,25 @@ if (!isset($bbcode_field))
 
 ?>
 						<div style="padding-top: 4px">
-							<input type="button" value=" B " name="B" onclick="insert_text('[b]','[/b]')" /> 
+							<input type="button" value=" B " name="B" onclick="insert_text('[b]','[/b]')" />
 							<input type="button" value=" I " name="I" onclick="insert_text('[i]','[/i]')" />
 							<input type="button" value=" U " name="U" onclick="insert_text('[u]','[/u]')" />
-							<input type="button" value="http://" name="Url" onclick="insert_text('[url]','[/url]')" />
-							<input type="button" value="mailto:" name="EMAIL" onclick="insert_text('[email]','[/email]')" />
-							<input type="button" value="Code" name="Code" onclick="insert_text('[code]','[/code]')" />
+							<input type="button" value="URL" name="Url" onclick="insert_text('[url]','[/url]')" />
+							<input type="button" value="E-Mail" name="EMAIL" onclick="insert_text('[email]','[/email]')" />
 							<input type="button" value="Img" name="Img" onclick="insert_text('[img]','[/img]')" />
-							<input type="button" value="Horiz. Line" name="HR" onclick="insert_text('[hr /]','')" />
 							<input type="button" value="Quote" name="Quote" onclick="insert_text('[quote]','[/quote]')" />
-							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote= USER ]','[/quote]')" />
-							<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style= STYLE]','[/style]')" />
-							<?php echo "".'<input type="button" value="User Agent" name="UA" onclick="insert_text(\'::::&nbsp;'.get_user_ua().'\',\'\')" />'."\n"; ?>
-							<input type="button" value="Show More" name="More" onclick="toggleSpan('q1');" />
+							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote=USER]','[/quote]')" />
+							<input type="button" value="Code" name="Code" onclick="insert_text('[code]','[/code]')" />
+							<input type="button" value="Horiz. Line" name="HR" onclick="insert_text('[hr /]','')" />
+							<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style=STYLE]','[/style]')" />
+							<input type="button" value="User Agent" name="UA" onclick="insert_text('::::&nbsp;<?php echo get_user_ua() ?>','')" />
+							<input type="button" value="<? echo $lang_common['Show More'] ?>" name="More" onclick="toggleSpan('q1');" />
 						</div>
 						<div class="inform" style="display: none;" id="q1Span" >
 						<table style="border: 0;">
 							<tr>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 3px;">
+						        	<fieldset style="padding: 8px;">
 							    		<legend>Текст</legend>
 											<input type="button" value="Strikethrough" name="S" onclick="insert_text('[s]','[/s]')" />
 											<input type="button" value="Highlight" name="H" onclick="insert_text('[h]','[/h]')" />
@@ -57,7 +57,7 @@ if (!isset($bbcode_field))
 									</fieldset>
 								</td>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 3px;">
+						        	<fieldset style="padding: 8px;">
 							    		<legend>Список</legend>
 											<input type="button" value=" UL " name="UL" onclick="insert_text('[ul]','[/ul]')" />
 											<input type="button" value=" OL " name="OL" onclick="insert_text('[ol]','[/ol]')" />
@@ -68,7 +68,7 @@ if (!isset($bbcode_field))
 							</tr>
 							<tr>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 3px;">
+						        	<fieldset style="padding: 8px;">
 							    		<legend>Шрифт</legend>
 											<input type="button" value="Font Face" name="FONT" onclick="insert_text('[font= FACE ]','[/font]')" />
 											<input type="button" value="Font Color" name="COLOR" onclick="insert_text('[color=#RRGGBB]','[/color]')" />
@@ -78,7 +78,7 @@ if (!isset($bbcode_field))
 									</fieldset>
 								</td>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 3px;">
+						        	<fieldset style="padding: 8px;">
 							    		<legend>Таблица</legend>
 											<input type="button" value=" Table " name="TABLE" onclick="insert_text('[table]','[/table]')" />
 											<input type="button" value="Table Caption" name="CAPTION" onclick="insert_text('[caption]','[/caption]')" />

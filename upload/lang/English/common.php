@@ -161,6 +161,7 @@ $lang_common = array(
 'Posted'				=>	'Posted',	// The date/time a topic was started
 'Comments'				=>	'Comments',	// The reply count for topic
 // MOD Printable topic version string
-'Print version'                 =>      'Printable version'
+'Print version'                 =>      'Printable version',
 
+'Show More' => 'More…'
 );

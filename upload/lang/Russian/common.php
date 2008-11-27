@@ -160,6 +160,7 @@ $lang_common = array(
 'Posted'				=>	'Размещено',	// The date/time a topic was started
 'Comments'				=>	'Комментарии',
 // MOD Printable topic version string
-'Print version'                 =>      'Версия для печати'
+'Print version'                 =>      'Версия для печати',
 
+'Show More' => 'Больше…'
 );

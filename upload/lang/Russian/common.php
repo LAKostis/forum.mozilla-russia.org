@@ -162,5 +162,6 @@ $lang_common = array(
 // MOD Printable topic version string
 'Print version'                 =>      'Версия для печати',
 
-'Show More' => 'Больше…'
+'Show More' => 'Больше »',
+'Show Less' => '« Меньше'
 );

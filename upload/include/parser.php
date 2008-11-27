@@ -29,14 +29,16 @@ if (!defined('PUN'))
 
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:', ':blush:',':usch:', ':angry:', ':angel:', ':whistle:', ':rock:', ':tongue2:', ':zzz:', ':sick:', ':music:', ':iron:', ':dumb:', ':puss:', ':beer:', ':heart:', ':couple:', ':whiteflag:', ':offtopic:', ':cry:' );
-$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png', 'blush.gif', 'usch.gif', 'angry.gif', 'angel.gif', 'whistle.gif', 'rock.gif', 'tongue2.gif', 'zzz.gif', 'sick.gif', 'music.gif', 'iron.gif', 'dumb.gif', 'puss.gif', 'beer.gif', 'heart.gif', 'couple.gif', 'whiteflag.gif', 'offtopic.gif', 'cry.gif');
+$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:', ':blush:', ':usch:', ':angry:', ':sick:', ':music:', ':cry:', ':whistle:', ':beer:', ':angel:', ':rock:', ':tongue2:', ':zzz:', ':iron:', ':dumb:', ':puss:', ':heart:', ':couple:', ':whiteflag:', ':offtopic:');
+$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png', 'blush.gif', 'usch.gif', 'angry.gif', 'sick.gif', 'music.gif', 'cry.gif', 'whistle.gif', 'beer.gif', 'angel.gif', 'rock.gif', 'tongue2.gif', 'zzz.gif', 'iron.gif', 'dumb.gif', 'puss.gif', 'heart.gif', 'couple.gif', 'whiteflag.gif', 'offtopic.gif');
+$smiley_limit = 22;
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
-$browser_text = array('[fx]');
-$browser_img = array('firefox.png');
+$browser_text = array('[fx]', '[tb]', '[mz]', '[sm]', '[fl]', '[fn]', '[sgb]', '[sb]', '[km]', '[nvu]', '[iceweasel]', '[iceape]', '[ns]', '[ie]', '[ie7]', '[opera]', '[safari]', '[sunrise]', '[chrome]', '[konqueror]', '[camino]', '[arora]', '[etna]');
+$browser_img = array('firefox.png', 'thunderbird.png', 'mozilla.png', 'seamonkey.png', 'flock.png', 'fennec.png', 'songbird.png', 'sunbird.png', 'k-meleon.png', 'nvu.png', 'iceweasel.png', 'iceape.png', 'netscape.png', 'ie.png', 'ie7.png', 'opera.png', 'safari.png', 'sunrise.png', 'chrome.png', 'konqueror.png', 'camino.png', 'arora.png', 'etna.png');
+$browser_limit = 3;
 
 //
 // Make sure all BBCodes are lower case and do a little cleanup

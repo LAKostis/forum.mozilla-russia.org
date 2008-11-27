@@ -54,9 +54,22 @@ function insert_text(open, close, focus)
 		msgfield.focus();
 }
 
-function toggleSpan(id) {
-	var span = document.getElementById(id + 'Span');
-	span.style.display = span.style.display == 'none' ? 'inline' : 'none';
+function toggleAdditional(id) {
+	document.getElementById('additional-more').style.display = document.getElementById('additional-more').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('additional').style.display = document.getElementById('additional').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('additional-less').style.display = document.getElementById('additional-less').style.display == 'none' ? 'inline' : 'none';
+}
+
+function moreSmiles () {
+	document.getElementById('smiley-more').style.display = document.getElementById('smiley-more').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('smileys').style.display = document.getElementById('smileys').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('smiley-less').style.display = document.getElementById('smiley-less').style.display == 'none' ? 'inline' : 'none';
+}
+
+function moreBrowser () {
+	document.getElementById('browser-more').style.display = document.getElementById('browser-more').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('browsers').style.display = document.getElementById('browsers').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('browser-less').style.display = document.getElementById('browser-less').style.display == 'none' ? 'inline' : 'none';
 }
 
 function ToggleAll(checked) {

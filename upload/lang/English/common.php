@@ -163,5 +163,6 @@ $lang_common = array(
 // MOD Printable topic version string
 'Print version'                 =>      'Printable version',
 
-'Show More' => 'More…'
+'Show More' => 'More »',
+'Show Less' => '« Less'
 );

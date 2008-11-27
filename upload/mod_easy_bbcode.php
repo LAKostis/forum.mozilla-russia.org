@@ -40,12 +40,12 @@ if (!isset($bbcode_field))
 							<input type="button" value="Quote" name="Quote" onclick="insert_text('[quote]','[/quote]')" />
 							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote=USER]','[/quote]')" />
 							<input type="button" value="Code" name="Code" onclick="insert_text('[code]','[/code]')" />
-							<input type="button" value="Horiz. Line" name="HR" onclick="insert_text('[hr /]','')" />
-							<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style=STYLE]','[/style]')" />
+							<input type="button" value="Line" name="HR" onclick="insert_text('[hr /]','')" />
 							<input type="button" value="User Agent" name="UA" onclick="insert_text('::::&nbsp;<?php echo get_user_ua() ?>','')" />
-							<input type="button" value="<? echo $lang_common['Show More'] ?>" name="More" onclick="toggleSpan('q1');" />
+							<input id="additional-more" type="button" value="<? echo $lang_common['Show More'] ?>" name="More" onclick="toggleAdditional();" />
+							<input id="additional-less" type="button" value="<? echo $lang_common['Show Less'] ?>" name="More" onclick="toggleAdditional();" style="display:none" />
 						</div>
-						<div class="inform" style="display: none;" id="q1Span" >
+						<div class="inform" style="display: none;" id="additional" >
 						<table style="border: 0;">
 							<tr>
 								<td style="border: 0;">
@@ -53,7 +53,8 @@ if (!isset($bbcode_field))
 							    		<legend>Текст</legend>
 											<input type="button" value="Strikethrough" name="S" onclick="insert_text('[s]','[/s]')" />
 											<input type="button" value="Highlight" name="H" onclick="insert_text('[h]','[/h]')" />
-											<input type="button" value="Text Align" name="ALIGN" onclick="insert_text('[align= ALIGNMENT ]','[/align]')" />
+											<input type="button" value="Text Align" name="ALIGN" onclick="insert_text('[align=ALIGNMENT]','[/align]')" />
+											<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style=STYLE]','[/style]')" />
 									</fieldset>
 								</td>
 								<td style="border: 0;">
@@ -70,7 +71,7 @@ if (!isset($bbcode_field))
 								<td style="border: 0;">
 						        	<fieldset style="padding: 8px;">
 							    		<legend>Шрифт</legend>
-											<input type="button" value="Font Face" name="FONT" onclick="insert_text('[font= FACE ]','[/font]')" />
+											<input type="button" value="Font Face" name="FONT" onclick="insert_text('[font=FACE]','[/font]')" />
 											<input type="button" value="Font Color" name="COLOR" onclick="insert_text('[color=#RRGGBB]','[/color]')" />
 											<input type="button" value=" Super " name="SUP" onclick="insert_text('[sup]','[/sup]')" />
 											<input type="button" value=" Sub " name="SUB" onclick="insert_text('[sub]','[/sub]')" />
@@ -89,26 +90,47 @@ if (!isset($bbcode_field))
 							</tr>
 						</table>
 						</div>							
-						<div style="padding-top: 4px">
+						<div style="padding-top: 4px; margin: 5px">
+							<span style="margin-right: 25px">
 <?php
 
-// Display the smiley set
 require_once PUN_ROOT.'include/parser.php';
 
-$smiley_dups = array();
-$num_smilies = count($smiley_text);
-$smtext = '';
-for ($i = 0; $i < $num_smilies; ++$i)
+for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
 {
-	// Is there a smiley at the current index?
-	if (!isset($smiley_text[$i]))
-		continue;
-
-	if (!in_array($smiley_img[$i], $smiley_dups))
-		echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'"/>' : $smiley_text[$i]).'</a>'."\n";
-	
-	$smiley_dups[] = $smiley_img[$i];
+	if ($i == $smiley_limit)
+	{
+		echo "\t\t\t\t\t\t\t".'<span id="smiley-more" style="white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show More'].'</a></span><span id="smileys" style="display:none">';
+		$smiley_limit = -1;
+	}
+	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.$smiley_text[$i].'"/>' : $smiley_text[$i]).'</a>'."\n";
 }
 
+if ($smiley_limit == -1)
+	echo "\t\t\t\t\t\t\t".'</span><span id="smiley-less" style="display:none;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show Less'].'</a></span>';
+
 ?>
+
+</span>
+<span>
+
+<?php
+
+for ($i = 0, $l = count($browser_text); $i < $l; ++$i)
+{
+	if ($i == $browser_limit)
+	{
+		echo "\t\t\t\t\t\t\t".'<span id="browser-more" style="white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show More'].'</a></span><span id="browsers" style="display:none">';
+		$browser_limit = -1;
+	}
+	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$browser_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.$browser_text[$i].'"/>' : $browser_text[$i]).'</a>'."\n";
+}
+
+if ($browser_limit == -1)
+	echo "\t\t\t\t\t\t\t".'</span><span id="browser-less" style="display:none;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show Less'].'</a></span>';
+
+
+
+?>
+							</span>
 						</div>

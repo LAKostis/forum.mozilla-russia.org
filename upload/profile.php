@@ -886,8 +886,10 @@ if ($pun_user['id'] != $id &&
 	($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_edit_users'] == '0') ||
 	($pun_user['g_id'] == PUN_MOD && $user['g_id'] < PUN_GUEST)))
 {
+	require_once PUN_ROOT.'include/parser.php';
+
 	if ($user['email_setting'] == '0' && !$pun_user['is_guest'])
-		$email_field = '<a href="mailto:'.$user['email'].'">'.$user['email'].'</a>';
+		$email_field = handle_email_tag($user['email']);
 	else if ($user['email_setting'] == '1' && !$pun_user['is_guest'])
 		$email_field = '<a href="misc.php?email='.$id.'">'.$lang_common['Send e-mail'].'</a>';
 	else
@@ -968,7 +970,7 @@ if ($pun_user['id'] != $id &&
 					<div class="infldset">
 						<dl>
 							<dt><?php echo $lang_profile['Jabber'] ?>: </dt>
-							<dd><?php echo ($user['jabber'] !='') ? pun_htmlspecialchars($user['jabber']) : $lang_profile['Unknown']; ?></dd>
+							<dd><?php echo ($user['jabber'] !='') ? handle_email_tag(pun_htmlspecialchars($user['jabber'])) : $lang_profile['Unknown']; ?></dd>
 							<dt><?php echo $lang_profile['ICQ'] ?>: </dt>
 							<dd><?php echo ($user['icq'] !='') ? $user['icq'] : $lang_profile['Unknown']; ?></dd>
 							<dt><?php echo $lang_profile['MSN'] ?>: </dt>

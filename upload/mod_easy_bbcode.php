@@ -96,18 +96,25 @@ if (!isset($bbcode_field))
 
 require_once PUN_ROOT.'include/parser.php';
 
+$smiley_index = array();
+
 for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
 {
+	if(in_array($smiley_img[$i], $smiley_index))
+		continue;
+
 	if ($i == $smiley_limit)
 	{
-		echo "\t\t\t\t\t\t\t".'<span id="smiley-more" style="white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show More'].'</a></span><span id="smileys" style="display:none">';
+		echo "\t\t\t\t\t\t\t".'<span id="smiley-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show More'].'</a></span><span id="smileys" style="display:none">';
 		$smiley_limit = -1;
 	}
 	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.$smiley_text[$i].'"/>' : $smiley_text[$i]).'</a>'."\n";
+
+	$smiley_index[] = $smiley_img[$i];
 }
 
 if ($smiley_limit == -1)
-	echo "\t\t\t\t\t\t\t".'</span><span id="smiley-less" style="display:none;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show Less'].'</a></span>';
+	echo "\t\t\t\t\t\t\t".'</span><span id="smiley-less" style="padding-left:5px;display:none;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show Less'].'</a></span>';
 
 ?>
 
@@ -120,14 +127,14 @@ for ($i = 0, $l = count($browser_text); $i < $l; ++$i)
 {
 	if ($i == $browser_limit)
 	{
-		echo "\t\t\t\t\t\t\t".'<span id="browser-more" style="white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show More'].'</a></span><span id="browsers" style="display:none">';
+		echo "\t\t\t\t\t\t\t".'<span id="browser-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show More'].'</a></span><span id="browsers" style="display:none">';
 		$browser_limit = -1;
 	}
 	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$browser_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.$browser_text[$i].'"/>' : $browser_text[$i]).'</a>'."\n";
 }
 
 if ($browser_limit == -1)
-	echo "\t\t\t\t\t\t\t".'</span><span id="browser-less" style="display:none;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show Less'].'</a></span>';
+	echo "\t\t\t\t\t\t\t".'</span><span id="browser-less" style="padding-left:5px;display:none;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show Less'].'</a></span>';
 
 
 

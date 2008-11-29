@@ -36,8 +36,8 @@ $smiley_limit = 22;
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
-$browser_text = array('[fx]', '[tb]', '[mz]', '[sm]', '[fl]', '[fn]', '[sgb]', '[sb]', '[km]', '[nvu]', '[iceweasel]', '[iceape]', '[ns]', '[ie]', '[ie7]', '[opera]', '[safari]', '[sunrise]', '[chrome]', '[konqueror]', '[camino]', '[arora]', '[etna]');
-$browser_img = array('firefox.png', 'thunderbird.png', 'mozilla.png', 'seamonkey.png', 'flock.png', 'fennec.png', 'songbird.png', 'sunbird.png', 'k-meleon.png', 'nvu.png', 'iceweasel.png', 'iceape.png', 'netscape.png', 'ie.png', 'ie7.png', 'opera.png', 'safari.png', 'sunrise.png', 'chrome.png', 'konqueror.png', 'camino.png', 'arora.png', 'etna.png');
+$browser_text = array('[fx]', '[tb]', '[mz]', '[sm]', '[fl]', '[fn]', '[sgb]', '[sb]', '[km]', '[nvu]', '[ns]', '[ie]', '[ie7]', '[opera]', '[safari]', '[sunrise]', '[chrome]', '[konqueror]', '[camino]', '[arora]', '[etna]');
+$browser_img = array('firefox.png', 'thunderbird.png', 'mozilla.png', 'seamonkey.png', 'flock.png', 'fennec.png', 'songbird.png', 'sunbird.png', 'k-meleon.png', 'nvu.png', 'netscape.png', 'ie.png', 'ie7.png', 'opera.png', 'safari.png', 'sunrise.png', 'chrome.png', 'konqueror.png', 'camino.png', 'arora.png', 'etna.png');
 $browser_limit = 3;
 
 //

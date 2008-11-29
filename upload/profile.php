@@ -1306,7 +1306,6 @@ else
 								<label><?php echo $lang_profile['Sig max length'] ?>: <?php echo $pun_config['p_sig_length'] ?> / <?php echo $lang_profile['Sig max lines'] ?>: <?php echo $pun_config['p_sig_lines'] ?><br />
 								<textarea name="signature" rows="4" cols="65"><?php echo pun_htmlspecialchars($user['signature']) ?></textarea><br /></label>
 							</div>
-							<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
 							<ul class="bblinks">
 								<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_sig_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 								<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_sig_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>

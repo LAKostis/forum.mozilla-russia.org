@@ -162,7 +162,7 @@ if ($db->num_rows($result))
 		} 	
 		?><tr>
 			<td colspan="7" style="WIDTH: auto; BORDER: 0;">
-			<center>Total: <?php echo $total; ?></center>
+			<center><?php echo $lang_polls['Total votes'] ?>: <?php echo $total; ?>, <?php echo $lang_polls['null votes'] ?>: <?php echo count($voters) - $total; ?></center>
 			</td> <?php 
 	} 
 
@@ -172,7 +172,7 @@ if ($db->num_rows($result))
 </div>
 
 <?php if ($showsubmit == true) { ?>
-	<p align="center"><input type="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /> <input type="submit" name="null" tabindex="2" value="<?php echo $lang_polls['Null vote'] ?>" accesskey="n" /></p>
+	<p align="center"><input type="submit" name="submit" tabindex="2" value="<?php echo $lang_polls['Vote'] ?>" accesskey="s" /> <input type="submit" name="null" tabindex="2" value="<?php echo $lang_polls['Null vote'] ?>" accesskey="n" /></p>
 		<?php } ?>
 		</form>
 		</div>

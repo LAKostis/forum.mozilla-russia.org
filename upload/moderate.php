@@ -77,6 +77,29 @@ else
 	$moderators = $db->result($result);
 	$mods_array = ($moderators != '') ? unserialize($moderators) : array();
 
+	// Open or close one or more topics (for users)
+	if ($pun_user['g_id'] > PUN_MOD && (isset($_REQUEST['open']) || isset($_REQUEST['close'])))
+	{
+		$action = (isset($_REQUEST['open'])) ? 0 : 1;
+
+		confirm_referrer('viewtopic.php');
+
+		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
+		if ($topic_id < 1)
+			message($lang_common['Bad request']);
+
+		$result = $db->query('SELECT poster FROM '.$db->prefix.'topics WHERE id='.$topic_id) or error('Unable to fetch topic poster info', __FILE__, __LINE__, $db->error());
+		$poster = $db->result($result);
+		if ($poster != $pun_user['username'])
+			message($lang_common['No permission']);
+
+		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id='.$topic_id.' AND forum_id='.$fid) or error('Unable to close topic', __FILE__, __LINE__, $db->error());
+
+		require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
+		$redirect_msg = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+		redirect('viewtopic.php?id='.$topic_id, $redirect_msg);
+	}
+
 	if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_id'] != PUN_MOD || !array_key_exists($pun_user['username'], $mods_array)))
 		message($lang_common['No permission']);
 }

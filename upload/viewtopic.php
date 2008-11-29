@@ -114,7 +114,7 @@ if (!$pun_user['is_guest'])
 	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $id . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 	if (!$db->num_rows($result))
-		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.sticky, t.last_post, t.question, t.yes, t.no, t.poster, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 }	
 else
 {

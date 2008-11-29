@@ -162,7 +162,7 @@ if ($db->num_rows($result))
 		} 	
 		?><tr>
 			<td colspan="7" style="WIDTH: auto; BORDER: 0;">
-			<center><?php echo $lang_polls['Total votes'] ?>: <?php echo $total; ?>, <?php echo $lang_polls['null votes'] ?>: <?php echo count($voters) - $total; ?></center>
+			<center><?php echo $lang_polls['Total votes'] ?>: <?php echo $total; ?>, <?php echo $lang_polls['null votes'] ?>: <?php echo $total - count($voters); ?></center>
 			</td> <?php 
 	} 
 

@@ -347,6 +347,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			// If it's a search for posts by a specific user ID
 			else if ($action == 'show_user')
 			{
+				$show_as = 'posts';
+
 				$result = $db->query('SELECT t.id FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.poster_id='.$user_id.' GROUP BY t.id') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$num_hits = $db->num_rows($result);
 
@@ -397,7 +399,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 			$db->free_result($result);
 
-			$show_as = 'topics';
+			if(empty($show_as))
+				$show_as = 'topics';
 		}
 		else
 			message($lang_common['Bad request']);

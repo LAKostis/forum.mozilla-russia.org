@@ -97,13 +97,14 @@ if (!isset($bbcode_field))
 require_once PUN_ROOT.'include/parser.php';
 
 $smiley_index = array();
+$smiley_count = 0;
 
 for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
 {
 	if(in_array($smiley_img[$i], $smiley_index))
 		continue;
 
-	if ($i == $smiley_limit)
+	if ($smiley_count == $smiley_limit)
 	{
 		echo "\t\t\t\t\t\t\t".'<span id="smiley-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show More'].'</a></span><span id="smileys" style="display:none">';
 		$smiley_limit = -1;
@@ -111,6 +112,7 @@ for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
 	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.$smiley_text[$i].'"/>' : $smiley_text[$i]).'</a>'."\n";
 
 	$smiley_index[] = $smiley_img[$i];
+	$smiley_count++;
 }
 
 if ($smiley_limit == -1)
@@ -123,14 +125,23 @@ if ($smiley_limit == -1)
 
 <?php
 
+$browser_index = array();
+$browser_count = 0;
+
 for ($i = 0, $l = count($browser_text); $i < $l; ++$i)
 {
-	if ($i == $browser_limit)
+	if(in_array($browser_img[$i], $browser_index))
+		continue;
+
+	if ($browser_count == $browser_limit)
 	{
 		echo "\t\t\t\t\t\t\t".'<span id="browser-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show More'].'</a></span><span id="browsers" style="display:none">';
 		$browser_limit = -1;
 	}
 	echo "\t\t\t\t\t\t\t".'<a href="#" onclick="insert_text(\''.$browser_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.$browser_text[$i].'"/>' : $browser_text[$i]).'</a>'."\n";
+
+	$browser_index[] = $browser_img[$i];
+	$browser_count++;
 }
 
 if ($browser_limit == -1)

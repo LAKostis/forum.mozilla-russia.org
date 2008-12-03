@@ -31,13 +31,13 @@ if (!defined('PUN'))
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
 $smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', '=o', '=O', ';)', ':/', '=/', ':P', '=P', ':lol:', ':mad:', ':rolleyes:', ':cool:', ':blush:', ':usch:', ':angry:', ':sick:', ':music:', ':cry:', ':whistle:', ':beer:', ':angel:', ':rock:', ':tongue2:', ':zzz:', ':iron:', ':dumb:', ':puss:', ':heart:', ':couple:', ':whiteflag:', ':offtopic:');
 $smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'hmm.png', 'tongue.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png', 'blush.gif', 'usch.gif', 'angry.gif', 'sick.gif', 'music.gif', 'cry.gif', 'whistle.gif', 'beer.gif', 'angel.gif', 'rock.gif', 'tongue2.gif', 'zzz.gif', 'iron.gif', 'dumb.gif', 'puss.gif', 'heart.gif', 'couple.gif', 'whiteflag.gif', 'offtopic.gif');
-$smiley_limit = 22;
+$smiley_limit = 17;
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
-$browser_text = array('[fx]', '[tb]', '[mz]', '[sm]', '[fl]', '[fn]', '[sgb]', '[sb]', '[km]', '[nvu]', '[ns]', '[ie]', '[ie7]', '[opera]', '[safari]', '[sunrise]', '[chrome]', '[konqueror]', '[camino]', '[arora]', '[etna]');
-$browser_img = array('firefox.png', 'thunderbird.png', 'mozilla.png', 'seamonkey.png', 'flock.png', 'fennec.png', 'songbird.png', 'sunbird.png', 'k-meleon.png', 'nvu.png', 'netscape.png', 'ie.png', 'ie7.png', 'opera.png', 'safari.png', 'sunrise.png', 'chrome.png', 'konqueror.png', 'camino.png', 'arora.png', 'etna.png');
+$browser_text = array('[firefox]', '[fx]', '[thunderbird]', '[tb]', '[mozilla]', '[mz]', '[seamonkey]', '[sm]', '[flock]', '[fl]', '[fennec]', '[fn]', '[songbird]', '[sgb]', '[sunbird]', '[sb]', '[k-meleon]', '[km]', '[nvu]', '[netscape]', '[ns]', '[ie]', '[ie7]', '[opera]', '[safari]', '[sunrise]', '[chrome]', '[konqueror]', '[camino]', '[arora]', '[etna]');
+$browser_img = array('firefox.png', 'firefox.png', 'thunderbird.png', 'thunderbird.png', 'mozilla.png', 'mozilla.png', 'seamonkey.png', 'seamonkey.png', 'flock.png', 'flock.png', 'fennec.png', 'fennec.png', 'songbird.png', 'songbird.png', 'sunbird.png', 'sunbird.png', 'k-meleon.png', 'k-meleon.png', 'nvu.png', 'netscape.png', 'netscape.png', 'ie.png', 'ie7.png', 'opera.png', 'safari.png', 'sunrise.png', 'chrome.png', 'konqueror.png', 'camino.png', 'arora.png', 'etna.png');
 $browser_limit = 3;
 
 //
@@ -419,7 +419,7 @@ function do_smilies($text)
 
 	$num_browsers = count($browser_text);
 	for ($i = 0; $i < $num_browsers; ++$i)
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" alt="'.$smiley_text[$i].'" title="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
 }

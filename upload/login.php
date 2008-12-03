@@ -112,7 +112,7 @@ else if ($action == 'out')
 {
 	if ($pun_user['is_guest'] || !isset($_GET['id']) || $_GET['id'] != $pun_user['id'] || !isset($_GET['csrf_token']) || $_GET['csrf_token'] != sha1($pun_user['id'].sha1(get_remote_address())))
 	{
-		header('Location: index.php');
+		hidden_redirect('index.php');
 		exit;
 	}
 
@@ -133,7 +133,7 @@ else if ($action == 'out')
 else if ($action == 'forget' || $action == 'forget_2')
 {
 	if (!$pun_user['is_guest'])
-		header('Location: index.php');
+		hidden_redirect('index.php');
 
 	if (isset($_POST['form_sent']))
 	{
@@ -215,7 +215,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 
 if (!$pun_user['is_guest'])
-	header('Location: index.php');
+	hidden_redirect('index.php');
 
 // Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
 $redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';

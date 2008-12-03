@@ -51,7 +51,7 @@ if ($action == 'change_pass')
 		// If the user is already logged in we shouldn't be here :)
 		if (!$pun_user['is_guest'])
 		{
-			header('Location: index.php');
+			hidden_redirect('index.php');
 			exit;
 		}
 

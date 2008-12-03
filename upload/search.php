@@ -438,7 +438,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$db->close();
 
 			// Redirect the user to the cached result page
-			header('Location: search.php?search_id='.$search_id);
+			hidden_redirect('search.php?search_id='.$search_id);
 			exit;
 		}
 	}

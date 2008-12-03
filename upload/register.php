@@ -31,7 +31,7 @@ require PUN_ROOT.'include/common.php';
 // If we are logged in, we shouldn't be here
 if (!$pun_user['is_guest'])
 {
-	header('Location: index.php');
+	hidden_redirect('index.php');
 	exit;
 }
 

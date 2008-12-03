@@ -1046,8 +1046,11 @@ function redirect($destination_url, $message)
 	// START SUBST - <pun_head>
 	ob_start();
 
+	if (!defined('PUN_DEBUG')):
+
 ?>
 <meta http-equiv="refresh" content="<?php echo $pun_config['o_redirect_delay'] ?>;URL=<?php echo str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url) ?>" />
+<?php endif; ?>
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Redirecting'] ?></title>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
@@ -1492,3 +1495,9 @@ function pun_increment_pm($str) {
     return 'Re: '.$str;
 }
 
+function hidden_redirect($location) {
+  if (defined('PUN_DEBUG'))
+    redirect(htmlspecialchars($location), 'Debug redirect...');
+  else
+    header('Location:' . htmlspecialchars($location));
+}

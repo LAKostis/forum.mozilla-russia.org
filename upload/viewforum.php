@@ -53,7 +53,7 @@ $cur_forum = $db->fetch_assoc($result);
 // Is this a redirect forum? In that case, redirect!
 if ($cur_forum['redirect_url'] != '')
 {
-	header('Location: '.$cur_forum['redirect_url']);
+	hidden_redirect($cur_forum['redirect_url']);
 	exit;
 }
 

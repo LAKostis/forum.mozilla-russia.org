@@ -86,9 +86,9 @@ else if ($action == 'new' && !$pun_user['is_guest'])
 	$first_new_post_id = $db->result($result);
 
 	if ($first_new_post_id)
-		header('Location: viewtopic.php?pid='.$first_new_post_id.'#p'.$first_new_post_id);
+		hidden_redirect('viewtopic.php?pid='.$first_new_post_id.'#p'.$first_new_post_id);
 	else	// If there is no new post, we go to the last post
-		header('Location: viewtopic.php?id='.$id.'&action=last');
+		hidden_redirect('viewtopic.php?id='.$id.'&action=last');
 
 	exit;
 }
@@ -101,7 +101,7 @@ else if ($action == 'last')
 
 	if ($last_post_id)
 	{
-		header('Location: viewtopic.php?pid='.$last_post_id.'#p'.$last_post_id);
+		hidden_redirect('viewtopic.php?pid='.$last_post_id.'#p'.$last_post_id);
 		exit;
 	}
 }

@@ -712,9 +712,6 @@ generate_admin_menu('options');
 						</div>
 					</fieldset>
 				</div>
-
-
-
 				<div class="inform">
 					<fieldset>
 						<legend>Random announcements</legend>
@@ -738,9 +735,6 @@ generate_admin_menu('options');
 						</div>
 					</fieldset>
 				</div>
-
-
-
 				<div class="inform">
 					<fieldset>
 						<legend>Maintenance</legend>
@@ -758,6 +752,22 @@ generate_admin_menu('options');
 									<td>
 										<textarea name="form[maintenance_message]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_maintenance_message']) ?></textarea>
 										<span>The message that will be displayed to users when the board is in maintenance mode. If left blank a default message will be used. This text will not be parsed like regular posts and thus may contain HTML.</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+				<div class="inform">
+					<fieldset>
+						<legend>Misc</legend>
+						<div class="infldset">
+							<table class="aligntop" cellspacing="0">
+								<tr>
+									<th scope="row">Message counter exceptions</th>
+									<td>
+										<input type="text" name="form[message_counter_exceptions]" size="20" value="<?php echo $pun_config['o_message_counter_exceptions'] ?>" />
+									<span>Space separated ID-list of subforums, where messages counter disabled for all users.</span>
 									</td>
 								</tr>
 							</table>

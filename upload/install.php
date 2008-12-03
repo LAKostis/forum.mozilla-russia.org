@@ -1630,6 +1630,7 @@ else
 		'o_reputation_timeout' 		=> "'120'",
 		'o_timeout_login' 		=> "'10'",
 		'o_merge_timeout'		=> "'300'",
+		'o_message_counter_exceptions'		=> "''",
 	);
 
 	while (list($conf_name, $conf_value) = @each($config))

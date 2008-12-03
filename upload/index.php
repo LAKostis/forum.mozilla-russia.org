@@ -201,8 +201,7 @@ if ($pun_config['o_users_online'] == '1')
 	}
 
 	$num_users = count($users);
-	echo "\t\t\t\t".'<dd>'. $lang_index['Users online'].': <strong>'.$num_users.'</strong></dd>'."\n\t\t\t\t".'<dd>'.$lang_index['Hidden online'].': <strong>'.$num_hidden.'</strong></dd>'."\n\t\t\t\t".'<dd>'.$lang_index['Guests online'].': <strong>'.$num_guests.'</strong></dd>'."\n\t\t\t".'</dl>'."\n";
-
+	echo "\t\t\t\t".'<dd>'. $lang_index['Users online'].': <strong>'.($num_users + $num_hidden + $num_guests).'</strong></dd>'."\n\t\t\t\t".'<dd>'.$lang_index['Registered online'].': <strong>'.($num_users + $num_hidden).'</strong> ('.$lang_index['Hidden online'].': <strong>'.$num_hidden.'</strong>), '.$lang_index['Guests online'].': <strong>'.$num_guests.'</strong></dd>'."\n\t\t\t".'</dl>'."\n";
 
 	if ($num_users > 0)
 		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $users).'</dd>'."\n\t\t\t".'</dl>'."\n";

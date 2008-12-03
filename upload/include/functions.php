@@ -1099,6 +1099,10 @@ function error($message, $file, $line, $db_error = false)
 {
 	global $pun_config;
 
+	if(empty($pun_user['language']))
+		$pun_user['language'] = $pun_config['o_default_lang'];
+	require PUN_ROOT.'lang/'.$pun_user['language'].'/error.php';
+
 	// Set a default title if the script failed before $pun_config could be populated
 	if (empty($pun_config))
 		$pun_config['o_board_title'] = 'PunBB';
@@ -1115,7 +1119,7 @@ function error($message, $file, $line, $db_error = false)
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Error</title>
+<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / <?php echo $lang_error['Encountered'] ?></title>
 <style type="text/css">
 <!--
 BODY {MARGIN: 10% 20% auto 20%; font: 10px Verdana, Arial, Helvetica, sans-serif}
@@ -1128,24 +1132,24 @@ H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADD
 <body>
 
 <div id="errorbox">
-	<h2>An error was encountered</h2>
+	<h2><?php echo $lang_error['Encountered'] ?></h2>
 	<div>
 <?php
 
 	if (defined('PUN_DEBUG'))
 	{
-		echo "\t\t".'<strong>File:</strong> '.$file.'<br />'."\n\t\t".'<strong>Line:</strong> '.$line.'<br /><br />'."\n\t\t".'<strong>PunBB reported</strong>: '.$message."\n";
+		echo "\t\t".'<strong>'.$lang_error['File'].':</strong> '.$file.'<br />'."\n\t\t".'<strong>Line:</strong> '.$line.'<br /><br />'."\n\t\t".'<strong>'.$lang_error['Error'].'</strong>: '.$message."\n";
 
 		if ($db_error)
 		{
-			echo "\t\t".'<br /><br /><strong>Database reported:</strong> '.pun_htmlspecialchars($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '')."\n";
+			echo "\t\t".'<br /><br /><strong>'.$lang_error['Database reported'].':</strong> '.pun_htmlspecialchars($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '')."\n";
 
 			if ($db_error['error_sql'] != '')
-				echo "\t\t".'<br /><br /><strong>Failed query:</strong> '.pun_htmlspecialchars($db_error['error_sql'])."\n";
+				echo "\t\t".'<br /><br /><strong>'.$lang_error['Failed query'].':</strong> '.pun_htmlspecialchars($db_error['error_sql'])."\n";
 		}
 	}
 	else
-		echo "\t\t".'Error: <strong>'.$message.'.</strong>'."\n";
+		echo "\t\t".$lang_error['Error'].': <strong>'.$message.'.</strong>'."\n";
 
 ?>
 	</div>

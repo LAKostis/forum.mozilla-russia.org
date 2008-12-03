@@ -47,7 +47,14 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$logintime = time() - $pun_config['o_timeout_login']; // 10 seconds delay by default.
 	$result = $db->query('SELECT * FROM '.$db->prefix.'iptrylog WHERE ip=\''.get_remote_address().'\' and lasttry >= \''.$logintime.'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
-	if ($db->num_rows($result)) error('Please wait some minutes to login again', 'login.php', '', '');
+	if ($db->num_rows($result))
+	{
+		if(empty($pun_user['language']))
+			$pun_user['language'] = $pun_config['o_default_lang'];
+		require PUN_ROOT.'lang/'.$pun_user['language'].'/error.php';
+
+		error($lang_error['Login timeout'], 'login.php', '', '');
+	}
 	// End of part 1 of patch, see below
 
 	$result = $db->query('SELECT id, group_id, password, save_pass FROM '.$db->prefix.'users WHERE '.$username_sql) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());

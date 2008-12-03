@@ -42,6 +42,9 @@ $lang_search = array(
 'No new posts'				=>	'There are no topics with new posts since your last visit.',
 'No recent posts'			=>	'No new posts have been made within the last 24 hours.',
 'No unanswered'				=>	'There are no unanswered posts in this forum.',
-'Go to post'				=>	'Go to post'
+'Go to post'				=>	'Go to post',
+
+'Delete'			=>	'Delete',
+'Edit'				=>	'Edit'
 
 );

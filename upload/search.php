@@ -604,7 +604,13 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					<dt><?php echo $pposter ?></dt>
 					<dd>Replies: <?php echo $search_set[$i]['num_replies'] ?></dd>
 					<dd><?php echo $icon; ?></dd>
-					<dd><p class="clearb"><a href="viewtopic.php?pid=<?php echo $search_set[$i]['pid'].'#p'.$search_set[$i]['pid'] ?>"><?php echo $lang_search['Go to post'] ?></a></p></dd>
+					<dd><p class="clearb">
+						<a href="viewtopic.php?pid=<?php echo $search_set[$i]['pid'].'#p'.$search_set[$i]['pid'] ?>"><?php echo $lang_search['Go to post'] ?></a><br/>
+<?php if ($pun_user['g_id'] <= PUN_MOD): ?>
+						<a href="edit.php?id=<?php echo $search_set[$i]['pid'] ?>"><?php echo $lang_search['Edit'] ?></a><br/>
+						<a href="delete.php?id=<?php echo $search_set[$i]['pid'] ?>"><?php echo $lang_search['Delete'] ?></a>
+<?php endif; ?>
+					</p></dd>
 				</dl>
 			</div>
 			<div class="postright">

@@ -566,7 +566,7 @@ function censor_words($text)
 		for ($i = 0; $i < $num_words; ++$i)
 		{
 			list($search_for[$i], $replace_with[$i]) = $db->fetch_row($result);
-			$search_for[$i] = '/\b('.str_replace('\*', '\w*?', preg_quote($search_for[$i], '/')).')\b/i';
+			$search_for[$i] = '/'.str_replace('\*', '\pL{1,}', preg_quote($search_for[$i], '/')).'/iu';
 		}
 	}
 

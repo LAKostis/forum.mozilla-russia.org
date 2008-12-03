@@ -249,9 +249,9 @@ DIV.postfootright LI, UL.bblinks LI {
 
 /* 9.1 Makes textareas and long text inputs shrink with page */
 
-DIV.txtarea {WIDTH: 85%}
+DIV.txtarea {WIDTH: 100%}
 
-DIV.txtarea TEXTAREA, INPUT.longinput {WIDTH: 100%}
+DIV.txtarea TEXTAREA, INPUT.longinput {WIDTH: 100%; MAX-WIDTH: 100%}
 
 .pun LABEL {DISPLAY: block}
 

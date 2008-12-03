@@ -1,696 +1,171 @@
-.all {
-  font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-  background-color: White;
-  color: Black;
-  margin: 0;
-  padding: 0;
-}
-
-.all div.clearer {clear: both; line-height: 0; height: 0;}
-
-.all table {
-  font-size: 100%;
-  padding:0;
-  margin:0;
-}
-
-.all tr,.all td,.all th {padding:0; margin:0;}
-
-.all img {border:0}
-
-.all p {padding:0; margin: 0 0 1.0em 0;}
-
-.all hr {
-  border: 0px;
-  border-top: 1px solid #0066B9;
-  text-align:center;
-  height: 0px;
-}
-
-.all form {
-  border: none;
-  margin: 0;
-  display: inline;
-}
-
-.all label {
-  display: block;
-  text-align: right;
-  font-weight: bold;
-}
-
-.all label.simple {
-  text-align: left;
-  font-weight: normal;
-}
-
-.all label input.edit {
-  width: 50%;
-}
-
-.all fieldset {
-  width: 300px;
-  text-align: center;
-  border: 1px solid #0066B9;
-  padding: 0.5em;
-}
-
-
-.all a {
-  color:#0066B9;
-  text-decoration:none;
-}
-.all a:hover {
-  color:#000000;
-  text-decoration:underline;
-}
-
-.all textarea.edit {
-  font-family:monospace;
-  border: 1px solid #0066B9;  
-  color: Black;
-  background-color: white;
-  font-size:14px;
-  padding: 3px;
-  width:100%;
-}
-
-.all input.edit {
-  font-size: 100%;
-  border: 1px solid #0066B9;
-  height: 22px ! important;
-  max-height: 22px ! important;
-  min-height: 22px ! important;
-  color: Black;
-  background-color: white;
-  vertical-align: middle;
-  padding: 1px;
-  display: inline;
-}
-
-.all input.missing {
-  font-size: 100%;
-  border: 1px solid #0066B9;
-  height: 22px ! important;
-  max-height: 22px ! important;
-  min-height: 22px ! important;
-  color: Black;
-  background-color: #ffcccc;
-  vertical-align: middle;
-  padding: 1px;
-  display: inline;
-}
-
-.all input.button {
-  border: 1px solid #0066B9;  
-  color: Black;
-  background-color: white;
-  vertical-align: middle;
-  text-decoration:none;
-  font-size: 100%;
-  cursor: pointer;
-  height: 22px ! important;
-  max-height: 22px ! important;
-  min-height: 22px ! important;
-  margin: 1px;
-  display: inline;
-}
-
-.all div.secedit input.button {
-  border: 1px solid #0066B9;
-  color: Black;
-  background-color: white;
-  vertical-align: middle;
-  text-decoration:none;
-  margin: 0px;
-  padding: 0px;
-  font-size: 10px;
-  cursor: pointer;
-  height: 15px;
-  max-height: 15px ! important;
-  min-height: 15px ! important;
-  float:right;
-  display: inline;
-}
-
-.all div.meta {
-  clear: both;
-  margin-top: 1em;
-  color:#0066B9;
-  font-size:70%;
-  text-align:right;
-}
-
-.all div.user {
-  float:left;
-}
-
-.all div.preview{
-  background:#f7f9fa;
-  margin-left:2em;
-  padding: 4px;
-  border: 1px dashed #000000;
-}
-
-.all div.breadcrumbs{
-  background-color: #f5f5f5;
-  font-size:80%;
-  color: #666666;
-  padding-left: 4px;
-}
-
-.all span.user{
-  color: #cccccc;
-  font-size: 90%;
-}
-
-.all div.error{
-  background: #ff6666 url(../../wiki/images/error.png) 0.5em 0px no-repeat;
-  font-size: 90%;
-  margin: 0px;
-  padding-left: 3em;
-}
-
-.all div.info{
-  background: #ffff66 url(../../wiki/images/info.png) 0.5em 0px no-repeat;
-  font-size: 90%;
-  margin: 0;
-  padding-left: 3em;
-}
-
-.all div.success{
-  background: #66ff66 url(../../wiki/images/thumbup.gif) 0.5em 0px no-repeat;
-  font-size: 90%;
-  margin: 0;
-  padding-left: 3em;
-}
-
-/* ---------------------------- Diff rendering --------------------------*/
-.all table.diff { background:white; }
-.all td.diff-blockheader {font-weight:bold}
-.all td.diff-header {
-  border-bottom: 1px solid #0066B9;
-  font-size:120%;
-}
-.all td.diff-addedline {
-    background:#ddffdd;
-    font-family: monospace;
-    font-size: 100%;
-}
-.all td.diff-deletedline { 
-    background:#ffffbb;
-    font-family: monospace;    
-    font-size: 100%;
-}
-.all td.diff-context {
-    background:#f7f9fa;
-    font-family: monospace;
-    font-size: 100%;
-}
-.all span.diffchange { color: red; }
-
-
-
-/* --------------------- Text formatting -------------------------------- */
-
+.all{font:80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;background-color:#FFF;color:#000;margin:0;padding:0}
+.all div.clearer{clear:both;line-height:0;height:0}
+.all table{font-size:100%;padding:0;margin:0}
+.all tr,.all td,.all th{padding:0;margin:0}
+.all img{border:0}
+.all p{padding:0;margin:0 0 1em}
+.all hr{border:0;border-top:1px solid #0066B9;text-align:center;height:0}
+.all form{border:none;margin:0;display:inline}
+.all label{display:block;text-align:right;font-weight:700}
+.all label.simple{text-align:left;font-weight:400}
+.all label input.edit{width:50%}
+.all fieldset{width:300px;text-align:center;border:1px solid #0066B9;padding:.5em}
+.all a{color:#0066B9;text-decoration:none}
+.all a:hover{color:#000;text-decoration:underline}
+.all textarea.edit{font-family:monospace;border:1px solid #0066B9;color:#000;background-color:#FFF;font-size:14px;padding:3px;width:100%}
+.all input.edit{font-size:100%;border:1px solid #0066B9;height:22px!important;max-height:22px!important;min-height:22px!important;color:#000;background-color:#FFF;vertical-align:middle;padding:1px;display:inline}
+.all input.missing{font-size:100%;border:1px solid #0066B9;height:22px!important;max-height:22px!important;min-height:22px!important;color:#000;background-color:#fcc;vertical-align:middle;padding:1px;display:inline}
+.all input.button{border:1px solid #0066B9;color:#000;background-color:#FFF;vertical-align:middle;text-decoration:none;font-size:100%;cursor:pointer;height:22px!important;max-height:22px!important;min-height:22px!important;margin:1px;display:inline}
+.all div.secedit input.button{border:1px solid #0066B9;color:#000;background-color:#FFF;vertical-align:middle;text-decoration:none;margin:0;padding:0;font-size:10px;cursor:pointer;height:15px;max-height:15px!important;min-height:15px!important;float:right;display:inline}
+.all div.meta{clear:both;margin-top:1em;color:#0066B9;font-size:70%;text-align:right}
+.all div.user{float:left}
+.all div.preview{background:#f7f9fa;margin-left:2em;padding:4px;border:1px dashed #000}
+.all div.breadcrumbs{background-color:#f5f5f5;font-size:80%;color:#666;padding-left:4px}
+.all span.user{color:#ccc;font-size:90%}
+.all div.error{background:#f66 url(../../wiki/images/error.png) .5em 0 no-repeat;font-size:90%;margin:0;padding-left:3em}
+.all div.info{background:#ff6 url(../../wiki/images/info.png) .5em 0 no-repeat;font-size:90%;margin:0;padding-left:3em}
+.all div.success{background:#6f6 url(../../wiki/images/thumbup.gif) .5em 0 no-repeat;font-size:90%;margin:0;padding-left:3em}
+/* Diff rendering */
+.all table.diff{background:#FFF}
+.all td.diff-blockheader{font-weight:700}
+.all td.diff-header{border-bottom:1px solid #0066B9;font-size:120%}
+.all td.diff-addedline{background:#dfd;font-family:monospace;font-size:100%}
+.all td.diff-deletedline{background:#ffb;font-family:monospace;font-size:100%}
+.all td.diff-context{background:#f7f9fa;font-family:monospace;font-size:100%}
+.all span.diffchange{color:red}
+/* Text formatting */
 /* external link */
-.all a.urlextern{
-    background: transparent url(../../wiki/images/link_icon.gif) 0px 1px no-repeat;
-    padding: 1px 0px 1px 16px;
-    color:#0066B9;
-    text-decoration:none;
-}
-.all a.urlextern:visited {
-  color:Purple;
-}
-.all a.urlextern:hover {
-  text-decoration:underline;
-}
-
+.all a.urlextern{background:transparent url(../../wiki/images/link_icon.gif) 0 1px no-repeat;padding:1px 0 1px 16px;color:#0066B9;text-decoration:none}
+.all a.urlextern:visited{color:Purple}
+.all a.urlextern:hover{text-decoration:underline}
 /* windows share */
-.all a.windows{
-    background: transparent url(../../wiki/images/windows.gif) 0px 1px no-repeat;
-    padding: 1px 0px 1px 16px;
-    color:#0066B9;
-    text-decoration:none;
-} 
-.all a.windows:visited {
-  color:Purple;
-}
-.all a.windows:hover { 
-  text-decoration:underline;
-}
-
+.all a.windows{background:transparent url(../../wiki/images/windows.gif) 0 1px no-repeat;padding:1px 0 1px 16px;color:#0066B9;text-decoration:none}
+.all a.windows:visited{color:Purple}
+.all a.windows:hover{text-decoration:underline}
 /* interwiki link */
-.all a.interwiki{
-    background: transparent url(../../wiki/images/interwiki.png) 0px 1px no-repeat;
-    padding: 1px 0px 1px 16px;
-    color:#0066B9;
-    text-decoration:none;
-}
-.all a.interwiki:visited {
-  color:Purple;
-}
-.all a.interwiki:hover {
-  text-decoration:underline;
-}
-
+.all a.interwiki{background:transparent url(../../wiki/images/interwiki.png) 0 1px no-repeat;padding:1px 0 1px 16px;color:#0066B9;text-decoration:none}
+.all a.interwiki:visited{color:Purple}
+.all a.interwiki:hover{text-decoration:underline}
 /* link to some embedded media */
-.all a.media {
-  color:#0066B9;
-  text-decoration:none;
-}
-.all a.media:hover {
-  color:#0066B9;
-  text-decoration:underline
-}
-
+.all a.media{color:#0066B9;text-decoration:none}
+.all a.media:hover{color:#0066B9;text-decoration:underline}
 /* embedded images */
-.all img.media {
-  margin: 3px;
-}
-
-.all img.medialeft {
-  border: 0;
-  float: left;
-  margin: 0 1.5em 0 0;
-}
-
-.all img.mediaright {
-  border: 0;
-  float: right;
-  margin: 0 0 0 1.5em;
-}
-
+.all img.media{margin:3px}
+.all img.medialeft{border:0;float:left;margin:0 1.5em 0 0}
+.all img.mediaright{border:0;float:right;margin:0 0 0 1.5em}
 /* email link */
-.all a.mail {
-  background: transparent url(../../wiki/images/mail_icon.gif) 0px 1px no-repeat;
-  padding: 1px 0px 1px 16px;
-  color:#0066B9;
-  text-decoration:none;
-}
-.all a.mail:hover {
-  text-decoration:underline;
-}
-
+.all a.mail{background:transparent url(../../wiki/images/mail_icon.gif) 0 1px no-repeat;padding:1px 0 1px 16px;color:#0066B9;text-decoration:none}
+.all a.mail:hover{text-decoration:underline}
 /* existing wikipage */
-.all a.wikilink1:link    { color:#009900; text-decoration:none }
-.all a.wikilink1:visited { color:#009900; text-decoration:none }
-.all a.wikilink1:hover   { color:#009900; text-decoration:underline }
-
+.all a.wikilink1:link{color:#090;text-decoration:none}
+.all a.wikilink1:visited{color:#090;text-decoration:none}
+.all a.wikilink1:hover{color:#090;text-decoration:underline}
 /* not exisitng wikipage */
-.all a.wikilink2:link    { color:#FF3300; text-decoration:none }
-.all a.wikilink2:visited { color:#FF3300; text-decoration:none }
-.all a.wikilink2:hover   { color:#FF3300; text-decoration:underline }
-
-.all acronym {
-  cursor: help;
-  border-bottom: 1px dotted #000;
-}
-
+.all a.wikilink2:link{color:#F30;text-decoration:none}
+.all a.wikilink2:visited{color:#F30;text-decoration:none}
+.all a.wikilink2:hover{color:#F30;text-decoration:underline}
+.all acronym{cursor:help;border-bottom:1px dotted #000}
 /* the document */
-.all div.page {
-  margin-top: 4px;
-  margin-left:  1em;
-  margin-right: 2em;
-  text-align: justify;
-}
-
+.all div.page{margin-top:4px;margin-left:1em;margin-right:2em;text-align:justify}
 /* general headline setup */
-.all h1, .all h2, .all h3, .all h4, .all h5 {
-    color: Black;
-    background-color: transparent;
-    font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-    font-size: 100%;
-    font-weight: normal;
-    margin-left:    0;
-    margin-right:   0;
-    margin-top:     0;
-    margin-bottom:  1em;
-    padding-left:   0;
-    padding-right:  0;
-    padding-top:    0.5em;
-    padding-bottom: 0;
-    border-bottom: 1px solid #0066B9;
-    clear: left;
-}
-
+.all h1,.all h2,.all h3,.all h4,.all h5{color:#000;background-color:transparent;font-family:"Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;font-size:100%;font-weight:400;margin-left:0;margin-right:0;margin-top:0;margin-bottom:1em;padding-left:0;padding-right:0;padding-top:.5em;padding-bottom:0;border-bottom:1px solid #0066B9;clear:left}
 /* special headlines */
-.all h1 {font-size: 160%; margin-left: 0px; font-weight: bold;}
-.all h2 {font-size: 150%; margin-left: 20px;}
-.all h3 {font-size: 140%; margin-left: 40px; border-bottom: none; font-weight: bold;}
-.all h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-weight: bold;}
-.all h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
-
+.all h1{font-size:160%;margin-left:0;font-weight:700}
+.all h2{font-size:150%;margin-left:20px}
+.all h3{font-size:140%;margin-left:40px;border-bottom:none;font-weight:700}
+.all h4{font-size:120%;margin-left:60px;border-bottom:none;font-weight:700}
+.all h5{font-size:100%;margin-left:80px;border-bottom:none;font-weight:700}
 /* indent different sections */
-.all div.level1 {margin-left: 3px;}
-.all div.level2 {margin-left: 23px;}
-.all div.level3 {margin-left: 43px;}
-.all div.level4 {margin-left: 63px;}
-.all div.level5 {margin-left: 83px;}
-
+.all div.level1{margin-left:3px}
+.all div.level2{margin-left:23px}
+.all div.level3{margin-left:43px}
+.all div.level4{margin-left:63px}
+.all div.level5{margin-left:83px}
 /* unordered lists */
-.all ul { 
-  line-height: 1.5em;
-  list-style-type: square;
-  margin: 0.5em 0 0.5em 1.5em;
-  padding: 0;
-  list-style-image: url(../../wiki/images/bullet.gif);
-}
-
+.all ul{line-height:1.5em;list-style-type:square;margin:.5em 0 .5em 1.5em;padding:0;list-style-image:url(../../wiki/images/bullet.gif)}
 /* ordered lists */
-.all ol {
-  line-height: 1.5em;
-  margin: 0.5em 0 0.5em 1.5em;
-  padding: 0;
-  color: #638c9c;
-  font-weight: bold;
-  list-style-image: none;
-}
-
+.all ol{line-height:1.5em;margin:.5em 0 .5em 1.5em;padding:0;color:#638c9c;font-weight:700;list-style-image:none}
 /* the list items overriding the ol definition */
-.all span.li {
-  color: #000000;
-  font-weight: normal;
-}
-
-.all li.open {
-  list-style-image: url(../../wiki/images/open.gif);
-}
-
-.all li.closed {
-  list-style-image: url(../../wiki/images/closed.gif);
-}
-
-.all .quote {
-  border-left: 2px solid #0066B9;
-  padding-left: 3px;
-}
-
+.all span.li{color:#000;font-weight:400}
+.all li.open{list-style-image:url(../../wiki/images/open.gif)}
+.all li.closed{list-style-image:url(../../wiki/images/closed.gif)}
+.all .quote{border-left:2px solid #0066B9;padding-left:3px}
 /* code blocks by indention */
-.all pre.pre {
-  font-size: 120%;
-  padding: 0.5em;
-  border: 1px dashed #0066B9;
-  color: Black;
-  background-color: #f7f9fa;
-  overflow: auto;
-}
-
+.all pre.pre{font-size:120%;padding:.5em;border:1px dashed #0066B9;color:#000;background-color:#f7f9fa;overflow:auto}
 /* code blocks by code tag */
-.all pre.code {
-  font-size: 120%;
-  padding: 0.5em;
-  border: 1px dashed #0066B9;
-  color: Black;
-  background-color: #f7f9fa;
-  overflow: auto;
-}
-
+.all pre.code{font-size:120%;padding:.5em;border:1px dashed #0066B9;color:#000;background-color:#f7f9fa;overflow:auto}
 /* code highlighting is at bottom of file */
-
 /* inline code words */
-.all code {
-  font-size: 120%;
-}
-
+.all code{font-size:120%}
 /* code blocks by file tag */
-.all pre.file {
-  font-size: 120%;
-  padding: 0.5em;
-  border: 1px dashed #0066B9;
-  color: Black;
-  background-color: #F1F1F1;
-  overflow: auto;
-}
-
+.all pre.file{font-size:120%;padding:.5em;border:1px dashed #0066B9;color:#000;background-color:#F1F1F1;overflow:auto}
 /* footnotes */
-.all div.footnotes{
-  clear:both;
-  border-top: 1px solid #0066B9;
-  padding-left: 1em;
-  margin-top: 1em;
-}
-
-.all div.fn{
-  font-size:90%;
-}
-
-.all a.fn_top{
-  vertical-align:super;
-  font-size:80%;
-}
-
-.all a.fn_bot{
-  vertical-align:super;
-  font-size:80%;
-  font-weight:bold;
-}
-
+.all div.footnotes{clear:both;border-top:1px solid #0066B9;padding-left:1em;margin-top:1em}
+.all div.fn{font-size:90%}
+.all a.fn_top{vertical-align:super;font-size:80%}
+.all a.fn_bot{vertical-align:super;font-size:80%;font-weight:700}
 /* inline tables */
-.all table.inline {
-  background-color: #ffffff;
-  border-spacing: 0px;
-  border-collapse: collapse;
-}
-
-.all table.inline th {
-  padding: 3px;
-  border: 1px solid #0066B9;
-  background-color: #F1F1F1;
-}
-
-.all table.inline td {
-  padding: 3px;
-  border: 1px solid #0066B9;
-}
-
-.all .leftalign{
-  text-align: left;
-}
-
-.all .centeralign{
-  text-align: center;
-}
-
-.all .rightalign{
-  text-align: right;
-}
-
-/* ---------- table of contents ------------------- */
-
-.all div.toc {
-  margin-left: 2em;
-  margin-top: 1.2em;
-  margin-bottom: 0;
-  float:right;
-  width: 200px;
-  font-size: 80%;
-  clear:both;
-}
-
-.all div.tocheader {
-  padding: 3px;
-  border: 1px solid #0066B9;
-  background-color: #F1F1F1;
-  text-align: left;
-  font-weight:bold;
-  margin-bottom: 2px;
-}
-
-.all #tocinside {
-  border: 1px solid #0066B9;
-  background-color: #ffffff;
-  text-align: left;
-  padding-top: 0.5em;
-  padding-bottom: 0.7em;
-}
-
-.all ul.toc {
-  list-style-type: none;
-  list-style-image: none;
-  line-height: 1.2em;
-  margin: 0;
-  padding: 0;
-  padding-left: 1em;
-}
-
-.all ul.toc li {
-  background: transparent url(../../wiki/images/tocdot2.gif) 0 0.6em no-repeat;
-  padding-left:0.4em;
-}
-
-.all ul.toc li.clear {
-/*  background: transparent url(images/blank.gif) 0 0.6em no-repeat;*/
-  background-image: none;
-  padding-left:0.4em;
-}
-
-.all a.toc {
-  color: #0066B9;
-  text-decoration:none;
-}
-
-.all a.toc:hover {
-  color: #000000;
-  text-decoration:underline; 
-}
-
-/* --------------- search result formating --------------- */
-.all .search_result{
-  margin-bottom: 6px;
-  padding-left: 30px;
-  padding-right: 10px;
-}
-
-.all .search_snippet{
-  color: #999999;
-  font-size: 12px;
-  margin-left: 20px;
-}
-
-.all .search_sep{
-  color: #000000;
-}
-
-.all .search_hit{
-  color: #000000;
-  background: #FFFF99;
-}
-
-.all div.search_quickresult{
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px dashed #0066B9;
-  margin-left: 30px;
-  padding-right: 10px;
-}
-
-.all div.search_quickhits {
-  margin-left: 1em;
-  float:left;
-  background: transparent url(../../wiki/images/bullet.gif) 0px 1px no-repeat;
-  padding: 1px 0px 1px 8px;
-  width: 30%;
-}
-
+.all table.inline{background-color:#fff;border-spacing:0;border-collapse:collapse}
+.all table.inline th{padding:3px;border:1px solid #0066B9;background-color:#F1F1F1}
+.all table.inline td{padding:3px;border:1px solid #0066B9}
+.all .leftalign{text-align:left}
+.all .centeralign{text-align:center}
+.all .rightalign{text-align:right}
+/* table of contents */
+.all div.toc{margin-left:2em;margin-top:1.2em;margin-bottom:0;float:right;width:200px;font-size:80%;clear:both}
+.all div.tocheader{padding:3px;border:1px solid #0066B9;background-color:#F1F1F1;text-align:left;font-weight:700;margin-bottom:2px}
+.all #tocinside{border:1px solid #0066B9;background-color:#fff;text-align:left;padding-top:.5em;padding-bottom:.7em}
+.all ul.toc{list-style-type:none;list-style-image:none;line-height:1.2em;margin:0;padding:0;padding-left:1em}
+.all ul.toc li{background:transparent url(../../wiki/images/tocdot2.gif) 0 .6em no-repeat;padding-left:.4em}
+.all ul.toc li.clear{
+background-image:none;padding-left:.4em}
+.all a.toc{color:#0066B9;text-decoration:none}
+.all a.toc:hover{color:#000;text-decoration:underline}
+/* search result formating */
+.all .search_result{margin-bottom:6px;padding-left:30px;padding-right:10px}
+.all .search_snippet{color:#999;font-size:12px;margin-left:20px}
+.all .search_sep{color:#000}
+.all .search_hit{color:#000;background:#FF9}
+.all div.search_quickresult{margin-bottom:15px;padding-bottom:5px;border-bottom:1px dashed #0066B9;margin-left:30px;padding-right:10px}
+.all div.search_quickhits{margin-left:1em;float:left;background:transparent url(../../wiki/images/bullet.gif) 0 1px no-repeat;padding:1px 0 1px 8px;width:30%}
 /* debug */
-.all pre.dbg{
-  background-color:#ffffff;
-  font-size: 120%;
-}
-
+.all pre.dbg{background-color:#fff;font-size:120%}
 /* Tableless Headers and Footers */
 /* Thanks to "moraes" <moraes@tipos.com.br> */
-
-.all .header {
-	height:35px;
-	padding:3px 0 2px 2px;
-}
-
-.all .pagename {
-	height:25px;
-	float:left;
-	font-size:200%;
-	font-weight:bolder;
-	color:#D1D1D1;
-	text-align:left;
-	vertical-align:middle;
-	padding:1px 0 0 1px;
-}
-
-.all .pagename a:link, .all .pagename a:visited {
-  color:#0066B9;
-  text-decoration:none;
-}
-
-.all .pagename a:hover, .all .pagename a:active {
-  color:#FF9933;
-}
-
-.all .logo {
-	float:right;
-	font-size:220%;
-	font-weight:bolder;
-	text-align:right;
-	vertical-align:middle;
-}
-
-.all .logo a:link, .all .logo a:visited, .all .logo a:hover, .all .logo a:active {
-	color:#D1D1D1;
-	text-decoration:none;
-	font-variant:small-caps;
-	letter-spacing:2pt;
-}
-
-.all .bar {
-	height:25px;
-	border:1px solid #0066B9;
-	background:#F1F1F1;
-	padding:2px;
-	margin:0;
-}
-
-.all .bar-left {
-	float:left;
-  width:50%;
-}
-
-.all .bar-right {
-	float:right;
-  width:50%;
-  text-align:right;
-}
-
-.all #bar_bottom {
-  margin-bottom:3px;
-}
-
-.all .mediaselect-left {
-  float:left;
-  padding: 0.5em;
-  height:230px;
-  overflow:auto;
-}
-
-.all .mediaselect-right {
-  float:right;
-  border-left: 1px solid #0066B9;
-  padding: 0.5em;
-  width:350px;
-  height:230px;
-  overflow:auto;
-}
-
-.all div.uploadform {
-  margin-top: 0.5em;
-  border-top: 1px solid #0066B9;
-}
-
+.all .header{height:35px;padding:3px 0 2px 2px}
+.all .pagename{height:25px;float:left;font-size:200%;font-weight:bolder;color:#D1D1D1;text-align:left;vertical-align:middle;padding:1px 0 0 1px}
+.all .pagename a:link,.all .pagename a:visited{color:#0066B9;text-decoration:none}
+.all .pagename a:hover,.all .pagename a:active{color:#F93}
+.all .logo{float:right;font-size:220%;font-weight:bolder;text-align:right;vertical-align:middle}
+.all .logo a:link,.all .logo a:visited,.all .logo a:hover,.all .logo a:active{color:#D1D1D1;text-decoration:none;font-variant:small-caps;letter-spacing:2pt}
+.all .bar{height:25px;border:1px solid #0066B9;background:#F1F1F1;padding:2px;margin:0}
+.all .bar-left{float:left;width:50%}
+.all .bar-right{float:right;width:50%;text-align:right}
+.all #bar_bottom{margin-bottom:3px}
+.all .mediaselect-left{float:left;padding:.5em;height:230px;overflow:auto}
+.all .mediaselect-right{float:right;border-left:1px solid #0066B9;padding:.5em;width:350px;height:230px;overflow:auto}
+.all div.uploadform{margin-top:.5em;border-top:1px solid #0066B9}
 /* syntax highlighting code */
-.all .code .br0	{ color: #66cc66; }
-.all .code .co1	{ color: #808080; font-style: italic; }
-.all .code .co2	{ color: #808080; font-style: italic; }
-.all .code .coMULTI	{ color: #808080; font-style: italic; }
-.all .code .es0	{ color: #000099; font-weight: bold; }
-.all .code .kw1	{ color: #b1b100; }
-.all .code .kw2	{ color: #000000; font-weight: bold; }
-.all .code .kw3	{ color: #000066; }
-.all .code .kw4	{ color: #993333; }
-.all .code .kw5	{ color: #0000ff; }
-.all .code .me0	{ color: #006600; }
-.all .code .nu0	{ color: #cc66cc; }
-.all .code .re0	{ color: #0000ff; }
-.all .code .re1	{ color: #0000ff; }
-.all .code .re2	{ color: #0000ff; }
-.all .code .re4	{ color: #009999; }
-.all .code .sc0	{ color: #00bbdd; }
-.all .code .sc1	{ color: #ddbb00; }
-.all .code .sc2	{ color: #009900; }
-.all .code .st0	{ color: #ff0000; }
-
-.all {margin:12px 20px}
-#punwrapfoot {margin:12px 20px}
-div.inlineform {
-display: inline;
-}
+.all .code .br0{color:#6c6}
+.all .code .co1{color:gray;font-style:italic}
+.all .code .co2{color:gray;font-style:italic}
+.all .code .comulti{color:gray;font-style:italic}
+.all .code .es0{color:#009;font-weight:700}
+.all .code .kw1{color:#b1b100}
+.all .code .kw2{color:#000;font-weight:700}
+.all .code .kw3{color:#006}
+.all .code .kw4{color:#933}
+.all .code .kw5{color:#00f}
+.all .code .me0{color:#060}
+.all .code .nu0{color:#c6c}
+.all .code .re0{color:#00f}
+.all .code .re1{color:#00f}
+.all .code .re2{color:#00f}
+.all .code .re4{color:#099}
+.all .code .sc0{color:#0bd}
+.all .code .sc1{color:#db0}
+.all .code .sc2{color:#090}
+.all .code .st0{color:red}
+.all{margin:12px 20px}
+#punwrapfoot{margin:12px 20px}
+div.inlineform{display:inline}

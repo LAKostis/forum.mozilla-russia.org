@@ -1,196 +1,60 @@
-/**************************************************/
 /* STRUCTURAL SETTINGS */
-/**************************************************/
-
-DIV, FORM, P, H1, H2, H3, H4, PRE, BLOCKQUOTE, UL, LI {
-	MARGIN: 0px;
-	PADDING: 0px;
-	FONT-WEIGHT: normal;
-}
-
-UL {
-	LIST-STYLE-TYPE: square;
-	PADDING-LEFT: 8px;
-}
-
-.clearer, .nosize {
-	HEIGHT: 0;
-	WIDTH: 0;
-	LINE-HEIGHT: 0;
-	FONT-SIZE: 0;
-	OVERFLOW: hidden
-}
-
-.clearer, .clearb {CLEAR: both}
-.nosize {POSITION:absolute; LEFT: -10000px}
-
-/* Begin IEWin Fix \*/
-* HTML .inbox, * HTML #content {HEIGHT: 1%}
-* HTML .imgbox {MARGIN-RIGHT: -18px}
-* HTML .imgbox IMG {PADDING-BOTTOM: 18px}
+div,form,p,h1,h2,h3,h4,pre,blockquote,ul,li{margin:0;padding:0;font-weight:400}
+ul{list-style-type:square;padding-left:8px}
+.clearer,.nosize{height:0;width:0;line-height:0;font-size:0;overflow:hidden}
+.clearer,.clearb{clear:both}
+.nosize{position:absolute;left:-10000px}
+/* Begin IEWin Fix */
+* html .inbox,* html #content{height:1%}
+* html .imgbox{margin-right:-18px}
+* html .imgbox img{padding-bottom:18px}
 /* End of IEWin Fix */
-
-DIV.incqbox, DIV.inimgbox {
-	WIDTH:100%;
-	OVERFLOW: hidden
-}
-
-DIV.scrollbox {
-	WIDTH: 100%;
-	OVERFLOW: auto
-}
-
-H4 {MARGIN-BOTTOM: 10px}
-
-BLOCKQUOTE, DIV.codebox {
-	MARGIN: 10px 15px 15px 15px;
-	PADDING: 8px
-}
-
-
-/**************************************************/
+div.incqbox,div.inimgbox{width:100%;overflow:hidden}
+div.scrollbox{width:100%;overflow:auto}
+h4{margin-bottom:10px}
+blockquote,div.codebox{margin:10px 15px 15px;padding:8px}
 /* TEXT */
-/**************************************************/
-
-BODY {
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE: 10px
-}
-
-
-/* IEWin Font Size only - to allow IEWin to zoom. Do not remove comments \*/
-* HTML BODY {FONT-SIZE: 62.5%}
+body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:10px}
+/* IEWin Font Size only - to allow IEWin to zoom. Do not remove comments */
+* html body{font-size:62.5%}
 /* End IE Win Font Size */
-
-H2 {FONT-SIZE: 1.8em}
-
-#nav {FONT-SIZE: 1em}
-
-H3, #nav LI, PRE {FONT-SIZE: 1.2em}
-
-H3, H4 {FONT-WEIGHT: bold}
-
-LI, P, H4, LABEL {FONT-SIZE: 1.1em}
-
-#footer {TEXT-ALIGN: right}
-
-/**************************************************/
+h2{font-size:1.8em}
+#nav{font-size:1em}
+h3,#nav li,pre{font-size:1.2em}
+h3,h4{font-weight:700}
+li,p,h4,label{font-size:1.1em}
+#footer{text-align:right}
 /* LAYOUT */
-/**************************************************/
-
-BODY {
-	MARGIN: 0 50px;
-	PADDING: 0
-}
-
-
-#wrapper {
-	BORDER-RIGHT-WIDTH: 6px;
-	BORDER-RIGHT-STYLE: solid;
-}
-
-.leftcol {
-	FLOAT: left;
-	WIDTH: 23em;
-}
-
-.rightcol, #footer, #nav {
-	BORDER-LEFT-WIDTH: 23em;
-	BORDER-LEFT-STYLE: solid;
-}
-
-#footer, #main {CLEAR: both}
-
-#footer, P.newsinfo {PADDING-TOP: 6px}
-
-#nav {
-	PADDING: 6px 0 6px 20px;
-	MARGIN-RIGHT: -6px
-
-}
-
-.leftcol H3 {
-	PADDING: 3px 10px;
-	MARGIN-TOP: 15px;
-	MARGIN-BOTTOM: 10px
-}
-
-.itemside {PADDING: 0px 10px 0px 10px}
-
-FORM P, LABEL, .rightcol h3, #main .rightcol P, .rightcol UL {PADDING-BOTTOM: 6px}
-
-LABEL {display: block}
-
-.rightcol .newsbox H3 {PADDING-BOTTOM: 12px}
-
-#main .leftcol, #main .rightcol {PADDING-TOP: 15px; PADDING-BOTTOM: 15px}
-
-DIV#content, #footer {
-	PADDING-RIGHT: 20px;
-	PADDING-LEFT: 20px;
-}
-
-#main H2, DIV.itembox {PADDING-BOTTOM: 15px}
-
-DIV.newsbox, #footer {PADDING-BOTTOM: 24px}
-
-
-.newsinfo {
-	BORDER-BOTTOM-STYLE: solid;
-	BORDER-BOTTOM-WIDTH: 1px;
-}
-
-DIV.newsbox {WIDTH: 100%; overflow: hidden}
-
-#header .rightcol {PADDING-LEFT: 20px}
-
-.leftcol UL, .itembox UL {
-	list-style-position: inside;
-	LIST-STYLE-TYPE: SQUARE;
-	line-height: 1.5em
-}
-
-#nav UL, #nav LI {
-	DISPLAY: inline;
-	HEIGHT: 0
-}
-
-#nav LI {MARGIN-RIGHT: 10px}
-
-#logo_left, #logo_right {HEIGHT: 110px}
-
-#standards, #links {TEXT-ALIGN: center}
-
-#standards IMG, #links IMG {BORDER: 0; MARGIN: 5px}
-
-#rambler img{border: none; margin: 0; padding: 0;}
-
-/**************************************************/
+body{margin:0 50px;padding:0}
+#wrapper{border-right-width:6px;border-right-style:solid}
+.leftcol{float:left;width:23em}
+.rightcol,#footer,#nav{border-left-width:23em;border-left-style:solid}
+#footer,#main{clear:both}
+#footer,p.newsinfo{padding-top:6px}
+#nav{padding:6px 0 6px 20px;margin-right:-6px}
+.leftcol h3{padding:3px 10px;margin-top:15px;margin-bottom:10px}
+.itemside{padding:0 10px}
+form p,label,.rightcol h3,#main .rightcol p,.rightcol ul{padding-bottom:6px}
+label{display:block}
+.rightcol .newsbox h3{padding-bottom:12px}
+#main .leftcol,#main .rightcol{padding-top:15px;padding-bottom:15px}
+div#content,#footer{padding-right:20px;padding-left:20px}
+#main h2,div.itembox{padding-bottom:15px}
+div.newsbox,#footer{padding-bottom:24px}
+.newsinfo{border-bottom-style:solid;border-bottom-width:1px}
+div.newsbox{width:100%;overflow:hidden}
+#header .rightcol{padding-left:20px}
+.leftcol ul,.itembox ul{list-style-position:inside;list-style-type:SQUARE;line-height:1.5em}
+#nav ul,#nav li{display:inline;height:0}
+#nav li{margin-right:10px}
+#logo_left,#logo_right{height:110px}
+#standards,#links{text-align:center}
+#standards img,#links img{border:0;margin:5px}
+#rambler img{border:none;margin:0;padding:0}
 /* LINKS */
-/**************************************************/
-
-A:link, A:visited {TEXT-DECORATION: underline}
-
-#nav A:hover {TEXT-DECORATION: underline}
-
-#nav LI.active A:link, #nav LI.active A:visited {TEXT-DECORATION: none} 
-
-/*************************************************/
-/* BUTTONS - tnx to vladimir
-/*************************************************/
-p input{
-	font:normal 12px verdana,arial,helvetica,sans serif;
-	color:#333;
-	background:#ddd;
-	border:1px solid #777;
-	cursor:hand;
-}
-
-#qjump input{
-	font:normal 13px verdana,arial,helvetica,sans serif;
-	color:#333;
-	background:#ddd;
-	border:1px solid #777;
-	cursor:hand;
-}
-
+a:link,a:visited{text-decoration:underline}
+#nav a:hover{text-decoration:underline}
+#nav li.active a:link,#nav li.active a:visited{text-decoration:none}
+/* BUTTONS - tnx to vladimir */
+p input{font:normal 12px verdana,arial,helvetica,sans serif;color:#333;background:#ddd;border:1px solid #777;cursor:hand}
+#qjump input{font:normal 13px verdana,arial,helvetica,sans serif;color:#333;background:#ddd;border:1px solid #777;cursor:hand}

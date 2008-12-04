@@ -32,13 +32,16 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
 // Add a rank
 if (isset($_POST['add_rank']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_ranks.php');
 
 	$rank = trim($_POST['new_rank']);
@@ -68,6 +71,9 @@ if (isset($_POST['add_rank']))
 // Update a rank
 else if (isset($_POST['update']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_ranks.php');
 
 	$id = intval(key($_POST['update']));
@@ -99,6 +105,9 @@ else if (isset($_POST['update']))
 // Remove a rank
 else if (isset($_POST['remove']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_ranks.php');
 
 	$id = intval(key($_POST['remove']));
@@ -141,7 +150,13 @@ generate_admin_menu('ranks');
 								<tr>
 									<td><input type="text" name="new_rank" size="24" maxlength="50" tabindex="1" /></td>
 									<td><input type="text" name="new_min_posts" size="7" maxlength="7" tabindex="2" /></td>
-									<td><input type="submit" name="add_rank" value=" Add " tabindex="3" /></td>
+									<td>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+										<input type="submit" name="add_rank" value=" Add " tabindex="3" />
+<?php else: ?>
+										<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+									</td>
 								</tr>
 							</tbody>
 							</table>
@@ -171,7 +186,14 @@ if ($db->num_rows($result))
 <?php
 
 	while ($cur_rank = $db->fetch_assoc($result))
-		echo "\t\t\t\t\t\t\t\t".'<tr><td><input type="text" name="rank['.$cur_rank['id'].']" value="'.pun_htmlspecialchars($cur_rank['rank']).'" size="24" maxlength="50" /></td><td><input type="text" name="min_posts['.$cur_rank['id'].']" value="'.$cur_rank['min_posts'].'" size="7" maxlength="7" /></td><td><input type="submit" name="update['.$cur_rank['id'].']" value="Update" />&nbsp;<input type="submit" name="remove['.$cur_rank['id'].']" value="Remove" /></td></tr>'."\n";
+	{
+		echo "\t\t\t\t\t\t\t\t".'<tr><td><input type="text" name="rank['.$cur_rank['id'].']" value="'.pun_htmlspecialchars($cur_rank['rank']).'" size="24" maxlength="50" /></td><td><input type="text" name="min_posts['.$cur_rank['id'].']" value="'.$cur_rank['min_posts'].'" size="7" maxlength="7" /></td><td>';
+		if ($pun_user['g_id'] == PUN_ADMIN)
+			echo '<input type="submit" name="update['.$cur_rank['id'].']" value="Update" />&nbsp;<input type="submit" name="remove['.$cur_rank['id'].']" value="Remove" />';
+		else
+			echo '<span style="color:red">You do not have permission to save changes.</span>';
+		echo '</td></tr>'."\n";
+	}
 
 ?>
 							</tbody>

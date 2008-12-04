@@ -32,12 +32,15 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
 if (isset($_POST['form_sent']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	// Custom referrer check (so we can output a custom error message)
 	if (!preg_match('#^'.preg_quote(str_replace('www.', '', $pun_config['o_base_url']).'/admin_options.php', '#').'#i', str_replace('www.', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''))))
 		message('Bad HTTP_REFERER. If you have moved these forums from one location to another or switched domains, you need to update the Base URL manually in the database (look for o_base_url in the config table) and then clear the cache by deleting all .php files in the /cache directory.');
@@ -167,7 +170,13 @@ generate_admin_menu('options');
 		<h2><span>Options</span></h2>
 		<div class="box">
 			<form method="post" action="admin_options.php?action=foo">
-				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
+				<p class="submittop">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 					<fieldset>
@@ -774,7 +783,13 @@ generate_admin_menu('options');
 						</div>
 					</fieldset>
 				</div>
-				<p class="submitend"><input type="submit" name="save" value="Save changes" /></p>
+				<p class="submitend">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 	</div>

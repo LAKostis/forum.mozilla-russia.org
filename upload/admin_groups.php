@@ -32,7 +32,7 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
@@ -41,6 +41,9 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 {
 	if (isset($_POST['add_group']))
 	{
+		if ($pun_user['g_id'] > PUN_ADMIN)
+			message($lang_common['No permission']);
+
 		$base_group = intval($_POST['base_group']);
 
 		$result = $db->query('SELECT * FROM '.$db->prefix.'groups WHERE g_id='.$base_group) or error('Unable to fetch user group info', __FILE__, __LINE__, $db->error());
@@ -76,7 +79,13 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		<h2><span>Group settings</span></h2>
 		<div class="box">
 			<form id="groups2" method="post" action="admin_groups.php" onsubmit="return process_form(this)">
-				<p class="submittop"><input type="submit" name="add_edit_group" value=" Save " /></p>
+				<p class="submittop">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="add_edit_group" value=" Save " />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 				<div class="inform">
 					<input type="hidden" name="mode" value="<?php echo $mode ?>" />
 <?php if ($mode == 'edit'): ?>				<input type="hidden" name="group_id" value="<?php echo $group_id ?>" />
@@ -188,7 +197,13 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 <?php endif; ?>						</div>
 					</fieldset>
 				</div>
-				<p class="submitend"><input type="submit" name="add_edit_group" value=" Save " tabindex="26" /></p>
+				<p class="submitend">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="add_edit_group" value=" Save " tabindex="26" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 	</div>
@@ -203,6 +218,9 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 // Add/edit a group (stage 2)
 else if (isset($_POST['add_edit_group']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_groups.php');
 
 	// Is this the admin group? (special rules apply)
@@ -262,6 +280,9 @@ else if (isset($_POST['add_edit_group']))
 // Set default group
 else if (isset($_POST['set_default_group']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_groups.php');
 
 	$group_id = intval($_POST['default_group']);
@@ -281,6 +302,9 @@ else if (isset($_POST['set_default_group']))
 // Remove a group
 else if (isset($_GET['del_group']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_groups.php');
 
 	$group_id = intval($_GET['del_group']);
@@ -353,7 +377,13 @@ else if (isset($_GET['del_group']))
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="del_group" value="Delete group" /></p>
+				<p>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="del_group" value="Delete group" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 	</div>
@@ -381,7 +411,13 @@ generate_admin_menu('groups');
 						<div class="infldset">
 							<table class="aligntop" cellspacing="0">
 								<tr>
-									<th scope="row">Base new group on<div><input type="submit" name="add_group" value=" Add " tabindex="2" /></div></th>
+									<th scope="row">Base new group on<div>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+										<input type="submit" name="add_group" value=" Add " tabindex="2" />
+<?php else: ?>
+										<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+									</div></th>
 									<td>
 										<select id="base_group" name="base_group" tabindex="1">
 <?php
@@ -411,7 +447,13 @@ while ($cur_group = $db->fetch_assoc($result))
 						<div class="infldset">
 							<table class="aligntop" cellspacing="0">
 								<tr>
-									<th scope="row">Default group<div><input type="submit" name="set_default_group" value=" Save " tabindex="4" /></div></th>
+									<th scope="row">Default group<div>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+										<input type="submit" name="set_default_group" value=" Save " tabindex="4" />
+<?php else: ?>
+										<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+									</div></th>
 									<td>
 										<select id="default_group" name="default_group" tabindex="3">
 <?php

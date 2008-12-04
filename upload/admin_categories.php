@@ -32,13 +32,16 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
 // Add a new category
 if (isset($_POST['add_cat']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_categories.php');
 
 	$new_cat_name = trim($_POST['new_cat_name']);
@@ -54,6 +57,9 @@ if (isset($_POST['add_cat']))
 // Delete a category
 else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_categories.php');
 
 	$cat_to_delete = intval($_POST['cat_to_delete']);
@@ -128,7 +134,14 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="del_cat_comply" value="Delete" /><a href="javascript:history.go(-1)">Go back</a></p>
+				<p>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="del_cat_comply" value="Delete" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+					<a href="javascript:history.go(-1)">Go back</a>
+				</p>
 			</form>
 		</div>
 	</div>
@@ -143,6 +156,9 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 else if (isset($_POST['update']))	// Change position and name of the categories
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_categories.php');
 
 	$cat_order = $_POST['cat_order'];
@@ -196,14 +212,26 @@ generate_admin_menu('categories');
 					<div class="infldset">
 						<table class="aligntop" cellspacing="0">
 							<tr>
-								<th scope="row">Add a new category<div><input type="submit" name="add_cat" value="Add New" tabindex="2" /></div></th>
+								<th scope="row">Add a new category<div>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+									<input type="submit" name="add_cat" value="Add New" tabindex="2" />
+<?php else: ?>
+									<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+								</div></th>
 								<td>
 									<input type="text" name="new_cat_name" size="35" maxlength="80" tabindex="1" />
 									<span>The name of the new category you want to add. You can edit the name of the category later (see below).Go to <a href="admin_forums.php">Forums</a> to add forums to your new category.</span>
 								</td>
 							</tr>
 <?php if ($num_cats): ?>							<tr>
-								<th scope="row">Delete a category<div><input type="submit" name="del_cat" value="Delete" tabindex="4" /></div></th>
+								<th scope="row">Delete a category<div>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+									<input type="submit" name="del_cat" value="Delete" tabindex="4" />
+<?php else: ?>
+									<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+								</div></th>
 								<td>
 									<select name="cat_to_delete" tabindex="3">
 <?php
@@ -249,7 +277,13 @@ generate_admin_menu('categories');
 ?>
 						</tbody>
 						</table>
-						<div class="fsetsubmit"><input type="submit" name="update" value="Update" /></div>
+						<div class="fsetsubmit">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+							<input type="submit" name="update" value="Update" />
+<?php else: ?>
+							<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+						</div>
 					</div>
 				</fieldset>
 			</div>

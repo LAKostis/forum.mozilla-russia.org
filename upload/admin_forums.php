@@ -32,13 +32,16 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
 // Add a "default" forum
 if (isset($_POST['add_forum']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_forums.php');
 
 	$add_to_cat = intval($_POST['add_to_cat']);
@@ -70,6 +73,9 @@ else if (isset($_GET['del_forum']))
 
 	if (isset($_POST['del_forum_comply']))	// Delete a forum with all posts
 	{
+		if ($pun_user['g_id'] > PUN_ADMIN)
+			message($lang_common['No permission']);
+
 		@set_time_limit(0);
 
 		// Prune all posts and topics
@@ -126,7 +132,14 @@ else if (isset($_GET['del_forum']))
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="del_forum_comply" value="Delete" /><a href="javascript:history.go(-1)">Go back</a></p>
+				<p>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="del_forum_comply" value="Delete" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+					<a href="javascript:history.go(-1)">Go back</a>
+				</p>
 			</form>
 		</div>
 	</div>
@@ -142,6 +155,9 @@ else if (isset($_GET['del_forum']))
 // Update forum positions
 else if (isset($_POST['update_positions']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_forums.php');
 
 	while (list($forum_id, $disp_position) = @each($_POST['position']))
@@ -173,6 +189,9 @@ else if (isset($_GET['edit_forum']))
 	// Update group permissions for $forum_id
 	if (isset($_POST['save']))
 	{
+		if ($pun_user['g_id'] > PUN_ADMIN)
+			message($lang_common['No permission']);
+
 		confirm_referrer('admin_forums.php');
 
 		// Start with the forum details
@@ -232,6 +251,9 @@ else if (isset($_GET['edit_forum']))
 	}
 	else if (isset($_POST['revert_perms']))
 	{
+		if ($pun_user['g_id'] > PUN_ADMIN)
+			message($lang_common['No permission']);
+
 		confirm_referrer('admin_forums.php');
 
 		$db->query('DELETE FROM '.$db->prefix.'forum_perms WHERE forum_id='.$forum_id) or error('Unable to delete group forum permissions', __FILE__, __LINE__, $db->error());
@@ -262,7 +284,13 @@ else if (isset($_GET['edit_forum']))
 		<h2><span>Edit forum</span></h2>
 		<div class="box">
 			<form id="edit_forum" method="post" action="admin_forums.php?edit_forum=<?php echo $forum_id ?>">
-				<p class="submittop"><input type="submit" name="save" value="Save changes" tabindex="6" /></p>
+				<p class="submittop">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" tabindex="6" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 				<div class="inform">
 					<fieldset>
 						<legend>Edit forum details</legend>
@@ -369,11 +397,23 @@ else if (isset($_GET['edit_forum']))
 ?>
 							</tbody>
 							</table>
-							<div class="fsetsubmit"><input type="submit" name="revert_perms" value="Revert to default" /></div>
+							<div class="fsetsubmit">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+								<input type="submit" name="revert_perms" value="Revert to default" />
+<?php else: ?>
+								<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+							</div>
 						</div>
 					</fieldset>
 				</div>
-				<p class="submitend"><input type="submit" name="save" value="Save changes" /></p>
+				<p class="submitend">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 	</div>
@@ -402,7 +442,13 @@ generate_admin_menu('forums');
 						<div class="infldset">
 							<table class="aligntop" cellspacing="0">
 								<tr>
-									<th scope="row">Add forum to category<div><input type="submit" name="add_forum" value=" Add " tabindex="2" /></div></th>
+									<th scope="row">Add forum to category<div>
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+										<input type="submit" name="add_forum" value=" Add " tabindex="2" />
+<?php else: ?>
+										<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+									</div></th>
 									<td>
 										<select name="add_to_cat" tabindex="1">
 <?php
@@ -435,7 +481,13 @@ if ($db->num_rows($result) > 0)
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
 			<form id="edforum" method="post" action="admin_forums.php?action=edit">
-				<p class="submittop"><input type="submit" name="update_positions" value="Update positions" tabindex="3" /></p>
+				<p class="submittop">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="update_positions" value="Update positions" tabindex="3" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 <?php
 
 $tabindex_count = 4;
@@ -475,7 +527,13 @@ while ($cur_forum = $db->fetch_assoc($result))
 						</div>
 					</fieldset>
 				</div>
-				<p class="submitend"><input type="submit" name="update_positions" value="Update positions" tabindex="<?php echo $tabindex_count ?>" /></p>
+				<p class="submitend">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="update_positions" value="Update positions" tabindex="<?php echo $tabindex_count ?>" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 <?php

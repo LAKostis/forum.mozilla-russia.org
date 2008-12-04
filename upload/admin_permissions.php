@@ -32,12 +32,15 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
 
-if ($pun_user['g_id'] > PUN_ADMIN)
+if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
 
 if (isset($_POST['form_sent']))
 {
+	if ($pun_user['g_id'] > PUN_ADMIN)
+		message($lang_common['No permission']);
+
 	confirm_referrer('admin_permissions.php');
 
 	$form = array_map('intval', $_POST['form']);
@@ -66,7 +69,13 @@ generate_admin_menu('permissions');
 		<h2><span>Permissions</span></h2>
 		<div class="box">
 			<form method="post" action="admin_permissions.php">
-				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
+				<p class="submittop">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 					<fieldset>
@@ -216,7 +225,13 @@ generate_admin_menu('permissions');
 						</div>
 					</fieldset>
 				</div>
-				<p class="submitend"><input type="submit" name="save" value="Save changes" /></p>
+				<p class="submitend">
+<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>
+					<input type="submit" name="save" value="Save changes" />
+<?php else: ?>
+					<span style="color:red">You do not have permission to save changes.</span>
+<?php endif; ?>
+				</p>
 			</form>
 		</div>
 	</div>

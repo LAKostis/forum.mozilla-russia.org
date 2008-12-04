@@ -20,6 +20,6 @@ $lang_index = array(
 'Board info'			=>	'Board information',
 'Board stats'			=>	'Board statistics',
 'User info'				=>	'User information',
-'Admin notice'			=>	' (hidden not marked)'
+'Admin notice'			=>	' (hidden marked as bold)'
 
 );

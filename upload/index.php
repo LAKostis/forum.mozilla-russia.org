@@ -192,26 +192,19 @@ if ($pun_config['o_users_online'] == '1')
 			{
 				++$num_hidden;
 				if ($pun_user['g_id'] <= PUN_MOD)
-					$users[] = '<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+					$users[] = '<dd><strong class="punhot"><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a></strong>';
 			}
 			else
 			{
 				++$num_users;
-				$users[] = "\n\t\t\t\t".'<dd><strong class="punhot"><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a></strong>';
+				$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			}
 		}
 		else
-			++$num_guests;
-	}
-
-	if ($pun_user['g_id'] <= PUN_MOD)
-	{
-		$result = $db->query('SELECT DISTINCT o.ident, p.poster FROM '.$db->prefix.'online AS o LEFT JOIN '.$db->prefix.'posts AS p ON o.ident=p.poster_ip WHERE o.idle=0 AND o.user_id = 1 ORDER BY o.logged', true) or error('Unable to fetch guests list', __FILE__, __LINE__, $db->error());
-
-		while ($pun_user_online = $db->fetch_assoc($result))
 		{
-			$empty = empty($pun_user_online['poster']);
-			$guests[] = "\n\t\t\t\t".'<dd>'.($empty ? '' : '<strong>').'<a href="admin_users.php?show_users='.$pun_user_online['ident'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>'.($empty ? '' : '</strong>');
+			++$num_guests;
+			if ($pun_user['g_id'] <= PUN_MOD)
+				$guests[] = "\n\t\t\t\t".'<dd><a href="admin_users.php?show_users='.$pun_user_online['ident'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 		}
 	}
 
@@ -227,7 +220,7 @@ if ($pun_config['o_users_online'] == '1')
 
 	if ($pun_user['g_id'] <= PUN_MOD && $num_guests > 0)
 	{
-		natsort($guests); // sort by logged is silly
+		sort($guests); // sort by logged is silly
 		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online guests'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $guests).'</dd>'."\n\t\t\t".'</dl>'."\n";
 		$clearer = false;
 	}

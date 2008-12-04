@@ -16,10 +16,8 @@ $lang_index = array(
 'No of topics'			=>	'Total number of topics',
 'No of posts'			=>	'Total number of posts',
 'Online'				=>	'Online',	// As in "Online: User A, User B etc."
-'Online guests'			=>	'Guests online',
 'Board info'			=>	'Board information',
 'Board stats'			=>	'Board statistics',
-'User info'				=>	'User information',
-'Admin notice'			=>	' (hidden marked as bold)'
+'User info'				=>	'User information'
 
 );

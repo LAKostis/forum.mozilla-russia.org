@@ -16,10 +16,8 @@ $lang_index = array(
 'No of topics'			=>	'Всего тем',
 'No of posts'			=>	'Всего сообщений',
 'Online'				=>	'Сейчас на форуме',	// As in "Online: User A, User B etc."
-'Online guests'			=>	'Гости на форуме',
 'Board info'			=>	'Информация о форуме',
 'Board stats'			=>	'Статистика форума',
-'User info'				=>	'Информация о пользователе',
-'Admin notice'			=>	' (скрытые выделены жирным)'
+'User info'				=>	'Информация о пользователе'
 
 );

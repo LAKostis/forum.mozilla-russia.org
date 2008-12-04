@@ -180,52 +180,32 @@ list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 if ($pun_config['o_users_online'] == '1')
 {
 	// Fetch users online info and generate strings for output
-	$num_users = $num_hidden = $num_guests = 0;
-	$users = $guests = array();
-	$result = $db->query('SELECT user_id, ident, show_online FROM '.$db->prefix.'online WHERE idle=0 ORDER BY logged', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
+	$num_hidden = $num_guests = 0;
+	$users = array();
+	$result = $db->query('SELECT user_id, ident, show_online FROM '.$db->prefix.'online WHERE idle=0 ORDER BY ident', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 	while ($pun_user_online = $db->fetch_assoc($result))
 	{
-		if ($pun_user_online['user_id'] > 1)
-		{
-			if ($pun_user_online['show_online'] == 0)
-			{
-				++$num_hidden;
-				if ($pun_user['g_id'] <= PUN_MOD)
-					$users[] = '<dd><strong class="punhot"><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a></strong>';
-			}
-			else
-			{
-				++$num_users;
-				$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
-			}
-		}
+		if ($pun_user_online['user_id'] > 1 && $pun_user_online['show_online'] == 0 && $pun_user['g_id'] < PUN_MOD || $pun_user_online['user_id'] == $pun_user['id'] && $pun_user_online['show_online'] == 0)
+			$users[] = '<dd><strong class="punhot"><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a></strong>';
+		elseif ($pun_user_online['user_id'] > 1 && $pun_user_online['show_online'] == 1)
+			$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 		else
 		{
-			++$num_guests;
-			if ($pun_user['g_id'] <= PUN_MOD)
-				$guests[] = "\n\t\t\t\t".'<dd><a href="admin_users.php?show_users='.$pun_user_online['ident'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+			if ($pun_user_online['user_id'] > 1 && $pun_user_online['show_online'] == '0')
+			{
+				++$num_hidden;
+			}
+			else ++$num_guests;
 		}
 	}
 
+	$num_users = count($users);
 	echo "\t\t\t\t".'<dd>'. $lang_index['Users online'].': <strong>'.($num_users + $num_hidden + $num_guests).'</strong></dd>'."\n\t\t\t\t".'<dd>'.$lang_index['Registered online'].': <strong>'.($num_users + $num_hidden).'</strong> ('.$lang_index['Hidden online'].': <strong>'.$num_hidden.'</strong>), '.$lang_index['Guests online'].': <strong>'.$num_guests.'</strong></dd>'."\n\t\t\t".'</dl>'."\n";
 
-	$clearer = true;
-
-	if ($num_users > 0 || ($pun_user['g_id'] <= PUN_MOD && $num_hidden > 0))
-	{
-		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online'].($pun_user['g_id'] <= PUN_MOD ? '</strong>' . $lang_index['Admin notice'] . ':&nbsp;' : ':&nbsp;</strong>').'</dt>'."\t\t\t\t".implode(',</dd> ', $users).'</dd>'."\n\t\t\t".'</dl>'."\n";
-		$clearer = false;
-	}
-
-	if ($pun_user['g_id'] <= PUN_MOD && $num_guests > 0)
-	{
-		sort($guests); // sort by logged is silly
-		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online guests'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $guests).'</dd>'."\n\t\t\t".'</dl>'."\n";
-		$clearer = false;
-	}
-
-	if ($clearer)
+	if ($num_users > 0)
+		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $users).'</dd>'."\n\t\t\t".'</dl>'."\n";
+	else
 		echo "\t\t\t".'<div class="clearer"></div>'."\n";
 
 }

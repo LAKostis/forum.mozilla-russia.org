@@ -348,8 +348,9 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			else if ($action == 'show_user')
 			{
 				$show_as = 'posts';
+				$sort_by = 9;
 
-				$result = $db->query('SELECT p.id FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.poster_id='.$user_id.' GROUP BY t.id') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
+				$result = $db->query('SELECT p.id FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.poster_id='.$user_id) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$num_hits = $db->num_rows($result);
 
 				if (!$num_hits)
@@ -391,7 +392,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			}
 
 			// We want to sort things after last post
-			$sort_by = 4;
+			if(empty($sort_by))
+				$sort_by = 4;
 
 			$search_ids = array();
 			while ($row = $db->fetch_row($result))

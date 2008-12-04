@@ -101,7 +101,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
 		}
 
-		if ($cur_topic['closed'] == '1')
+		if ($cur_topic['closed'] == '1' && $is_admmod)
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'">'.$lang_common['Open topic'].'</a></dd>'."\n";
 		else
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";

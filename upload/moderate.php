@@ -78,7 +78,7 @@ else
 	$mods_array = ($moderators != '') ? unserialize($moderators) : array();
 
 	// Open or close one or more topics (for users)
-	if ($pun_user['g_id'] > PUN_MOD && (isset($_REQUEST['open']) || isset($_REQUEST['close'])))
+	if ($pun_user['g_id'] > PUN_MOD && isset($_REQUEST['close']))
 	{
 		$action = (isset($_REQUEST['open'])) ? 0 : 1;
 

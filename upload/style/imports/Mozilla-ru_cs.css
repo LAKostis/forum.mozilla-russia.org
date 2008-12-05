@@ -68,6 +68,7 @@ tr.isticky{background-color:#f9e3d1}
 tr.isticky td.tc2,tr.isticky td.tc3,tr.isticky td.tc4{background-color:#f4d0b2}
 /* 11. ADDITIONAL STYLES */
 /* 11.2 Top menu links */
+div.top-menu{margin:7px 0}
 div.projects a:link,div.projects a:visited{color:#888}
 div.projects a:hover{color:#333;text-decoration:underline}
 /* 11.3 Top menu search form */

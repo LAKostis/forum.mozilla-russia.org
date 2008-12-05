@@ -70,3 +70,6 @@ tr.isticky{background-color:#ffe2db}
 tr.isticky td.tc2,tr.isticky td.tc3{background-color:#ffb6a4}
 tr.iredirect{background-color:#e2f9e2}
 tr.iredirect td.tc2,tr.iredirect td.tc3{background-color:#b6f0b6}
+/* 11. ADDITIONAL STYLES */
+/* 11.2 Top menu links */
+div.top-menu{margin:7px 0}

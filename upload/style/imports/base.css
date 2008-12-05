@@ -9,6 +9,7 @@
 .pun .nosize{position:absolute;left:-10000px}
 /* 2.2 Overflow settings for posts */
 div.blockpost div.box,div.postleft,div.postsignature,div.postmsg{overflow:hidden}
+div.blockpost span.conr a{margin-right:3px}
 /* 3. BUG FIXES - VERY IMPORTANT - DO NOT CHANGE */
 /* 3.1 This attempts to eliminate rounding errors in Gecko browsers. */
 div>div>div.postfootleft,div>div>div.postfootright{padding-top:1px;margin-top:-1px}

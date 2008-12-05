@@ -181,7 +181,7 @@ if ($pun_config['o_users_online'] == '1')
 {
 	// Fetch users online info and generate strings for output
 	$num_users = $num_hidden = $num_guests = 0;
-	$users = $guests = array();
+	$users = $hidden = $guests = array();
 	$result = $db->query('SELECT user_id, ident, show_online FROM '.$db->prefix.'online WHERE idle=0 ORDER BY logged', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 	while ($pun_user_online = $db->fetch_assoc($result))
@@ -192,12 +192,12 @@ if ($pun_config['o_users_online'] == '1')
 			{
 				++$num_hidden;
 				if ($pun_user['g_id'] <= PUN_MOD)
-					$users[] = '<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+					$hidden[] = '<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			}
 			else
 			{
 				++$num_users;
-				$users[] = "\n\t\t\t\t".'<dd><strong class="punhot"><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a></strong>';
+				$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			}
 		}
 		else
@@ -206,12 +206,12 @@ if ($pun_config['o_users_online'] == '1')
 
 	if ($pun_user['g_id'] <= PUN_MOD)
 	{
-		$result = $db->query('SELECT DISTINCT o.ident, p.poster FROM '.$db->prefix.'online AS o LEFT JOIN '.$db->prefix.'posts AS p ON o.ident=p.poster_ip WHERE o.idle=0 AND o.user_id = 1 ORDER BY o.logged', true) or error('Unable to fetch guests list', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT o.ident, COUNT(p.poster) AS poster FROM '.$db->prefix.'online AS o LEFT JOIN '.$db->prefix.'posts AS p ON o.ident=p.poster_ip WHERE o.idle=0 AND o.user_id = 1 GROUP BY o.ident', true) or error('Unable to fetch guests list', __FILE__, __LINE__, $db->error());
 
 		while ($pun_user_online = $db->fetch_assoc($result))
 		{
 			$empty = empty($pun_user_online['poster']);
-			$guests[] = "\n\t\t\t\t".'<dd>'.($empty ? '' : '<strong>').'<a href="admin_users.php?show_users='.$pun_user_online['ident'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>'.($empty ? '' : '</strong>');
+			$guests[] = "\n\t\t\t\t".'<dd><a href="admin_users.php?show_users='.$pun_user_online['ident'].'">'.($empty ? '' : '<strong>').pun_htmlspecialchars($pun_user_online['ident']).($empty ? '' : '</strong>').'</a>';
 		}
 	}
 
@@ -219,17 +219,27 @@ if ($pun_config['o_users_online'] == '1')
 
 	$clearer = true;
 
-	if ($num_users > 0 || ($pun_user['g_id'] <= PUN_MOD && $num_hidden > 0))
+	if ($num_users > 0)
 	{
-		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online'].($pun_user['g_id'] <= PUN_MOD ? '</strong>' . $lang_index['Admin notice'] . ':&nbsp;' : ':&nbsp;</strong>').'</dt>'."\t\t\t\t".implode(',</dd> ', $users).'</dd>'."\n\t\t\t".'</dl>'."\n";
+		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online users'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $users).'</dd>'."\n\t\t\t".'</dl>'."\n";
 		$clearer = false;
 	}
 
-	if ($pun_user['g_id'] <= PUN_MOD && $num_guests > 0)
+	if ($pun_user['g_id'] <= PUN_MOD)
 	{
-		natsort($guests); // sort by logged is silly
-		echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online guests'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $guests).'</dd>'."\n\t\t\t".'</dl>'."\n";
-		$clearer = false;
+		if ($num_hidden > 0)
+		{
+			natsort($guests); // sort by logged is silly
+			echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online hidden'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $hidden).'</dd>'."\n\t\t\t".'</dl>'."\n";
+			$clearer = false;
+		}
+
+		if ($num_guests > 0)
+		{
+			natsort($guests); // sort by logged is silly
+			echo "\t\t\t".'<dl id="onlinelist" class="clearb">'."\n\t\t\t\t".'<dt><strong>'.$lang_index['Online guests'].':&nbsp;</strong></dt>'."\t\t\t\t".implode(',</dd> ', $guests).'</dd>'."\n\t\t\t".'</dl>'."\n";
+			$clearer = false;
+		}
 	}
 
 	if ($clearer)

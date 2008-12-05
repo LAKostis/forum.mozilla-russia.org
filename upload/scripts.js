@@ -1,22 +1,22 @@
 var txt = '', nick = '', selected_id = null;
 
 function copyQ(obj, nickname, cursor) {
-	txt = window.getSelection ? window.getSelection() : document.selection ? document.selection.createRange().text : '';
+	txt = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text.toString() : '';
 	if (nickname)
-		nick = obj.textContent;
+		nick = obj.innerHTML;
 	if (cursor)
 		obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
 }
 
 function pasteQ() {
-	if (txt != '' && document.forms['post']['req_message'])
-		insert_text('[quote]' + txt + '[/quote]\n', '');
+	if (txt && document.forms['post']['req_message'])
+		insert_text('[quote]' + trim(txt) + '[/quote]\n', '');
 }
 
 function pasteN() {
-	if (txt != '' && document.forms['post']['req_message'])
-		insert_text('[quote=' + nick + ']' + txt + '[/quote]\n', '');
-	else
+	if (txt && document.forms['post']['req_message'])
+		insert_text('[quote=' + nick + ']' + trim(txt) + '[/quote]\n', '');
+	else if (nick && document.forms['post']['req_message'])
 		insert_text('[b]' + nick + '[/b]\n', '');
 }
 
@@ -25,8 +25,7 @@ function setCaret (textObj) {
 		textObj.caretPos = document.selection.createRange().duplicate();
 }
 
-function insert_text(open, close, focus)
-{
+function insert_text(open, close, focus) {
 	var msgfield = document.all ? document.all.req_message : document.forms['post'] ? document.forms['post']['req_message'] : document.forms['edit']['req_message'];
 	var ss = msgfield.selectionStart, st = msgfield.scrollTop, sh = msgfield.scrollHeight;
 	if (!ss && document.selection && msgfield.caretPos) {
@@ -60,16 +59,24 @@ function toggleAdditional(id) {
 	document.getElementById('additional-less').style.display = document.getElementById('additional-less').style.display == 'none' ? 'inline' : 'none';
 }
 
-function moreSmiles () {
-	document.getElementById('smiley-more').style.display = document.getElementById('smiley-more').style.display == 'none' ? 'inline' : 'none';
-	document.getElementById('smileys').style.display = document.getElementById('smileys').style.display == 'none' ? 'inline' : 'none';
-	document.getElementById('smiley-less').style.display = document.getElementById('smiley-less').style.display == 'none' ? 'inline' : 'none';
+function moreSmiles() {
+	for each(var id in ['smiley-more', 'smileys', 'smiley-less'])
+	{
+		var node = document.getElementById(id);
+		node.style.display = node.style.display == 'none' ? 'inline' : 'none';
+	}
+	if (document.getElementById('smileys').style.display == 'inline' && document.getElementById('browsers').style.display == 'inline')
+		moreBrowser();
 }
 
-function moreBrowser () {
-	document.getElementById('browser-more').style.display = document.getElementById('browser-more').style.display == 'none' ? 'inline' : 'none';
-	document.getElementById('browsers').style.display = document.getElementById('browsers').style.display == 'none' ? 'inline' : 'none';
-	document.getElementById('browser-less').style.display = document.getElementById('browser-less').style.display == 'none' ? 'inline' : 'none';
+function moreBrowser() {
+	for each(var id in ['browser-more', 'browsers', 'browser-less'])
+	{
+		var node = document.getElementById(id);
+		node.style.display = node.style.display == 'none' ? 'inline' : 'none';
+	}
+	if (document.getElementById('browsers').style.display == 'inline' && document.getElementById('smileys').style.display == 'inline')
+		moreSmiles();
 }
 
 function ToggleAll(checked) {
@@ -80,8 +87,7 @@ function ToggleAll(checked) {
 	}
 }
 
-function mail_to(s)
-{
+function mail_to(s) {
 	var n = 0;
 	var r = '';
 	for (var i = 0; i < s.length; i++)
@@ -94,20 +100,22 @@ function mail_to(s)
 	location.href = r;
 }
 
-function incrementForm()
-{
+function incrementForm() {
 	if(document.forms['post'] && document.forms['post']['req_message'].rows < 49)
 		document.forms['post']['req_message'].rows += 7;
 	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows < 49)
 		document.forms['edit']['req_message'].rows += 7;
 }
 
-function decrementForm()
-{
+function decrementForm() {
 	if(document.forms['post'] && document.forms['post']['req_message'].rows > 7)
 		document.forms['post']['req_message'].rows -= 7;
 	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows > 7)
 		document.forms['edit']['req_message'].rows -= 7;
+}
+
+function trim(str) {
+	return str.replace(/^\s+/g, "").replace(/\s+$/g, "");
 }
 
 /*@cc_on

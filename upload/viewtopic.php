@@ -298,7 +298,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{
-			$user_info[] = '<dd>IP: <a href="moderate.php?get_host='.$cur_post['id'].'">'.$cur_post['poster_ip'].'</a>';
+			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
 			if ($cur_post['admin_note'] != '')
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
@@ -311,7 +311,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		$user_title = get_title($cur_post);
 
 		if ($pun_user['g_id'] < PUN_GUEST)
-			$user_info[] = '<dd>IP: <a href="moderate.php?get_host='.$cur_post['id'].'">'.$cur_post['poster_ip'].'</a>';
+			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
 		if ($pun_config['o_show_user_info'] == '1' && $cur_post['poster_email'] != '' && !$pun_user['is_guest'])
 			$user_contacts[] = '<a href="mailto:'.$cur_post['poster_email'].'">'.$lang_common['E-mail'].'</a>';

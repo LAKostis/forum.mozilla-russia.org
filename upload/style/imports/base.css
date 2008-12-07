@@ -122,3 +122,9 @@ form input#search-submit{font-size:85%;font-weight:700;padding:1px 4px}
 /* 11.5 Misc */
 .bbincrement{float:right}
 img.smileyimg,img.browserimg{margin:2px 1px -4px;padding-top:-2px}
+.pun ul.list,.pun ol.list,.pun ul.list[type="circle"]>li{margin:0 30px 0}
+.pun ul.list>li,.pun ol.list>li{padding:5px 0}
+.pun ul.list[type="disc"],.pun ul.list[type="disc"]>li{list-style-type:disc}
+.pun ul.list[type="circle"],.pun ul.list[type="circle"]>li{list-style-type:circle}
+.pun ol.list[type="A"],.pun ol.list[type="A"]>li{list-style-type:upper-latin}
+.pun ol.list[type="1"],.pun ol.list[type="1"]>li{list-style-type:decimal}

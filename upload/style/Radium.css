@@ -53,7 +53,7 @@ have a 6px space beneath them */
 /* 6. SPACING AROUND CONTENT */
 /* 6.1 Default padding for main items */
 div.block div.inbox,div.blockmenu div.inbox{padding:3px 6px}
-.pun p,.pun ul,.pun dl,div.blockmenu li,.pun label,#announce div.inbox div{padding:3px 0}
+.pun p,.pun dl,div.blockmenu li,.pun label,#announce div.inbox div{padding:3px 0}
 .pun h2{padding:4px 6px}
 /* 6.2 Special spacing for various elements */
 .pun h1{padding:3px 0 0}

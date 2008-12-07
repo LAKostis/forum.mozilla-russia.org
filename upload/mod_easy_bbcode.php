@@ -49,38 +49,38 @@ if (!isset($bbcode_field))
 						<table style="border: 0;">
 							<tr>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 8px;">
-							    		<legend>Текст</legend>
+									<fieldset style="padding: 8px;">
+										<legend>Текст</legend>
 											<input type="button" value="Strikethrough" name="S" onclick="insert_text('[s]','[/s]')" />
 											<input type="button" value="Highlight" name="H" onclick="insert_text('[h]','[/h]')" />
 											<input type="button" value="Text Align" name="ALIGN" onclick="insert_text('[align=ALIGNMENT]','[/align]')" />
-											<input type="button" value="Custom CSS" name="STYLE" onclick="insert_text('[style=STYLE]','[/style]')" />
+											<input type="button" value=" PRE " name="PRE" onclick="insert_text('[pre]','[/pre]')" />
 									</fieldset>
 								</td>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 8px;">
-							    		<legend>Список</legend>
-											<input type="button" value=" UL " name="UL" onclick="insert_text('[ul]','[/ul]')" />
-											<input type="button" value=" OL " name="OL" onclick="insert_text('[ol]','[/ol]')" />
-											<input type="button" value="UL List Item" name="ULI" onclick="insert_text('[uli]','[/uli]')" />
-											<input type="button" value="OL List Item" name="OLI" onclick="insert_text('[oli]','[/oli]')" /><br />
+									<fieldset style="padding: 8px;">
+										<legend>Список</legend>
+											<input type="button" value="Marker List" name="Marker List" onclick="insert_text('[list]\n','\n[/list]')" />
+											<input type="button" value="Marker Sub List" name="Marker Sub List" onclick="insert_text('[list=s]\n','\n[/list]')" />
+											<input type="button" value="Numeric List" name="Numeric List" onclick="insert_text('[list=1]\n','\n[/list]')" />
+											<input type="button" value="Word List" name="Word List" onclick="insert_text('[list=a]\n','\n[/list]')" />
+											<input type="button" value="List Item" name="OLI" onclick="insert_text('[*]','')" /><br />
 									</fieldset>
 								</td>
 							</tr>
 							<tr>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 8px;">
-							    		<legend>Шрифт</legend>
+									<fieldset style="padding: 8px;">
+										<legend>Шрифт</legend>
 											<input type="button" value="Font Face" name="FONT" onclick="insert_text('[font=FACE]','[/font]')" />
 											<input type="button" value="Font Color" name="COLOR" onclick="insert_text('[color=#RRGGBB]','[/color]')" />
 											<input type="button" value=" Super " name="SUP" onclick="insert_text('[sup]','[/sup]')" />
 											<input type="button" value=" Sub " name="SUB" onclick="insert_text('[sub]','[/sub]')" />
-											<input type="button" value=" PRE " name="PRE" onclick="insert_text('[pre]','[/pre]')" />
 									</fieldset>
 								</td>
 								<td style="border: 0;">
-						        	<fieldset style="padding: 8px;">
-							    		<legend>Таблица</legend>
+									<fieldset style="padding: 8px;">
+										<legend>Таблица</legend>
 											<input type="button" value=" Table " name="TABLE" onclick="insert_text('[table]','[/table]')" />
 											<input type="button" value="Table Caption" name="CAPTION" onclick="insert_text('[caption]','[/caption]')" />
 											<input type="button" value=" Row " name="TR" onclick="insert_text('[tr]','[/tr]')" />

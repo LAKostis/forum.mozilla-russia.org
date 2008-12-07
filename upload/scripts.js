@@ -3,7 +3,7 @@ var txt = '', nick = '', selected_id = null;
 function copyQ(obj, nickname, cursor) {
 	txt = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text.toString() : '';
 	if (nickname)
-		nick = obj.innerHTML;
+		nick = obj.textContent ? obj.textContent : obj.innerHTML;
 	if (cursor)
 		obj.firstChild.style.cursor = (txt == '' ? 'not-allowed' : 'pointer');
 }
@@ -20,7 +20,7 @@ function pasteN() {
 		insert_text('[b]' + nick + '[/b]\n', '');
 }
 
-function setCaret (textObj) {
+function setCaret(textObj) {
 	if (textObj.createTextRange)
 		textObj.caretPos = document.selection.createRange().duplicate();
 }

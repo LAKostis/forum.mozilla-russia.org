@@ -44,6 +44,7 @@ if ($id < 1 && $pid < 1)
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/reputation.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
+require PUN_ROOT.'lang/'.$pun_user['language'].'/userlist.php';
 
 // create SQL for multigroup mod
 $mgrp_extra = multigrp_getSql($db);
@@ -217,7 +218,7 @@ require PUN_ROOT.'include/polls/viewpoll.php';
 // END MOD
 
 // Retrieve the posts (and their respective poster/online status)
-$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, g.g_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
 {
 	$post_count++;
@@ -254,6 +255,8 @@ while ($cur_post = $db->fetch_assoc($result))
 
 		$user_banned = $user_title == $lang_common['Banned'];
 
+		$group_title = $cur_post['g_title'];
+
 		if ($pun_config['o_censoring'] == '1')
 			$user_title = censor_words($user_title);
 
@@ -275,6 +278,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		// We only show location, register date, post count and the contact links if "Show user info" is enabled
 		if ($pun_config['o_show_user_info'] == '1')
 		{
+			$user_info[] = '<dd>'.$lang_ul['User group'].': <strong>'.$group_title.'</strong>';
 			if ($cur_post['location'] != '')
 			{
 				if ($pun_config['o_censoring'] == '1')

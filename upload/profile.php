@@ -42,7 +42,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/prof_reg.php';
 
 // Load the profile.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/profile.php';
-
+require PUN_ROOT.'lang/'.$pun_user['language'].'/userlist.php';
 
 if ($action == 'change_pass')
 {
@@ -864,7 +864,7 @@ else if (isset($_POST['form_sent']))
 }
 
 
-$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.pm_email_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.pm_email_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, g.g_id, g.g_user_title, g.g_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
@@ -909,6 +909,8 @@ if ($pun_user['id'] != $id &&
 	else
 		$url = $lang_profile['Unknown'];
 
+	$group_title = $user['g_title'];
+
 	if ($pun_config['o_avatars'] == '1')
 	{
 		if ($user['use_avatar'] == '1')
@@ -950,6 +952,8 @@ if ($pun_user['id'] != $id &&
 							<dd><?php echo pun_htmlspecialchars($user['username']) ?></dd>
 							<dt><?php echo $lang_common['Title'] ?>: </dt>
 							<dd><?php echo ($pun_config['o_censoring'] == '1') ? censor_words($user_title_field) : $user_title_field; ?></dd>
+							<dt><?php echo $lang_ul['User group'] ?>: </dt>
+							<dd><?php echo $group_title ?>&nbsp;</dd>
 							<dt><?php echo $lang_profile['Realname'] ?>: </dt>
 							<dd><?php echo ($user['realname'] !='') ? pun_htmlspecialchars(($pun_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']) : $lang_profile['Unknown']; ?></dd>
 							<dt><?php echo $lang_profile['Location'] ?>: </dt>

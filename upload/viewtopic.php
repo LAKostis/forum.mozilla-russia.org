@@ -252,13 +252,15 @@ while ($cur_post = $db->fetch_assoc($result))
 			$username = '<a href="profile.php?id='.$cur_post['poster_id'].'" onclick="pasteN();return false;" onmouseover="copyQ(this, true);">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		$user_title = get_title($cur_post);
 
+		$user_banned = $user_title == $lang_common['Banned'];
+
 		if ($pun_config['o_censoring'] == '1')
 			$user_title = censor_words($user_title);
 
 		// Format the online indicator
 		$is_online = ($cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong>'.$lang_topic['Online'].'</strong>' : $is_online = $lang_topic['Offline'];
 
-		if ($pun_config['o_avatars'] == '1' && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0' && $pun_user['is_guest'] != '1')
+		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0' && $pun_user['is_guest'] != '1')
 		{
 			if ($img_size = @getimagesize($pun_config['o_avatars_dir'].'/'.$cur_post['poster_id'].'.gif'))
 				$user_avatar = '<img src="'.$pun_config['o_avatars_dir'].'/'.$cur_post['poster_id'].'.gif" '.$img_size[3].' alt="" />';
@@ -358,7 +360,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
 	// Do signature parsing/caching
-	if ($cur_post['signature'] != '' && $pun_user['show_sig'] != '0')
+	if (!$user_banned && $cur_post['signature'] != '' && $pun_user['show_sig'] != '0')
 	{
 		if (isset($signature_cache[$cur_post['poster_id']]))
 			$signature = $signature_cache[$cur_post['poster_id']];

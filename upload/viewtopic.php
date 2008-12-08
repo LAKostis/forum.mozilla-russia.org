@@ -314,7 +314,6 @@ while ($cur_post = $db->fetch_assoc($result))
 	else
 	{
 		$username = pun_htmlspecialchars($cur_post['username']);
-		$user_title = get_title($cur_post);
 
 		$group_title = $cur_post['g_title'];
 
@@ -387,7 +386,9 @@ while ($cur_post = $db->fetch_assoc($result))
 			<div class="postleft">
 				<dl>
 					<dt><strong><?php echo $username ?></strong></dt>
+<?php if ($cur_post['poster_id'] > 1): ?>
 					<dd class="usertitle"><strong><?php echo $user_title ?></strong></dd>
+<?php endif; ?>
 					<dd class="postavatar">
 <?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?></dd>
 <?php if (strlen($user_image_award)>0) echo $user_image_award;  ## Image Award Mod ?>

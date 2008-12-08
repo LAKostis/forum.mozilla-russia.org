@@ -60,21 +60,17 @@ function toggleAdditional(id) {
 }
 
 function moreSmiles() {
-	for each(var id in ['smiley-more', 'smileys', 'smiley-less'])
-	{
-		var node = document.getElementById(id);
-		node.style.display = node.style.display == 'none' ? 'inline' : 'none';
-	}
+	document.getElementById('smiley-more').style.display = document.getElementById('smiley-more').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('smileys').style.display = document.getElementById('smileys').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('smiley-less').style.display = document.getElementById('smiley-less').style.display == 'none' ? 'inline' : 'none';
 	if (document.getElementById('smileys').style.display == 'inline' && document.getElementById('browsers').style.display == 'inline')
 		moreBrowser();
 }
 
 function moreBrowser() {
-	for each(var id in ['browser-more', 'browsers', 'browser-less'])
-	{
-		var node = document.getElementById(id);
-		node.style.display = node.style.display == 'none' ? 'inline' : 'none';
-	}
+	document.getElementById('browser-more').style.display = document.getElementById('browser-more').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('browsers').style.display = document.getElementById('browsers').style.display == 'none' ? 'inline' : 'none';
+	document.getElementById('browser-less').style.display = document.getElementById('browser-less').style.display == 'none' ? 'inline' : 'none';
 	if (document.getElementById('browsers').style.display == 'inline' && document.getElementById('smileys').style.display == 'inline')
 		moreSmiles();
 }

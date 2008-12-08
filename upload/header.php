@@ -167,7 +167,7 @@ function process_form(the_form)
 
 }
 
-echo '<script type="text/javascript" src="scripts.js"></script>';
+echo '<script type="text/javascript" src="scripts.js?0"></script>';
 
 $tpl_temp = trim(ob_get_contents());
 $tpl_main = str_replace('<pun_head>', $tpl_temp, $tpl_main);

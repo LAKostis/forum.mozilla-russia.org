@@ -316,6 +316,10 @@ while ($cur_post = $db->fetch_assoc($result))
 		$username = pun_htmlspecialchars($cur_post['username']);
 		$user_title = get_title($cur_post);
 
+		$group_title = $cur_post['g_title'];
+
+		$user_info[] = '<dd>'.$lang_ul['User group'].': <strong>'.$group_title.'</strong>';
+
 		if ($pun_user['g_id'] < PUN_GUEST)
 			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 

@@ -184,16 +184,18 @@ if(isset($_GET['id'])){
 		$username = '<a href="profile.php?id='.$cur_post['id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		$cur_post['username'] = $cur_post['username'];
 		$user_title = get_title($cur_post);
-		
+
+		$user_banned = $user_title == $lang_common['Banned'];
+
+		$group_title = $cur_post['g_title'];
+
 		if ($pun_config['o_censoring'] == '1')
 			$user_title = censor_words($user_title);
-		
-		$group_title = $cur_post['g_title'];
 
 		// Format the online indicator
 		$is_online = ($cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong>'.$lang_topic['Online'].'</strong>' : $is_online = $lang_topic['Offline'];
 
-		if ($pun_config['o_avatars'] == '1' && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0')
+		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0')
 		{
 			if ($img_size = @getimagesize($pun_config['o_avatars_dir'].'/'.$cur_post['id'].'.gif'))
 				$user_avatar = '<img src="'.$pun_config['o_avatars_dir'].'/'.$cur_post['id'].'.gif" '.$img_size[3].' alt="" />';
@@ -270,7 +272,7 @@ if(isset($_GET['id'])){
 	$cur_post['message'] = parse_message($cur_post['message'], (int)(!$cur_post['smileys']));
 	
 	// Do signature parsing/caching
-	if (isset($cur_post['signature']) && $pun_user['show_sig'] != '0')
+	if (!$user_banned && isset($cur_post['signature']) && $pun_user['show_sig'] != '0')
 	{
 		$signature = parse_signature($cur_post['signature']);
 	}

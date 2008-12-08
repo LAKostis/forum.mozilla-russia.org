@@ -894,8 +894,15 @@ if ($pun_user['id'] != $id &&
 		$email_field = '<a href="misc.php?email='.$id.'">'.$lang_common['Send e-mail'].'</a>';
 	else
 		$email_field = $lang_profile['Private'];
-		
-	$user_title_field = get_title($user);
+
+	$user_title = get_title($user);
+
+	$user_banned = $user_title == $lang_common['Banned'];
+
+	$group_title = $user['g_title'];
+
+	if ($pun_config['o_censoring'] == '1')
+		$user_title = censor_words($user_title);
 
 	if ($user['url'] != '')
 	{
@@ -908,8 +915,6 @@ if ($pun_user['id'] != $id &&
 	}
 	else
 		$url = $lang_profile['Unknown'];
-
-	$group_title = $user['g_title'];
 
 	if ($pun_config['o_avatars'] == '1')
 	{
@@ -951,7 +956,7 @@ if ($pun_user['id'] != $id &&
 							<dt><?php echo $lang_common['Username'] ?>: </dt>
 							<dd><?php echo pun_htmlspecialchars($user['username']) ?></dd>
 							<dt><?php echo $lang_common['Title'] ?>: </dt>
-							<dd><?php echo ($pun_config['o_censoring'] == '1') ? censor_words($user_title_field) : $user_title_field; ?></dd>
+							<dd><?php echo $user_title ?></dd>
 							<dt><?php echo $lang_ul['User group'] ?>: </dt>
 							<dd><?php echo $group_title ?>&nbsp;</dd>
 							<dt><?php echo $lang_profile['Realname'] ?>: </dt>
@@ -988,6 +993,7 @@ if ($pun_user['id'] != $id &&
 					</div>
 				</fieldset>
 			</div>
+<?php if (!$user_banned): ?>
 			<div class="inform">
 				<fieldset>
 				<legend><?php echo $lang_profile['Section personality'] ?></legend>
@@ -1002,6 +1008,7 @@ if ($pun_user['id'] != $id &&
 					</div>
 				</fieldset>
 			</div>
+<?php endif; ?>
 			<div class="inform">
 				<fieldset>
 				<legend><?php echo $lang_profile['User activity'] ?></legend>

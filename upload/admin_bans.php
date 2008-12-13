@@ -282,6 +282,34 @@ else if (isset($_GET['del_ban']))
 }
 
 
+else if (isset($_POST['cleanup_bans']))
+{
+	$username_exists = isset($_POST['ban_username_exists']) ? (int)$_POST['ban_username_exists'] : 0;
+	$email_exists = isset($_POST['ban_email_exists']) ? (int)$_POST['ban_email_exists'] : 0;
+	$never_expires = isset($_POST['ban_never_expires']) ? (int)$_POST['ban_never_expires'] : 1;
+
+	$username_exists = 'u.username' . ($username_exists == 0 ? ' IS NULL' : ' IS NOT NULL');
+	$email_exists = 'u.email' . ($email_exists == 0 ? ' IS NULL' : ' IS NOT NULL');
+	$never_expires = 'b.expire' . ($never_expires == 1 ? ' IS NULL' : ' IS NOT NULL');
+
+	$result = $db->query('SELECT b.id AS id FROM '.$db->prefix.'bans AS b LEFT JOIN '.$db->prefix.'users AS u ON b.username=u.username WHERE ' . $username_exists . ' AND ' . $email_exists . ' AND ' . $never_expires) or error('Unable to delete expired ban', __FILE__, __LINE__, $db->error());
+
+	if ($db->num_rows($result))
+	{
+		$bans = array();
+		while ($cur_ban = $db->fetch_assoc($result))
+		{
+			$bans[] = $cur_ban['id'];
+		}
+
+		$db->query('DELETE FROM '.$db->prefix.'bans WHERE id IN('.join(',', $bans).')') or error('Unable to delete bans', __FILE__, __LINE__, $db->error());
+
+		message(count($bans) . ' bans removed.');
+	}
+	else
+		message('No bans match.');
+}
+
 $page_title = 'Admin | Bans | '.pun_htmlspecialchars($pun_config['o_board_title']);
 $focus_element = array('bans', 'new_ban_user');
 require PUN_ROOT.'header.php';
@@ -361,6 +389,50 @@ else
 ?>
 			</div>
 		</div>
+
+		<h2 class="block2"><span>Bans cleanup</span></h2>
+		<div class="box">
+			<form id="bans2" method="post" action="admin_bans.php">
+				<div class="inform">
+					<fieldset>
+						<legend>Remove old bans</legend>
+						<div class="infldset">
+							<table class="aligntop" cellspacing="0">
+								<tr>
+									<th scope="row">Banned username exists</th>
+									<td>
+										<input type="radio" name="ban_username_exists" value="1"/>&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="ban_username_exists" value="0" checked="checked"/>&nbsp;<strong>No</strong>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Banned email exists</th>
+									<td>
+										<input type="radio" name="ban_email_exists" value="1"/>&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="ban_email_exists" value="0" checked="checked"/>&nbsp;<strong>No</strong>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Ban never expires</th>
+									<td>
+										<input type="radio" name="ban_never_expires" value="1" checked="checked"/>&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="ban_never_expires" value="0"/>&nbsp;<strong>No</strong>
+									</td>
+								</tr>
+
+
+								<tr>
+									<th scope="row"><div><input type="submit" name="cleanup_bans" value=" Remove " tabindex="2" /></div></th>
+									<td>
+										It will delete all matched bans.<br/>
+										Please note that this operation can not be reversed.
+									</td>
+								</tr>
+
+							</table>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+
 	</div>
 	<div class="clearer"></div>
 </div>

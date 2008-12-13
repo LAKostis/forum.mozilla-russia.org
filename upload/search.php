@@ -116,6 +116,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$sort_dir = $temp['sort_dir'];
 			$show_as = $temp['show_as'];
 			$highlight = $temp['highlight'];
+			$search_in = $temp['search_in'];
 
 			unset($temp);
 		}
@@ -430,6 +431,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$temp['sort_dir'] = $sort_dir;
 		$temp['show_as'] = $show_as;
 		$temp['highlight'] = $keywords_array;
+		$temp['search_in'] = $search_in;
 		$temp = serialize($temp);
 		$search_id = mt_rand(1, 2147483647);
 
@@ -561,11 +563,19 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			if ($show_as == 'posts')
 			{
 				$icon = '<div class="icon"><div class="nosize">'.$lang_common['Normal icon'].'</div></div>'."\n";
+
+				$subject_highlight = pun_htmlspecialchars($search_set[$i]['subject']);
+				if (!empty($highlight) && $search_in != 1)
+				{
+					foreach ($highlight as $highword)
+						if ($highword != 'and' && $highword != 'or' && $highword != 'not')
+								$subject_highlight = preg_replace('#('.str_replace('*', '[^\s]+', str_replace('#', '\#', $highword)).')#i', '<span style="background-color: #FFFF00; color: #000000">$1</span>', $subject_highlight);
+				}
+
 				if ($search_set[$i]['question'] == "")
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
+					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.$subject_highlight.'</a>';
 				else
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">
-					<b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
+					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.$subject_highlight.'</a>';
 				if (!$pun_user['is_guest'] && $search_set[$i]['last_post'] > $pun_user['last_visit'])
 					$icon = '<div class="icon inew"><div class="nosize">'.$lang_common['New icon'].'</div></div>'."\n";
 
@@ -574,13 +584,13 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					$search_set[$i]['message'] = censor_words($search_set[$i]['message']);
 
 				$message = $search_set[$i]['message'];
-				if (!empty($highlight))
+				if (!empty($highlight) && $search_in != -1)
 				{
 					foreach ($highlight as $highword)
 						if ($highword != 'and' && $highword != 'or' && $highword != 'not')
 								$message = preg_replace('#('.str_replace('*', '[^\s]+', str_replace('#', '\#', $highword)).')#i', '[h]$1[/h]', $message);
 				}
-				$message = parse_message(pun_htmlspecialchars($message), 1);
+				$message = parse_message($message, 1);
 				$pposter = pun_htmlspecialchars($search_set[$i]['pposter']);
 
 				if ($search_set[$i]['poster_id'] > 1)

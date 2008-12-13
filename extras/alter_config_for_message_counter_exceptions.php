@@ -33,4 +33,7 @@ $result = $db->query('INSERT INTO '.$db->prefix.'config VALUES("o_message_counte
 
 echo ($result) ? 'done' : 'falied';
 
+require PUN_ROOT.'include/cache.php';
+generate_config_cache();
+
 ?>

@@ -35,4 +35,7 @@ $result2 = $db->query('INSERT INTO '.$db->prefix.'config VALUES("o_rannouncement
 echo ($result) ? 'done' : 'falied';
 echo ($result2) ? 'done' : 'falied';
 
+require PUN_ROOT.'include/cache.php';
+generate_config_cache();
+
 ?>

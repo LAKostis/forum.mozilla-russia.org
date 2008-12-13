@@ -223,7 +223,7 @@ if(isset($_GET['id'])){
 			$user_info[] = '<dd>'.$lang_common['Registered'].': '.date($pun_config['o_date_format'], $cur_post['registered']);
 
 			if ($pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST)
-				$user_info[] = '<dd>'.$lang_common['Posts'].': '.$cur_post['num_posts'];
+				$user_info[] = '<dd>'.$lang_common['Posts'].': <a href="search.php?action=show_user&amp;user_id='.$cur_post['poster_id'].'">'.$cur_post['num_posts'].'</a>';
 
 			// Now let's deal with the contact links (E-mail and URL)
 			if (($cur_post['email_setting'] == '0' && !$pun_user['is_guest']) || $pun_user['g_id'] < PUN_GUEST)

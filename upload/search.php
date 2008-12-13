@@ -577,8 +577,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if (!empty($highlight))
 				{
 					foreach ($highlight as $highword)
-				  		if ($highword != 'and' && $highword != 'or' && $highword != 'not')
-				    			$message = preg_replace('#('.str_replace('*', '[^\s]+', $highword).')#i', '[h]$1[/h]', $message);
+						if ($highword != 'and' && $highword != 'or' && $highword != 'not')
+								$message = preg_replace('#('.str_replace('*', '[^\s]+', str_replace('#', '\#', $highword)).')#i', '[h]$1[/h]', $message);
 				}
 				$message = parse_message(pun_htmlspecialchars($message), 1);
 				$pposter = pun_htmlspecialchars($search_set[$i]['pposter']);
@@ -645,7 +645,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					$item_status = 'iclosed';
 				}
 
-            	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
+				// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 				if (!$pun_user['is_guest'] && topic_is_new($search_set[$i]['tid'], $search_set[$i]['forum_id'],  $search_set[$i]['last_post']))
 				{
 					$icon_text .= ' '.$lang_common['New icon'];
@@ -766,7 +766,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 		{
 			echo "\t\t\t\t\t\t\t".'<option value="'.$categories[0].'">'.$categories[1].'</option>'."\n".$categories[2];
 			$categories = array ('', '', '');
-    }
+	}
 
 		$categories[1] = pun_htmlspecialchars($cur_forum['cat_name']);
 		$cur_category = $cur_forum['cid'];

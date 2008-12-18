@@ -96,10 +96,6 @@ div.txtarea{width:100%}
 div.txtarea textarea,input.longinput{width:100%;max-width:100%}
 .pun label{display:block}
 #qjump select{width:50%}
-/* BUTTONS - tnx to vladimir */
-p input{font:normal 12px verdana,arial,helvetica,sans serif;color:#333;background:#ddd;border:1px solid #777}
-#qjump input{font:normal 13px verdana,arial,helvetica,sans serif;color:#333;background:#ddd;border:1px solid #777}
-/* 10. HELP FILES AND MISC. */
 /* 10.1 Put some space between sections of the help file */
 #helpfile h2{margin-top:12px}
 /* 10.2 Internal padding */

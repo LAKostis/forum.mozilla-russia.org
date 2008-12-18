@@ -40,6 +40,8 @@ require PUN_ROOT.'include/functions.php';
 // Reverse the effect of register_globals
 unregister_globals();
 
+// Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
+error_reporting(E_ALL ^ E_NOTICE);
 
 @include PUN_ROOT.'config.php';
 
@@ -51,9 +53,6 @@ if (!defined('PUN'))
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
 $pun_start = ((float)$usec + (float)$sec);
-
-// Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
-error_reporting(E_ALL ^ E_NOTICE);
 
 // Turn off magic_quotes_runtime
 set_magic_quotes_runtime(0);

@@ -29,11 +29,9 @@ $lang_common = array(
 
 // Text orientation and encoding
 'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
-//'lang_encoding'			=>	'iso-8859-1',
-'lang_encoding'                       =>      'utf-8',
-//'lang_multibyte'		=>	false,
-'lang_multibyte'              =>      true,
-'db_lang_encoding'              =>      'utf8',
+'lang_encoding'			=>	'utf-8',
+'lang_multibyte'		=>	true,
+'db_lang_encoding'		=>	'utf8',
 
 // Notices
 'Bad request'			=>	'Bad request. The link you followed is incorrect or outdated.',
@@ -54,6 +52,7 @@ $lang_common = array(
 'Options'				=>	'Options',
 'Actions'				=>	'Actions',
 'Submit'				=>	'Submit',	// "name" of submit buttons
+'Preview'				=>	'Preview',	// submit button to preview message
 'Ban message'			=>	'You are banned from this forum.',
 'Ban message 2'			=>	'The ban expires at the end of',
 'Ban message 3'			=>	'The administrator or moderator that banned you left the following message:',
@@ -118,11 +117,11 @@ $lang_common = array(
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Index',
 'User list'				=>	'User list',
-'Rules'					=>  'Rules',
-'Search'				=>  'Search',
-'Register'				=>  'Register',
-'Login'					=>  'Login',
-'Not logged in'			=>  'You are not logged in.',
+'Rules'					=>	'Rules',
+'Search'				=>	'Search',
+'Register'				=>	'Register',
+'Login'					=>	'Login',
+'Not logged in'			=>	'You are not logged in.',
 'Profile'				=>	'Profile',
 'Logout'				=>	'Logout',
 'Logged in as'			=>	'Logged in as',
@@ -132,7 +131,7 @@ $lang_common = array(
 'Mark all as read'		=>	'Mark all topics as read',
 'Link separator'		=>	'',	// The text that separates links in the navigator
 'Mark forum as read'	=>	'Mark this forum as read', // MOD: MARK TOPICS AS READ
-'New reports'			=> 'There are new reports',
+'New reports'			=>	'There are new reports',
 
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',
@@ -141,14 +140,14 @@ $lang_common = array(
 'Show unanswered posts'	=>	'Show unanswered posts',
 'Show your posts'		=>	'Show your posts',
 'Show subscriptions'	=>	'Show your subscribed topics',
-'Show active posts'	=> 'Show most active topics',
+'Show active posts'		=>	'Show most active topics',
 'Jump to'				=>	'Jump to',
 'Go'					=>	' Go ',		// submit button in forum jump
-'Move topic'			=>  'Move topic',
-'Open topic'			=>  'Open topic',
-'Close topic'			=>  'Close topic',
-'Unstick topic'			=>  'Unstick topic',
-'Stick topic'			=>  'Stick topic',
+'Move topic'			=>	'Move topic',
+'Open topic'			=>	'Open topic',
+'Close topic'			=>	'Close topic',
+'Unstick topic'			=>	'Unstick topic',
+'Stick topic'			=>	'Stick topic',
 'Moderate forum'		=>	'Moderate forum',
 'Delete posts'			=>	'Moderate posts',
 'Debug table'			=>	'Debug information',
@@ -156,13 +155,14 @@ $lang_common = array(
 // For extern.php RSS feed
 'RSS Desc Active'		=>	'The most recently active topics at',	// board_title will be appended to this string
 'RSS Desc New'			=>	'The newest topics at',					// board_title will be appended to this string
-'RSS Desc Messages'  => 'The new messages at',
-'RSS Site News'		=> 'The news at',
+'RSS Desc Messages'		=>	'The new messages at',
+'RSS Site News'			=>	'The news at',
 'Posted'				=>	'Posted',	// The date/time a topic was started
 'Comments'				=>	'Comments',	// The reply count for topic
 // MOD Printable topic version string
-'Print version'                 =>      'Printable version',
+'Print version'			=>	'Printable version',
 
-'Show More' => 'More »',
-'Show Less' => '« Less'
+'Show More'				=>	'More »',
+'Show Less'				=>	'« Less'
+
 );

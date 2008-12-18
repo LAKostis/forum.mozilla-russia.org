@@ -1,6 +1,5 @@
 <?php
 
-
 // Determine what locale to use
 switch (PHP_OS)
 {
@@ -22,7 +21,7 @@ switch (PHP_OS)
 
 // Attempt to set the locale
 setlocale(LC_CTYPE, $locale);
-// hcs merge update
+// hcs merge posts update
 setlocale(LC_TIME, $locale);
 
 // Language definitions for frequently used strings
@@ -53,6 +52,7 @@ $lang_common = array(
 'Options'				=>	'Параметры',
 'Actions'				=>	'Действия',
 'Submit'				=>	'Отправить',	// "name" of submit buttons
+'Preview'				=>	'Предварительный просмотр',	// submit button to preview message
 'Ban message'			=>	'На этом форуме Вы находитесь в чёрном списке (забанены).',
 'Ban message 2'			=>	'Действие Вашего бана истекает',
 'Ban message 3'			=>	'Забанивший Вас администратор или модератор оставил следующее сообщение:',
@@ -117,11 +117,11 @@ $lang_common = array(
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Форумы',
 'User list'				=>	'Пользователи',
-'Rules'					=>  'Правила',
-'Search'				=>  'Поиск',
-'Register'				=>  'Регистрация',
-'Login'					=>  'Зайти',
-'Not logged in'			=>  'Вы не зашли.',
+'Rules'					=>	'Правила',
+'Search'				=>	'Поиск',
+'Register'				=>	'Регистрация',
+'Login'					=>	'Зайти',
+'Not logged in'			=>	'Вы не зашли.',
 'Profile'				=>	'Профиль',
 'Logout'				=>	'Выйти',
 'Logged in as'			=>	'Вы зашли как',
@@ -130,8 +130,8 @@ $lang_common = array(
 'Show new posts'		=>	'Показать новые сообщения, с момента Вашего последнего визита',
 'Mark all as read'		=>	'Пометить все форумы как прочитанные',
 'Link separator'		=>	'',	// The text that separates links in the navigator
-'Mark forum as read'	=> 	'Пометить форум как прочитанный', // MOD: MARK TOPICS AS READ
-'New reports'			=> 'Есть новые жалобы',
+'Mark forum as read'	=>	'Пометить форум как прочитанный', // MOD: MARK TOPICS AS READ
+'New reports'			=>	'Есть новые жалобы',
 
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',
@@ -140,14 +140,14 @@ $lang_common = array(
 'Show unanswered posts'	=>	'Показать сообщения, не имеющие ответов',
 'Show your posts'		=>	'Показать Ваши сообщения',
 'Show subscriptions'	=>	'Показать темы, на которые Вы подписаны',
-'Show active posts'	=> 'Показать наиболее обсуждаемые темы',
+'Show active posts'		=>	'Показать наиболее обсуждаемые темы',
 'Jump to'				=>	'Перейти',
 'Go'					=>	' Перейти ',		// submit button in forum jump
-'Move topic'			=>  'Перенести тему',
-'Open topic'			=>  'Открыть тему',
-'Close topic'			=>  'Закрыть тему',
-'Unstick topic'			=>  'Открепить тему',
-'Stick topic'			=>  'Прикрепить тему',
+'Move topic'			=>	'Перенести тему',
+'Open topic'			=>	'Открыть тему',
+'Close topic'			=>	'Закрыть тему',
+'Unstick topic'			=>	'Открепить тему',
+'Stick topic'			=>	'Прикрепить тему',
 'Moderate forum'		=>	'Модерировать форум',
 'Delete posts'			=>	'Модерировать сообщения',
 'Debug table'			=>	'Отладочная информация',
@@ -155,13 +155,14 @@ $lang_common = array(
 // For extern.php RSS feed
 'RSS Desc Active'		=>	'Наиболее активные обсуждения на',	// board_title will be appended to this string
 'RSS Desc New'			=>	'Новые темы на',					// board_title will be appended to this string
-'RSS Desc Messages'  => 'Новые сообщения на',
-'RSS Site News'		=> 'Новости на', 
+'RSS Desc Messages'		=>	'Новые сообщения на',
+'RSS Site News'			=>	'Новости на',
 'Posted'				=>	'Размещено',	// The date/time a topic was started
 'Comments'				=>	'Комментарии',
 // MOD Printable topic version string
-'Print version'                 =>      'Версия для печати',
+'Print version'			=>	'Версия для печати',
 
-'Show More' => 'Больше »',
-'Show Less' => '« Меньше'
+'Show More'				=>	'Больше »',
+'Show Less'				=>	'« Меньше'
+
 );

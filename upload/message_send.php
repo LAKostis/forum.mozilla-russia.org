@@ -226,12 +226,9 @@ else
 	}
 
 	$action = $lang_pms['Send a message'];
-	$form = '<form method="post" id="post" action="message_send.php?action=send" onsubmit="return process_form(this)">';
 
 	$page_title = pun_htmlspecialchars($action).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$form_name = 'post';
 
-	$cur_index = 1;
 	if (!isset($username))
 		$username = '';
 	if (!isset($quote))
@@ -246,7 +243,7 @@ else
 <div class="blockform">
 	<h2><span><?php echo $action ?></span></h2>
 	<div class="box">
-	<?php echo $form."\n" ?>
+	<form method="post" id="post" action="message_send.php?action=send" onsubmit="return process_form(this)">
 		<div class="inform">
 		<fieldset>
 			<legend><?php echo $lang_common['Write message legend'] ?></legend>
@@ -255,12 +252,12 @@ else
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_GET['tid']) ? intval($_GET['tid']) : '' ?>" />
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_POST['from_profile']) ? $_POST['from_profile'] : '' ?>" />
 				<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
-				<label class="conl"><strong><?php echo $lang_pms['Send to'] ?></strong><br /><?php echo '<input type="text" name="req_username" size="25" maxlength="25" value="'.pun_htmlspecialchars($username).'" tabindex="'.($cur_index++).'" />'; ?><br /></label>
+				<label class="conl"><strong><?php echo $lang_pms['Send to'] ?></strong><br /><input type="text" name="req_username" size="25" maxlength="25" value="<?php echo pun_htmlspecialchars($username) ?>" tabindex="2" /><br /></label>
 				<div class="clearer"></div>
-				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type='text' name='req_subject' value='<?php echo $subject ?>' size="80" maxlength="70" tabindex='<?php echo $cur_index++ ?>' /><br /></label>
+				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php echo $subject ?>" size="80" maxlength="70" tabindex="3" /><br /></label>
 				<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
 				<label><strong><?php echo $lang_common['Message'] ?></strong><br />
-				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" tabindex="<?php echo $cur_index++ ?>"><?php echo $quote ?></textarea><br /></label>
+				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" tabindex="4"><?php echo $quote ?></textarea><br /></label>
 				<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
 				<ul class="bblinks">
 					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
@@ -273,9 +270,9 @@ else
 	$checkboxes = array();
 
 	if ($pun_config['o_smilies'] == '1')
-		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];
+		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="5"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];
 
-	$checkboxes[] = '<label><input type="checkbox" name="savemessage" value="1" tabindex="'.($cur_index++).'" checked="checked" />'.$lang_pms['Save message'];
+	$checkboxes[] = '<label><input type="checkbox" name="savemessage" value="1" tabindex="6" checked="checked" />'.$lang_pms['Save message'];
 
 	if (!empty($checkboxes))
 	{
@@ -295,7 +292,7 @@ else
 ?>
 			</div>
 			<!-- MOD AJAX post preview -->
-			<p><input type="submit" name="submit" value="<?php echo $lang_pms['Send'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="<?php echo  $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<p><input type="submit" name="submit" value="<?php echo $lang_pms['Send'] ?>" tabindex="7" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="8" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 			<!--// MOD AJAX post preview -->
 		</form>
 	</div>

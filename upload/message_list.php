@@ -26,6 +26,7 @@
 
 define('PUN_ROOT', './');
 
+require PUN_ROOT.'post.common.php';
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/parser.php';
 
@@ -37,6 +38,7 @@ if ($pun_user['is_guest'])
 
 // Load the message.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
+require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/userlist.php';
@@ -147,6 +149,8 @@ $p = (!isset($_GET['p']) || intval($_GET['p']) <= 1 || intval($_GET['p']) > $num
 $start_from = $pun_config['o_pms_mess_per_page'] * ($p - 1);
 $limit = $start_from.','.$pun_config['o_pms_mess_per_page'];
 
+$quickpost = $pun_config['o_quickpost'] == '1';
+
 require PUN_ROOT.'header.php';
 ?>
 
@@ -154,12 +158,12 @@ require PUN_ROOT.'header.php';
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
 		<p class="postlink conr"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
-		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo $lang_pms['Private Messages']." - ".$page_name ?></li></ul>
+		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="message_list.php"><?php echo $lang_pms['Private Messages'].'</a>&nbsp;</li><li>&raquo;&nbsp;'.$page_name ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
 
-<form id="post" method="post" action="message_list.php">
+<form id="actions" method="actions" action="message_list.php">
 <div id="vf" class="blocktable">
 	<h2><span><?php echo $name ?></span></h2>
 	<div class="box">
@@ -196,6 +200,8 @@ $result = $db->query('SELECT * FROM '.$db->prefix.'messages WHERE owner='.$pun_u
 $new_messages = false;
 $messages_exist = false;
 
+$post_link = $subject_reply = $user_reply = null;
+
 // If there are messages in this folder.
 if ($db->num_rows($result))
 {
@@ -212,10 +218,16 @@ if ($db->num_rows($result))
 
 		($new_messages == false && $cur_mess['showed'] == '0') ? $new_messages = true : null;
 
-		$subject = '<a href="message_list.php?id='.$cur_mess['id'].'&amp;p='.$p.'&amp;box='.(int)$box.'">'.pun_htmlspecialchars($cur_mess['subject']).'</a>';
-		if (isset($_GET['id']))
+		$subject_link = 'message_list.php?id='.$cur_mess['id'].'&amp;p='.$p.'&amp;box='.(int)$box;
+		$subject = '<a href="'.$subject_link.'">'.pun_htmlspecialchars($cur_mess['subject']).'</a>';
+		if (!$post_link && isset($_GET['id']))
 			if($cur_mess['id'] == $_GET['id'])
+			{
 				$subject = "<strong>$subject</strong>";
+				$post_link = $subject_link;
+				$subject_reply = pun_increment_pm(pun_htmlspecialchars($cur_mess['subject']));
+				$user_reply = pun_htmlspecialchars($cur_mess['sender']);
+			}
 
 ?>
 	<tr>
@@ -273,7 +285,10 @@ if(isset($_GET['id'])){
 
 	if ($cur_post['id'] > 0)
 	{
-		$username = '<a href="profile.php?id='.$cur_post['id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
+		if (!$quickpost)
+			$username = '<a href="profile.php?id='.$cur_post['id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
+		else
+			$username = '<a href="profile.php?id='.$cur_post['id'].'" onclick="pasteN();return false;" onmouseover="copyQ(this, true);">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		$cur_post['username'] = $cur_post['username'];
 		$user_title = get_title($cur_post);
 
@@ -315,7 +330,7 @@ if(isset($_GET['id'])){
 			$user_info[] = '<dd>'.$lang_common['Registered'].': '.date($pun_config['o_date_format'], $cur_post['registered']);
 
 			if ($pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST)
-				$user_info[] = '<dd>'.$lang_common['Posts'].': <a href="search.php?action=show_user&amp;user_id='.$cur_post['poster_id'].'">'.$cur_post['num_posts'].'</a>';
+				$user_info[] = '<dd>'.$lang_common['Posts'].': <a href="search.php?action=show_user&amp;user_id='.$cur_post['id'].'">'.$cur_post['num_posts'].'</a>';
 
 			// Now let's deal with the contact links (E-mail and URL)
 			if (($cur_post['email_setting'] == '0' && !$pun_user['is_guest']) || $pun_user['g_id'] < PUN_GUEST)
@@ -336,13 +351,13 @@ if(isset($_GET['id'])){
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
 		}
 		// Generation post action array (reply, delete etc.)
-		if(!$status)
-			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;reply='.$cur_post['mid'].'">'.$lang_pms['Reply'].'</a>';
-
 		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['mid'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'">'.$lang_pms['Delete'].'</a>';
 
 		if(!$status)
-			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'">'.$lang_pms['Quote'].'</a>';
+			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'">'.$lang_pms['Reply'].'</a>';
+
+		if(!$status)
+			$post_actions[] = '<li onmouseover="copyQ(this, false, true);"><a href="'.$post_link.'" onclick="pasteQ();return false;">'.$lang_pms['Quote'].'</a>';
 
 	}
 	// If the sender has been deleted
@@ -373,7 +388,7 @@ if(isset($_GET['id'])){
 
 
 <div id="p<?php echo $cur_post['id'] ?>" class="blockpost row_odd firstpost">
-	<h2><span><?php echo format_time($cur_post['posted']) ?></span></h2>
+	<h2><span><a href="<?php echo $post_link ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -420,11 +435,105 @@ else
 <?php
 }
 ?>
-		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo $lang_pms['Private Messages']." - ".$page_name; ?></li></ul>
+		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="message_list.php"><?php echo $lang_pms['Private Messages'].'</a>&nbsp;</li><li>&raquo;&nbsp;'.$page_name; ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
 </form>
+
+
+
+
+
+
+
+<?php
+
+	// Display quick post if enabled
+	if (isset($_GET['id']) && $quickpost)
+	{
+
+?>
+<!-- MOD AJAX post preview -->
+<div id="ajaxpostpreview"></div>
+<!--// MOD AJAX post preview -->
+<div class="blockform">
+	<h2><span><?php echo $lang_pms['Send a message'] ?></span></h2>
+	<div class="box">
+	<form method="post" id="post" action="message_send.php?action=send" onsubmit="return process_form(this)">
+		<div class="inform">
+		<fieldset>
+			<legend><?php echo $lang_common['Write message legend'] ?></legend>
+			<div class="infldset txtarea">
+				<input type="hidden" name="form_sent" value="1" />
+				<input type="hidden" name="topic_redirect" value="<?php echo isset($_GET['tid']) ? intval($_GET['tid']) : '' ?>" />
+				<input type="hidden" name="topic_redirect" value="<?php echo isset($_POST['from_profile']) ? $_POST['from_profile'] : '' ?>" />
+				<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
+				<label class="conl"><strong><?php echo $lang_pms['Send to'] ?></strong><br /><input type="text" name="req_username" size="25" maxlength="25" value="<?php echo $user_reply ?>" tabindex="2" /><br /></label>
+				<div class="clearer"></div>
+				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php echo $subject_reply ?>" size="80" maxlength="70" tabindex="3" /><br /></label>
+				<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
+				<label><strong><?php echo $lang_common['Message'] ?></strong><br />
+				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" tabindex="4"></textarea><br /></label>
+				<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
+				<ul class="bblinks">
+					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+				</ul>
+			</div>
+		</fieldset>
+<?php
+	$checkboxes = array();
+
+	if ($pun_config['o_smilies'] == '1')
+		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="5"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];
+
+	$checkboxes[] = '<label><input type="checkbox" name="savemessage" value="1" tabindex="6" checked="checked" />'.$lang_pms['Save message'];
+
+	if (!empty($checkboxes))
+	{
+?>
+			</div>
+			<div class="inform">
+				<fieldset>
+					<legend><?php echo $lang_common['Options'] ?></legend>
+					<div class="infldset">
+						<div class="rbox">
+							<?php echo implode('<br /></label>'."\n\t\t\t\t", $checkboxes).'<br /></label>'."\n" ?>
+						</div>
+					</div>
+				</fieldset>
+<?php
+	}
+?>
+			</div>
+			<!-- MOD AJAX post preview -->
+			<p><input type="submit" name="submit" value="<?php echo $lang_pms['Send'] ?>" tabindex="7" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="8" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<!--// MOD AJAX post preview -->
+		</form>
+	</div>
+</div>
+<?php
+
+	}
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php
 if(isset($_GET['id'])){
 	$forum_id = $id;

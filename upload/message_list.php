@@ -65,9 +65,9 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 		if( isset($_POST['deleteall']) )
 			$db->query('DELETE FROM '.$db->prefix.'messages WHERE owner=\''.$pun_user['id'].'\'') or error('Unable to delete messages.', __FILE__, __LINE__, $db->error());
 		else
-		// Delete messages 
+		// Delete messages
 		$db->query('DELETE FROM '.$db->prefix.'messages WHERE id IN('.$_POST['messages'].') AND owner=\''.$pun_user['id'].'\'') or error('Unable to delete messages.', __FILE__, __LINE__, $db->error());
-		
+
 		redirect('message_list.php?box='.$_POST['box'], $lang_pms['Deleted redirect']);
 	}
 	else
@@ -97,7 +97,7 @@ if( isset($_POST['delete_messages']) || isset($_POST['delete_messages_comply']) 
 		require PUN_ROOT.'footer.php';
 	}
 }
-else 
+else
 {
 	// Delete all messages
 	if (isset($_GET['action']) && $_GET['action'] == 'deleteall')
@@ -125,7 +125,7 @@ else
 	<?php
 			require PUN_ROOT.'footer.php';
 	}
-	
+
 	// Mark all messages as read
 	if (isset($_GET['action']) && $_GET['action'] == 'markall')
 	{
@@ -159,10 +159,102 @@ require PUN_ROOT.'header.php';
 	</div>
 </div>
 
+<form id="post" method="post" action="message_list.php">
+<div id="vf" class="blocktable">
+	<h2><span><?php echo $name ?></span></h2>
+	<div class="box">
+		<div class="inbox">
+			<table cellspacing="0">
+			<thead>
+				<tr>
+<?php
+		if($pun_config['o_pms_messages'] != 0 && $pun_user['g_id'] > PUN_GUEST){
+			// Get total message count
+			$result = $db->query('SELECT count(*) FROM '.$db->prefix.'messages WHERE owner='.$pun_user['id']) or error('Unable to count messages', __FILE__, __LINE__, $db->error());
+			list($tot_messages) = $db->fetch_row($result);
+			$proc = ceil($tot_messages / $pun_config['o_pms_messages'] * 100);
+			$status = ' - '.$lang_pms['Status'].' '.$proc.'%';
+		}
+		else
+			$status = '';
+?>
+					<th class="tcl"><?php echo $lang_pms['Subject'] ?><?php echo $status ?></th>
+					<th><?php if($box == 0) echo $lang_pms['Sender']; else echo $lang_pms['Receiver']; ?></th>
+					<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
+					<th <?php if(isset($_GET['action']) && $_GET['action'] != 'multidelete') { ?> class="tcr"<?php }?>><?php echo $lang_pms['Date'] ?></th>
+						<th><input type=checkbox onclick="ToggleAll(checked)"></th>
+					<?php } else { ?>
+					<th class="tcr"><?php echo $lang_pms['Date'] ?></th>
+					<?php } ?>
+				</tr>
+			</thead>
+			<tbody>
+<?php
+
+// Fetch messages
+$result = $db->query('SELECT * FROM '.$db->prefix.'messages WHERE owner='.$pun_user['id'].' AND status='.$box.' ORDER BY posted DESC LIMIT '.$limit) or error('Unable to fetch messages list for forum', __FILE__, __LINE__, $db->error());
+$new_messages = false;
+$messages_exist = false;
+
+// If there are messages in this folder.
+if ($db->num_rows($result))
+{
+	$messages_exist = true;
+	while ($cur_mess = $db->fetch_assoc($result))
+	{
+		$icon_text = $lang_common['Normal icon'];
+		$icon_type = 'icon';
+		if ($cur_mess['showed'] == '0')
+		{
+			$icon_text .= ' '.$lang_common['New icon'];
+			$icon_type = 'icon inew';
+		}
+
+		($new_messages == false && $cur_mess['showed'] == '0') ? $new_messages = true : null;
+
+		$subject = '<a href="message_list.php?id='.$cur_mess['id'].'&amp;p='.$p.'&amp;box='.(int)$box.'">'.pun_htmlspecialchars($cur_mess['subject']).'</a>';
+		if (isset($_GET['id']))
+			if($cur_mess['id'] == $_GET['id'])
+				$subject = "<strong>$subject</strong>";
+
+?>
+	<tr>
+
+		<td class="tcl">
+			<div class="intd">
+				<div class="<?php echo $icon_type ?>"><div class="nosize"><?php echo trim($icon_text) ?></div></div>
+				<div class="tclcon">
+					<?php echo $subject."\n" ?>
+				</div>
+			</div>
+		</td>
+		<td class="tc2" style="white-space: nowrap; OVERFLOW: hidden"><a href="profile.php?id=<?php echo $cur_mess['sender_id'] ?>"><?php echo $cur_mess['sender'] ?></a></td>
+<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
+		<td style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
+		<td style="text-align: center"><input type="checkbox" name="delete_messages[]" value="<?php echo $cur_mess['id']; ?>"></td>
+<?php } else { ?>
+		<td class="tcr" style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
+<?php } ?>
+	</tr>
+<?php
+
+	}
+}
+else
+{
+	$cols = isset($_GET['action']) ? '4' : '3';
+	echo "\t".'<tr><td class="puncon1" colspan="'.$cols.'">'.$lang_pms['No messages'].'</td></tr>'."\n";
+}
+?>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 <?php
 //Are we viewing a PM?
 if(isset($_GET['id'])){
-	//Yes! Lets get the details	
+	//Yes! Lets get the details
 	$id = intval($_GET['id']);
 
 	// Set user
@@ -172,7 +264,7 @@ if(isset($_GET['id'])){
 
 	$result = $db->query('SELECT m.id AS mid,m.subject,m.sender_ip,m.message,m.smileys,m.posted,m.showed,u.id,u.group_id as g_id,g.g_user_title,g.g_title,u.username,u.registered,u.email,u.title,u.url,u.icq,u.msn,u.aim,u.yahoo,u.location,u.use_avatar,u.email_setting,u.num_posts,u.admin_note,u.signature,u.show_online,o.user_id AS is_online FROM '.$db->prefix.'messages AS m,'.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.idle=0) LEFT JOIN '.$db->prefix.'groups AS g ON u.group_id = g.g_id WHERE '.$where.' AND m.id='.$id) or error('Unable to fetch message and user info', __FILE__, __LINE__, $db->error());
 	$cur_post = $db->fetch_assoc($result);
-	
+
 	if ($owner != $pun_user['id'])
 		message($lang_common['No permission']);
 
@@ -234,7 +326,7 @@ if(isset($_GET['id'])){
 			if ($cur_post['url'] != '')
 				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
 		}
-		
+
 		//Moderator and Admin stuff
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{
@@ -246,9 +338,9 @@ if(isset($_GET['id'])){
 		// Generation post action array (reply, delete etc.)
 		if(!$status)
 			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;reply='.$cur_post['mid'].'">'.$lang_pms['Reply'].'</a>';
-	
+
 		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['mid'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'">'.$lang_pms['Delete'].'</a>';
-	
+
 		if(!$status)
 			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'">'.$lang_pms['Quote'].'</a>';
 
@@ -263,21 +355,22 @@ if(isset($_GET['id'])){
 		$user_title = "Deleted User";
 
 		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['id'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'">'.$lang_pms['Delete'].'</a>';
-		
+
 		$is_online = $lang_topic['Offline'];
 	}
-	
+
 	// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 	$cur_post['smileys'] = isset($cur_post['smileys']) ? $cur_post['smileys'] : $pun_user['show_smilies'];
 	$cur_post['message'] = parse_message($cur_post['message'], (int)(!$cur_post['smileys']));
-	
+
 	// Do signature parsing/caching
 	if (!$user_banned && isset($cur_post['signature']) && $pun_user['show_sig'] != '0')
 	{
 		$signature = parse_signature($cur_post['signature']);
 	}
-	
+
 ?>
+
 
 <div id="p<?php echo $cur_post['id'] ?>" class="blockpost row_odd firstpost">
 	<h2><span><?php echo format_time($cur_post['posted']) ?></span></h2>
@@ -305,102 +398,10 @@ if(isset($_GET['id'])){
 	</div>
 </div>
 <div class="clearer"></div>
-<?php	
+<?php
 }
 
 ?>
-<form id="post" method="post" action="message_list.php">
-<div id="vf" class="blocktable">
-	<h2><span><?php echo $name ?></span></h2>
-	<div class="box">
-		<div class="inbox">
-			<table cellspacing="0">
-			<thead>
-				<tr>
-<?php
-		if($pun_config['o_pms_messages'] != 0 && $pun_user['g_id'] > PUN_GUEST){
-			// Get total message count
-			$result = $db->query('SELECT count(*) FROM '.$db->prefix.'messages WHERE owner='.$pun_user['id']) or error('Unable to count messages', __FILE__, __LINE__, $db->error());
-			list($tot_messages) = $db->fetch_row($result);
-			$proc = ceil($tot_messages / $pun_config['o_pms_messages'] * 100);
-			$status = ' - '.$lang_pms['Status'].' '.$proc.'%';
-		}
-		else 
-			$status = '';
-?>
-					<th class="tcl"><?php echo $lang_pms['Subject'] ?><?php echo $status ?></th>
-					<th><?php if($box == 0) echo $lang_pms['Sender']; else echo $lang_pms['Receiver']; ?></th>
-					<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
-					<th <?php if(isset($_GET['action']) && $_GET['action'] != 'multidelete') { ?> class="tcr"<?php }?>><?php echo $lang_pms['Date'] ?></th>
-						<th><input type=checkbox onclick="ToggleAll(checked)"></th>
-					<?php } else { ?>
-					<th class="tcr"><?php echo $lang_pms['Date'] ?></th>
-					<?php } ?>
-				</tr>
-			</thead>
-			<tbody>
-<?php
-
-// Fetch messages
-$result = $db->query('SELECT * FROM '.$db->prefix.'messages WHERE owner='.$pun_user['id'].' AND status='.$box.' ORDER BY posted DESC LIMIT '.$limit) or error('Unable to fetch messages list for forum', __FILE__, __LINE__, $db->error());
-$new_messages = false;
-$messages_exist = false;
-
-// If there are messages in this folder.
-if ($db->num_rows($result))
-{
-	$messages_exist = true;
-	while ($cur_mess = $db->fetch_assoc($result))
-	{
-		$icon_text = $lang_common['Normal icon'];
-		$icon_type = 'icon';
-		if ($cur_mess['showed'] == '0')
-		{
-			$icon_text .= ' '.$lang_common['New icon'];
-			$icon_type = 'icon inew';
-		}
-
-		($new_messages == false && $cur_mess['showed'] == '0') ? $new_messages = true : null;
-			
-		$subject = '<a href="message_list.php?id='.$cur_mess['id'].'&amp;p='.$p.'&amp;box='.(int)$box.'">'.pun_htmlspecialchars($cur_mess['subject']).'</a>';
-		if (isset($_GET['id']))
-			if($cur_mess['id'] == $_GET['id'])
-				$subject = "<strong>$subject</strong>";
-
-?>
-	<tr>
-
-		<td class="tcl">
-			<div class="intd">
-				<div class="<?php echo $icon_type ?>"><div class="nosize"><?php echo trim($icon_text) ?></div></div>
-				<div class="tclcon">
-					<?php echo $subject."\n" ?>
-				</div>
-			</div>
-		</td>
-		<td class="tc2" style="white-space: nowrap; OVERFLOW: hidden"><a href="profile.php?id=<?php echo $cur_mess['sender_id'] ?>"><?php echo $cur_mess['sender'] ?></a></td>
-<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
-		<td style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
-		<td style="text-align: center"><input type="checkbox" name="delete_messages[]" value="<?php echo $cur_mess['id']; ?>"></td>
-<?php } else { ?>
-		<td class="tcr" style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
-<?php } ?>
-	</tr>
-<?php
-
-	}
-}
-else
-{
-	$cols = isset($_GET['action']) ? '4' : '3';
-	echo "\t".'<tr><td class="puncon1" colspan="'.$cols.'">'.$lang_pms['No messages'].'</td></tr>'."\n";
-}
-?>
-			</tbody>
-			</table>
-		</div>
-	</div>
-</div>
 
 <div class="postlinksb">
 	<div class="inbox">

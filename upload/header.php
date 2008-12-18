@@ -55,7 +55,7 @@ while (preg_match('#<pun_include "([^/\\\\]*?)\.(php[45]?|inc|html?|txt)">#', $t
 	include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
 	$tpl_temp = ob_get_contents();
 	$tpl_main = str_replace($cur_include[0], $tpl_temp, $tpl_main);
-    ob_end_clean();
+	ob_end_clean();
 }
 // END SUBST - <pun_include "*">
 
@@ -109,14 +109,13 @@ if (defined('PUN_WIKI')) {
 else {
 ?>
 <title><?php echo $page_title ?></title>
-
 <?php // MOD AJAX post preview
 	if(isset($xajax))
 	{
 		$xajax->printJavascript();
 	}
 ?>
-
+<script type="text/javascript" src="scripts.js?0"></script>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 }
@@ -166,8 +165,6 @@ function process_form(the_form)
 <?php
 
 }
-
-echo '<script type="text/javascript" src="scripts.js?0"></script>';
 
 $tpl_temp = trim(ob_get_contents());
 $tpl_main = str_replace('<pun_head>', $tpl_temp, $tpl_main);
@@ -231,8 +228,8 @@ else
 	if (in_array(basename($_SERVER['PHP_SELF']), array('index.php', 'search.php')))
 		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markread">'.$lang_common['Mark all as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	// MOD: MARK TOPICS AS READ - 2 LINES NEW CODE FOLLOW
-    	else if (in_array(basename($_SERVER['PHP_SELF']), array('viewforum.php')) && isset($id))
-	        $tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+		else if (in_array(basename($_SERVER['PHP_SELF']), array('viewforum.php')) && isset($id))
+			$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else
 	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php'){
 		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li>';

@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" dir="<pun_content_direction>">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<pun_char_encoding>" />
 <meta name="robots" content="index,follow" />
@@ -10,31 +11,34 @@
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS" title="<rss new>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=active&amp;type=RSS" title="<rss active>" />
 <link rel="alternate" type="application/rss+xml" href="<board_url>/extern.php?action=new&amp;type=RSS&amp;fid=21&amp;res=site" title="<rss site news>" />
-<link rel="icon" href="/favicon.ico" type="image/ico" />
 </head>
+
 <body>
+
 <div id="punwrap">
 <div id="pun<pun_page>" class="pun">
 
 <div class="top-menu">
-  <div class="projects">
-    <b>Наши проекты:</b><img src="http://counter.rambler.ru/top100.cnt?648851" width=1 height=1 border=0 alt="" />
-    <a href="http://www.mozilla-russia.org">Mozilla Россия</a>&nbsp;
-    <a href="http://www.kmeleon.ru">K-meleon</a>&nbsp;
-    <a href="https://bugzilla.mozilla-russia.org">Bugzilla</a>&nbsp;
-    <a href="http://mozutil.mozilla-russia.org">MozUtil</a>&nbsp;
-    <a href="http://flock.mozilla-russia.org">Flock</a>&nbsp;
-    <a href="http://nvu.mozilla-russia.org">Nvu</a>&nbsp;
-    <a href="http://pastebin.mozilla-russia.org">Pastebin</a>&nbsp;
-    <a href="http://wiki.mozilla-russia.org">Wiki</a>&nbsp;
-  </div>
-  <div class="search">
-    <form id="search" method="get" action="doku.php?id=" accept-charset="utf-8" style="margin: 3px">
-      <input type="hidden" name="do" value="search" />
-      <input type="text" name="id" size="20" maxlength="100" id="search-input" />
-      <input type="submit" value="Поиск" id="search-submit" />
-    </form>
-  </div>
+	<div class="projects">
+		<b>Наши проекты:</b>
+		<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
+		<a href="http://www.kmeleon.ru/">K-meleon</a>
+		<a href="https://bugzilla.mozilla-russia.org/">Bugzilla</a>
+		<a href="http://mozutil.mozilla-russia.org/">MozUtil</a>
+		<a href="http://flock.mozilla-russia.org/">Flock</a>
+		<a href="http://nvu.mozilla-russia.org/">Nvu</a>
+		<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>
+		<a href="http://wiki.mozilla-russia.org/">Wiki</a>
+		<img src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
+	</div>
+	<div class="search">
+		<form id="search" method="get" action="search.php">
+			<input type="hidden" name="action" value="search" />
+			<input type="hidden" name="show_as" value="topics" />
+			<input type="text" name="keywords" size="20" maxlength="100" id="search-input" />
+			<input type="submit" name="search" value="Поиск" accesskey="g" id="search-submit" />
+		</form>
+	</div>
 </div>
 
 <div id="brdheader" class="block">
@@ -52,7 +56,10 @@
 <pun_main>
 
 <pun_footer>
+
 </div>
 </div>
+
 </body>
+
 </html>

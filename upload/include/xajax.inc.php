@@ -574,11 +574,8 @@ class xajax
 			$sJsURI = $this->sRequestURI;
 			
 		$separator=strpos($sJsURI,'?')==false?'?':'&';
-		
-		$html  = "<script type=\"text/javascript\">var xajaxRequestUri=\"".$this->sRequestURI."\";</script>\n";
-		$html .= "\t<script type=\"text/javascript\" src=\"".$sJsURI.$separator."xajaxjs=xajaxjs\"></script>\n";
-		
-		return $html;
+
+		return '<script type="text/javascript">var xajaxRequestUri="'.$this->sRequestURI.'";</script>'."\n".'<script type="text/javascript" src="'.$sJsURI.$separator.'xajaxjs=xajaxjs"></script>'."\n";
 	}
 	
 	// compressJavascript() compresses the javascript code for more efficient delivery

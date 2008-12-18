@@ -108,7 +108,8 @@ p input{font:normal 12px verdana,arial,helvetica,sans serif;color:#333;backgroun
 #punredirect div.block,#punmaint div.block{margin:50px 20% 12px}
 /* 11. ADDITIONAL STYLES */
 /* 11.1 Styles for top menu */
-div.top-menu{width:100%;margin:2px 0}
+div.top-menu{width:100%;margin:5px 0}
+div.top-menu div.projects a{margin:0 3px}
 div.projects{float:left}
 /* 11.2 Top menu links */
 div.projects a{font-size:90%}

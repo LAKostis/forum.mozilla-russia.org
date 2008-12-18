@@ -55,6 +55,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	$action = (isset($_GET['action'])) ? $_GET['action'] : null;
 	$forum = (isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum'])) ? $_GET['forum'] : -1;
 	$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
+	$search_in = 0;
 	if (isset($search_id)) unset($search_id);
 
 	// If a search_id was supplied
@@ -125,7 +126,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	}
 	else
 	{
-		$keyword_results = $author_results = array();
+		$keyword_results = $author_results = $keywords_array = array();
 
 		// Search a specific forum?
 		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id IN('.$forum.')' : '';

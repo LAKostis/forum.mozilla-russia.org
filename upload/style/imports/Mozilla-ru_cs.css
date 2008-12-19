@@ -9,7 +9,7 @@ td.tc2,td.tc3,td.tc4,td.tcmod,#postpreview,#viewprofile dd,div.forminfo,#adminco
 /* 1.3 Main headers and navigation bar background and text colour */
 .pun h2{background:url('../img/Mozilla-ru/pun_h2_left_bg.png') no-repeat left top #3c6a97;color:#FFF;font-weight:700}
 #brdmenu{background:url('../img/Mozilla-ru/pun_menu_bg.png') repeat-x top right #df731b}
-#ajaxpostpreview #postpreview h2 span,#postpreview h2 span,.inform h2 span,.blockform h2 span,.blocktable h2 span,.block h2 span,.blockmenu h2 span,.searchposts h2 span{background:url('../img/Mozilla-ru/pun_h2_right_bg.png') no-repeat right top transparent;display:block;color:#FFF;width:100%;text-align:left;margin:-4px -6px;padding:4px 6px}
+#ajaxpostpreview #postpreview h2 span,#postpreview h2 span,.inform h2 span,.blockform h2 span,.blocktable h2 span,.block h2 span,.blockmenu h2 span{background:url('../img/Mozilla-ru/pun_h2_right_bg.png') no-repeat right top transparent;display:block;color:#FFF;width:100%;text-align:left;margin:-4px -6px;padding:4px 6px}
 /* 1.4 Table header rows */
 .pun th{background-color:#d2dde7}
 /* 1.5 Fieldset legend text colour */

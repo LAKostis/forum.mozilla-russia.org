@@ -1,6 +1,6 @@
 /* 1. BACKGROUND AND TEXT COLOURS */
 /* 1.1 Default background colour and text colour */
-body{background-color:#FFF}
+body{background:url('../img/Moz-future/pun_body_bg.gif') repeat-x top #FFF}
 .pun{color:#333}
 div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven{background-color:#f4f6f9}
 #adminconsole td,#adminconsole th{border-color:#F1F1F1}
@@ -58,18 +58,20 @@ li.pmlink a:link,li.pmlink a:hover,li.pmlink a:visited{color:red!important}
 /* 5. POST STATUS INDICATORS */
 /* These are the post status indicators which appear at the left of some tables. */
 div.icon{background:url('../img/Moz-future/pun_icon_unactive.png') no-repeat transparent}
-tr.inew div.icon{background:url('../img/Moz-future/pun_icon_active.png') no-repeat transparent}
+tr.inew div.icon,.intd div.inew{background:url('../img/Moz-future/pun_icon_active.png') no-repeat transparent}
 tr.isticky div.icon{background:url('../img/Moz-future/pun_icon_sticky.png') no-repeat transparent}
 tr.iclosed div.icon{background:url('../img/Moz-future/pun_icon_close.png') no-repeat transparent}
 tr.iredirect div.icon{background:url('../img/Moz-future/pun_icon_redirect.png') no-repeat transparent}
-tr.inew{background-color:#ffefbf}
-tr.inew td.tc2,tr.inew td.tc3{background-color:#ffd168}
 tr.iclosed{background-color:#f2f2f2}
-tr.iclosed td.tc2,tr.iclosed td.tc3{background-color:#cacaca}
+tr.iclosed td.tc2,tr.iclosed td.tc3,tr.iclosed td.tc4{background-color:#cacaca}
 tr.isticky{background-color:#ffe2db}
-tr.isticky td.tc2,tr.isticky td.tc3{background-color:#ffb6a4}
-tr.iredirect{background-color:#e2f9e2}
-tr.iredirect td.tc2,tr.iredirect td.tc3{background-color:#b6f0b6}
+tr.isticky td.tc2,tr.isticky td.tc3,tr.iclosed td.tc4{background-color:#ffb6a4}
 /* 11. ADDITIONAL STYLES */
 /* 11.2 Top menu links */
 div.top-menu{margin:7px 0}
+div.projects a:link,div.projects a:visited{color:#888}
+div.projects a:hover{color:#333;text-decoration:underline}
+/* 11.3 Top menu search form */
+form input#search-input{background-color:#EAEAEA;border:1px solid #577FA5}
+form input#search-input:focus,form input#search-input:hover{background:#fff}
+form input#search-submit{background-color:#2A5D8D;border-bottom:1px solid #08447b;border-left:1px solid #527CA2;border-right:1px solid #08447b;border-top:1px solid #527CA2;color:#fff}

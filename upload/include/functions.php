@@ -72,7 +72,7 @@ function check_cookie(&$pun_user)
 			$expire = 0;
 
 		// MOD: MARK TOPICS AS READ - 4 LINES NEW CODE FOLLOW
-        	if ($pun_user['read_topics'])
+			if ($pun_user['read_topics'])
 			$pun_user['read_topics'] = unserialize($pun_user['read_topics']);
 		else
 			$pun_user['read_topics'] = array();
@@ -84,21 +84,21 @@ function check_cookie(&$pun_user)
 			if (!$pun_user['logged'])
 			{
 				$show_online = ($pun_user['show_online']);
- 				$pun_user['logged'] = $now;
- 
- 				// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
- 				switch ($db_type)
- 				{
- 					case 'mysql':
- 					case 'mysqli':
- 						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
- 						break;
- 
- 					default:
- 						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
- 						break;
- 				}
- 			}
+				$pun_user['logged'] = $now;
+
+				// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
+				switch ($db_type)
+				{
+					case 'mysql':
+					case 'mysqli':
+						$db->query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+						break;
+
+					default:
+						$db->query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged, show_online) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].', \''.$db->escape($show_online).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $db->error());
+						break;
+				}
+			}
 			else
 			{
 				// Special case: We've timed out, but no other user has browsed the forums since we timed out
@@ -538,12 +538,12 @@ function delete_user($user_id,$delete_posts)
 	require(PUN_ROOT.'include/pms/profile_delete.php');
 
 	// Delete user avatar
-      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.gif'))
-      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.gif');
-      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.jpg'))
-      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.jpg');
-      	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.png'))
-      		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.png');
+	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.gif'))
+		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.gif');
+	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.jpg'))
+		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.jpg');
+	if (file_exists($pun_config['o_avatars_dir'].'/'.$id.'.png'))
+		@unlink($pun_config['o_avatars_dir'].'/'.$id.'.png');
 
 }
 
@@ -690,7 +690,7 @@ function paginate($num_pages, $cur_page, $link_to)
 			$pages[] = '<a href="'.$link_to.'&amp;p='.$num_pages.'">'.$num_pages.'</a>';
 		}
 	}
-	
+
 	if($nav_links)
 	{
 		if($cur_page > 1){
@@ -699,12 +699,12 @@ function paginate($num_pages, $cur_page, $link_to)
 			array_splice($pages, 0, 0, $back_page);
 		}
 		if($cur_page < $num_pages){
-			$next_page_number =  $cur_page+1;
+			$next_page_number = $cur_page+1;
 			$next_page = '<a href="'.$link_to.'&amp;p='.$next_page_number.'">--&raquo;</a>';
 			array_push($pages, $next_page);
 															}
 	}
-	
+
 	return implode('&nbsp;', $pages);
 }
 
@@ -944,7 +944,7 @@ function maintenance_message()
 		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
 		$tpl_temp = ob_get_contents();
 		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
-	    ob_end_clean();
+		ob_end_clean();
 	}
 	// END SUBST - <pun_include "*">
 
@@ -1029,7 +1029,7 @@ function redirect($destination_url, $message)
 		include PUN_ROOT.'include/user/'.$cur_include[1].'.'.$cur_include[2];
 		$tpl_temp = ob_get_contents();
 		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
-	    ob_end_clean();
+		ob_end_clean();
 	}
 	// END SUBST - <pun_include "*">
 
@@ -1238,7 +1238,7 @@ function unregister_globals()
 	// Prevent script.php?GLOBALS[foo]=bar
 	if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']))
 		exit('I\'ll have a steak sandwich and... a steak sandwich.');
-	
+
 	// Variables that shouldn't be unset
 	$no_unset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
 
@@ -1283,17 +1283,17 @@ function get_all_new_topics() {
 	$new_topics = array();
 	while($new_topics_row = $db->fetch_assoc($result))
 		$new_topics[$new_topics_row['forum_id']][$new_topics_row['id']] = $new_topics_row['last_post'];
-    return $new_topics;
+	return $new_topics;
 }
 
 function forum_is_new($forum_id, $last_post_time) { // this function scares me but I believe all the logic is good.
-	
+
 	global $db, $pun_user, $new_topics;
-	
-	// first we try to do this the easy way.  
+
+	// first we try to do this the easy way.
 	if ($pun_user['last_visit'] >= $last_post_time) { // were there no posts since the user's last visit?
 		return false;
-	} else if (!empty($pun_user['read_topics']['f'][$forum_id]) &&    // has the user marked all topics in 
+	} else if (!empty($pun_user['read_topics']['f'][$forum_id]) && // has the user marked all topics in
 		$pun_user['read_topics']['f'][$forum_id] >= $last_post_time) { // the forum read since the last post?
 		return false;
 	} else if (empty($pun_user['read_topics']['t']) && empty($pun_user['read_topics']['f'])) { // is it even possible that any of the new posts could be read?
@@ -1316,27 +1316,27 @@ function forum_is_new($forum_id, $last_post_time) { // this function scares me b
 function topic_is_new($topic_id, $forum_id, $last_post_time) {
 
 	global $pun_user;
-	
+
 	if ($pun_user['last_visit'] >= $last_post_time) {
 		return false;
-	} else if (!empty($pun_user['read_topics']['f'][$forum_id]) && 
+	} else if (!empty($pun_user['read_topics']['f'][$forum_id]) &&
 		$pun_user['read_topics']['f'][$forum_id] >= $last_post_time) {
 		return false;
-	} else if (!empty($pun_user['read_topics']['t'][$topic_id]) && 
+	} else if (!empty($pun_user['read_topics']['t'][$topic_id]) &&
 		$pun_user['read_topics']['t'][$topic_id] >= $last_post_time) {
 		return false;
-	} 
+	}
 	return true;
 }
 
 function mark_topic_read($topic_id, $forum_id, $last_post) {
 
-    global $db, $pun_user;
-    
-    if (topic_is_new($topic_id, $forum_id, $last_post)) {
-        $pun_user['read_topics']['t'][$topic_id] = time();
-        $db->query('UPDATE '.$db->prefix.'users SET read_topics=\''.$db->escape(serialize($pun_user['read_topics'])).'\' WHERE id='.$pun_user['id']) or error('Unable to update read-topic data', __FILE__, __LINE__, $db->error());
-    }
+	global $db, $pun_user;
+
+	if (topic_is_new($topic_id, $forum_id, $last_post)) {
+		$pun_user['read_topics']['t'][$topic_id] = time();
+		$db->query('UPDATE '.$db->prefix.'users SET read_topics=\''.$db->escape(serialize($pun_user['read_topics'])).'\' WHERE id='.$pun_user['id']) or error('Unable to update read-topic data', __FILE__, __LINE__, $db->error());
+	}
 }
 
 // creates sql-query for multigroup mod
@@ -1423,62 +1423,64 @@ function pun_strcasecmp($string1, $string2) {
 // For show User Agent in users info
 //
 function pun_get_browser($uagent){
-   $known_bw = array('firefox',
-                     'opera',
-                     'ie',
-                     'arora',
-                     'camino',
-                     'chrome',
-                     'demobrowser',
-                     'dillo',
-                     'elinks',
-                     'epiphany',
-                     'fennec',
-                     'flock',
-                     'foxware',
-                     'google',
-                     'iceape',
-                     'icecat',
-                     'iceweasel',
-                     'k-meleon',
-                     'kazehakase',
-                     'konqueror',
-                     'links',
-                     'lolifox',
-                     'lynx',
-                     'midori',
-                     'mozilla',
-                     'netscape',
-                     'netsurf',
-                     'omniweb',
-                     'safari',
-                     'seamonkey',
-                     'shiira',
-                     'songbird',
-                     'sunrise',
-                     'swift',
-                     'wyzo');
-   $ua = get_browser($uagent,true);
-   $ua_browser = pun_strtolower($ua['browser']);
-   $ua_version = $ua['version'];
-   $ua_browser_alt = pun_ucwords($ua_browser);
-   
-   if (!in_array($ua_browser,$known_bw)){
-      $ua_browser = "unknown";
-      $ua_version = "0.0";
-      $ua_browser_alt = "unknown";
-   }
-   else{
-      if($ua_browser == "ie" && $ua_version == "7.0"){
-        $ua_browser = "ie7";
-        $ua_browser_alt = "IE";
-      }
-      if($ua_browser == "ie"){
-      	$ua_browser_alt = "IE";
-      }
-   }
-   
-   return array($ua_browser,$ua_version,$ua_browser_alt);
+	$known_bw = array(
+		'firefox',
+		'opera',
+		'ie',
+		'arora',
+		'camino',
+		'chrome',
+		'demobrowser',
+		'dillo',
+		'elinks',
+		'epiphany',
+		'fennec',
+		'flock',
+		'foxware',
+		'google',
+		'iceape',
+		'icecat',
+		'iceweasel',
+		'k-meleon',
+		'kazehakase',
+		'konqueror',
+		'links',
+		'lolifox',
+		'lynx',
+		'midori',
+		'mozilla',
+		'netscape',
+		'netsurf',
+		'omniweb',
+		'safari',
+		'seamonkey',
+		'shiira',
+		'songbird',
+		'sunrise',
+		'swift',
+		'wyzo'
+	);
+	$ua = get_browser($uagent,true);
+	$ua_browser = pun_strtolower($ua['browser']);
+	$ua_version = $ua['version'];
+	$ua_browser_alt = pun_ucwords($ua_browser);
+
+	if (!in_array($ua_browser,$known_bw)){
+		$ua_browser = "unknown";
+		$ua_version = "0.0";
+		$ua_browser_alt = "unknown";
+	}
+	else{
+		if($ua_browser == "ie" && $ua_version == "7.0"){
+		$ua_browser = "ie7";
+		$ua_browser_alt = "IE";
+		}
+		if($ua_browser == "ie"){
+			$ua_browser_alt = "IE";
+		}
+	}
+
+	return array($ua_browser,$ua_version,$ua_browser_alt);
 }
 
 //
@@ -1486,19 +1488,19 @@ function pun_get_browser($uagent){
 // written by francev.nikolay @ gmail<.>com
 //
 function pun_increment_pm($str) {
-  if (preg_match('/^Re\(\d+\): /i', $str)) {
-    $arr = preg_split('/^Re\(|\): /i', $str, 3);
-    return 'Re('.(++$arr[1]).'): '.$arr[2];
-  }
-  elseif (preg_match('/^(Re: )+/i', $str, $matches))
-    return preg_replace('/^(Re: )+/i', 'Re('.sizeof(split(' ',$matches[0])).'): ', $str);
-  else
-    return 'Re: '.$str;
+	if (preg_match('/^Re\(\d+\): /i', $str)) {
+		$arr = preg_split('/^Re\(|\): /i', $str, 3);
+		return 'Re('.(++$arr[1]).'): '.$arr[2];
+	}
+	elseif (preg_match('/^(Re: )+/i', $str, $matches))
+		return preg_replace('/^(Re: )+/i', 'Re('.sizeof(split(' ',$matches[0])).'): ', $str);
+	else
+		return 'Re: '.$str;
 }
 
 function hidden_redirect($location) {
-  if (defined('PUN_DEBUG'))
-    redirect(htmlspecialchars($location), 'Debug redirect...');
-  else
-    header('Location:' . htmlspecialchars($location));
+	if (defined('PUN_DEBUG'))
+		redirect(htmlspecialchars($location), 'Debug redirect...');
+	else
+		header('Location:' . htmlspecialchars($location));
 }

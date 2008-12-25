@@ -94,25 +94,32 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 	{
 		echo "\t\t\t".'<dl id="modcontrols">';
 
-		if ($is_admmod)
-		{
-			echo "\t\t\t".'<dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
-			if ($cur_topic['announcement'] != '1')
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
-		}
-
 		if ($cur_topic['closed'] == '1' && $is_admmod)
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'">'.$lang_common['Open topic'].'</a></dd>'."\n";
 		else
 			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";
 
-		if ($is_admmod && $cur_topic['announcement'] != '1')
+		if ($is_admmod)
 		{
-			if ($cur_topic['sticky'] == '1')
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a></dd></dl>'."\n";
-			else
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd></dl>'."\n";
+			if ($cur_topic['announcement'] != '1')
+				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
+
+			if ($cur_topic['announcement'] != '1')
+			{
+				if ($cur_topic['sticky'] == '1')
+					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a></dd>'."\n";
+				else
+					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd>'."\n";
+
+				echo "\t\t\t".'<dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
+
+				if ($cur_topic['question'] != '')
+					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;totopic='.$id.'">'.$lang_common['Poll to topic'].'</a></dd>'."\n";
+			}
+
 		}
+
+		echo "\t\t\t".'</dl>';
 	}
 
 	echo "\t\t\t".'</div>'."\n";

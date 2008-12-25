@@ -148,6 +148,7 @@ $lang_common = array(
 'Close topic'			=>	'Close topic',
 'Unstick topic'			=>	'Unstick topic',
 'Stick topic'			=>	'Stick topic',
+'Poll to topic'			=>	'Convert poll to topic',
 'Moderate forum'		=>	'Moderate forum',
 'Delete posts'			=>	'Moderate posts',
 'Debug table'			=>	'Debug information',

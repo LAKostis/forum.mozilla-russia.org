@@ -36,6 +36,7 @@ $lang_misc = array(
 'Select'					=>	'Select',	// the header of a column of checkboxes
 'Move'						=>	'Move',
 'Delete'					=>	'Delete',
+'Agree'						=>	'Agree',
 
 // Moderate forum
 'Open'						=>	'Open',
@@ -58,6 +59,8 @@ $lang_misc = array(
 'No topics selected'		=>	'You must select at least one topic for move/delete/open/close.',
 'Stick topic redirect'		=>	'Topic sticked. Redirecting &hellip;',
 'Unstick topic redirect'	=>	'Topic unsticked. Redirecting &hellip;',
+'Poll to topic redirect'	=>	'Convert poll to topic redirect',
+'Poll to topic warning'		=>	'Warning! This operation can not be undone. Question, all variants and all votes will be deleted.',
 
 // Delete multiple posts in topic
 'Delete posts'				=>	'Delete posts',

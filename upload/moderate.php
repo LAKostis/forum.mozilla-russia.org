@@ -584,6 +584,66 @@ else if (isset($_GET['unstick']))
 }
 
 
+// Convert poll to topic
+else if (isset($_GET['totopic']))
+{
+	$totopic = intval($_GET['totopic']);
+	if ($totopic < 1)
+		message($lang_common['Bad request']);
+
+	if (isset($_GET['confirm']))
+	{
+		confirm_referrer('moderate.php');
+
+		$db->start_transaction();
+
+		$db->query('UPDATE '.$db->prefix.'topics SET question=\'\',yes=\'\',no=\'\' WHERE id='.$totopic.' AND forum_id='.$fid) or
+			($db->end_transaction() && error('Unable to convert topic', __FILE__, __LINE__, $db->error()));
+
+		$db->query('DELETE FROM '.$db->prefix.'polls WHERE pollid='.$totopic) or
+			($db->end_transaction() && error('Unable to convert topic', __FILE__, __LINE__, $db->error()));
+
+		redirect('viewtopic.php?id='.$totopic, $lang_misc['Poll to topic redirect']);
+	}
+	else
+	{
+		confirm_referrer('viewtopic.php');
+
+		$result = $db->query('SELECT t.poster, t.question FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.id='.$totopic) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+		if (!$db->num_rows($result))
+			message($lang_common['Bad request']);
+
+		$cur_post = $db->fetch_assoc($result);
+
+		$page_title = pun_htmlspecialchars($lang_common['Poll to topic']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
+		require PUN_ROOT.'header.php';
+
+?>
+<div class="blockform">
+	<h2><span><?php echo $lang_common['Poll to topic'] ?></span></h2>
+	<div class="box">
+		<form method="post" action="moderate.php?fid=<?php echo $fid ?>&totopic=<?php echo $totopic ?>&confirm=1">
+			<p><input type="submit" name="agree" value="<?php echo $lang_misc['Agree'] ?>" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p><br/>
+			<div class="inform">
+				<fieldset>
+					<legend class="warntext"><?php echo $lang_misc['Poll to topic warning'] ?></legend>
+					<div class="infldset">
+						<div class="postmsg">
+							<p><?php echo $lang_common['Author'] ?>: <strong><?php echo pun_htmlspecialchars($cur_post['poster']) ?></strong></p>
+							<?php echo $cur_post['question'] ?>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+</div>
+<?php
+
+		require PUN_ROOT.'footer.php';
+	}
+}
+
 // No specific forum moderation action was specified in the query string, so we'll display the moderator forum
 
 // Load the viewforum.php language file

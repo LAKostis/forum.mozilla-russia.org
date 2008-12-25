@@ -36,6 +36,7 @@ $lang_misc = array(
 'Select'					=>	'Выбрать',	// the header of a column of checkboxes
 'Move'						=>	'Переместить',
 'Delete'					=>	'Удалить',
+'Agree'						=>	'Согласен',
 
 // Moderate forum
 'Open'						=>	'Открыть',
@@ -58,6 +59,8 @@ $lang_misc = array(
 'No topics selected'		=>	'Вы должны выбрать, по крайней мере, одну тему, для выполнения этого действия.',
 'Stick topic redirect'		=>	'Тема прикреплена. Переадресация...',
 'Unstick topic redirect'	=>	'Тема откреплена. Переадресация...',
+'Poll to topic redirect'	=>	'Опрос преобразован в тему. Переадресация...',
+'Poll to topic warning'		=>	'Предупреждение! Эта операция необратима. Вопрос, варианты ответов, а так же все голоса будут утеряны.',
 
 // Delete multiple posts in topic
 'Delete posts'				=>	'Удалить сообщения',

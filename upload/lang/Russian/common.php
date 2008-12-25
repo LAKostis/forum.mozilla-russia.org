@@ -148,6 +148,7 @@ $lang_common = array(
 'Close topic'			=>	'Закрыть тему',
 'Unstick topic'			=>	'Открепить тему',
 'Stick topic'			=>	'Прикрепить тему',
+'Poll to topic'			=>	'Преобразовать опрос в тему',
 'Moderate forum'		=>	'Модерировать форум',
 'Delete posts'			=>	'Модерировать сообщения',
 'Debug table'			=>	'Отладочная информация',

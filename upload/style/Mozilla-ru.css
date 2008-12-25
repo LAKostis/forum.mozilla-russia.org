@@ -107,7 +107,6 @@ div.blockform p input{margin-left:12px}
 /* 10.1 These are the post status indicators which appear at the left of some tables. */
 div.icon{display:block;float:left;width:22px;height:22px}
 div.searchposts div.icon{margin-left:0}
-div.inew + div.tclcon a{font-weight:700}
 /* 10.2 Class .tclcon is a div inside the first column of tables with post indicators. The margin creates space for the post status indicator */
 td div.tclcon{margin-left:2.3em}
 /* 11. ADDITIONAL STYLES */

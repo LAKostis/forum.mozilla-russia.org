@@ -58,14 +58,16 @@ li.pmlink a:link,li.pmlink a:hover,li.pmlink a:visited{color:red!important}
 /* 5. POST STATUS INDICATORS */
 /* These are the post status indicators which appear at the left of some tables. */
 div.icon{background:url('../img/Mozilla-ru/pun_icon_unactive.png') no-repeat #B5C7D8}
-tr.inew div.icon,.intd div.inew{background:url('../img/Mozilla-ru/pun_icon_active.png') no-repeat #DF731B}
-tr.isticky div.icon{background:url('../img/Mozilla-ru/pun_icon_sticky.png') no-repeat #B5C7D8}
-tr.iclosed div.icon{background:url('../img/Mozilla-ru/pun_icon_close.png') no-repeat #DDD}
+tr.inew{background-color:#f4d9c3}
+tr.inew td.tc2,tr.inew td.tc3,tr.inew td.tc4{background-color:#e8b082}
+tr.inew div.icon,.intd div.inew{background:url('../img/Mozilla-ru/pun_icon_active.png') no-repeat #e8b082}
+tr.iclosed{background-color:#eee6e3}
+tr.iclosed td.tc2,tr.iclosed td.tc3,tr.iclosed td.tc4{background-color:#d0c9c6}
+tr.iclosed div.icon{background:url('../img/Mozilla-ru/pun_icon_close.png') no-repeat #d0c9c6}
+tr.isticky{background-color:#ffe2db}
+tr.isticky td.tc2,tr.isticky td.tc3,tr.isticky td.tc4{background-color:#ffb6a4}
+tr.isticky div.icon{background:url('../img/Mozilla-ru/pun_icon_sticky.png') no-repeat #ffb6a4}
 tr.iredirect div.icon{background:url('../img/Mozilla-ru/pun_icon_redirect.png') no-repeat #B5C7D8}
-tr.iclosed{background-color:#f2f2f2}
-tr.iclosed td.tc2,tr.iclosed td.tc3,tr.iclosed td.tc4{background-color:#cacaca}
-tr.isticky{background-color:#f9e3d1}
-tr.isticky td.tc2,tr.isticky td.tc3,tr.isticky td.tc4{background-color:#f4d0b2}
 /* 11. ADDITIONAL STYLES */
 /* 11.2 Top menu links */
 div.top-menu{margin:7px 0}

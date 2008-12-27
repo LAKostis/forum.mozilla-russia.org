@@ -67,7 +67,7 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 // Can we or can we not post new topics?
 if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod) {
 	$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a>'."\n";
-	if (!$pun_user['is_guest']) 
+	if (!$pun_user['is_guest'])
 		$post_link .= '<br /><a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a></p>'."\n";
 } else
 	$post_link = '';
@@ -157,7 +157,7 @@ if ($db->num_rows($result))
 			$last_post = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a> <br /> <span class="byuser"><b>'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['last_poster']).'</span>';
 		else {
 			$last_post = '&nbsp;';
-	  		$icon_text = $lang_common['Redirect icon'];
+			$icon_text = $lang_common['Redirect icon'];
 			$item_status = 'iredirect';
 		}
 
@@ -167,7 +167,7 @@ if ($db->num_rows($result))
 		if ($cur_topic['question'] != '') {
 			if ($pun_config['o_censoring'] == '1')
 				$cur_topic['question'] = censor_words($cur_topic['question']);
-				
+
 			if ($cur_topic['moved_to'] != 0)
 				$subject = $lang_forum['Moved'].': <b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else if ($cur_topic['closed'] == '0')
@@ -214,7 +214,7 @@ if ($db->num_rows($result))
 		}
 		$f_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['id'];
 
-    		// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
+		// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 		if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id,  $cur_topic['last_post']) && $cur_topic['moved_to'] == null && $f_id != 'announcement')
 		{
 			$icon_text .= ' '.$lang_common['New icon'];
@@ -234,7 +234,7 @@ if ($db->num_rows($result))
 			else
 				$subject = '&nbsp;&nbsp;'.$subject;
 		}
-	 }	
+	}
 
 		if ($cur_topic['announcement'] == '1')
 		{

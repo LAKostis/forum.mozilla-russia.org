@@ -34,6 +34,8 @@ if ($pun_user['g_read_board'] == '0')
 
 // Load the index.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/index.php';
+// Load poll language file
+require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
 
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']);
 define('PUN_ALLOW_INDEX', 1);
@@ -45,9 +47,7 @@ $mgrp_extra = multigrp_getSql($db);
 $new_topics = get_all_new_topics();
 
 // Print the categories and forums
-$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.forum_desc, f.redirect_url, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, t.subject FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id 
-LEFT JOIN '.$db->prefix.'topics AS t ON f.last_post_id=t.last_post_id
-LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.forum_desc, f.redirect_url, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, t.subject, t.question FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$db->prefix.'topics AS t ON f.last_post_id=t.last_post_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 
 $cur_category = 0;
 $cat_count = 0;
@@ -117,7 +117,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 
 	// If there is a last_post/last_poster.
 	if ($cur_forum['last_post'] != '')
-        $last_post = '<a href="viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id'].'">'.pun_htmlspecialchars($cur_forum['subject']).'</a> <span class="byuser">'.format_time($cur_forum['last_post']).' '.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
+		$last_post = ($cur_forum['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b> : ' : '').'<a href="viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id'].'">'.pun_htmlspecialchars($cur_forum['subject']).'</a> <span class="byuser">'.format_time($cur_forum['last_post']).' '.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
 	else
 		$last_post = '&nbsp;';
 
@@ -133,7 +133,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 	}
 
 ?>
- 				<tr<?php if ($item_status != '') echo ' class="'.$item_status.'"'; ?>>
+				<tr<?php if ($item_status != '') echo ' class="'.$item_status.'"'; ?>>
 					<td class="tcl">
 						<div class="intd">
 							<div class="<?php echo $icon_type ?>"><div class="nosize"><?php echo $icon_text ?></div></div>

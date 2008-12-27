@@ -35,7 +35,10 @@ $mgrp_extra = multigrp_getSql($db);
 
 // Load the search.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
+// Load the forum.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/forum.php';
+// Load poll language file
+require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
 
 require_once PUN_ROOT.'include/parser.php';
 
@@ -330,7 +333,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			{
 				if ($pun_user['is_guest'])
 					message($lang_common['No permission']);
-				
+
 				$result = $db->query('SELECT t.id FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.last_post>'.$pun_user['last_visit'].' AND t.moved_to IS NULL') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$num_hits = $db->num_rows($result);
 
@@ -375,7 +378,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			{
 				$order_by = 't.last_post';
 				$forum_sql = '';
-				
+
 				// Fetch 15 topics
 				$result = $db->query('SELECT t.id, t.poster, t.subject, t.posted, t.last_post, f.id AS fid, f.forum_name FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT 15') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$num_hits = $db->num_rows($result);
@@ -573,10 +576,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 								$subject_highlight = preg_replace('#('.str_replace('*', '[^\s]+', str_replace('#', '\#', $highword)).')#i', '<span style="background-color: #FFFF00; color: #000000">$1</span>', $subject_highlight);
 				}
 
-				if ($search_set[$i]['question'] == "")
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.$subject_highlight.'</a>';
-				else
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.$subject_highlight.'</a>';
+				$subject = ($search_set[$i]['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b> : ' : '').'<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.$subject_highlight.'</a>';
 				if (!$pun_user['is_guest'] && $search_set[$i]['last_post'] > $pun_user['last_visit'])
 					$icon = '<div class="icon inew"><div class="nosize">'.$lang_common['New icon'].'</div></div>'."\n";
 
@@ -649,7 +649,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($search_set[$i]['question'] == "")
 					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				else
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+					$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				if ($search_set[$i]['closed'] != '0')
 				{
 					$icon_text = $lang_common['Closed icon'];

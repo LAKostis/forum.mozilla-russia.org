@@ -27,6 +27,7 @@ $lang_search = array(
 'Sort by author'			=>	'Author',
 'Sort by subject'			=>	'Subject',
 'Sort by forum'				=>	'Forum',
+'Sort by last post'			=>	'Last post',
 'Ascending'					=>	'Ascending',
 'Descending'				=>	'Descending',
 'Show as'					=>	'Show results as',
@@ -43,8 +44,7 @@ $lang_search = array(
 'No recent posts'			=>	'No new posts have been made within the last 24 hours.',
 'No unanswered'				=>	'There are no unanswered posts in this forum.',
 'Go to post'				=>	'Go to post',
-
-'Delete'			=>	'Delete',
-'Edit'				=>	'Edit'
+'Delete'					=>	'Delete post',
+'Edit'						=>	'Edit post'
 
 );

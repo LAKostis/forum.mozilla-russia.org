@@ -812,6 +812,7 @@ echo "\t\t\t\t\t\t\t".'<option value="'.$categories[0].'">'.$categories[1].'</op
 							<option value="1"><?php echo $lang_search['Sort by author'] ?></option>
 							<option value="2"><?php echo $lang_search['Sort by subject'] ?></option>
 							<option value="3"><?php echo $lang_search['Sort by forum'] ?></option>
+							<option value="4"><?php echo $lang_search['Sort by last post'] ?></option>
 						</select>
 						<br /></label>
 						<label class="conl"><?php echo $lang_search['Sort order'] ?>

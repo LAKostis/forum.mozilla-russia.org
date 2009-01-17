@@ -75,9 +75,9 @@ function moreBrowser() {
 		moreSmiles();
 }
 
-function ToggleAll(checked) {
-	for(i=0; i < document.forms['post'].elements.length; i++) {
-		var item=document.forms['post'].elements[i];
+function toggleChildren(checked) {
+	for(i=0; i < document.forms['actions'].elements.length; i++) {
+		var item=document.forms['actions'].elements[i];
 		if (item.name == 'delete_messages[]')
 			item.checked=checked;
 	}

@@ -163,7 +163,7 @@ require PUN_ROOT.'header.php';
 	</div>
 </div>
 
-<form id="actions" method="actions" action="message_list.php">
+<form id="actions" name="actions" method="post" action="message_list.php">
 <div id="vf" class="blocktable">
 	<h2><span><?php echo $name ?></span></h2>
 	<div class="box">
@@ -186,7 +186,7 @@ require PUN_ROOT.'header.php';
 					<th><?php if($box == 0) echo $lang_pms['Sender']; else echo $lang_pms['Receiver']; ?></th>
 					<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
 					<th <?php if(isset($_GET['action']) && $_GET['action'] != 'multidelete') { ?> class="tcr"<?php }?>><?php echo $lang_pms['Date'] ?></th>
-						<th><input type=checkbox onclick="ToggleAll(checked)"></th>
+						<th><input type="checkbox" onclick="toggleChildren(checked)"></th>
 					<?php } else { ?>
 					<th class="tcr"><?php echo $lang_pms['Date'] ?></th>
 					<?php } ?>
@@ -460,7 +460,7 @@ else
 <div class="blockform">
 	<h2><span><?php echo $lang_pms['Send a message'] ?></span></h2>
 	<div class="box">
-	<form method="post" id="post" action="message_send.php?action=send" onsubmit="return process_form(this)">
+	<form id="post" name="post" method="post" action="message_send.php?action=send" onsubmit="return process_form(this)">
 		<div class="inform">
 		<fieldset>
 			<legend><?php echo $lang_common['Write message legend'] ?></legend>

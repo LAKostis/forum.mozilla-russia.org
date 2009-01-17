@@ -299,3 +299,19 @@ function generate_topics_autoclose_cache()
 
 	fclose($fh);
 }
+
+
+//
+// Generate the max users cache PHP script
+//
+function generate_max_users_cache($max_users = 0)
+{
+	// Output max users as PHP code
+	$fh = @fopen(PUN_ROOT.'cache/cache_max_users.php', 'wb');
+	if (!$fh)
+		error('Unable to write max users cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_MAX_USERS_LOADED\', 1);'."\n\n".'$pun_max_users = '.var_export($max_users, true).';'."\n\n".'$pun_max_users_time = '.var_export(time(), true).';'."\n\n".'?>');
+
+	fclose($fh);
+}

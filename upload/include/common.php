@@ -194,6 +194,15 @@ if (!defined('PUN_TOPICS_AUTOCLOSE_LOADED') || $pun_topics_autoclose < time())
 	require PUN_ROOT.'cache/cache_topics_autoclose.php';
 }
 
+// Load cached max users
+@include PUN_ROOT.'cache/cache_max_users.php';
+if (!defined('PUN_MAX_USERS_LOADED'))
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_max_users_cache();
+	require PUN_ROOT.'cache/cache_max_users.php';
+}
+
 // Check if current user is banned
 check_bans();
 

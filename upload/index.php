@@ -169,8 +169,8 @@ list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 			<dl class="conr">
 				<dt><strong><?php echo $lang_index['Board stats'] ?></strong></dt>
 				<dd><?php echo $lang_index['No of users'].': <strong>'. $pun_users_count ?></strong></dd>
-				<dd><?php echo $lang_index['No of topics'].': <strong>'.$stats['total_topics'] ?></strong></dd>
 				<dd><?php echo $lang_index['No of posts'].': <strong>'.$stats['total_posts'] ?></strong></dd>
+				<dd><?php echo $lang_index['No of topics'].': <strong>'.$stats['total_topics'] ?></strong></dd>
 			</dl>
 			<dl class="conl">
 				<dt><strong><?php echo $lang_index['User info'] ?></strong></dt>
@@ -204,7 +204,15 @@ if ($pun_config['o_users_online'] == '1')
 			++$num_guests;
 	}
 
-	echo "\t\t\t\t".'<dd>'. $lang_index['Users online'].': <strong>'.($num_users + $num_hidden + $num_guests).'</strong></dd>'."\n\t\t\t\t".'<dd>'.$lang_index['Registered online'].': <strong>'.($num_users + $num_hidden).'</strong> ('.$lang_index['Hidden online'].': <strong>'.$num_hidden.'</strong>), '.$lang_index['Guests online'].': <strong>'.$num_guests.'</strong></dd>'."\n\t\t\t".'</dl>'."\n";
+	$max_users_now = $num_users + $num_hidden + $num_guests;
+	if ($pun_max_users < $max_users_now)
+	{
+		require_once PUN_ROOT.'include/cache.php';
+		generate_max_users_cache($max_users_now);
+		$pun_max_users = $max_users_now;
+	}
+
+	echo "\t\t\t\t".'<dd>'.$lang_index['Users online'].': <strong>'.$max_users_now.'</strong> ('.$lang_index['Registered online'].': <strong>'.($num_users + $num_hidden).'</strong>, '.$lang_index['Hidden online'].': <strong>'.$num_hidden.'</strong>, '.$lang_index['Guests online'].': <strong>'.$num_guests.'</strong>)</dd>'."\t\t\t\t".'<dd>'.$lang_index['Most users online'].': <strong>'.$pun_max_users.'</strong> ('.format_time($pun_max_users_time).')</dd>'."\n\t\t\t".'</dl>'."\n";
 
 	$clearer = true;
 

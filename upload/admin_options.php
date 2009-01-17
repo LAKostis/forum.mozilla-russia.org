@@ -123,6 +123,15 @@ if (isset($_POST['form_sent']))
 			$form['maintenance'] = '0';
 	}
 
+	if ($form['autoclose_subforums'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['autoclose_subforums']))
+		message('Autoclose subforums must be a comma separated ID-list of subforums.');
+
+	if ($form['autoclose_timeout'] == '' || !is_numeric($form['autoclose_timeout']))
+		$form['autoclose_timeout'] = 730;
+
+	if ($form['message_counter_exceptions'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['message_counter_exceptions']))
+		message('Message counter exceptions must be a comma separated ID-list of subforums.');
+
 	$form['timeout_visit'] = intval($form['timeout_visit']);
 	$form['timeout_online'] = intval($form['timeout_online']);
 	$form['redirect_delay'] = intval($form['redirect_delay']);
@@ -769,6 +778,30 @@ generate_admin_menu('options');
 				</div>
 				<div class="inform">
 					<fieldset>
+						<legend>Autoclose old topics</legend>
+						<div class="infldset">
+							<table class="aligntop" cellspacing="0">
+								<tr>
+									<th scope="row">Autoclose subforums</th>
+									<td>
+										<input type="text" name="form[autoclose_subforums]" size="20" value="<?php echo $pun_config['o_autoclose_subforums'] ?>" />
+									<span>Comma separated ID-list of subforums, where old topics will be automatically closed.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Last post timeout</th>
+									<td>
+										<input type="text" name="form[autoclose_timeout]" size="20" value="<?php echo $pun_config['o_autoclose_timeout'] ?>" />
+									<span>Autoclose topics if last post older than N days.<br/>
+									Next old topics autoclose at <b><?php echo date('Y-m-d', $pun_topics_autoclose) ?></b>. <a href="admin_maintenance.php?autoclose=1">Do in now!</a></span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+				<div class="inform">
+					<fieldset>
 						<legend>Misc</legend>
 						<div class="infldset">
 							<table class="aligntop" cellspacing="0">
@@ -776,7 +809,7 @@ generate_admin_menu('options');
 									<th scope="row">Message counter exceptions</th>
 									<td>
 										<input type="text" name="form[message_counter_exceptions]" size="20" value="<?php echo $pun_config['o_message_counter_exceptions'] ?>" />
-									<span>Space separated ID-list of subforums, where messages counter disabled for all users.</span>
+									<span>Comma separated ID-list of subforums, where messages counter disabled for all users.</span>
 									</td>
 								</tr>
 							</table>

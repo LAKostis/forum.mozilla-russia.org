@@ -185,6 +185,15 @@ if (!defined('PUN_FORUMS_LOADED'))
 	require PUN_ROOT.'cache/cache_forums.php';
 }
 
+// Load cached topics autoclose
+@include PUN_ROOT.'cache/cache_topics_autoclose.php';
+if (!defined('PUN_TOPICS_AUTOCLOSE_LOADED') || $pun_topics_autoclose < time())
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_topics_autoclose_cache();
+	require PUN_ROOT.'cache/cache_topics_autoclose.php';
+}
+
 // Check if current user is banned
 check_bans();
 

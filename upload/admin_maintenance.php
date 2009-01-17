@@ -70,26 +70,7 @@ if (isset($_GET['i_per_page']) && isset($_GET['i_start_at']))
 		}
 	}
 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Rebuilding search index &hellip;</title>
-<style type="text/css">
-body {
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	color: #333333;
-	background-color: #FFFFFF
-}
-</style>
-</head>
-<body>
-
-Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br /><br />
-
-<?php
+	echo 'Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br /><br />';
 
 	require PUN_ROOT.'include/search_idx.php';
 
@@ -124,8 +105,17 @@ Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br
 	$db->end_transaction();
 	$db->close();
 
-	exit('<script type="text/javascript">window.location="admin_maintenance.php'.$query_str.'"</script><br />JavaScript redirect unsuccessful. Click <a href="admin_maintenance.php'.$query_str.'">here</a> to continue.');
+	exit('<br/>Done. Click <a href="admin_maintenance.php'.$query_str.'">here</a> to continue.');
 }
+
+elseif (isset($_GET['autoclose']))
+{
+	require_once PUN_ROOT.'include/cache.php';
+	generate_topics_autoclose_cache();
+
+	exit('Done. Click <a href="admin_maintenance.php'.$query_str.'">here</a> to continue.');
+}
+
 
 
 // Get the first post ID from the db

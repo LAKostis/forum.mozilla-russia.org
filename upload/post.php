@@ -387,7 +387,7 @@ if (isset($_POST['form_sent']))
 			$low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
 			if ($merged)
 				$db->query('UPDATE '.$low_prio.$db->prefix.'users SET last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
-			else if(empty($pun_config['o_message_counter_exceptions']) || !in_array($cur_posting['id'], split(' ', $pun_config['o_message_counter_exceptions'])))
+			else if(empty($pun_config['o_message_counter_exceptions']) || !in_array($cur_posting['id'], split(',', $pun_config['o_message_counter_exceptions'])))
 				$db->query('UPDATE '.$low_prio.$db->prefix.'users SET num_posts=num_posts+1, last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 		}
 

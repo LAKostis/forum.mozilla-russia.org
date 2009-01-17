@@ -266,12 +266,36 @@ function generate_forums_cache()
 	while ($output[] = $db->fetch_row($result))
 		;
 
-	// Output last user as PHP code
+	// Output forums as PHP code
 	$fh = @fopen(PUN_ROOT.'cache/cache_forums.php', 'wb');
 	if (!$fh)
 		error('Unable to write last user cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
 
 	fwrite($fh, '<?php'."\n\n".'define(\'PUN_FORUMS_LOADED\', 1);'."\n\n".'$pun_forums = '.var_export($output, true).';'."\n\n".'?>');
+
+	fclose($fh);
+}
+
+
+//
+// Generate the topics autoclose cache PHP script
+//
+function generate_topics_autoclose_cache()
+{
+	global $db, $pun_config;
+
+	if(!empty($pun_config['o_autoclose_subforums']))
+	{
+		// Close old topics
+		$result = $db->query('UPDATE '.$db->prefix.'topics SET closed=1 WHERE forum_id IN('.$pun_config['o_autoclose_subforums'].') AND last_post<'.strtotime('-'.$pun_config['o_autoclose_timeout'].' days')) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+	}
+
+	// Output topics autoclose as PHP code
+	$fh = @fopen(PUN_ROOT.'cache/cache_topics_autoclose.php', 'wb');
+	if (!$fh)
+		error('Unable to write topics autoclose cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
+
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_TOPICS_AUTOCLOSE_LOADED\', 1);'."\n\n".'$pun_topics_autoclose = '.var_export(strtotime('+1 week'), true).';'."\n\n".'?>');
 
 	fclose($fh);
 }

@@ -654,9 +654,9 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$icon_type = 'icon';
 
 				if ($search_set[$i]['question'] == "")
-					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.iconize_topic(pun_htmlspecialchars($search_set[$i]['subject']), $search_set[$i]['forum_id']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				else
-					$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.pun_htmlspecialchars($search_set[$i]['question']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+					$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.iconize_topic(pun_htmlspecialchars($search_set[$i]['question']), $search_set[$i]['forum_id']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				if ($search_set[$i]['closed'] != '0')
 				{
 					$icon_text = $lang_common['Closed icon'];
@@ -682,8 +682,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					if ($search_set[$i]['question'] == "")
 						$subject_multipage = '[&nbsp;'.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).'&nbsp;]';
 					else
-						$subject_multipage = '[&nbsp;'.paginate($num_pages_topic, -1,
-'viewtopic.php?id='.$search_set[$i]['tid']).'&nbsp;]';
+						$subject_multipage = '[&nbsp;'.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).'&nbsp;]';
 				}
 				else
 					$subject_multipage = null;

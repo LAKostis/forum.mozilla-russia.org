@@ -26,7 +26,7 @@
 
 define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
-
+require PUN_ROOT.'include/parser.php';
 
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view']);
@@ -169,11 +169,11 @@ if ($db->num_rows($result))
 				$cur_topic['question'] = censor_words($cur_topic['question']);
 
 			if ($cur_topic['moved_to'] != 0)
-				$subject = $lang_forum['Moved'].': <b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = $lang_forum['Moved'].': <b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else if ($cur_topic['closed'] == '0')
-				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			else if ($cur_topic['closed'] == '1') {
-				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.pun_htmlspecialchars($cur_topic['subject']).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+				$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['question']).'</a><br /> <span class="byuser">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).' '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 				$icon_text = $lang_common['Closed icon'];
 				$item_status = 'iclosed';
 			}
@@ -201,14 +201,14 @@ if ($db->num_rows($result))
 			}
 		} else {
 		if ($cur_topic['moved_to'] != 0)
-			$subject = $lang_forum['Moved'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = $lang_forum['Moved'].': <a href="viewtopic.php?id='.$cur_topic['moved_to'].'">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		else if ($cur_topic['closed'] == '0')
 		{
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 		}
 		else
 		{
-			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.pun_htmlspecialchars($cur_topic['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
+			$subject = '<a href="viewtopic.php?id='.$cur_topic['id'].'">'.iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $id).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($cur_topic['poster']).'</span>';
 			$icon_text = $lang_common['Closed icon'];
 			$item_status = 'iclosed';
 		}

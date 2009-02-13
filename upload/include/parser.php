@@ -571,7 +571,7 @@ function do_clickable($text)
 //
 function do_smilies($text)
 {
-	global $smiley_text, $smiley_img, $browser_text, $browser_img;
+	global $smiley_text, $smiley_img;
 
 	$text = ' '.$text.' ';
 
@@ -579,11 +579,37 @@ function do_smilies($text)
 	for ($i = 0; $i < $num_smilies; ++$i)
 		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/smilies/'.$smiley_img[$i].'" class="smileyimg" alt="'.$smiley_text[$i].'" title="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
 
+	return substr($text, 1, -1);
+}
+
+
+//
+// Convert a series of browsers to images
+//
+function do_browsers($text)
+{
+	global $browser_text, $browser_img;
+
+	$text = ' '.$text.' ';
+
 	$num_browsers = count($browser_text);
 	for ($i = 0; $i < $num_browsers; ++$i)
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="img/browsers/'.$browser_img[$i].'" class="browserimg" alt="'.$browser_text[$i].'" title="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($browser_text[$i], '#')."(?=.\W|\W.|\W$)#mi", '$1<img src="img/browsers/'.$browser_img[$i].'" class="browserimg" alt="'.$browser_text[$i].'" title="'.substr($browser_img[$i], 0, strrpos($browser_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
+}
+
+function iconize_topic($text, $fid)
+{
+	global $pun_config;
+	static $iconize_forums;
+
+	if (!isset($iconize_forums))
+		$iconize_forums = !empty($pun_config['o_iconize_subforums']) ? split(',', $pun_config['o_iconize_subforums']) : array();
+
+	if ($fid && isset($iconize_forums[$fid]))
+		return do_browsers($text);
+	return $text;
 }
 
 
@@ -612,7 +638,10 @@ function parse_message($text, $hide_smilies)
 		$text = do_clickable($text);
 
 	if ($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1' && $hide_smilies == '0')
+	{
 		$text = do_smilies($text);
+		$text = do_browsers($text);
+	}
 
 	if ($pun_config['p_message_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 	{
@@ -673,7 +702,10 @@ function parse_signature($text)
 		$text = do_clickable($text);
 
 	if ($pun_config['o_smilies_sig'] == '1' && $pun_user['show_smilies'] != '0')
+	{
 		$text = do_smilies($text);
+		$text = do_browsers($text);
+	}
 
 	if ($pun_config['p_sig_bbcode'] == '1' && strpos($text, '[') !== false && strpos($text, ']') !== false)
 	{

@@ -126,6 +126,9 @@ if (isset($_POST['form_sent']))
 	if ($form['autoclose_subforums'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['autoclose_subforums']))
 		message('Autoclose subforums must be a comma separated ID-list of subforums.');
 
+	if ($form['iconize_subforums'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['iconize_subforums']))
+		message('Iconize subforums must be a comma separated ID-list of subforums.');
+
 	if ($form['autoclose_timeout'] == '' || !is_numeric($form['autoclose_timeout']))
 		$form['autoclose_timeout'] = 730;
 
@@ -810,6 +813,13 @@ generate_admin_menu('options');
 									<td>
 										<input type="text" name="form[message_counter_exceptions]" size="20" value="<?php echo $pun_config['o_message_counter_exceptions'] ?>" />
 									<span>Comma separated ID-list of subforums, where messages counter disabled for all users.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Iconize subforums</th>
+									<td>
+										<input type="text" name="form[iconize_subforums]" size="20" value="<?php echo $pun_config['o_iconize_subforums'] ?>" />
+									<span>Comma separated ID-list of subforums, where browser icons in topic enabled.</span>
 									</td>
 								</tr>
 							</table>

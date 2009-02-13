@@ -17,12 +17,13 @@
 		<b>Наши проекты:</b>
 		<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
 		<a href="http://www.kmeleon.ru/">K-meleon</a>
+		<a href="http://wiki.mozilla-russia.org/">Wiki</a>
 		<a href="https://bugzilla.mozilla-russia.org/">Bugzilla</a>
 		<a href="http://mozutil.mozilla-russia.org/">MozUtil</a>
 		<a href="http://flock.mozilla-russia.org/">Flock</a>
 		<a href="http://nvu.mozilla-russia.org/">Nvu</a>
 		<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>
-		<a href="http://wiki.mozilla-russia.org/">Wiki</a>
+		<a href="http://planet.mozilla-russia.org/">Планета</a>
 		<img src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 	</div>
 	<div class="search">

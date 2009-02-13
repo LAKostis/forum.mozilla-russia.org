@@ -86,6 +86,9 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		if ($author)
 			$author = str_replace('*', '%', $author);
 
+		$after = (isset($_GET['after']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['after'])) ? strtotime($_GET['after']) : null;
+		$before = (isset($_GET['before']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['before'])) ? strtotime($_GET['before']) : null;
+
 		$show_as = (isset($_GET['show_as'])) ? $_GET['show_as'] : 'posts';
 		$sort_by = (isset($_GET['sort_by'])) ? intval($_GET['sort_by']) : null;
 		$search_in = (!isset($_GET['search_in']) || $_GET['search_in'] == 'all') ? 0 : (($_GET['search_in'] == 'message') ? 1 : -1);
@@ -153,7 +156,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				else
 				{
 					// Filter out non-alphabetical chars
-					$noise_match = array('^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', '¤');
+					$noise_match = array('^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', 'â‚¬');
 					$noise_replace = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ',  ' ', ' ', ' ');
 					$keywords = str_replace($noise_match, $noise_replace, $keywords);
 
@@ -305,7 +308,9 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 			if ($show_as == 'topics')
 			{
-				$result = $db->query('SELECT t.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.' GROUP BY t.id', true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
+				$result = $db->query('SELECT t.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.
+				($after ? ' AND t.posted > ' . $after : '') . ($before ? ' AND t.posted < ' . $before : '') .
+				' GROUP BY t.id', true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$search_ids = array();
 				while ($row = $db->fetch_row($result))
 					$search_ids[] = $row[0];
@@ -316,7 +321,9 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			}
 			else
 			{
-				$result = $db->query('SELECT p.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql, true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
+				$result = $db->query('SELECT p.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.
+				($after ? ' AND p.posted > ' . $after : '') . ($before ? ' AND p.posted < ' . $before : '')
+				, true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$search_ids = array();
 				while ($row = $db->fetch_row($result))
 					$search_ids[] = $row[0];
@@ -751,7 +758,15 @@ require PUN_ROOT.'header.php';
 						<input type="hidden" name="action" value="search" />
 						<label class="conl"><?php echo $lang_search['Keyword search'] ?><br /><input type="text" name="keywords" size="40" maxlength="100" /><br /></label>
 						<label class="conl"><?php echo $lang_search['Author search'] ?><br /><input id="author" type="text" name="author" size="25" maxlength="25" /><br /></label>
+<?php if(!$pun_user['is_guest']): ?>
+						<label class="conl"><br /><input type="button" value="<?php echo $lang_search['My posts'] ?>" onclick='document.getElementById("author").value="<?php echo pun_htmlspecialchars($pun_user['username']); ?>"' /><br /></label>
+<?php endif; ?>
 						<p class="clearb"><?php echo $lang_search['Search info'] ?></p>
+						<label class="conl"><?php echo $lang_search['Date after'] ?><br /><input id="after" type="text" name="after" size="18" maxlength="10" /><br /></label>
+						<label class="conl"><?php echo $lang_search['Date before'] ?><br /><input id="before" type="text" name="before" size="18" maxlength="10" /><br /></label>
+						<label class="conl"><br /><input type="button" value="<?php echo $lang_search['Last week'] ?>" onclick="document.getElementById('after').value='<?php echo date('Y-m-d', strtotime('-1 week')); ?>';document.getElementById('before').value='';" /><br /></label>
+						<label class="conl"><br /><input type="button" value="<?php echo $lang_search['Last month'] ?>" onclick="document.getElementById('after').value='<?php echo date('Y-m-d', strtotime('-1 month')); ?>';document.getElementById('before').value='';" /><br /></label>
+						<p class="clearb"><?php echo $lang_search['Date info'] ?></p>
 					</div>
 				</fieldset>
 			</div>

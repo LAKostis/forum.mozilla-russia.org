@@ -337,8 +337,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		if (empty($topics) || $move_to_forum < 1)
 			message($lang_common['Bad request']);
 
-                // Verify that the topic IDs are valid
-                $result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.implode(',',$topics).') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+		// Verify that the topic IDs are valid
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.implode(',',$topics).') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
 
 		if ($db->num_rows($result) != count($topics))
 			message($lang_common['Bad request']);
@@ -350,16 +350,36 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$db->query('UPDATE '.$db->prefix.'topics SET forum_id='.$move_to_forum.' WHERE id IN('.implode(',',$topics).')') or error('Unable to move topics', __FILE__, __LINE__, $db->error());
 
 		// Should we create redirect topics?
-		if (isset($_POST['with_redirect']))
+		if (isset($_POST['with_redirect']) || isset($_POST['with_notify']) || isset($_POST['with_close']) || isset($_POST['with_open']))
 		{
 			while (list(, $cur_topic) = @each($topics))
 			{
-				// Fetch info for the redirect topic
-				$result = $db->query('SELECT poster, subject, posted, last_post FROM '.$db->prefix.'topics WHERE id='.$cur_topic) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
-				$moved_to = $db->fetch_assoc($result);
+				if (isset($_POST['with_redirect']))
+				{
+					// Fetch info for the redirect topic
+					$result = $db->query('SELECT poster, subject, posted, last_post FROM '.$db->prefix.'topics WHERE id='.$cur_topic) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+					$moved_to = $db->fetch_assoc($result);
 
-				// Create the redirect topic
-				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, moved_to, forum_id) VALUES(\''.$db->escape($moved_to['poster']).'\', \''.$db->escape($moved_to['subject']).'\', '.$moved_to['posted'].', '.$moved_to['last_post'].', '.$cur_topic.', '.$fid.')') or error('Unable to create redirect topic', __FILE__, __LINE__, $db->error());
+					// Create the redirect topic
+					$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, moved_to, forum_id) VALUES(\''.$db->escape($moved_to['poster']).'\', \''.$db->escape($moved_to['subject']).'\', '.$moved_to['posted'].', '.$moved_to['last_post'].', '.$cur_topic.', '.$fid.')') or error('Unable to create redirect topic', __FILE__, __LINE__, $db->error());
+				}
+
+				if (isset($_POST['with_notify']))
+				{
+					// Fetch info for the notify post
+					$fid_new = $db->query('SELECT forum_name FROM '.$db->prefix.'forums WHERE id='.$move_to_forum) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+					$fid_old = $db->query('SELECT forum_name FROM '.$db->prefix.'forums WHERE id='.$fid) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+					$result_new = $db->result($fid_new);
+					$result_old = $db->result($fid_old);
+
+					// Create the notify post
+					$message = 'Тема перенесена из форума «[url='.$pun_config['o_base_url'].'/viewforum.php?id='.$fid.']'.$result_old.'[/url]» в форум «[url='.$pun_config['o_base_url'].'/viewforum.php?id='.$move_to_forum.']'.$result_new.'[/url]».';
+					$hide_smilies = false;
+					$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_id, poster_ip, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($pun_user['username']).'\', '.$pun_user['id'].', \''.get_remote_address().'\', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.time().', '.$cur_topic.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
+				}
+
+				if (isset($_POST['with_close']) || isset($_POST['with_open']))
+					$db->query('UPDATE '.$db->prefix.'topics SET closed=' . (isset($_POST['with_close']) ? 1 : 0) . ' WHERE id IN('.implode(',',$topics).')') or error('Unable to open/close topics', __FILE__, __LINE__, $db->error());
 			}
 		}
 
@@ -402,12 +422,13 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 					<legend><?php echo $lang_misc['Move legend'] ?></legend>
 					<div class="infldset">
 						<label><?php echo $lang_misc['Move to'] ?>
-						<br /><select name="move_to_forum">
+						<br /><select name="move_to_forum" onchange="document.getElementById('notify').checked = !(this.selectedIndex == this.options.length-1);document.getElementById('close').checked = this.selectedIndex == this.options.length-1;document.getElementById('close').onchange();">
 <?php
 
 	$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 
-	$cur_category = 0;
+	$cur_category = $cur_fid = 0;
+	$num_forums = $db->num_rows($result);
 	while ($cur_forum = $db->fetch_assoc($result))
 	{
 		if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
@@ -419,8 +440,8 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 			$cur_category = $cur_forum['cid'];
 		}
 
-		if ($cur_forum['fid'] != $fid)
-			echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_forum['fid'].'">'.pun_htmlspecialchars($cur_forum['forum_name']).'</option>'."\n";
+		$cur_fid++;
+		echo "\t\t\t\t\t\t\t\t".'<option value="'.$cur_forum['fid'].'"'.($cur_forum['fid'] == $fid ? ' disabled' : ($cur_fid == $num_forums ? ' selected uncheck' : '')).'>'.pun_htmlspecialchars($cur_forum['forum_name']).'</option>'."\n";
 	}
 
 ?>
@@ -429,6 +450,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 						<br /></label>
 						<div class="rbox">
 							<label><input type="checkbox" name="with_redirect" value="1"<?php if ($action == 'single') echo ' checked="checked"' ?> /><?php echo $lang_misc['Leave redirect'] ?><br /></label>
+							<label><input id="notify" type="checkbox" name="with_notify" value="1" /><?php echo $lang_misc['Post redirect message'] ?><br /></label>
+							<label><input id="close" type="checkbox" name="with_close" value="1" onchange="if (this.checked)document.getElementById('open').checked = false;"<?php if ($action == 'single') echo ' checked="checked"' ?> /><?php echo $lang_misc['Close topics'] ?><br /></label>
+							<label><input id="open" type="checkbox" name="with_open" value="1" onchange="if (this.checked)document.getElementById('close').checked = false;" /><?php echo $lang_misc['Open topics'] ?><br /></label>
 						</div>
 					</div>
 				</fieldset>
@@ -459,10 +483,10 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 
 		require PUN_ROOT.'include/search_idx.php';
 
-                // Verify that the topic IDs are valid
-                $result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.$topics.') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
+		// Verify that the topic IDs are valid
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics WHERE id IN('.$topics.') AND forum_id='.$fid) or error('Unable to check topics', __FILE__, __LINE__, $db->error());
 
-                if ($db->num_rows($result) != substr_count($topics, ',') + 1)
+		if ($db->num_rows($result) != substr_count($topics, ',') + 1)
 			message($lang_common['Bad request']);
 
 		// Delete the topics and any redirect topics
@@ -739,7 +763,7 @@ if ($db->num_rows($result))
 			$item_status = 'iclosed';
 		}
 
-    	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
+		// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 		if (topic_is_new($cur_topic['id'], $fid,  $cur_topic['last_post']) && !$ghost_topic)
 		{
 			$icon_text .= ' '.$lang_common['New icon'];

@@ -23,13 +23,14 @@
 
 ************************************************************************/
 
-define('PUN_ROOT', './');
 
+define('PUN_ROOT', './');
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'include/common.php';
 
 if ($pun_user['is_guest'])
 	message($lang_common['No permission']);
-	
+
 if (empty($_GET['id']))
 	message($lang_common['Bad request']);
 $id = intval($_GET['id']);
@@ -55,22 +56,22 @@ if (isset($_POST['delete']))
 	if (empty($_GET['id']))
 		message($lang_common['Bad request']);
 	$id = intval($_GET['id']);
-	
+
 	confirm_referrer('message_delete.php');
 
 	// Delete message
 	$db->query('DELETE FROM '.$db->prefix.'messages WHERE id='.$id) or error('Unable to delete messages list', __FILE__, __LINE__, $db->error());
-	
+
 	// Redirect
 	redirect('message_list.php?box='.$_POST['box'].'&p='.$_POST['p'], $lang_pms['Del redirect']);
 }
 else
 {
 	$page_title = pun_htmlspecialchars($lang_pms['Delete message']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	
+
 	require PUN_ROOT.'header.php';
 	require PUN_ROOT.'include/parser.php';
-	
+
 	$cur_post['message'] = parse_message($cur_post['message'], (int)(!$cur_post['smileys']));
 ?>
 <div class="blockform">

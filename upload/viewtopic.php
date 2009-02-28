@@ -25,7 +25,7 @@
 
 
 define('PUN_ROOT', './');
-// MOD AJAX post preview
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'post.common.php';
 require PUN_ROOT.'include/common.php';
 
@@ -116,7 +116,7 @@ if (!$pun_user['is_guest'])
 	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 	if (!$db->num_rows($result))
 		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.last_post, t.question, t.yes, t.no, t.poster, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
-}	
+}
 else
 {
 	// MOD Announcement: CODE FOLLOWS
@@ -233,12 +233,11 @@ while ($cur_post = $db->fetch_assoc($result))
 	{
 		// Image Award Mod Block Start
 		if(strlen($cur_post['imgaward']) > 0)
-		{  // if we have something there, figure out what to output...
-		//figure out the size of the award (Name of award should be in teh form:  Test_Award_100x20.png ... where png is format, 100x20 is dimensions and Test_Award is name of award (seen in admin interface)
+		{
 			$awardmod_filename=$cur_post['imgaward'];
 			$awardmod_temp=substr($awardmod_filename,strrpos($awardmod_filename,'_')+1); //we still have the file extentsion
 			$awardmod_temp=substr($awardmod_temp,0,strpos($awardmod_temp,'.'));
-			$awardmod_dimensions = explode('x',$awardmod_temp);     // there ... now the array will hold 100 and 20 in [0] and [1] respecively ... :)
+			$awardmod_dimensions = explode('x',$awardmod_temp);
 			$awardmod_name=str_replace('_',' ',substr($awardmod_filename,0,strrpos($awardmod_filename,'_')));
 			if($pun_config['o_avatars'] == '1' && $pun_user['show_avatars'] != '0')
 				$user_image_award = "\t\t\t\t\t".'<dd><img src="img/awards/'.$awardmod_filename.'" width="'.$awardmod_dimensions[0].'" height="'.$awardmod_dimensions[1].'" alt="Award: '.$awardmod_name.'" /></dd>';
@@ -352,7 +351,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	{
 		if (($cur_post['poster_id'] != '1') && $quickpost)
 			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
-		
+
 		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover="copyQ(this, false, true);"><a href="viewtopic.php?pid='.$cur_post['id'].'#p'.$cur_post['id'].'" onclick="pasteQ();return false;">'.$lang_topic['Quote'].'</a>';
 	}
 
@@ -388,25 +387,22 @@ while ($cur_post = $db->fetch_assoc($result))
 					<dd class="usertitle"><strong><?php echo $user_title ?></strong></dd>
 <?php endif; ?>
 					<dd class="postavatar">
-<?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?></dd>
-<?php if (strlen($user_image_award)>0) echo $user_image_award;  ## Image Award Mod ?>
+<?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?>
+					</dd>
+<?php if (strlen($user_image_award)>0) echo $user_image_award; ?>
 <?php if (count($user_info)) echo "\t\t\t\t\t".implode('</dd>'."\n\t\t\t\t\t", $user_info).'</dd>'."\n"; ?>
 					<dd>
-	  <?php
-		  //Is rep. system enabled
-		  if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1) {
-			  echo $lang_reputation['Reputation'];
-		  ?> :
-		  <?php
-		  //If viewer are guest or user who post this message,then we do not show control buttons
-		  if($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']) {
-		  ?>
-	  <a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a>
-	  <a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="-" border="0" /></a>
-	  	<?php }?> 
-	  &nbsp;<strong><small>[+ <?php echo $cur_post['reputation_plus']; ?>/ -<?php echo $cur_post['reputation_minus']; ?> ]</small></strong>
-	  <?php }?>
-          </dd>
+<?php
+	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1) {
+		echo $lang_reputation['Reputation'];
+?> :
+<?php if($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']) { ?>
+						<a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a>
+						<a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="-" border="0" /></a>
+<?php }?>
+						<strong><small>[+ <?php echo $cur_post['reputation_plus']; ?>/ -<?php echo $cur_post['reputation_minus']; ?> ]</small></strong>
+<?php }?>
+					</dd>
 <?php if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
 	</dl>
 			</div>
@@ -459,7 +455,7 @@ if ($quickpost)
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
-						<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>	
+						<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
 						<label><textarea name="req_message" rows="7" cols="75" tabindex="1" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);"></textarea></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
 						<ul class="bblinks">

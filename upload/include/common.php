@@ -204,9 +204,8 @@ if (!defined('PUN_MAX_USERS_LOADED'))
 }
 
 // Check if current user is banned
-check_bans();
-
+if (!defined('PUN_NO_BAN'))
+	check_bans();
 
 // Update online list
 update_users_online();
-

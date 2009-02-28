@@ -28,6 +28,7 @@
 define('PUN_HELP', 1);
 
 define('PUN_ROOT', './');
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'include/common.php';
 
 

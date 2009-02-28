@@ -25,7 +25,9 @@
 
 
 define('PUN_ROOT', './');
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'include/common.php';
+
 $mgrp_extra = multigrp_getSql($db);
 
 if ($pun_user['g_read_board'] == '0')
@@ -79,7 +81,6 @@ $page_title = pun_htmlspecialchars($cur_topic['subject']).' | '.pun_htmlspecialc
 <tbody>
 <?php
 
-
 require PUN_ROOT.'include/parser.php';
 
 $result = $db->query('SELECT p.poster AS username, p.message, p.hide_smilies, p.posted FROM '.$db->prefix.'posts AS p WHERE p.topic_id='.$id.' ORDER BY p.id ASC') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
@@ -103,4 +104,3 @@ while ($cur_post = $db->fetch_assoc($result))
 </table>
 </body>
 </html>
-

@@ -28,6 +28,7 @@ if (isset($_GET['action']))
 	define('PUN_QUIET_VISIT', 1);
 
 define('PUN_ROOT', './');
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'include/common.php';
 
 // Load the misc.php language file
@@ -80,10 +81,10 @@ else if ($action == 'markforumread')
 	if ($id < 1)
 		message($lang_common['Bad request']);
 
-       // Make sure the user can view the topic
-       $result = $db->query('SELECT 1 FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=t.forum_id AND fp.group_id=1) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.forum_id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
-       if (!$db->num_rows($result))
-               message($lang_common['Bad request']);
+	// Make sure the user can view the topic
+	$result = $db->query('SELECT 1 FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=t.forum_id AND fp.group_id=1) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.forum_id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+	if (!$db->num_rows($result))
+		message($lang_common['Bad request']);
 
 	$pun_user['read_topics']['f'][$id] = time();
 
@@ -94,6 +95,8 @@ else if ($action == 'markforumread')
 
 else if (isset($_GET['email']))
 {
+	check_bans();
+
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission']);
 
@@ -139,7 +142,7 @@ else if (isset($_GET['email']))
 		$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
 
 		require_once PUN_ROOT.'include/email.php';
-		
+
 		$cur_username = '"'.str_replace('"', '', $pun_user['username']).'"';
 		pun_mail($recipient_email, $mail_subject, $mail_message, encode($cur_username).' <'.$pun_user['email'].'>');
 
@@ -186,6 +189,8 @@ else if (isset($_GET['email']))
 
 else if (isset($_GET['report']))
 {
+	check_bans();
+
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission']);
 
@@ -281,6 +286,8 @@ else if (isset($_GET['report']))
 
 else if (isset($_GET['subscribe']))
 {
+	check_bans();
+
 	if ($pun_user['is_guest'] || $pun_config['o_subscriptions'] != '1')
 		message($lang_common['No permission']);
 

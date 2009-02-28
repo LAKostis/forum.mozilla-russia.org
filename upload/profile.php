@@ -334,7 +334,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 	{
 		if (!isset($_FILES['req_file']))
 			message($lang_profile['No file']);
-			
+
 		$uploaded_file = $_FILES['req_file'];
 
 		// Make sure the upload went smooth
@@ -401,7 +401,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 			{
 				@unlink($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
 				message($lang_profile['Bad type']);
-			}			
+			}
 
 			// Delete any old avatars and put the new one in place
 			@unlink($pun_config['o_avatars_dir'].'/'.$id.$extensions[0]);
@@ -606,16 +606,16 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 else if (isset($_POST['form_sent']))
 {
 	// Fetch the user group of the user we are editing
-	$result = $db->query('SELECT group_id FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT group_id, num_posts FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
 		message($lang_common['Bad request']);
 
-	$group_id = $db->result($result);
+	$user = $db->result($result);
 
 	if ($pun_user['id'] != $id &&
 		($pun_user['g_id'] > PUN_MOD ||
 		($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_edit_users'] == '0') ||
-		($pun_user['g_id'] == PUN_MOD && $group_id < PUN_GUEST)))
+		($pun_user['g_id'] == PUN_MOD && $user['group_id'] < PUN_GUEST)))
 		message($lang_common['No permission']);
 
 	if ($pun_user['g_id'] < PUN_GUEST)
@@ -628,8 +628,8 @@ else if (isset($_POST['form_sent']))
 
 		while (list($key, $value) = @each($_POST['form']))
 		{
-		    if (in_array($key, $allowed_elements))
-		        $form[$key] = $value;
+			if (in_array($key, $allowed_elements))
+				$form[$key] = $value;
 		}
 
 		return $form;
@@ -657,7 +657,7 @@ else if (isset($_POST['form_sent']))
 					if (strlen($form['username']) < 2)
 						message($lang_prof_reg['Username too short']);
 					else if (pun_strlen($form['username']) > 25)	// This usually doesn't happen since the form element only accepts 25 characters
-					    message($lang_common['Bad request']);
+						message($lang_common['Bad request']);
 					else if (!strcasecmp($form['username'], 'Guest') || !pun_strcasecmp($form['username'], $lang_common['Guest']))
 						message($lang_prof_reg['Username guest']);
 					else if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $form['username']))
@@ -751,6 +751,8 @@ else if (isset($_POST['form_sent']))
 				message($lang_prof_reg['Sig too long'].' '.$pun_config['p_sig_length'].' '.$lang_prof_reg['characters'].'.');
 			else if (substr_count($form['signature'], "\n") > ($pun_config['p_sig_lines']-1))
 				message($lang_prof_reg['Sig too many lines'].' '.$pun_config['p_sig_lines'].' '.$lang_prof_reg['lines'].'.');
+			else if ($pun_user['g_id'] == PUN_MEMBER && preg_match('#\[url|http://#', $form['signature']) && $user['num_posts'] < $pun_config['o_urls_in_signature'])
+				message($lang_prof_reg['Sig URLs disabled'].' '.$pun_config['o_urls_in_signature'].' '.$lang_prof_reg['messages on forum'].'.');
 			else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && pun_strtoupper($form['signature']) == $form['signature'] && $pun_user['g_id'] > PUN_MOD)
 				$form['signature'] = pun_ucwords(pun_strtolower($form['signature']));
 
@@ -796,7 +798,7 @@ else if (isset($_POST['form_sent']))
 			if (!isset($form['notify_with_post']) || $form['notify_with_post'] != '1') $form['notify_with_post'] = '0';
 			if ($form['pm_email_notify'] < 0 && $form['pm_email_notify'] > 2) $form['pm_email_notify'] = '1';
 			if (!isset($form['show_online']) || $form['show_online'] != '1') $form['show_online'] = '0';
-		
+
 			// If the save_pass setting has changed, we need to set a new cookie with the appropriate expire date
 			if ($pun_user['id'] == $id && $form['save_pass'] != $pun_user['save_pass'])
 			{

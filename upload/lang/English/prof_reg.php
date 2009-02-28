@@ -33,7 +33,10 @@ $lang_prof_reg = array(
 'characters'				=>	'characters',
 'Sig too many lines'		=>	'Signatures cannot have more than',
 'lines'						=>	'lines',
+'Sig URLs disabled'			=>	'Users with less than',
+'messages on forum'			=>	'forum comments can not use links in signature',
 'Signature quote/code'		=>	'The quote and code BBCodes are not allowed in signatures. Please go back and correct.',
 'Bad ICQ'					=>	'You entered an invalid ICQ UIN. Please go back and correct.',
-'Show online'			   => 'Show my name on the users online list.'
+'Show online'				=>	'Show my name on the users online list.'
+
 );

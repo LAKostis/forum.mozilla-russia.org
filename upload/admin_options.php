@@ -374,7 +374,7 @@ generate_admin_menu('options');
 									<th scope="row">Merge time</th>
 									<td>
 										<input type="text" name="form[merge_timeout]" size="5" maxlength="5" value="<?php echo $pun_config['o_merge_timeout'] ?>" />
-									<span>Time of merge of the post.</span>
+										<span>Time of merge of the post.</span>
 									</td>
 								</tr>
 							</table>
@@ -688,8 +688,8 @@ generate_admin_menu('options');
 								<tr>
 									<th scope="row">Image Verify registrations</th>
 									<td>
-								<input type="radio" name="form[regs_verify_image]" value="1"<?php if ($pun_config['o_regs_verify_image'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[regs_verify_image]" value="0"<?php if ($pun_config['o_regs_verify_image'] == '0') echo 'checked="checked"' ?> />&nbsp;<strong>No</strong>
-									<span>When enabled, users are forced to match text with an image in order to register. This is an effective way of avoiding registration abuse and not forcing all users to verify via email which can be time consuming.</span>
+										<input type="radio" name="form[regs_verify_image]" value="1"<?php if ($pun_config['o_regs_verify_image'] == '1') echo ' checked="checked"' ?> />&nbsp;<strong>Yes</strong>&nbsp;&nbsp;&nbsp;<input type="radio" name="form[regs_verify_image]" value="0"<?php if ($pun_config['o_regs_verify_image'] == '0') echo 'checked="checked"' ?> />&nbsp;<strong>No</strong>
+										<span>When enabled, users are forced to match text with an image in order to register. This is an effective way of avoiding registration abuse and not forcing all users to verify via email which can be time consuming.</span>
 									</td>
 								</tr>
 								<tr>
@@ -788,14 +788,14 @@ generate_admin_menu('options');
 									<th scope="row">Autoclose subforums</th>
 									<td>
 										<input type="text" name="form[autoclose_subforums]" size="20" value="<?php echo $pun_config['o_autoclose_subforums'] ?>" />
-									<span>Comma separated ID-list of subforums, where old topics will be automatically closed.</span>
+										<span>Comma separated ID-list of subforums, where old topics will be automatically closed.</span>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">Last post timeout</th>
 									<td>
 										<input type="text" name="form[autoclose_timeout]" size="20" value="<?php echo $pun_config['o_autoclose_timeout'] ?>" />
-									<span>Autoclose topics if last post older than N days.<br/>
+										<span>Autoclose topics if last post older than N days.<br/>
 									Next old topics autoclose at <b><?php echo date('Y-m-d', $pun_topics_autoclose) ?></b>. <a href="admin_maintenance.php?autoclose=1">Do in now!</a></span>
 									</td>
 								</tr>
@@ -812,14 +812,30 @@ generate_admin_menu('options');
 									<th scope="row">Message counter exceptions</th>
 									<td>
 										<input type="text" name="form[message_counter_exceptions]" size="20" value="<?php echo $pun_config['o_message_counter_exceptions'] ?>" />
-									<span>Comma separated ID-list of subforums, where messages counter disabled for all users.</span>
+										<span>Comma separated ID-list of subforums, where messages counter disabled for all users.</span>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">Iconize subforums</th>
 									<td>
 										<input type="text" name="form[iconize_subforums]" size="20" value="<?php echo $pun_config['o_iconize_subforums'] ?>" />
-									<span>Comma separated ID-list of subforums, where browser icons in topic enabled.</span>
+										<span>Comma separated ID-list of subforums, where browser icons in topic enabled.</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+				<div class="inform">
+					<fieldset>
+						<legend>Antispam</legend>
+						<div class="infldset">
+							<table class="aligntop" cellspacing="0">
+								<tr>
+									<th scope="row">Disable URLs in signature</th>
+									<td>
+										<input type="text" name="form[urls_in_signature]" size="5" value="<?php echo $pun_config['o_urls_in_signature'] ?>" />
+										<span>Users with less than N forum comments can not use links in signature.</span>
 									</td>
 								</tr>
 							</table>

@@ -5,6 +5,7 @@ $lang_profile = array(
 
 // Navigation and sections
 'Profile menu'					=>	'Раздел',
+'Section view'					=>	'Просмотр профиля',
 'Section essentials'			=>	'Основные настройки',
 'Section personal'				=>	'Персональные данные',
 'Section messaging'				=>	'Контактная информация',

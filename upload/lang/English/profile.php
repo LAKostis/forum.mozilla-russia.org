@@ -5,6 +5,7 @@ $lang_profile = array(
 
 // Navigation and sections
 'Profile menu'					=>	'Profile menu',
+'Section view'					=>	'View profile',
 'Section essentials'			=>	'Essentials',
 'Section personal'				=>	'Personal',
 'Section messaging'				=>	'Messaging',

@@ -883,10 +883,11 @@ if ($user['signature'] != '')
 
 
 // View or edit?
-if ($pun_user['id'] != $id &&
+$view = $pun_user['id'] != $id &&
 	($pun_user['g_id'] > PUN_MOD ||
 	($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_edit_users'] == '0') ||
-	($pun_user['g_id'] == PUN_MOD && $user['g_id'] < PUN_GUEST)))
+	($pun_user['g_id'] == PUN_MOD && $user['g_id'] < PUN_GUEST));
+if ($view || !$section)
 {
 	require_once PUN_ROOT.'include/parser.php';
 
@@ -945,8 +946,11 @@ if ($pun_user['id'] != $id &&
 	define('PUN_ALLOW_INDEX', 1);
 	require PUN_ROOT.'header.php';
 
+	if (!$view)
+		generate_profile_menu();
+
 ?>
-<div id="viewprofile" class="block">
+<div id="viewprofile" class="blockform">
 	<h2><span><?php echo $lang_common['Profile'] ?></span></h2>
 	<div class="box">
 		<div class="fakeform">
@@ -1030,13 +1034,16 @@ if ($pun_user['id'] != $id &&
 		</div>
 	</div>
 </div>
-
+<?php if (!$view): ?>
+	<div class="clearer"></div>
+</div>
+<?php endif; ?>
 <?php
 	require PUN_ROOT.'footer.php';
 }
 else
 {
-	if (!$section || $section == 'essentials')
+	if ($section == 'essentials')
 	{
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{

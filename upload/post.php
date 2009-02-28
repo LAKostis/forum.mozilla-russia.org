@@ -146,8 +146,10 @@ if (isset($_POST['form_sent']))
 		{
 			session_start();
 			// Make sure what they submitted is not empty
-			if ((trim($_POST['req_image']) == '') || (strtolower(trim($_POST['req_image'])) != strtolower($_SESSION['text'])))
+			if (strtolower(trim($_POST['req_image'])) != strtolower($_SESSION['text']))
 				$errors[] = $lang_register['Text mismatch'];
+			else
+				unset($_SESSION['text']);
 		}
 
 		// Check that the username (or a too similar username) is not already registered

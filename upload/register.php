@@ -135,6 +135,8 @@ else if (isset($_POST['form_sent']))
 
 		if (strtolower(trim($_POST['req_image'])) != strtolower($_SESSION['text']))
 			message($lang_register['Text mismatch']);
+		else
+			unset($_SESSION['text']);
 	}
 
 	// Check that the username (or a too similar username) is not already registered

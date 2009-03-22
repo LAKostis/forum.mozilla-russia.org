@@ -115,7 +115,7 @@ else {
 		$xajax->printJavascript();
 	}
 ?>
-<script type="text/javascript" src="scripts.js?0"></script>
+<script type="text/javascript" src="scripts.js?1"></script>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 }

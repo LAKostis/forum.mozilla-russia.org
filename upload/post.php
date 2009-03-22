@@ -479,7 +479,8 @@ $cur_index = 1;
 if ($fid && (isset($_GET['action']) && $_GET['action'] == 'newpoll') || $ptype > 0)
 	require PUN_ROOT.'include/polls/poll.php';
 else {
-	$required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
+	require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
+	$required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message'], 'req_image' => $lang_register['Image text']);
 	$focus_element = array('post');
 
 	if (!$pun_user['is_guest'])
@@ -580,19 +581,6 @@ if ($pun_user['is_guest'])
 						<label class="conl"><?php echo $email_label ?><br /><input type="text" name="<?php echo $email_form_name ?>" value="<?php if (isset($_POST[$email_form_name])) echo pun_htmlspecialchars($email); ?>" size="50" maxlength="50" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 						<div class="clearer"></div>
 <?php
-if ($pun_config['o_regs_verify_image'] == '1'): ?>
-<?php require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php' ?>
-	<div class="inform">
-		<fieldset>
-			<legend><?php echo $lang_register['Image verification'] ?></legend>
-			<div class="infldset">
-				<img src=ran.php><br />
-			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" name="req_image" size="16" maxlength="16" /><br /></label>
-			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
-			</div>
-		</fieldset>
-	</div>
-<?php endif;
 
 }
 
@@ -627,6 +615,20 @@ if (!empty($checkboxes))
 
 ?>
 			</div>
+<?php
+if ($pun_config['o_regs_verify_image'] == '1'):
+require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php'; ?>
+			<div class="inform">
+				<fieldset>
+					<legend><?php echo $lang_register['Image verification'] ?></legend>
+					<div class="infldset">
+						<img id="kcaptcha" src="kcaptcha.php"><br />
+					<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" id="req_image" name="req_image" size="16" maxlength="16" tabindex="<?php echo $cur_index++ ?>" /> <input type="button" value="<?php echo $lang_register['Image reload'] ?>" onclick="captchaReload()" /><br /></label>
+					<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
+					</div>
+				</fieldset>
+			</div>
+<?php endif; ?>
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_common['Options'] ?></legend>

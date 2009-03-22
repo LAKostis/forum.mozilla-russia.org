@@ -311,7 +311,7 @@ else if (isset($_POST['form_sent']))
 
 
 $page_title = pun_htmlspecialchars($lang_register['Register']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$required_fields = array('req_username' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['E-mail'], 'req_email2' => $lang_common['E-mail'].' 2');
+$required_fields = array('req_username' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['E-mail'], 'req_email2' => $lang_common['E-mail'].' 2', 'req_image' => $lang_register['Image text']);
 $focus_element = array('register', 'req_username');
 require PUN_ROOT.'header.php';
 
@@ -339,8 +339,8 @@ require PUN_ROOT.'header.php';
 		<fieldset>
 			<legend><?php echo $lang_register['Image verification'] ?></legend>
 			<div class="infldset">
-				<img src=ran.php><br />
-			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" name="req_image" size="16" maxlength="16" /><br /></label>
+				<img id="kcaptcha" src="kcaptcha.php"><br />
+			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" id="req_image" name="req_image" size="16" maxlength="16" /> <input type="button" value="<?php echo $lang_register['Image reload'] ?>" onclick="captchaReload()" /><br /></label>
 			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
 			</div>
 		</fieldset>

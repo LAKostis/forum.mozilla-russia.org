@@ -28,6 +28,7 @@ if (isset($_GET['action']))
 	define('PUN_QUIET_VISIT', 1);
 
 define('PUN_ROOT', './');
+define('PUN_NO_BAN', 1);
 require PUN_ROOT.'include/common.php';
 
 
@@ -132,6 +133,8 @@ else if ($action == 'out')
 
 else if ($action == 'forget' || $action == 'forget_2')
 {
+	check_bans();
+
 	if (!$pun_user['is_guest'])
 		hidden_redirect('index.php');
 

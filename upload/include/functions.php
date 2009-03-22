@@ -347,8 +347,8 @@ function generate_profile_menu($page = '')
 		<div class="box">
 			<div class="inbox">
 				<ul>
-					<li<?php if ($page == '') echo ' class="isactive"'; ?>><a href="profile.php?id=<?php echo $id ?>"><?php echo $lang_profile['Section view'] ?></a></li>
-					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
+					<li<?php if ($page == 'view') echo ' class="isactive"'; ?>><a href="profile.php?section=view&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section view'] ?></a></li>
+					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
 					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="profile.php?section=personal&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personal'] ?></a></li>
 					<li<?php if ($page == 'messaging') echo ' class="isactive"'; ?>><a href="profile.php?section=messaging&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section messaging'] ?></a></li>
 					<li<?php if ($page == 'personality') echo ' class="isactive"'; ?>><a href="profile.php?section=personality&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personality'] ?></a></li>

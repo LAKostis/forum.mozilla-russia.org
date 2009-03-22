@@ -887,7 +887,7 @@ $view = $pun_user['id'] != $id &&
 	($pun_user['g_id'] > PUN_MOD ||
 	($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_edit_users'] == '0') ||
 	($pun_user['g_id'] == PUN_MOD && $user['g_id'] < PUN_GUEST));
-if ($view || !$section)
+if ($view || $section == 'view')
 {
 	require_once PUN_ROOT.'include/parser.php';
 
@@ -947,7 +947,7 @@ if ($view || !$section)
 	require PUN_ROOT.'header.php';
 
 	if (!$view)
-		generate_profile_menu();
+		generate_profile_menu('view');
 
 ?>
 <div id="viewprofile" class="blockform">
@@ -1043,7 +1043,7 @@ if ($view || !$section)
 }
 else
 {
-	if ($section == 'essentials')
+	if (!$section || $section == 'essentials')
 	{
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{

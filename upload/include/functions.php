@@ -1431,6 +1431,7 @@ function pun_get_browser($uagent){
 		'arora',
 		'camino',
 		'chrome',
+		'cometbird',
 		'demobrowser',
 		'dillo',
 		'elinks',

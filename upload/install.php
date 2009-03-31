@@ -420,7 +420,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."bans (
 					id INTEGER NOT NULL,
 					username VARCHAR(200),
-					ip  VARCHAR(255),
+					ip VARCHAR(255),
 					email VARCHAR(50),
 					message VARCHAR(255),
 					expire INTEGER,
@@ -431,7 +431,7 @@ else
 
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'bans. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'bans. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -465,7 +465,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'categories. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'categories. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -500,7 +500,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'censoring. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'censoring. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -532,7 +532,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'config. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'config. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -573,7 +573,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'forum_perms. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'forum_perms. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -641,7 +641,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'forums. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'forums. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -718,7 +718,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'groups. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'groups. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -746,7 +746,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'iptrylog. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'iptrylog. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -765,47 +765,47 @@ else
 					smileys TINYINT(4) DEFAULT 1,
 					status TINYINT(4) DEFAULT 0,
 					showed TINYINT(4) DEFAULT 0,
-					PRIMARY KEY  (id)
+					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
 
 		case 'pgsql':
 		case 'pgsql':
-		         $sql = 'CREATE TABLE '.$db->prefix."messages (
-                                        id SERIAL,
-                                        owner INT NOT NULL DEFAULT 0,
-                                        subject VARCHAR(120) NOT NULL DEFAULT 0,
-                                        message TEXT,
-                                        sender VARCHAR(120) NOT NULL DEFAULT '',
-                                        sender_id INT NOT NULL DEFAULT 0,
-                                        posted INT NOT NULL DEFAULT 0,
-                                        sender_ip VARCHAR(120),
-                                        smileys SMALLINT DEFAULT 1,
-                                        status SMALLINT DEFAULT 0,
-                                        showed SMALLINT DEFAULT 0,
-                                        PRIMARY KEY (id)
-                                        ) ";
+			$sql = 'CREATE TABLE '.$db->prefix."messages (
+				id SERIAL,
+				owner INT NOT NULL DEFAULT 0,
+				subject VARCHAR(120) NOT NULL DEFAULT 0,
+				message TEXT,
+				sender VARCHAR(120) NOT NULL DEFAULT '',
+				sender_id INT NOT NULL DEFAULT 0,
+				posted INT NOT NULL DEFAULT 0,
+				sender_ip VARCHAR(120),
+				smileys SMALLINT DEFAULT 1,
+				status SMALLINT DEFAULT 0,
+				showed SMALLINT DEFAULT 0,
+				PRIMARY KEY (id)
+			) ";
 			break;
 
 		case 'sqlite':
-		         $sql = 'CREATE TABLE '.$db->prefix."messages (
-                                        id INTEGER NOT NULL,
-                                        owner INTEGER NOT NULL DEFAULT 0,
-                                        subject VARCHAR(120) NOT NULL DEFAULT 0,
-                                        message TEXT,
-                                        sender VARCHAR(120) NOT NULL DEFAULT '',
-                                        sender_id INTEGER NOT NULL DEFAULT 0,
-                                        posted INTEGER NOT NULL DEFAULT 0,
-                                        sender_ip VARCHAR(120),
-                                        smileys INTERGER DEFAULT 1,
-                                        status INTEGER DEFAULT 0,
-                                        showed INTEGER DEFAULT 0,
-                                        PRIMARY KEY (id)
-                                        ) ";
+			$sql = 'CREATE TABLE '.$db->prefix."messages (
+				id INTEGER NOT NULL,
+				owner INTEGER NOT NULL DEFAULT 0,
+				subject VARCHAR(120) NOT NULL DEFAULT 0,
+				message TEXT,
+				sender VARCHAR(120) NOT NULL DEFAULT '',
+				sender_id INTEGER NOT NULL DEFAULT 0,
+				posted INTEGER NOT NULL DEFAULT 0,
+				sender_ip VARCHAR(120),
+				smileys INTERGER DEFAULT 1,
+				status INTEGER DEFAULT 0,
+				showed INTEGER DEFAULT 0,
+				PRIMARY KEY (id)
+			) ";
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'messages. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'messages. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 	switch ($db_type)
 	{
@@ -841,7 +841,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'online. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'online. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -883,7 +883,7 @@ else
 					)";
 			break;
 	}
-	$db->query($sql) or error('Unable to create table '.$db->prefix.'polls. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db->prefix.'polls. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 	
 
 	switch ($db_type)
@@ -944,7 +944,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'posts. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'posts. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -979,7 +979,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'titles. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'titles. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1032,7 +1032,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'reports. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'reports. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1067,7 +1067,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_cache. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_cache. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1099,7 +1099,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_matches. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_matches. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1133,7 +1133,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_words. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'search_words. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1165,7 +1165,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'subscriptions. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'subscriptions. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1242,7 +1242,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'topics. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'topics. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -1272,7 +1272,7 @@ else
 					)";
 			break;
 	}
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploaded. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploaded. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -1317,7 +1317,7 @@ else
 					)";
 			break;
 	}
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploads_conf. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'uploads_conf. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	switch ($db_type)
@@ -1477,7 +1477,7 @@ else
 			break;
 	}
 
-	$db->query($sql) or error('Unable to create table '.$db_prefix.'users. Please check your settings and try again.',  __FILE__, __LINE__, $db->error());
+	$db->query($sql) or error('Unable to create table '.$db_prefix.'users. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
 
 
 	// Add some indexes
@@ -1518,7 +1518,7 @@ else
 
 	@reset($queries);
 	while (list(, $sql) = @each($queries))
-		$db->query($sql) or error('Unable to create indexes. Please check your configuration and try again.',  __FILE__, __LINE__, $db->error());
+		$db->query($sql) or error('Unable to create indexes. Please check your configuration and try again.', __FILE__, __LINE__, $db->error());
 
 
 
@@ -1597,6 +1597,10 @@ else
 		'o_announcement_message'	=> "'Enter your announcement here.'",
 		'o_rannouncement'			=> "'0'",
 		'o_rannouncement_message'	=> "'Enter your first announcement here.\nEnter your second announcement here.'",
+		'o_iconize_subforums'		=> "''",
+		'o_autoclose_subforums'		=> "''",
+		'o_autoclose_timeout'		=> "'730'",
+		'o_urls_in_signature'		=> "'50'",
 		'o_rules'					=> "'0'",
 		'o_rules_message'			=> "'Enter your rules here.'",
 		'o_maintenance'				=> "'0'",

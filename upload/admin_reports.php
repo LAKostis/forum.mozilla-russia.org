@@ -41,15 +41,23 @@ if (isset($_POST['zap_id']))
 {
 	confirm_referrer('admin_reports.php');
 
-	$zap_id = intval(key($_POST['zap_id']));
+	$zap_id = is_array ($_POST['zap_id']) ? $_POST['zap_id'] : array();
 
-	$result = $db->query('SELECT zapped FROM '.$db->prefix.'reports WHERE id='.$zap_id) or error('Unable to fetch report info', __FILE__, __LINE__, $db->error());
-	$zapped = $db->result($result);
+	foreach ($zap_id as $group)
+		foreach ($group as $report)
+			$zap_array[] = intval($report);
 
-	if ($zapped == '')
-		$db->query('UPDATE '.$db->prefix.'reports SET zapped='.time().', zapped_by='.$pun_user['id'].' WHERE id='.$zap_id) or error('Unable to zap report', __FILE__, __LINE__, $db->error());
+	$zapped = 0;
+	$unzapped = sizeof($zap_array);
 
-	redirect('admin_reports.php', 'Report zapped. Redirecting &hellip;');
+	if ($unzapped)
+	{
+		$db->query('UPDATE '.$db->prefix.'reports SET zapped='.time().', zapped_by='.$pun_user['id'].' WHERE id IN('.join(',', $zap_array).') AND zapped IS NULL') or error('Unable to zap report', __FILE__, __LINE__, $db->error());
+		$zapped = $db->affected_rows();
+		$unzapped -= $zapped;
+	}
+
+	redirect('admin_reports.php', ($unzapped ? ($zapped ? 'Some' : 'No') : 'All') . ' selected reports zapped. Redirecting &hellip;');
 }
 
 
@@ -62,13 +70,21 @@ generate_admin_menu('reports');
 	<div class="blockform">
 		<h2><span>New reports</span></h2>
 		<div class="box">
-			<form method="post" action="admin_reports.php?action=zap">
+			<form name="reports" method="post" action="admin_reports.php?action=zap">
 <?php
 
-$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.created, r.message, t.subject, f.forum_name, u.username AS reporter, p.id AS post_exists FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id WHERE r.zapped IS NULL ORDER BY created DESC') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.created, r.message, t.subject, f.forum_name, u.username AS reporter, p.id AS post_exists FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id WHERE r.zapped IS NULL ORDER BY post_id DESC, created') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
 
 if ($db->num_rows($result))
 {
+
+?>
+				<p class="submittop">
+					<input type="submit" value=" Zap selected reports " />
+				</p>
+<?php
+
+	$group_id = $last_group_id = 0;
 	while ($cur_report = $db->fetch_assoc($result))
 	{
 		$reporter = ($cur_report['reporter'] != '') ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
@@ -77,27 +93,65 @@ if ($db->num_rows($result))
 		$post = ($cur_report['post_id'] != '') ? str_replace("\n", '<br />', pun_htmlspecialchars($cur_report['message'])) : 'Deleted';
 		$postid = ($cur_report['post_exists'] != '') ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
 
+		$last_group_id = $cur_report['post_id'];
+
+		if ($group_id != $last_group_id)
+		{
+
+			if ($group_id)
+			{
+
 ?>
-				<div class="inform">
-					<fieldset>
-						<legend>Reported <?php echo format_time($cur_report['created']) ?></legend>
-						<div class="infldset">
-							<table cellspacing="0">
-								<tr>
-									<th scope="row">Forum&nbsp;&raquo;&nbsp;Topic&nbsp;&raquo;&nbsp;Post</th>
-									<td><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $topic ?>&nbsp;&raquo;&nbsp;<?php echo $postid ?></td>
-								</tr>
-								<tr>
-									<th scope="row">Report by <?php echo $reporter ?><div><input type="submit" name="zap_id[<?php echo $cur_report['id'] ?>]" value=" Zap " /></div></th>
-									<td><?php echo $post ?></td>
-								</tr>
 							</table>
 						</div>
 					</fieldset>
 				</div>
 <?php
 
+			}
+
+			$group_id = $last_group_id;
+
+?>
+				<div class="inform">
+					<fieldset>
+						<legend>First report: <?php echo format_time($cur_report['created']) ?></legend>
+						<div class="infldset">
+							<table cellspacing="0">
+								<tr>
+									<th scope="row">Forum&nbsp;&raquo;&nbsp;Topic&nbsp;&raquo;&nbsp;Post</th>
+									<td><input type="checkbox" onclick="toggleReports(<?php echo $last_group_id ?>, this)" /></td>
+									<td><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $topic ?>&nbsp;&raquo;&nbsp;<?php echo $postid ?></td>
+								</tr>
+<?php
+
+		}
+
+		if ($group_id == $last_group_id)
+		{
+
+?>
+								<tr>
+									<th scope="row">Report by <?php echo $reporter ?><br /><?php echo format_time($cur_report['created']) ?></th>
+									<td width="1"><input type="checkbox" name="zap_id[<?php echo $last_group_id ?>][]" value="<?php echo $cur_report['id'] ?>" /></td>
+									<td><?php echo $post ?></td>
+								</tr>
+<?php
+
+		}
+
 	}
+
+?>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+				<p class="submittop">
+					<input type="submit" value=" Zap selected reports " />
+				</p>
+<?php
+
 }
 else
 	echo "\t\t\t\t".'<p>There are no new reports.</p>'."\n";
@@ -108,15 +162,16 @@ else
 	</div>
 
 	<div class="blockform block2">
-		<h2><span>10 last zapped reports</span></h2>
+		<h2><span>30 last zapped reports</span></h2>
 		<div class="box">
 			<div class="fakeform">
 <?php
 
-$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.message, r.zapped, r.zapped_by AS zapped_by_id, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by, p.id AS post_exists  FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'users AS u2 ON r.zapped_by=u2.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id  WHERE r.zapped IS NOT NULL ORDER BY zapped DESC LIMIT 10') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.message, r.zapped, r.zapped_by AS zapped_by_id, r.created, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by, p.id AS post_exists FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'users AS u2 ON r.zapped_by=u2.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id WHERE r.zapped IS NOT NULL ORDER BY zapped DESC LIMIT 30') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
 
 if ($db->num_rows($result))
 {
+	$zap_time = $last_zap_time = 0;
 	while ($cur_report = $db->fetch_assoc($result))
 	{
 		$reporter = ($cur_report['reporter'] != '') ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
@@ -126,27 +181,60 @@ if ($db->num_rows($result))
 		$post_id = ($cur_report['post_exists'] != '') ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
 		$zapped_by = ($cur_report['zapped_by'] != '') ? '<a href="profile.php?id='.$cur_report['zapped_by_id'].'">'.pun_htmlspecialchars($cur_report['zapped_by']).'</a>' : 'N/A';
 
+		$last_zap_time = $cur_report['zapped'];
+
+		if ($zap_time != $last_zap_time)
+		{
+
+			if ($zap_time)
+			{
+
 ?>
-				<div class="inform">
-					<fieldset>
-						<legend>Zapped <?php echo format_time($cur_report['zapped']) ?></legend>
-						<div class="infldset">
-							<table cellspacing="0">
-								<tr>
-									<th scope="row">Forum&nbsp;&raquo;&nbsp;Topic&nbsp;&raquo;&nbsp;Post</th>
-									<td><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $topic ?>&nbsp;&raquo;&nbsp;<?php echo $post_id ?></td>
-								</tr>
-								<tr>
-									<th scope="row">Reported by <?php echo $reporter ?><div class="topspace">Zapped by <?php echo $zapped_by ?></div></th>
-									<td><?php echo $post ?></td>
-								</tr>
 							</table>
 						</div>
 					</fieldset>
 				</div>
 <?php
 
+			}
+
+			$zap_time = $last_zap_time;
+
+?>
+				<div class="inform">
+					<fieldset>
+						<legend>Zapped: <?php echo format_time($cur_report['zapped']) ?> | Zap speed: <?php echo format_time_interval($cur_report['zapped'] - $cur_report['created']) ?>| Zap initiator: <?php echo $zapped_by ?></legend>
+						<div class="infldset">
+							<table cellspacing="0">
+								<tr>
+									<th scope="row">Forum&nbsp;&raquo;&nbsp;Topic&nbsp;&raquo;&nbsp;Post</th>
+									<td><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $topic ?>&nbsp;&raquo;&nbsp;<?php echo $post_id ?></td>
+								</tr>
+<?php
+
+		}
+
+		if ($zap_time == $cur_report['zapped'])
+		{
+
+?>
+								<tr>
+									<th scope="row">Reported by <?php echo $reporter ?><br /><?php echo format_time($cur_report['created']) ?></th>
+									<td><?php echo $post ?></td>
+								</tr>
+<?php
+
+		}
+
 	}
+
+?>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+<?php
+
 }
 else
 	echo "\t\t\t\t".'<p>There are no zapped reports.</p>'."\n";

@@ -773,6 +773,38 @@ function format_time($timestamp, $date_only = false)
 
 
 //
+//
+//
+function format_time_interval($time)
+{
+	$str = '';
+	$words = 2;
+	if ($words && $time >= 86400)
+	{
+		$str .= floor($time / 86400) . ' days ';
+		$time %= 86400;
+		$words--;
+	}
+	if ($words && $time >= 3600)
+	{
+		$str .= floor($time / 3600) . ' hours ';
+		$time %= 3600;
+		$words--;
+	}
+	if ($words && $time >= 60)
+	{
+		$str .= floor($time / 60) . ' minutes ';
+		$time %= 60;
+		$words--;
+	}
+	if ($words)
+	{
+		$str .= $time . ' seconds ';
+	}
+	return $str;
+}
+
+//
 // If we are running pre PHP 4.3.0, we add our own implementation of file_get_contents
 //
 if (!function_exists('file_get_contents'))

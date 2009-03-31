@@ -121,6 +121,14 @@ function captchaReload()
 	document.getElementById("req_image").focus();
 }
 
+function toggleReports(group, obj) {
+	for(i=0; i < document.forms['reports'].elements.length; i++) {
+		var item=document.forms['reports'].elements[i];
+		if (item.type=="checkbox" && item.name == 'zap_id['+group+'][]')
+			item.checked=obj.checked;
+	}
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

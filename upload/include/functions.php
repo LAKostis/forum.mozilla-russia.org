@@ -1496,6 +1496,7 @@ function pun_get_browser($uagent){
 		'shiira',
 		'shiretoko',
 		'songbird',
+		'stainless',
 		'sunrise',
 		'swift',
 		'wyzo'

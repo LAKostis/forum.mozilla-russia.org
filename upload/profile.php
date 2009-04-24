@@ -751,7 +751,7 @@ else if (isset($_POST['form_sent']))
 				message($lang_prof_reg['Sig too long'].' '.$pun_config['p_sig_length'].' '.$lang_prof_reg['characters'].'.');
 			else if (substr_count($form['signature'], "\n") > ($pun_config['p_sig_lines']-1))
 				message($lang_prof_reg['Sig too many lines'].' '.$pun_config['p_sig_lines'].' '.$lang_prof_reg['lines'].'.');
-			else if ($pun_user['g_id'] == PUN_MEMBER && preg_match('#\[url|http://|www\.|\.ru|\.com|\.org|\.info|\.biz|\.ua#', $form['signature']) && $user['num_posts'] < $pun_config['o_urls_in_signature'])
+			else if ($pun_user['g_id'] == PUN_MEMBER && preg_match('#\[url|http://|www\.|\.ru|\.com|\.org|\.info|\.biz|\.ua#', $form['signature']) && (int)$user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
 				message($lang_prof_reg['Sig URLs disabled'].' '.$pun_config['o_urls_in_signature'].' '.$lang_prof_reg['messages on forum'].'.');
 			else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && pun_strtoupper($form['signature']) == $form['signature'] && $pun_user['g_id'] > PUN_MOD)
 				$form['signature'] = pun_ucwords(pun_strtolower($form['signature']));

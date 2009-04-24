@@ -283,8 +283,8 @@ if(isset($_GET['id'])){
 		if (!$quickpost)
 			$username = '<a href="profile.php?id='.$cur_post['id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		else
-			$username = '<a href="profile.php?id='.$cur_post['id'].'" onclick="pasteN();return false;" onmouseover="copyQ(this, true);">'.pun_htmlspecialchars($cur_post['username']).'</a>';
-		$cur_post['username'] = $cur_post['username'];
+			$username = '<a href="profile.php?id='.$cur_post['id'].'" onclick="pasteN();return false;">'.pun_htmlspecialchars($cur_post['username']).'</a>';
+
 		$user_title = get_title($cur_post);
 
 		$user_banned = $user_title == $lang_common['Banned'];
@@ -352,7 +352,7 @@ if(isset($_GET['id'])){
 			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'">'.$lang_pms['Reply'].'</a>';
 
 		if(!$status)
-			$post_actions[] = '<li onmouseover="copyQ(this, false, true);"><a href="'.$post_link.'" onclick="pasteQ();return false;">'.$lang_pms['Quote'].'</a>';
+			$post_actions[] = '<li onmouseover="copyQ(this, false);"><a href="'.$post_link.'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '");return false;\'>'.$lang_pms['Quote'].'</a>';
 
 	}
 	// If the sender has been deleted

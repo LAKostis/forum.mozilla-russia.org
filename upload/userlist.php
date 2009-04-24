@@ -134,7 +134,8 @@ $paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'userlist.ph
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink"><?php echo $paging_links ?></p>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
+		<div class="clearer"></div>
 	</div>
 </div>
 
@@ -186,7 +187,8 @@ else
 
 <div class="linksb">
 	<div class="inbox">
-		<p class="pagelink"><?php echo $paging_links ?></p>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
+		<div class="clearer"></div>
 	</div>
 </div>
 <?php

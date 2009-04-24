@@ -143,16 +143,18 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 if ($cur_topic['closed'] == '0')
 {
 	if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $is_admmod)
-		$post_link = '<a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+		$post_link = '<p class="pagelink conl"><a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a></p>'."\n";
 	else
-		$post_link = '&nbsp;';
+		$post_link = '';
 }
 else
 {
-	$post_link = $lang_topic['Topic closed'];
+	$post_link = '<p class="pagelink conl">' . $lang_topic['Topic closed'];
 
 	if ($is_admmod)
-		$post_link .= ' / <a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+		$post_link .= '<br /><a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+
+	$post_link .= '</p>'."\n";
 }
 
 
@@ -180,17 +182,6 @@ if ($pun_config['o_quickpost'] == '1' &&
 	$quickpost = true;
 }
 
-if (!$pun_user['is_guest'] && $pun_config['o_subscriptions'] == '1')
-{
-	if ($cur_topic['is_subscribed'])
-		// I apologize for the variable naming here. It's a mix of subscription and action I guess :-)
-		$subscraction = '<p class="subscribelink clearb">'.$lang_topic['Is subscribed'].' - <a href="misc.php?unsubscribe='.$id.'">'.$lang_topic['Unsubscribe'].'</a></p>'."\n";
-	else
-		$subscraction = '<p class="subscribelink clearb"><a href="misc.php?subscribe='.$id.'">'.$lang_topic['Subscribe'].'</a></p>'."\n";
-}
-else
-	$subscraction = '<div class="clearer"></div>'."\n";
-
 $page_title = pun_htmlspecialchars($cur_topic['subject']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT.'header.php';
@@ -199,8 +190,8 @@ require PUN_ROOT.'include/parser.php';
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $paging_links ?></p>
-		<p class="postlink conr"><?php echo $post_link ?></p>
+		<?php echo $post_link ?>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="viewforum.php?id=<?php echo $cur_topic['forum_id'] ?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $cur_topic['forum_id']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
@@ -428,10 +419,10 @@ while ($cur_post = $db->fetch_assoc($result))
 ?>
 <div class="postlinksb">
 	<div class="inbox">
-		<p class="postlink conr"><?php echo $post_link ?></p>
-		<p class="pagelink conl"><?php echo $paging_links ?></p>
+		<?php echo $post_link ?>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="viewforum.php?id=<?php echo $cur_topic['forum_id'] ?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo iconize_topic(pun_htmlspecialchars($cur_topic['subject']), $cur_topic['forum_id']) ?></li></ul>
-		<?php echo $subscraction ?>
+		<div class="clearer"></div>
 	</div>
 </div>
 

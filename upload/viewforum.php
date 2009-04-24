@@ -66,11 +66,16 @@ if ($cur_forum['moderators'] != '')
 $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
 
 // Can we or can we not post new topics?
-if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod) {
-	$post_link = "\t\t".'<p class="postlink conr"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a>'."\n";
+if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod)
+{
+	$post_link = '<p class="pagelink conl"><a href="post.php?fid='.$id.'">'.$lang_forum['Post topic'].'</a>';
+
 	if (!$pun_user['is_guest'])
-		$post_link .= '<br /><a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a></p>'."\n";
-} else
+		$post_link .= '<br /><a href="post.php?fid='.$id.'&amp;action=newpoll">'.$lang_polls['New poll'].'</a>';
+
+	$post_link .= '</p>'."\n";
+}
+else
 	$post_link = '';
 
 
@@ -91,8 +96,8 @@ require PUN_ROOT.'header.php';
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $paging_links ?></p>
-<?php echo $post_link ?>
+		<?php echo $post_link ?>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
@@ -302,8 +307,8 @@ else
 
 <div class="linksb">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $paging_links ?></p>
-<?php echo $post_link ?>
+		<?php echo $post_link ?>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>

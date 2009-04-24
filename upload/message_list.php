@@ -156,8 +156,8 @@ require PUN_ROOT.'header.php';
 
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
-		<p class="postlink conr"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
+		<p class="pagelink conl"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
+		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
 		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="message_list.php"><?php echo $lang_pms['Private Messages'].'</a>&nbsp;</li><li>&raquo;&nbsp;'.$page_name ?></li></ul>
 		<div class="clearer"></div>
 	</div>
@@ -182,14 +182,12 @@ require PUN_ROOT.'header.php';
 		else
 			$status = '';
 ?>
+					<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
+					<th class="tcmod"><input type="checkbox" onclick="toggleChildren(checked)"></th>
+					<?php } ?>
 					<th class="tcl"><?php echo $lang_pms['Subject'] ?><?php echo $status ?></th>
 					<th><?php if($box == 0) echo $lang_pms['Sender']; else echo $lang_pms['Receiver']; ?></th>
-					<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
-					<th <?php if(isset($_GET['action']) && $_GET['action'] != 'multidelete') { ?> class="tcr"<?php }?>><?php echo $lang_pms['Date'] ?></th>
-						<th><input type="checkbox" onclick="toggleChildren(checked)"></th>
-					<?php } else { ?>
 					<th class="tcr"><?php echo $lang_pms['Date'] ?></th>
-					<?php } ?>
 				</tr>
 			</thead>
 			<tbody>
@@ -231,7 +229,9 @@ if ($db->num_rows($result))
 
 ?>
 	<tr>
-
+<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
+		<td class="tcmod"><input type="checkbox" name="delete_messages[]" value="<?php echo $cur_mess['id']; ?>"></td>
+<?php } ?>
 		<td class="tcl">
 			<div class="intd">
 				<div class="<?php echo $icon_type ?>"><div class="nosize"><?php echo trim($icon_text) ?></div></div>
@@ -241,12 +241,7 @@ if ($db->num_rows($result))
 			</div>
 		</td>
 		<td class="tc2" style="white-space: nowrap; OVERFLOW: hidden"><a href="profile.php?id=<?php echo $cur_mess['sender_id'] ?>"><?php echo $cur_mess['sender'] ?></a></td>
-<?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
-		<td style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
-		<td style="text-align: center"><input type="checkbox" name="delete_messages[]" value="<?php echo $cur_mess['id']; ?>"></td>
-<?php } else { ?>
 		<td class="tcr" style="white-space: nowrap"><?php echo format_time($cur_mess['posted']) ?></td>
-<?php } ?>
 	</tr>
 <?php
 
@@ -420,21 +415,21 @@ if(isset($_GET['id'])){
 
 <div class="postlinksb">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
 <?php
 if(isset($_GET['action']) && $_GET['action'] == 'multidelete')
 {
 ?>
-		<p class="postlink conr"><input type="hidden" name="box" value="<?php echo $box	; ?>"><input type="submit" value="<?php echo $lang_pms['Delete'] ?>"></p>
+		<p class="pagelink conl"><input type="hidden" name="box" value="<?php echo $box	; ?>"><input type="submit" value="<?php echo $lang_pms['Delete'] ?>"></p>
 <?php
 }
 else
 {
 ?>
-		<p class="postlink conr"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
+		<p class="pagelink conl"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
 <?php
 }
 ?>
+		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
 		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="message_list.php"><?php echo $lang_pms['Private Messages'].'</a>&nbsp;</li><li>&raquo;&nbsp;'.$page_name; ?></li></ul>
 		<div class="clearer"></div>
 	</div>

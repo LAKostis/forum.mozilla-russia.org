@@ -98,8 +98,8 @@ require PUN_ROOT.'header.php';
 </div>
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink conl"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
-		<p class="postlink conr"><?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<a href="upload.php">'.$lang_uploads['New file upload'].'</a>' ?></p>
+		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>
 	</div>
@@ -262,7 +262,14 @@ elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_PO
 }
 
 ?>
-
+<div class="linksb">
+	<div class="inbox">
+		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
+		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
+		<div class="clearer"></div>
+	</div>
+</div>
 <?php
 
 $footer_style = 'index';

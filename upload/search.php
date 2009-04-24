@@ -525,7 +525,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink"><?php echo $paging_links ?></p>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
+		<div class="clearer"></div>
 	</div>
 </div>
 
@@ -728,7 +729,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 ?>
 <div class="<?php echo ($show_as == 'topics') ? 'linksb' : 'postlinksb'; ?>">
 	<div class="inbox">
-		<p class="pagelink"><?php echo $paging_links ?></p>
+		<p class="postlink conr"><?php echo $paging_links ?></p>
+		<div class="clearer"></div>
 	</div>
 </div>
 <?php

@@ -20,10 +20,10 @@ div.postmsg p{line-height:1.4}
 div.postleft dt{font-size:1.1em}
 .pun pre{font-size:1.2em}
 /* 2.5 Bold text */
-div.postleft dt,div.postmsg h4,td.tcl h3,div.forminfo h3,p.postlink,div.linkst li,div.linksb li,div.postlinksb li,.blockmenu li,#brdtitle h1,.pun span.warntext,.pun p.warntext{font-weight:700}
+div.postleft dt,div.postmsg h4,td.tcl h3,div.forminfo h3,p.pagelink,div.linkst li,div.linksb li,div.postlinksb li,.blockmenu li,#brdtitle h1,.pun span.warntext,.pun p.warntext{font-weight:700}
 /* 3. LINKS */
 /* 3.1 Remove underlining for main menu, post header links, post links and vertical menus */
-#brdmenu a:link,#brdmenu a:visited,.blockpost dt a:link,.blockpost dt a:visited,.blockpost h2 a:link,.blockpost h2 a:visited,.postlink a:link,.postlink a:visited,.postfootright a:link,.postfootright a:visited,.blockmenu a:link,.blockmenu a:visited{text-decoration:none}
+#brdmenu a:link,#brdmenu a:visited,.blockpost dt a:link,.blockpost dt a:visited,.blockpost h2 a:link,.blockpost h2 a:visited,.pagelink a:link,.pagelink a:visited,.postfootright a:link,.postfootright a:visited,.blockmenu a:link,.blockmenu a:visited{text-decoration:none}
 /* 3.2 Underline on hover for links in headers and main menu */
 #brdmenu a:hover,.blockpost h2 a:hover{text-decoration:underline}
 /* 4. BORDER WIDTH AND STYLE */
@@ -55,7 +55,7 @@ div.postlinksb{margin-top:-6px}
 /* 6. SPACING AROUND CONTENT */
 /* 6.1 Default padding for main items */
 div.block div.inbox,div.blockmenu div.inbox{padding:3px 6px}
-.pun p,.pun dl,div.blockmenu li,.pun label,#announce div.inbox div{padding:3px 0}
+.pun p,.pun dl,div.blockmenu li,.pun label,#announce div.inbox div,div.linkst div.inbox ul,div.postlinksb div.inbox ul{padding:3px 0}
 .pun h2{padding:4px 6px}
 /* 6.2 Special spacing for various elements */
 .pun h1{padding:3px 0 0}

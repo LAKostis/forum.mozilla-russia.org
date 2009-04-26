@@ -616,7 +616,7 @@ if (!empty($checkboxes))
 ?>
 			</div>
 <?php
-if ($pun_config['o_regs_verify_image'] == '1'):
+if ($pun_config['o_regs_verify_image'] == '1' && $pun_user['is_guest']):
 require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php'; ?>
 			<div class="inform">
 				<fieldset>

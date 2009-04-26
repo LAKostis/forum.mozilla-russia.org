@@ -33,7 +33,7 @@ but does no harm */
 label.conl{width:auto;overflow:visible;margin-right:10px}
 /* 5.2 Set up page numbering and posts links */
 div.linkst .conl,div.linksb .conl,div.postlinksb .conl{width:18em}
-div.linkst .conr,div.linksb .conr,div.postlinksb .conr{width:16em}
+div.linkst .conr,div.linksb .conr,div.postlinksb .conr{width:22em}
 form div.linksb .conr{width:32em}
 /* 5.3 Settings for Profile and Admin interface.*/
 div.block2col{padding-bottom:1px}

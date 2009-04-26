@@ -1,9 +1,7 @@
-var txt = '', nick = '', selected_id = null;
+var txt = '', selected_id = null;
 
-function copyQ(obj, nickname) {
+function copyQ(obj) {
 	txt = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text.toString() : '';
-	if (nickname)
-		nick = obj.textContent ? obj.textContent : obj.innerHTML;
 }
 
 function pasteQ(nick, msg) {
@@ -14,7 +12,8 @@ function pasteQ(nick, msg) {
 		insert_text('[quote=' + nick + ']' + trim(txt) + '[/quote]\n', '');
 }
 
-function pasteN() {
+function pasteN(obj) {
+	var nick = obj.textContent ? obj.textContent : (obj.innerHTML ? obj.innerHTML : null);
 	if (nick && document.forms['post']['req_message'])
 		insert_text('[b]' + nick + '[/b]\n', '');
 }

@@ -28,7 +28,7 @@ but does no harm */
 #brdfooter h2,#brdstats h2,#brdstats .conl dt,#brdstats .conr dt,#modcontrols dt,#searchlinks dt,div.postright h3{position:absolute;display:block;overflow:hidden;width:1em;left:-999em}
 /* 5. BOX CONTAINERS AND FLOATS */
 /* 5.1. Setup all left and right content using floats. */
-.conr{float:right;text-align:right;clear:right;width:40%;padding:0}
+.conr{float:right;text-align:right;clear:right;width:40%;padding:0;white-space:nowrap}
 .conl{float:left;width:60%;white-space:nowrap}
 label.conl{width:auto;overflow:visible;margin-right:10px}
 /* 5.2 Set up page numbering and posts links */

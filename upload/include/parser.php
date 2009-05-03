@@ -607,7 +607,7 @@ function iconize_topic($text, $fid)
 	if (!isset($iconize_forums))
 		$iconize_forums = !empty($pun_config['o_iconize_subforums']) ? split(',', $pun_config['o_iconize_subforums']) : array();
 
-	if ($fid && isset($iconize_forums[$fid]))
+	if ($fid && in_array($fid, $iconize_forums))
 		return do_browsers($text);
 	return $text;
 }

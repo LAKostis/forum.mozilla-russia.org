@@ -167,11 +167,11 @@ else
 			<div class="fakeform">
 <?php
 
-$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.message, r.zapped, r.zapped_by AS zapped_by_id, r.created, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by, p.id AS post_exists FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'users AS u2 ON r.zapped_by=u2.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id WHERE r.zapped IS NOT NULL ORDER BY zapped DESC LIMIT 30') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT r.id, r.post_id, r.topic_id, r.forum_id, r.reported_by, r.message, r.zapped, r.zapped_by AS zapped_by_id, r.created, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by, p.id AS post_exists FROM '.$db->prefix.'reports AS r LEFT JOIN '.$db->prefix.'topics AS t ON r.topic_id=t.id LEFT JOIN '.$db->prefix.'forums AS f ON r.forum_id=f.id LEFT JOIN '.$db->prefix.'users AS u ON r.reported_by=u.id LEFT JOIN '.$db->prefix.'users AS u2 ON r.zapped_by=u2.id LEFT JOIN '.$db->prefix.'posts AS p ON r.post_id=p.id WHERE r.zapped IS NOT NULL ORDER BY r.zapped DESC, r.topic_id DESC LIMIT 30') or error('Unable to fetch report list', __FILE__, __LINE__, $db->error());
 
 if ($db->num_rows($result))
 {
-	$zap_time = $last_zap_time = 0;
+	$group_id = $last_group_id = 0;
 	while ($cur_report = $db->fetch_assoc($result))
 	{
 		$reporter = ($cur_report['reporter'] != '') ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
@@ -181,12 +181,12 @@ if ($db->num_rows($result))
 		$post_id = ($cur_report['post_exists'] != '') ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
 		$zapped_by = ($cur_report['zapped_by'] != '') ? '<a href="profile.php?id='.$cur_report['zapped_by_id'].'">'.pun_htmlspecialchars($cur_report['zapped_by']).'</a>' : 'N/A';
 
-		$last_zap_time = $cur_report['zapped'];
+		$last_group_id = $cur_report['post_id'];
 
-		if ($zap_time != $last_zap_time)
+		if ($group_id != $last_group_id)
 		{
 
-			if ($zap_time)
+			if ($group_id)
 			{
 
 ?>
@@ -198,7 +198,7 @@ if ($db->num_rows($result))
 
 			}
 
-			$zap_time = $last_zap_time;
+			$group_id = $last_group_id;
 
 ?>
 				<div class="inform">
@@ -214,7 +214,7 @@ if ($db->num_rows($result))
 
 		}
 
-		if ($zap_time == $cur_report['zapped'])
+		if ($group_id == $cur_report['post_id'])
 		{
 
 ?>

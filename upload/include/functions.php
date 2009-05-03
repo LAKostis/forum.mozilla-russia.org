@@ -696,12 +696,12 @@ function paginate($num_pages, $cur_page, $link_to)
 	{
 		if($cur_page > 1){
 			$back_page_number = $cur_page-1;
-			$back_page = '<a href="'.$link_to.'&amp;p='.$back_page_number.'">&laquo;--</a>';
+			$back_page = '<a href="'.$link_to.'&amp;p='.$back_page_number.'">&laquo;</a>';
 			array_splice($pages, 0, 0, $back_page);
 		}
 		if($cur_page < $num_pages){
 			$next_page_number = $cur_page+1;
-			$next_page = '<a href="'.$link_to.'&amp;p='.$next_page_number.'">--&raquo;</a>';
+			$next_page = '<a href="'.$link_to.'&amp;p='.$next_page_number.'">&raquo;</a>';
 			array_push($pages, $next_page);
 															}
 	}

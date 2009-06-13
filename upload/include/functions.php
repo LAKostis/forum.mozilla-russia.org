@@ -1490,6 +1490,7 @@ function pun_get_browser($uagent){
 		'netsurf',
 		'omniweb',
 		'orca',
+		'phoenix',
 		'rekonq',
 		'safari',
 		'seamonkey',

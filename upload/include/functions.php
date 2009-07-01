@@ -1513,7 +1513,7 @@ function pun_get_browser($uagent){
 		$ua_browser_alt = "unknown";
 	}
 	else{
-		if($ua_browser == "ie" && $ua_version == "7.0"){
+		if($ua_browser == "ie" && $ua_version >= "7.0"){
 		$ua_browser = "ie7";
 		$ua_browser_alt = "IE";
 		}

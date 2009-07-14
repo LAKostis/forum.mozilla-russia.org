@@ -1460,6 +1460,7 @@ function pun_get_browser($uagent) {
 		'firefox',
 		'opera',
 		'ie',
+		'android',
 		'arora',
 		'camino',
 		'chrome',

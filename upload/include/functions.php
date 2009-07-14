@@ -1455,7 +1455,7 @@ function pun_strcasecmp($string1, $string2) {
 //
 // For show User Agent in users info
 //
-function pun_get_browser($uagent){
+function pun_get_browser($uagent) {
 	$known_bw = array(
 		'firefox',
 		'opera',
@@ -1508,29 +1508,27 @@ function pun_get_browser($uagent){
 	$ua_version = $ua['version'];
 	$ua_browser_alt = pun_ucwords($ua_browser);
 
-	if (!in_array($ua_browser,$known_bw)){
+	if (!in_array($ua_browser,$known_bw)) {
 		$ua_browser = "unknown";
 		$ua_version = "0.0";
 		$ua_browser_alt = "unknown";
 	}
-	else{
-		if($ua_browser == "ie" && $ua_version >= "7.0"){
-		$ua_browser = "ie7";
-		$ua_browser_alt = "IE";
-		}
-		if($ua_browser == "ie"){
+	elseif {
+		if ($ua_browser == "ie" && $ua_version >= "7.0") {
+			$ua_browser = "ie7";
 			$ua_browser_alt = "IE";
 		}
-	else{
-		if($ua_browser == "firefox" && $ua_version == "3.5"){
-		$ua_browser = "firefox35";
-		$ua_browser_alt = "FIREFOX";
-		}
-		if($ua_browser == "firefox"){
+		if($ua_browser == "ie")
+			$ua_browser_alt = "IE";
+	}
+	else {
+		if ($ua_browser == "firefox" && $ua_version == "3.5") {
+			$ua_browser = "firefox35";
 			$ua_browser_alt = "FIREFOX";
 		}
+		if ($ua_browser == "firefox")
+			$ua_browser_alt = "FIREFOX";
 	}
-
 	return array($ua_browser,$ua_version,$ua_browser_alt);
 }
 

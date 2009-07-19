@@ -606,7 +606,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 else if (isset($_POST['form_sent']))
 {
 	// Fetch the user group of the user we are editing
-	$result = $db->query('SELECT group_id, num_posts FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT group_id FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
 		message($lang_common['Bad request']);
 
@@ -751,7 +751,7 @@ else if (isset($_POST['form_sent']))
 				message($lang_prof_reg['Sig too long'].' '.$pun_config['p_sig_length'].' '.$lang_prof_reg['characters'].'.');
 			else if (substr_count($form['signature'], "\n") > ($pun_config['p_sig_lines']-1))
 				message($lang_prof_reg['Sig too many lines'].' '.$pun_config['p_sig_lines'].' '.$lang_prof_reg['lines'].'.');
-			else if ($pun_user['g_id'] == PUN_MEMBER && preg_match('#\[url|http://|www\.|\.ru|\.com|\.org|\.info|\.biz|\.ua#', $form['signature']) && (int)$user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
+			else if ($pun_user['g_id'] == PUN_MEMBER && preg_match('#\[url|http://|www\.|\.ru|\.com|\.org|\.info|\.biz|\.ua#', $form['signature']) && (int)$pun_user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
 				message($lang_prof_reg['Sig URLs disabled'].' '.$pun_config['o_urls_in_signature'].' '.$lang_prof_reg['messages on forum'].'.');
 			else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && pun_strtoupper($form['signature']) == $form['signature'] && $pun_user['g_id'] > PUN_MOD)
 				$form['signature'] = pun_ucwords(pun_strtolower($form['signature']));

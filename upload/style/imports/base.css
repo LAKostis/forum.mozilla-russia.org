@@ -33,7 +33,7 @@ but does no harm */
 label.conl{width:auto;overflow:visible;margin-right:10px}
 /* 5.2 Set up page numbering and posts links */
 div.linkst .conl,div.linksb .conl,div.postlinksb .conl{width:18em}
-div.linkst .conr,div.linksb .conr,div.postlinksb .conr{width:20em}
+div.linkst .conr,div.linksb .conr,div.postlinksb .conr{width:auto;padding-left:10px}
 div.linkst ul{margin:0 0 0 18em}
 form div.linksb .conr{width:32em}
 /* 5.3 Settings for Profile and Admin interface.*/
@@ -85,6 +85,7 @@ span.bbu{text-decoration:underline}
 /* 8. LISTS SPECIAL SETTINGS */
 /* 8.1 Horizontal display of online list, main navigation menu and breadcrumbs */
 #onlinelist dd,#onlinelist dt,#brdmenu li,div.linkst li,div.linksb li,div.postlinksb li,div.postfootright li,ul.bblinks li{display:inline;height:0}
+div.linkst div.inbox ul,div.postlinksb div.inbox ul{overflow:hidden}
 /* 8.2 Turn on square icon for posterror list */
 #posterror ul li{list-style:square inside}
 /* 8.3 Right alignment of descriptions in ordinary member view of other members profiles */

@@ -49,6 +49,8 @@ $result = $db->query('SELECT f.forum_name, f.redirect_url, f.moderators, f.num_t
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
 
+define('FORUM_ID', $id);
+
 $cur_forum = $db->fetch_assoc($result);
 
 // Is this a redirect forum? In that case, redirect!

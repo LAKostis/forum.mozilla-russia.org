@@ -186,6 +186,24 @@ $tpl_main = str_replace('<pun_page>', htmlspecialchars(basename($_SERVER['PHP_SE
 // END SUBST - <pun_page>
 
 
+// START SUBST - <pun_search>
+$tpl_main = str_replace('<pun_search>',
+
+(defined('TOPIC_ID') ? '<input type="hidden" name="show_as" value="posts" />
+			<input type="hidden" name="topic" value="' . TOPIC_ID . '" />
+			<input type="submit" value="Поиск по теме" accesskey="g" id="search-submit" />' : (
+
+defined('FORUM_ID') ? '<input type="hidden" name="show_as" value="topics" />
+			<input type="hidden" name="forum" value="' . FORUM_ID . '" />
+			<input type="submit" value="Поиск по разделу " accesskey="g" id="search-submit" />' :
+
+'<input type="hidden" name="show_as" value="topics" />
+			<input type="submit" value="Поиск по форуму" accesskey="g" id="search-submit" />'))
+
+, $tpl_main);
+// END SUBST - <pun_search>
+
+
 // START SUBST - <pun_title>
 $tpl_main = str_replace('<pun_title>', '<h1><span>'.pun_htmlspecialchars($pun_config['o_board_title']).'</span></h1>', $tpl_main);
 // END SUBST - <pun_title>

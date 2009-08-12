@@ -35,9 +35,8 @@
 	<div class="search">
 		<form id="search" method="get" action="search.php">
 			<input type="hidden" name="action" value="search" />
-			<input type="hidden" name="show_as" value="topics" />
 			<input type="text" name="keywords" size="20" maxlength="100" id="search-input" />
-			<input type="submit" name="search" value="Поиск" accesskey="g" id="search-submit" />
+			<pun_search>
 		</form>
 	</div>
 </div>

@@ -57,6 +57,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 {
 	$action = (isset($_GET['action'])) ? $_GET['action'] : null;
 	$forum = (isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum'])) ? $_GET['forum'] : -1;
+	$topic = (isset($_GET['topic']) && preg_match('#^[\d,]+$#', $_GET['topic'])) ? $_GET['topic'] : -1;
 	$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
 	$search_in = 0;
 	if (isset($search_id)) unset($search_id);
@@ -136,6 +137,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 		// Search a specific forum?
 		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id IN('.$forum.')' : '';
+		$topic_sql = $topic ? ' AND t.id='.$topic : '';
 
 		if (!empty($author) || !empty($keywords))
 		{
@@ -321,7 +323,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			}
 			else
 			{
-				$result = $db->query('SELECT p.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.
+				$result = $db->query('SELECT p.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.$topic_sql.
 				($after ? ' AND p.posted > ' . $after : '') . ($before ? ' AND p.posted < ' . $before : '')
 				, true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$search_ids = array();

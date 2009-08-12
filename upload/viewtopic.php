@@ -125,6 +125,8 @@ else
 		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 }
 
+define('TOPIC_ID', $id);
+
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
 

@@ -137,7 +137,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 		// Search a specific forum?
 		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id IN('.$forum.')' : '';
-		$topic_sql = $topic ? ' AND t.id='.$topic : '';
+		$topic_sql = ($topic != -1 ? ' AND t.id='.$topic : '');
 
 		if (!empty($author) || !empty($keywords))
 		{

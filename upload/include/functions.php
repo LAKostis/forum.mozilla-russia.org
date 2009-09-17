@@ -1490,6 +1490,7 @@ function pun_get_browser($uagent) {
 		'minefield',
 		'mozilla',
 		'namoroka',
+		'netpositive',
 		'netscape',
 		'netsurf',
 		'omniweb',

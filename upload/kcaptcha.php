@@ -1,6 +1,7 @@
 <?php
 
-error_reporting(E_NONE);
+//
+// error_reporting(0);
 
 include 'include/kcaptcha/kcaptcha.php';
 

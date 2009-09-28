@@ -222,7 +222,10 @@ $tpl_main = str_replace('<pun_navlinks>','<div id="brdmenu" class="inbox">'."\n\
 // START SUBST - <pun_status>
 if ($pun_user['is_guest'])
 {
-	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li>'.$lang_common['Not logged in'].'</li></ul>'."\n\t\t\t";
+	// Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
+	$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
+
+	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li><form method="post" action="login.php?action=in"><input type="hidden" name="form_sent" value="1" /> <input type="hidden" name="redirect_url" value="' . $redirect_url .'" /> <input type="text" name="req_username" size="16" maxlength="25" tabindex="1" value="'. $lang_common['Username'] .'" onfocus="this.value=\'\'" /> <input type="password" name="req_password" size="12" maxlength="16" tabindex="2" value="'. $lang_common['Password'] .'" onfocus="this.value=\'\'" /> <input type="submit" name="login" value="'. $lang_common['Login'] .'" tabindex="3" /></form></li></ul>'."\n\t\t\t";
 	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
 	$tpl_temp .= "\n\t\t\t".'<ul class="conr"><li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else

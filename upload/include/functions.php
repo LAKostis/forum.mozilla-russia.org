@@ -1506,6 +1506,7 @@ function pun_get_browser($uagent) {
 		'stainless',
 		'sunrise',
 		'swift',
+		'uzbl',
 		'wyzo'
 	);
 	$ua = get_browser($uagent,true);

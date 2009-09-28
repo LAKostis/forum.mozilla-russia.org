@@ -172,12 +172,12 @@ else if (isset($_GET['email']))
 						<label><strong><?php echo $lang_misc['E-mail subject'] ?></strong><br />
 						<input class="longinput" type="text" name="req_subject" size="75" maxlength="70" tabindex="1" /><br /></label>
 						<label><strong><?php echo $lang_misc['E-mail message'] ?></strong><br />
-						<textarea name="req_message" rows="10" cols="75" tabindex="2"></textarea><br /></label>
+						<textarea name="req_message" rows="10" cols="75" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="2"></textarea><br /></label>
 						<p><?php echo $lang_misc['E-mail disclosure note'] ?></p>
 					</div>
 				</fieldset>
 			</div>
-			<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="3" accesskey="s" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<p><input type="submit" id="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="3" accesskey="s" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		</form>
 	</div>
 </div>
@@ -270,11 +270,11 @@ else if (isset($_GET['report']))
 					<legend><?php echo $lang_misc['Reason desc'] ?></legend>
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
-						<label><strong><?php echo $lang_misc['Reason'] ?></strong><br /><textarea name="req_reason" rows="5" cols="60"></textarea><br /></label>
+						<label><strong><?php echo $lang_misc['Reason'] ?></strong><br /><textarea name="req_reason" rows="5" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" cols="60"></textarea><br /></label>
 					</div>
 				</fieldset>
 			</div>
-			<p><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<p><input type="submit" id="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		</form>
 	</div>
 </div>

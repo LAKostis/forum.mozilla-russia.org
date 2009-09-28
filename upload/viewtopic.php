@@ -439,7 +439,7 @@ if ($quickpost)
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 						<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
-						<label><textarea name="req_message" rows="7" cols="75" tabindex="1" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);"></textarea></label>
+						<label><textarea name="req_message" rows="7" cols="75" tabindex="1" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()"></textarea></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;">[ + ]</a> <a href="#" onclick="decrementForm();return false;">[ - ]</a></div>
 						<ul class="bblinks">
 							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
@@ -449,7 +449,7 @@ if ($quickpost)
 					</div>
 				</fieldset>
 			</div>
-		<p><input type="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" accesskey="p" /></p>
+		<p><input type="submit" id="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" accesskey="p" /></p>
 		</form>
 	</div>
 </div>

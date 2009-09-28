@@ -379,25 +379,15 @@ while ($cur_post = $db->fetch_assoc($result))
 <?php if ($cur_post['poster_id'] > 1): ?>
 					<dd class="usertitle"><strong><?php echo $user_title ?></strong></dd>
 <?php endif; ?>
-					<dd class="postavatar">
-<?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?>
-					</dd>
+					<dd class="postavatar"><?php if (!$user_avatar) {echo "&nbsp;";}else {echo $user_avatar;} ## Validation fix ?></dd>
 <?php if (strlen($user_image_award)>0) echo $user_image_award; ?>
 <?php if (count($user_info)) echo "\t\t\t\t\t".implode('</dd>'."\n\t\t\t\t\t", $user_info).'</dd>'."\n"; ?>
-					<dd>
-<?php
+					<dd><?php
 	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1) {
 		echo $lang_reputation['Reputation'];
-?> :
-<?php if($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']) { ?>
-						<a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a>
-						<a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="-" border="0" /></a>
-<?php }?>
-						<strong><small>[+ <?php echo $cur_post['reputation_plus']; ?>/ -<?php echo $cur_post['reputation_minus']; ?> ]</small></strong>
-<?php }?>
-					</dd>
+?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
 <?php if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
-	</dl>
+				</dl>
 			</div>
 			<div class="postright">
 				<h3><?php if (($post_count + $start_from) > 1) echo ' Re: '; ?><?php echo pun_htmlspecialchars($cur_topic['subject']) ?></h3>

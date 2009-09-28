@@ -131,6 +131,7 @@ if (isset($_POST['form_sent']))
 				\'1\',
 				\''.time().'\'
 			)') or error('Unable to send message', __FILE__, __LINE__, $db->error());
+			$message_id = $db->insert_id() - 1;
 		}
 
 		// Should we send out notifications?
@@ -163,6 +164,7 @@ if (isset($_POST['form_sent']))
 						$mail_message = str_replace('<sender>', $pun_user['username'], $mail_message);
 						$mail_message = str_replace('<subject>', '\''. $subject.'\'', $mail_message);
 						$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
+						$mail_message = str_replace('<reply_url>', $pun_config['o_base_url'].'/message_list.php?id='.$message_id, $mail_message);
 
 						$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
 						$notification_emails[$cur_subscriber['language']][1] = $mail_message;

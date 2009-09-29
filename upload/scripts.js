@@ -95,17 +95,17 @@ function mail_to(s) {
 }
 
 function incrementForm() {
-	if(document.forms['post'] && document.forms['post']['req_message'].rows < 49)
-		document.forms['post']['req_message'].rows += 7;
-	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows < 49)
-		document.forms['edit']['req_message'].rows += 7;
+	if(document.forms['post'])
+		document.forms['post']['req_message'].rows += 15;
+	else if(document.forms['edit'])
+		document.forms['edit']['req_message'].rows += 15;
 }
 
 function decrementForm() {
-	if(document.forms['post'] && document.forms['post']['req_message'].rows > 7)
-		document.forms['post']['req_message'].rows -= 7;
-	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows > 7)
-		document.forms['edit']['req_message'].rows -= 7;
+	if(document.forms['post'] && document.forms['post']['req_message'].rows > 21)
+		document.forms['post']['req_message'].rows -= 15;
+	else if(document.forms['edit'] && document.forms['edit']['req_message'].rows > 21)
+		document.forms['edit']['req_message'].rows -= 15;
 }
 
 function trim(str) {

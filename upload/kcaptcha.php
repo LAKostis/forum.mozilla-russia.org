@@ -1,14 +1,13 @@
 <?php
 
-//
-// error_reporting(0);
-
 include 'include/kcaptcha/kcaptcha.php';
-
-session_start();
 
 $captcha = new KCAPTCHA();
 
-$_SESSION['text'] = $captcha->getKeyString();
+if(isset($_REQUEST[session_name()]))
+{
+	session_start();
+	$_SESSION['text'] = $captcha->getKeyString();
+}
 
 ?>

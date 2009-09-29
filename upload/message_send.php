@@ -116,6 +116,7 @@ if (isset($_POST['form_sent']))
 			\''.$smilies.'\',
 			\''.time().'\'
 		)') or error('Unable to send message', __FILE__, __LINE__, $db->error());
+		$message_id = $db->insert_id();
 
 		// Save an own copy of the message
 		if(isset($_POST['savemessage'])){
@@ -131,7 +132,6 @@ if (isset($_POST['form_sent']))
 				\'1\',
 				\''.time().'\'
 			)') or error('Unable to send message', __FILE__, __LINE__, $db->error());
-			$message_id = $db->insert_id() - 1;
 		}
 
 		// Should we send out notifications?
@@ -161,6 +161,7 @@ if (isset($_POST['form_sent']))
 						$mail_message = trim(substr($mail_tpl, $first_crlf));
 
 						$mail_subject = str_replace('<board_title>', $pun_config['o_board_title'], $mail_subject);
+						$mail_message = str_replace('<board_title>', $pun_config['o_board_title'], $mail_message);
 						$mail_message = str_replace('<sender>', $pun_user['username'], $mail_message);
 						$mail_message = str_replace('<subject>', '\''. $subject.'\'', $mail_message);
 						$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);

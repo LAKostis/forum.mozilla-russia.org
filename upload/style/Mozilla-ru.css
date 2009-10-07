@@ -28,7 +28,7 @@ div.postleft dt,div.postmsg h4,td.tcl h3,div.forminfo h3,p.pagelink,div.linkst l
 #brdmenu a:hover,.blockpost h2 a:hover{text-decoration:underline}
 /* 4. BORDER WIDTH AND STYLE */
 /* 4.1 By default borders are 1px solid */
-div.box,.pun td,.pun th,.pun blockquote,div.codebox,div.forminfo,div.blockpost label{border-style:solid;border-width:1px}
+div.box,.pun td,.pun th,.pun blockquote,div.codebox,div.forminfo,div.blockpost label,div.spoiler{border-style:solid;border-width:1px}
 /* 4.2 Special settings for the board header. */
 #brdheader div.box{width:100%;border:0;background:url('./img/Mozilla-ru/pun_head_left_bg.png') no-repeat top left #255989}
 #brdtitle{background:url('./img/Mozilla-ru/pun_head_right_icon_bg.png') no-repeat top right transparent}
@@ -80,7 +80,7 @@ dd.postavatar{margin-bottom:5px}
 div.postsignature,div.postmsg p.postedit{padding-top:15px}
 /* 8.4 Spacing for code and quote boxes */
 div.postmsg h4{margin-bottom:10px}
-.pun blockquote,div.codebox{margin:5px 15px 15px;padding:8px}
+.pun blockquote,div.codebox,div.spoiler{margin:5px 15px 15px;padding:8px}
 /* 8.5 Padding for the action links and online indicator in viewtopic */
 div.postfootleft p,div.postfootright ul,div.postfootright div{padding:10px 6px 5px}
 /* 8.6 This is the input on moderators multi-delete view */

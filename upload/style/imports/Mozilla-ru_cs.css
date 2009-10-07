@@ -2,7 +2,7 @@
 /* 1.1 Default background colour and text colour */
 body{background:url('../img/Mozilla-ru/pun_body_bg.gif') repeat-x top #FFF}
 .pun{color:#333}
-div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven{background-color:#f4f6f9}
+div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven,div.spoiler{background-color:#f4f6f9}
 #adminconsole td,#adminconsole th{border-color:#F1F1F1}
 /* 1. 2 Darker background colours */
 td.tc2,td.tc3,td.tc4,td.tcmod,#postpreview,#viewprofile dd,div.forminfo,#adminconsole fieldset td,div.blockmenu div.box,#adstats dd{background-color:#b5c7d8}
@@ -37,6 +37,7 @@ div.blockpost div.box,#brdwelcome{border-color:#688baf}
 .pun th{border-color:#fff}
 /* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
 .pun blockquote,div.codebox,div.forminfo,div.blockpost label{border-color:#b4c6d7 #dfe6ee #dfe6ee #b4c6d7}
+div.spoiler{border-color:#dfe6ee #b4c6d7 #b4c6d7 #dfe6ee}
 /* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
 without interferring with IE's rather nice default */
 .pun div>fieldset{border-color:#b4c6d7}
@@ -77,3 +78,9 @@ div.projects a:hover{color:#333;text-decoration:underline}
 form input#search-input{background-color:#EAEAEA;border:1px solid #577FA5}
 form input#search-input:focus,form input#search-input:hover{background:#fff}
 form input#search-submit{background-color:#2A5D8D;border-bottom:1px solid #08447b;border-left:1px solid #527CA2;border-right:1px solid #08447b;border-top:1px solid #527CA2;color:#fff}
+/* 6. MISC */
+/* Spoiler */
+div.spoiler div.spoiler-plus,div.spoiler div.spoiler-minus{padding:0 0 0 14px;cursor:pointer;font-weight:700}
+div.spoiler div.spoiler-plus{background:url(./../../img/plus.png) no-repeat 2px 4px}
+div.spoiler div.spoiler-minus{background:url(./../../img/minus.png) no-repeat 2px 4px}
+div.spoiler div.spoiler-body{display:none;border-top:1px solid gray;padding:8px 0 0;margin:10px 0 0}

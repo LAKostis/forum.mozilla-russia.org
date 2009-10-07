@@ -7,7 +7,7 @@ div.box,#adminconsole fieldset th,.rowodd,.roweven{background-color:#383838}
 /* 1. 2 Darker background colours */
 td.tc2,td.tc3,td.tc4,td.tcmod,#brdfooter div.box{background-color:#424242}
 #adminconsole fieldset td,#viewprofile dd,div.forminfo,div.blockmenu div.box,#adstats dd{background-color:#484848}
-.pun blockquote,div.codebox{background-color:#353533}
+.pun blockquote,div.codebox,div.spoiler{background-color:#353533}
 /* 1.3 Main headers and navigation bar background and text colour */
 .pun h2,#brdmenu{background-color:#565656;color:#D4D4D4}
 /* 1.4 Table header rows */
@@ -38,6 +38,7 @@ div.blockpost div.box{border-color:#565656 #525252 #525252}
 .pun th{border-color:#484848}
 /* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
 .pun blockquote,div.codebox,div.forminfo,div.blockpost label{border-color:#606060}
+div.spoiler{border-color:#606060}
 /* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
 without interferring with IE's rather nice default */
 .pun div>fieldset{border-color:#ACA899}
@@ -61,3 +62,9 @@ div.inew{border-color:#60C860 #54AF54 #499849 #59B657}
 /* 5.2 Class .tclcon is a div inside the first column of tables with post indicators. The
 margin creates space for the post status indicator */
 td div.tclcon{margin-left:2.3em}
+/* 6. MISC */
+/* Spoiler */
+div.spoiler div.spoiler-plus,div.spoiler div.spoiler-minus{padding:0 0 0 14px;cursor:pointer;font-weight:700}
+div.spoiler div.spoiler-plus{background:url(./../../img/plus.png) no-repeat 2px 2px}
+div.spoiler div.spoiler-minus{background:url(./../../img/minus.png) no-repeat 2px 2px}
+div.spoiler div.spoiler-body{display:none;border-top:1px solid gray;padding:8px 0 0;margin:10px 0 0}

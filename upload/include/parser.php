@@ -501,7 +501,8 @@ function do_bbcode($text)
 		'#\[sub\](.*?)\[/sub\]#s',
 		'#\[h\](.*?)\[/h\]#s',
 		'#\[spoiler\](.*?)\[/spoiler\]#s',
-		'#\[spoiler=(.*?)\](.*?)\[/spoiler\]#s'
+		'#\[spoiler=(.*?)\](.*?)\[/spoiler\]#s',
+		'#\[noindex\](.*?)\[/noindex\]#e'
 	);
 
 	$replace = array(
@@ -532,7 +533,8 @@ function do_bbcode($text)
 		'<sub>$1</sub>',
 		'<span style="background-color: #FFFF00; color: #000000">$1</span>',
 		'<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">' . $lang_common['Spoiler'].'</div><div class="spoiler-body">$1</div></div>',
-		'<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">$1</div><div class="spoiler-body">$2</div></div>'
+		'<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">$1</div><div class="spoiler-body">$2</div></div>',
+		'handle_noindex_tag(\'$1\')'
 	);
 
 	// This thing takes a while! :)
@@ -737,7 +739,7 @@ function parse_signature($text)
 }
 
 //
-// spam protect e-mails
+// Spam protect e-mails
 //
 function handle_email_tag($email,$text = '')
 {
@@ -755,4 +757,16 @@ function handle_email_tag($email,$text = '')
 		$text = str_replace('@','@<span style="display:none">remove-this.</span>',$email);
 	}
 	return '<a href="#" onclick="mailTo(\''.$enc_email.'\');return false;">'.$text.'</a>';
+}
+
+//
+// NoIndex tag
+//
+function handle_noindex_tag($text)
+{
+	global $pun_user, $pun_config;
+
+	if ($pun_user['g_id'] == PUN_GUEST)
+		return '<div class="noindex" title="Текстовый блок не индексируется поисковыми системами"><a href="' . $pun_config['o_base_url']. '/login.php">Войдите</a> или <a href="' . $pun_config['o_base_url']. '/register.php">зарегистрируйтесь</a>, чтобы увидеть скрытый текст.</div>';
+	return '<div class="noindex" title="Текстовый блок не индексируется поисковыми системами">' . $text . '</div>';
 }

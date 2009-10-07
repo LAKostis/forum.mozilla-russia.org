@@ -41,7 +41,8 @@ if (!isset($bbcode_field))
 							<input type="button" value="Code" name="Code" onclick="insert_text('[code]','[/code]')" />
 							<input type="button" value="Line" name="HR" onclick="insert_text('[hr /]','')" />
 							<input type="button" value="Spoiler" name="Spoiler" onclick="insert_text('[spoiler]','[/spoiler]')" />
-							<input type="button" value="User Agent" name="UA" onclick="insert_text('::::&nbsp;<?php echo get_user_ua() ?>','')" />&nbsp;
+							<input type="button" value="NoIndex" name="Spoiler" onclick="insert_text('[noindex]','[/noindex]')" />
+							<input type="button" value="UA" name="UA" onclick="insert_text('::::&nbsp;<?php echo get_user_ua() ?>','')" />&nbsp;
 							<input id="additional-more" type="button" value="<?php echo $lang_common['Show More'] ?>" name="More" onclick="toggleAdditional();" />
 							<input id="additional-less" type="button" value="<?php echo $lang_common['Show Less'] ?>" name="More" onclick="toggleAdditional();" style="display:none" />
 						</div>

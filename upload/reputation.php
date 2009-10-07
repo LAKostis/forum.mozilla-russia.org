@@ -41,11 +41,11 @@ if($pun_config['o_reputation_enabled'] != '1')
   message($lang_reputation['Disabled']);
   
 //Is ID valid?
-$query = $db->query("select id from ".$db->prefix."users where id='".$id."';");
+$query = $db->query("select id, group_id from ".$db->prefix."users where id='".$id."';");
 $target_user = $db->fetch_assoc($query);
 
 //Check is user exists
-if(empty($target_user["id"]))
+if(empty($target_user["id"]) || $target_user["group_id"] <= PUN_MOD)
   message($lang_reputation['No user']);
   
 //Compare ID's

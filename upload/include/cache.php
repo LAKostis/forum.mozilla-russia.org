@@ -308,15 +308,28 @@ function generate_max_users_cache($max_users = 0)
 {
 	global $db;
 
+	$max_time = time();
+
+	if (!$max_users)
+	{
+		$result = $db->query('SELECT conf_value FROM '.$db->prefix.'config WHERE conf_name="o_max_users"') or error('Unable to fetch activity summary', __FILE__, __LINE__, $db->error());
+		if ($db->num_rows($result))
+			list($max_users) = $db->fetch_row($result);
+
+		$result = $db->query('SELECT conf_value FROM '.$db->prefix.'config WHERE conf_name="o_max_users_time"') or error('Unable to fetch activity summary', __FILE__, __LINE__, $db->error());
+		if ($db->num_rows($result))
+			list($max_time) = $db->fetch_row($result);
+	}
+
 	$result = $db->query('UPDATE '.$db->prefix.'config SET conf_value="'.$max_users.'" WHERE conf_name="o_max_users"') or error('Unable to update activity summary', __FILE__, __LINE__, $db->error());
-	$result = $db->query('UPDATE '.$db->prefix.'config SET conf_value="'.time().'" WHERE conf_name="o_max_users_time"') or error('Unable to update activity summary', __FILE__, __LINE__, $db->error());
+	$result = $db->query('UPDATE '.$db->prefix.'config SET conf_value="'.$max_time.'" WHERE conf_name="o_max_users_time"') or error('Unable to update activity summary', __FILE__, __LINE__, $db->error());
 
 	// Output max users as PHP code
 	$fh = @fopen(PUN_ROOT.'cache/cache_max_users.php', 'wb');
 	if (!$fh)
 		error('Unable to write max users cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
 
-	fwrite($fh, '<?php'."\n\n".'define(\'PUN_MAX_USERS_LOADED\', 1);'."\n\n".'$pun_max_users = '.var_export($max_users, true).';'."\n\n".'$pun_max_users_time = '.var_export(time(), true).';'."\n\n".'?>');
+	fwrite($fh, '<?php'."\n\n".'define(\'PUN_MAX_USERS_LOADED\', 1);'."\n\n".'$pun_max_users = '.var_export($max_users, true).';'."\n\n".'$pun_max_users_time = '.var_export($max_time, true).';'."\n\n".'?>');
 
 	fclose($fh);
 }

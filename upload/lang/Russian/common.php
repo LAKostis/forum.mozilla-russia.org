@@ -96,7 +96,7 @@ $lang_common = array(
 'Code'					=>	'Код',		// For [code]'s
 'Mailer'				=>	'Почтовый робот',	// As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Важная информация',
-'Write message legend'	=>	'Напишите ваше сообщение и нажмите отправить',
+'Write message legend'	=>	'Напишите ваше сообщение и нажмите отправить (Ctrl+Enter)',
 
 // Title
 'Title'					=>	'Статус',

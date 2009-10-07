@@ -306,6 +306,11 @@ function generate_topics_autoclose_cache()
 //
 function generate_max_users_cache($max_users = 0)
 {
+	global $db;
+
+	$result = $db->query('UPDATE '.$db->prefix.'config SET conf_value="'.$max_users.'" WHERE conf_name="o_max_users"') or error('Unable to update activity summary', __FILE__, __LINE__, $db->error());
+	$result = $db->query('UPDATE '.$db->prefix.'config SET conf_value="'.time().'" WHERE conf_name="o_max_users_time"') or error('Unable to update activity summary', __FILE__, __LINE__, $db->error());
+
 	// Output max users as PHP code
 	$fh = @fopen(PUN_ROOT.'cache/cache_max_users.php', 'wb');
 	if (!$fh)

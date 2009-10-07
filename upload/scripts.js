@@ -81,7 +81,19 @@ function toggleChildren(checked) {
 	}
 }
 
-function mail_to(s) {
+function toggleSpoiler(obj) {
+	obj.className = obj.className == 'spoiler-plus' ? 'spoiler-minus' : 'spoiler-plus';
+	for(i=0; i < obj.parentNode.childNodes.length; i++) {
+		var item=obj.parentNode.childNodes[i];
+		if (item.className == 'spoiler-body')
+		{
+			item.style.display = item.style.display == 'block' ? 'none' : 'block';
+			break;
+		}
+	}
+}
+
+function mailTo(s) {
 	var n = 0;
 	var r = '';
 	for (var i = 0; i < s.length; i++)
@@ -108,12 +120,7 @@ function decrementForm() {
 		document.forms['edit']['req_message'].rows -= 15;
 }
 
-function trim(str) {
-	return str.replace(/^\s+/g, "").replace(/\s+$/g, "");
-}
-
-function captchaReload()
-{
+function captchaReload() {
 	document.getElementById("kcaptcha").src = "kcaptcha.php?" + Math.random();
 	document.getElementById("req_image").value = "";
 	document.getElementById("req_image").focus();
@@ -125,6 +132,10 @@ function toggleReports(group, obj) {
 		if (item.type=="checkbox" && item.name == 'zap_id['+group+'][]')
 			item.checked=obj.checked;
 	}
+}
+
+function trim(str) {
+	return str.replace(/^\s+/g, "").replace(/\s+$/g, "");
 }
 
 /*@cc_on

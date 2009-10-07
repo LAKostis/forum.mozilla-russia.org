@@ -216,7 +216,10 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'#\[email\]\s*#i',
 				'#\s*\[/email\]#i',
 				'#\[img\]\s*(.*?)\s*\[/img\]#is',
-				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is');
+				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is',
+				'#\[spoiler=("|\'|)(.*?)\\1\]\s*#i',
+				'#\[spoiler\]\s*#i',
+				'#\s*\[/spoiler\]#i');
 
 	$b = array(	'[url=$2]',
 				'[url]',
@@ -225,7 +228,10 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'[email]',
 				'[/email]',
 				'[img]$1[/img]',
-				'[color=$2]$3[/color]');
+				'[color=$2]$3[/color]',
+				'[spoiler=$2]',
+				'[spoiler]',
+				'[/spoiler]');
 
 	if (!$is_signature)
 	{
@@ -480,8 +486,8 @@ function do_bbcode($text)
 		'#\[list=a\](.*?)\[/list\]#s',
 		'#\[list=1\](.*?)\[/list\]#s',
 		'#\[\*\]#',
-		'#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})](.*?)\[/color\]#s',
-		'#\[font=(.*?)](.*?)\[/font\]#s',
+		'#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})\](.*?)\[/color\]#s',
+		'#\[font=(.*?)\](.*?)\[/font\]#s',
 		'#\[align=(.*?)\](.*?)\[/align\]#s',
 		'#\[hr /\]#',
 		'#\[hr\]#',
@@ -493,7 +499,9 @@ function do_bbcode($text)
 		'#\[pre\](.*?)\[/pre\]#s',
 		'#\[sup\](.*?)\[/sup\]#s',
 		'#\[sub\](.*?)\[/sub\]#s',
-		'#\[h\](.*?)\[/h\]#s'
+		'#\[h\](.*?)\[/h\]#s',
+		'#\[spoiler\](.*?)\[/spoiler\]#s',
+		'#\[spoiler=(.*?)\](.*?)\[/spoiler\]#s'
 	);
 
 	$replace = array(
@@ -522,7 +530,9 @@ function do_bbcode($text)
 		'<pre>$1</pre>',
 		'<sup>$1</sup>',
 		'<sub>$1</sub>',
-		'<span style="background-color: #FFFF00; color: #000000">$1</span>'
+		'<span style="background-color: #FFFF00; color: #000000">$1</span>',
+		'<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">' . $lang_common['Spoiler'].'</div><div class="spoiler-body">$1</div></div>',
+		'<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">$1</div><div class="spoiler-body">$2</div></div>'
 	);
 
 	// This thing takes a while! :)
@@ -744,5 +754,5 @@ function handle_email_tag($email,$text = '')
 	{
 		$text = str_replace('@','@<span style="display:none">remove-this.</span>',$email);
 	}
-	return '<a href="#" onclick="mail_to(\''.$enc_email.'\');return false;">'.$text.'</a>';
+	return '<a href="#" onclick="mailTo(\''.$enc_email.'\');return false;">'.$text.'</a>';
 }

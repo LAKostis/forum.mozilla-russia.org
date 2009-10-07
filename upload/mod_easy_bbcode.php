@@ -38,9 +38,9 @@ if (!isset($bbcode_field))
 							<input type="button" value="E-Mail" name="EMAIL" onclick="insert_text('[email]','[/email]')" />
 							<input type="button" value="Img" name="Img" onclick="insert_text('[img]','[/img]')" />
 							<input type="button" value="Quote" name="Quote" onclick="insert_text('[quote]','[/quote]')" />
-							<input type="button" value="Quote User" name="Quote" onclick="insert_text('[quote=USER]','[/quote]')" />
 							<input type="button" value="Code" name="Code" onclick="insert_text('[code]','[/code]')" />
 							<input type="button" value="Line" name="HR" onclick="insert_text('[hr /]','')" />
+							<input type="button" value="Spoiler" name="Spoiler" onclick="insert_text('[spoiler]','[/spoiler]')" />
 							<input type="button" value="User Agent" name="UA" onclick="insert_text('::::&nbsp;<?php echo get_user_ua() ?>','')" />&nbsp;
 							<input id="additional-more" type="button" value="<?php echo $lang_common['Show More'] ?>" name="More" onclick="toggleAdditional();" />
 							<input id="additional-less" type="button" value="<?php echo $lang_common['Show Less'] ?>" name="More" onclick="toggleAdditional();" style="display:none" />

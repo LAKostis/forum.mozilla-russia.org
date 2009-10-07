@@ -164,6 +164,8 @@ $lang_common = array(
 'Print version'			=>	'Printable version',
 
 'Show More'				=>	'More »',
-'Show Less'				=>	'« Less'
+'Show Less'				=>	'« Less',
+
+'Spoiler'				=>	'hidden text'
 
 );

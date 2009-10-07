@@ -7,7 +7,7 @@ div.box,#adminconsole fieldset th,.rowodd,.roweven{background-color:#383838}
 /* 1. 2 Darker background colours */
 td.tc2,td.tc3,td.tc4,td.tcmod,#brdfooter div.box{background-color:#424242}
 #adminconsole fieldset td,#viewprofile dd,div.forminfo,div.blockmenu div.box,#adstats dd{background-color:#484848}
-.pun blockquote,div.codebox,div.spoiler{background-color:#353533}
+.pun blockquote,div.codebox,div.spoiler,div.noindex{background-color:#353533}
 /* 1.3 Main headers and navigation bar background and text colour */
 .pun h2,#brdmenu{background-color:#565656;color:#D4D4D4}
 /* 1.4 Table header rows */
@@ -37,7 +37,7 @@ div.blockpost div.box{border-color:#565656 #525252 #525252}
 .pun td{border-color:#565656}
 .pun th{border-color:#484848}
 /* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
-.pun blockquote,div.codebox,div.forminfo,div.blockpost label{border-color:#606060}
+.pun blockquote,div.codebox,div.forminfo,div.blockpost label,div.noindex{border-color:#606060}
 div.spoiler{border-color:#606060}
 /* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
 without interferring with IE's rather nice default */

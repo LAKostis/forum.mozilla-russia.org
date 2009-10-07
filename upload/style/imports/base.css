@@ -127,3 +127,4 @@ img.smileyimg,img.browserimg{margin:2px 1px -4px}
 .pun ul.list[type="circle"]>li{list-style-type:circle}
 .pun ol.list[type="A"]>li{list-style-type:upper-latin}
 .pun ol.list[type="1"]>li{list-style-type:decimal}
+div.noindex{opacity:0.7}

@@ -2,7 +2,7 @@
 /* 1.1 Default background colour and text colour */
 body{background:url('../img/Mozilla-ru/pun_body_bg.gif') repeat-x top #FFF}
 .pun{color:#333}
-div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven,div.spoiler{background-color:#f4f6f9}
+div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven,div.spoiler,div.noindex{background-color:#f4f6f9}
 #adminconsole td,#adminconsole th{border-color:#F1F1F1}
 /* 1. 2 Darker background colours */
 td.tc2,td.tc3,td.tc4,td.tcmod,#postpreview,#viewprofile dd,div.forminfo,#adminconsole fieldset td,div.blockmenu div.box,#adstats dd{background-color:#b5c7d8}
@@ -36,7 +36,7 @@ div.blockpost div.box,#brdwelcome{border-color:#688baf}
 .pun td{border-color:#fff}
 .pun th{border-color:#fff}
 /* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
-.pun blockquote,div.codebox,div.forminfo,div.blockpost label{border-color:#b4c6d7 #dfe6ee #dfe6ee #b4c6d7}
+.pun blockquote,div.codebox,div.forminfo,div.blockpost label,div.noindex{border-color:#b4c6d7 #dfe6ee #dfe6ee #b4c6d7}
 div.spoiler{border-color:#dfe6ee #b4c6d7 #b4c6d7 #dfe6ee}
 /* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
 without interferring with IE's rather nice default */

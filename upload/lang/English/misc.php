@@ -62,6 +62,8 @@ $lang_misc = array(
 'No topics selected'		=>	'You must select at least one topic for move/delete/open/close.',
 'Stick topic redirect'		=>	'Topic sticked. Redirecting &hellip;',
 'Unstick topic redirect'	=>	'Topic unsticked. Redirecting &hellip;',
+'Stick post redirect'		=>	'Post sticked. Redirecting &hellip;',
+'Unstick post redirect'		=>	'Post unsticked. Redirecting &hellip;',
 'Poll to topic redirect'	=>	'Convert poll to topic redirect',
 'Poll to topic warning'		=>	'Warning! This operation can not be undone. Question, all variants and all votes will be deleted.',
 

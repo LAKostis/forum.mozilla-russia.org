@@ -111,6 +111,11 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 				else
 					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd>'."\n";
 
+				if ($cur_topic['post_sticky'] == '1')
+					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick_post='.$id.'">'.$lang_common['Unstick post'].'</a></dd>'."\n";
+				else
+					echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick_post='.$id.'">'.$lang_common['Stick post'].'</a></dd>'."\n";
+
 				echo "\t\t\t".'<dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
 
 				if ($cur_topic['question'] != '')

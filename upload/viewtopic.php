@@ -115,14 +115,14 @@ if (!$pun_user['is_guest'])
 	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $id . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 	// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 	if (!$db->num_rows($result))
-		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.last_post, t.question, t.yes, t.no, t.poster, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.last_post, t.question, t.yes, t.no, t.poster, t.post_sticky, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, s.user_id AS is_subscribed FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'subscriptions AS s ON (t.id=s.topic_id AND s.user_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 }
 else
 {
 	// MOD Announcement: CODE FOLLOWS
 	$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement FROM ' . $db->prefix . 'topics AS t WHERE t.id=' . $id . ' AND t.announcement=\'1\' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
-		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.question, t.yes, t.no, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT t.subject, t.closed, t.num_replies, t.announcement, t.sticky, t.question, t.yes, t.no, t.post_sticky, f.id AS forum_id, f.forum_name, f.moderators, fp.post_replies, 0 FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND t.id='.$id.' AND t.moved_to IS NULL') or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
 }
 
 define('TOPIC_ID', $id);
@@ -208,9 +208,12 @@ $post_count = 0;	// Keep track of post numbers
 require PUN_ROOT.'include/polls/viewpoll.php';
 // END MOD
 
+if($start_from && $cur_topic['post_sticky'])
+	$result_post = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, g.g_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT 0,1', true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+
 // Retrieve the posts (and their respective poster/online status)
 $result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, g.g_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
-while ($cur_post = $db->fetch_assoc($result))
+while (($result_post && $cur_post = $db->fetch_assoc($result_post)) || $cur_post = $db->fetch_assoc($result))
 {
 	$post_count++;
 	$user_avatar = '';

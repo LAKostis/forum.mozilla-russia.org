@@ -608,6 +608,36 @@ else if (isset($_GET['unstick']))
 }
 
 
+// Stick a post
+else if (isset($_GET['stick_post']))
+{
+	confirm_referrer('viewtopic.php');
+
+	$stick = intval($_GET['stick_post']);
+	if ($stick < 1)
+		message($lang_common['Bad request']);
+
+	$db->query('UPDATE '.$db->prefix.'topics SET post_sticky=\'1\' WHERE id='.$stick.' AND forum_id='.$fid) or error('Unable to stick post', __FILE__, __LINE__, $db->error());
+
+	redirect('viewtopic.php?id='.$stick, $lang_misc['Stick post redirect']);
+}
+
+
+// Unstick a post
+else if (isset($_GET['unstick_post']))
+{
+	confirm_referrer('viewtopic.php');
+
+	$unstick = intval($_GET['unstick_post']);
+	if ($unstick < 1)
+		message($lang_common['Bad request']);
+
+	$db->query('UPDATE '.$db->prefix.'topics SET post_sticky=\'0\' WHERE id='.$unstick.' AND forum_id='.$fid) or error('Unable to unstick post', __FILE__, __LINE__, $db->error());
+
+	redirect('viewtopic.php?id='.$unstick, $lang_misc['Unstick post redirect']);
+}
+
+
 // Convert poll to topic
 else if (isset($_GET['totopic']))
 {

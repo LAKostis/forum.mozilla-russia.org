@@ -1191,6 +1191,7 @@ else
 					yes VARCHAR(30) NOT NULL DEFAULT '',
 					no VARCHAR(30) NOT NULL DEFAULT '',
 					announcement TINYINT(1) NOT NULL DEFAULT 0,
+					post_sticky TINYINT(1) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -1214,6 +1215,7 @@ else
 					yes VARCHAR(30) NOT NULL DEFAULT '',
 					no VARCHAR(30) NOT NULL DEFAULT '',
 					announcement SMALLINT NOT NULL DEFAULT 0,
+					post_sticky SMALLINT NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1237,6 +1239,7 @@ else
 					yes VARCHAR(30) NOT NULL DEFAULT '',
 					no VARCHAR(30) NOT NULL DEFAULT '',
 					announcement INTEGER NOT NULL DEFAULT 0,
+					post_sticky INTEGER NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;

@@ -129,6 +129,20 @@ if (isset($_POST['form_sent']))
 	if ($form['iconize_subforums'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['iconize_subforums']))
 		message('Iconize subforums must be a comma separated ID-list of subforums.');
 
+
+	if ($form['spamreport_forums'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['spamreport_forums']))
+		message('Awaiting review whitelist forums must be a comma separated ID-list of subforums.');
+
+	if ($form['spamreport_whitelist'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['spamreport_whitelist']))
+		message('Awaiting review users whitelist must be a comma separated ID-list of users.');
+
+	if ($form['spamreport_blacklist'] != '' && !preg_match("/^\d+(,\d+)*$/", $form['spamreport_blacklist']))
+		message('Awaiting review users blacklist must be a comma separated ID-list of users.');
+
+	if ($form['spamreport_count'] == '' || !is_numeric($form['spamreport_count']))
+		$form['spamreport_count'] = 2;
+
+
 	if ($form['autoclose_timeout'] == '' || !is_numeric($form['autoclose_timeout']))
 		$form['autoclose_timeout'] = 730;
 
@@ -819,7 +833,7 @@ generate_admin_menu('options');
 									<th scope="row">Iconize subforums</th>
 									<td>
 										<input type="text" name="form[iconize_subforums]" size="20" value="<?php echo $pun_config['o_iconize_subforums'] ?>" />
-										<span>Comma separated ID-list of subforums, where browser icons in topic enabled.</span>
+										<span>Comma separated ID-list of subforums, where browser icons in topic is enabled.</span>
 									</td>
 								</tr>
 							</table>
@@ -836,6 +850,34 @@ generate_admin_menu('options');
 									<td>
 										<input type="text" name="form[urls_in_signature]" size="5" value="<?php echo $pun_config['o_urls_in_signature'] ?>" />
 										<span>Users with less than N forum comments can not use links in signature.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Awaiting review votes limit</th>
+									<td>
+										<input type="text" name="form[spamreport_count]" size="5" value="<?php echo $pun_config['o_spamreport_count'] ?>" />
+										<span>How many votes necessary for set awaiting review for message.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Awaiting review whitelist forums</th>
+									<td>
+										<input type="text" name="form[spamreport_forums]" size="60" value="<?php echo $pun_config['o_spamreport_forums'] ?>" />
+										<span>Comma separated ID-list of subforums, where awaiting review for first post in topics is disabled.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Awaiting review users blacklist</th>
+									<td>
+										<input type="text" name="form[spamreport_blacklist]" size="60" value="<?php echo $pun_config['o_spamreport_blacklist'] ?>" />
+										<span>Comma separated ID-list of users, which ignored in awaiting review counting.</span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">Awaiting review users whitelist</th>
+									<td>
+										<input type="text" name="form[spamreport_whitelist]" size="60" value="<?php echo $pun_config['o_spamreport_whitelist'] ?>" />
+										<span>Comma separated ID-list of users, which set awaiting review for post in single report.</span>
 									</td>
 								</tr>
 							</table>

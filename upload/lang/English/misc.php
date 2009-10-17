@@ -24,6 +24,8 @@ $lang_misc = array(
 'Report post'				=>	'Report post',
 'Reason'					=>	'Reason',
 'Reason desc'				=>	'Please enter a short reason why you are reporting this post',
+'Report more'				=>	'Additional options',
+'Report spam'				=>	'Spam-report',
 
 // Subscriptions
 'Already subscribed'		=>	'You are already subscribed to this topic.',

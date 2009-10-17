@@ -903,6 +903,7 @@ else
 					edited INT(10) UNSIGNED,
 					edited_by VARCHAR(200),
 					topic_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
+					blocked TINYINT(1) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -921,6 +922,7 @@ else
 					edited INT,
 					edited_by VARCHAR(200),
 					topic_id INT NOT NULL DEFAULT 0,
+					blocked SMALLINT NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -939,6 +941,7 @@ else
 					edited INTEGER,
 					edited_by VARCHAR(200),
 					topic_id INTEGER NOT NULL DEFAULT 0,
+					blocked INTEGER NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1627,20 +1630,24 @@ else
 		'p_allow_banned_email'		=> "'1'",
 		'p_allow_dupe_email'		=> "'0'",
 		'p_force_guest_email'		=> "'1'",
-		'o_pms_enabled' 		=> "'1'",
-		'o_pms_messages' 		=> "'50'",
-		'o_pms_mess_per_page' 		=> "'10'",
-		'o_polls' 			=> "'0'",
-		'o_poll_change' 		=> "'1'",
-		'o_poll_multi' 			=> "'0'",
-		'p_guests_poll'			=> "'0'",
+		'o_pms_enabled'				=> "'1'",
+		'o_pms_messages'			=> "'50'",
+		'o_pms_mess_per_page'		=> "'10'",
+		'o_polls' 					=> "'0'",
+		'o_poll_change' 			=> "'1'",
+		'o_poll_multi' 				=> "'0'",
+		'p_guests_poll'				=> "'0'",
 		'o_regs_verify_image' 		=> "'0'",
-		'poll_max_fields' 		=> "'10'",
+		'poll_max_fields' 			=> "'10'",
 		'o_reputation_enabled' 		=> "'0'",
 		'o_reputation_timeout' 		=> "'120'",
-		'o_timeout_login' 		=> "'10'",
-		'o_merge_timeout'		=> "'300'",
+		'o_timeout_login' 			=> "'10'",
+		'o_merge_timeout'			=> "'300'",
 		'o_message_counter_exceptions'		=> "''",
+		'o_spamreport_whitelist'	=> "''",
+		'o_spamreport_blacklist'	=> "''",
+		'o_spamreport_forums'		=> "''",
+		'o_spamreport_count'		=> "'2'"
 	);
 
 	while (list($conf_name, $conf_value) = @each($config))

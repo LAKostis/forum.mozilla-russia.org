@@ -138,6 +138,10 @@ function trim(str) {
 	return str.replace(/^\s+/g, "").replace(/\s+$/g, "");
 }
 
+function toggleSpamReport(obj) {
+	document.getElementById('reason').style.display = !obj.checked ? 'block' : 'none';
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

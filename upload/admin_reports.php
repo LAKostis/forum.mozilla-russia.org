@@ -52,6 +52,16 @@ if (isset($_POST['zap_id']))
 
 	if ($unzapped)
 	{
+		$result = $db->query('SELECT DISTINCT post_id '.$db->prefix.'FROM reports WHERE id IN('.join(',', $zap_array) . ')') or error('Unable to select posts for unblock', __FILE__, __LINE__, $db->error());
+		if ($db->num_rows($result))
+		{
+			$blocked = array();
+			while ($cur_report = $db->fetch_assoc($result))
+				$blocked[] = (int)$cur_report['post_id'];
+			if (sizeof($blocked))
+				$db->query('UPDATE '.$db->prefix.'posts SET blocked=0 WHERE blocked=1 AND id IN('.join(',', $blocked) . ')') or error('Unable to unblock post', __FILE__, __LINE__, $db->error());
+		}
+
 		$db->query('UPDATE '.$db->prefix.'reports SET zapped='.time().', zapped_by='.$pun_user['id'].' WHERE id IN('.join(',', $zap_array).') AND zapped IS NULL') or error('Unable to zap report', __FILE__, __LINE__, $db->error());
 		$zapped = $db->affected_rows();
 		$unzapped -= $zapped;

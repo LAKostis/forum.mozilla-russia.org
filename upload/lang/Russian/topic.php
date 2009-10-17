@@ -6,7 +6,6 @@ $lang_topic = array(
 'Post reply'		=>	'Ответить',
 'Topic closed'		=>	'Тема закрыта',
 'From'				=>	'Откуда',				// User location
-'Note'				=>	'',				// Admin note
 'Website'			=>	'Веб-сайт',
 'Guest'				=>	'Гость',
 'Online'			=>	'На форуме',
@@ -16,7 +15,7 @@ $lang_topic = array(
 'User agent'		=>	'UA: ',
 'Delete'			=>	'Удалить',
 'Edit'				=>	'Редактировать',
-'Reply'           => 'Ответить',
+'Reply'				=>	'Ответить',
 'Quote'				=>	'Цитировать',
 'Is subscribed'		=>	'Вы подписаны на эту тему',
 'Unsubscribe'		=>	'Отписаться',
@@ -24,6 +23,8 @@ $lang_topic = array(
 'Quick post'		=>	'Быстрый ответ',
 
 'Link separator'	=>	' | ',	// The text that separates links in posts (website, e-mail, report, edit etc.)
-'Mod controls'		=>	'Контролируется модератором'
+'Mod controls'		=>	'Контролируется модератором',
+
+'Message blocked'	=>	'Сообщение временно заблокировано на основании жалоб пользователей и ожидает проверки администратором.'
 
 );

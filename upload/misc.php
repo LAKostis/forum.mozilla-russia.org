@@ -202,6 +202,9 @@ else if (isset($_GET['report']))
 	{
 		// Clean up reason from POST
 		$reason = pun_linebreaks(pun_trim($_POST['req_reason']));
+		$spam = (int)$_POST['spam'];
+		if ($spam)
+			$reason = 'Spam';
 		if ($reason == '')
 			message($lang_misc['No reason']);
 
@@ -221,7 +224,41 @@ else if (isset($_GET['report']))
 
 		// Should we use the internal report handling?
 		if ($pun_config['o_report_method'] == 0 || $pun_config['o_report_method'] == 2)
+		{
 			$db->query('INSERT INTO '.$db->prefix.'reports (post_id, topic_id, forum_id, reported_by, created, message) VALUES('.$post_id.', '.$topic_id.', '.$forum_id.', '.$pun_user['id'].', '.time().', \''.$db->escape($reason).'\')' ) or error('Unable to create report', __FILE__, __LINE__, $db->error());
+
+			$result = $db->query('SELECT DISTINCT forum_id, topic_id, post_id, reported_by FROM '.$db->prefix.'reports WHERE message = \'Spam\' AND zapped IS NULL') or error('Unable to select reports', __FILE__, __LINE__, $db->error());
+			if ($db->num_rows($result))
+			{
+				$whitelist = !empty($pun_config['o_spamreport_whitelist']) ? split(',', $pun_config['o_spamreport_whitelist']) : array();
+				$blacklist = !empty($pun_config['o_spamreport_blacklist']) ? split(',', $pun_config['o_spamreport_blacklist']) : array();
+				$forums = !empty($pun_config['o_spamreport_forums']) ? split(',', $pun_config['o_spamreport_forums']) : array();
+				$count = (int)$pun_config['o_spamreport_count'] > 1 ? (int)$pun_config['o_spamreport_count'] : 2;
+
+				$blocked = array();
+				while ($cur_report = $db->fetch_assoc($result))
+				{
+					if (in_array($cur_report['forum_id'], $forums))
+						continue;
+					if (in_array($cur_report['reported_by'], $blacklist))
+						continue;
+					if (in_array($cur_report['reported_by'], $whitelist))
+						$blocked[$cur_report['post_id']] = $count;
+					elseif (array_key_exists($cur_report['post_id'], $blocked))
+						$blocked[$cur_report['post_id']]++;
+					else
+						$blocked[$cur_report['post_id']] = 1;
+				}
+
+				$forums_blocked = array();
+				foreach ($blocked as $forum_id => $reports)
+					if ($reports >= $count)
+						$forums_blocked[] = (int)$forum_id;
+
+				if (sizeof($forums_blocked))
+					$db->query('UPDATE '.$db->prefix.'posts SET blocked=1 WHERE blocked=0 AND id IN('.join(',', $forums_blocked) . ')') or error('Unable to block post', __FILE__, __LINE__, $db->error());
+			}
+		}
 
 		// Should we e-mail the report?
 		if ($pun_config['o_report_method'] == 1 || $pun_config['o_report_method'] == 2)
@@ -256,7 +293,6 @@ else if (isset($_GET['report']))
 
 
 	$page_title = pun_htmlspecialchars($lang_misc['Report post']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$required_fields = array('req_reason' => $lang_misc['Reason']);
 	$focus_element = array('report', 'req_reason');
 	require PUN_ROOT.'header.php';
 
@@ -265,12 +301,22 @@ else if (isset($_GET['report']))
 	<h2><span><?php echo $lang_misc['Report post'] ?></span></h2>
 	<div class="box">
 		<form id="report" method="post" action="misc.php?report=<?php echo $post_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
-			<div class="inform">
+			<div class="inform" id="reason">
 				<fieldset>
 					<legend><?php echo $lang_misc['Reason desc'] ?></legend>
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
 						<label><strong><?php echo $lang_misc['Reason'] ?></strong><br /><textarea name="req_reason" rows="5" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" cols="60"></textarea><br /></label>
+					</div>
+				</fieldset>
+			</div>
+			<div class="inform">
+				<fieldset>
+					<legend><?php echo $lang_misc['Report more'] ?></legend>
+					<div class="infldset">
+						<div class="rbox">
+							<label><input type="checkbox" name="spam" value="1" onclick="toggleSpamReport(this)" />&nbsp;<?php echo $lang_misc['Report spam'] ?></label>
+						</div>
 					</div>
 				</fieldset>
 			</div>

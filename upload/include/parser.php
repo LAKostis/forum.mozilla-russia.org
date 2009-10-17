@@ -203,6 +203,16 @@ $browser_limit = 3;
 //
 function preparse_bbcode($text, &$errors, $is_signature = false)
 {
+	global $lang_common;
+
+	// If the message contains a code tag we have to split it up (text within [code][/code] shouldn't be touched)
+	if (strpos($text, '[code]') !== false && strpos($text, '[/code]') !== false)
+	{
+		list($inside, $outside) = split_text($text, '[code]', '[/code]');
+		$outside = array_map('ltrim', $outside);
+		$text = implode('<">', $outside);
+	}
+
 	// Change all simple BBCodes to lower case
 	$a = array('[B]', '[I]', '[U]', '[/B]', '[/I]', '[/U]');
 	$b = array('[b]', '[i]', '[u]', '[/b]', '[/i]', '[/u]');
@@ -267,6 +277,26 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 
 		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]|\[spoiler=(&quot;|"|\'|)(.*)\\1\]|\[spoiler\]|\[/spoiler\]|\[noindex\]|\[/noindex\]#i', $text))
 			message($lang_prof_reg['Signature quote/code']);
+	}
+
+	// If we split up the message before we have to concatenate it together again (code tags)
+	if (isset($inside))
+	{
+		$outside = explode('<">', $text);
+		$text = '';
+
+		$num_tokens = count($outside);
+
+		for ($i = 0; $i < $num_tokens; ++$i)
+		{
+			$text .= $outside[$i];
+			if (isset($inside[$i]))
+			{
+				$num_lines = ((substr_count($inside[$i], "\n")) + 3) * 1.5;
+				$height_str = ($num_lines > 35) ? '35em' : $num_lines.'em';
+				$text .= '[code]'.$inside[$i].'[/code]';
+			}
+		}
 	}
 
 	return trim($text);

@@ -115,7 +115,13 @@ else {
 		$xajax->printJavascript();
 	}
 ?>
-<script type="text/javascript" src="scripts.js?3"></script>
+<script type="text/javascript" src="scripts.js?4"></script>
+<?php
+
+if (defined('PUN_GOOGLE_API'))
+	echo '<script type="text/javascript" src="http://www.google.com/jsapi?autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22search%22%2C%22version%22%3A%221%22%2C%22callback%22%3A%22googleSearch%22%2C%22language%22%3A%22ru%22%2C%22nocss%22%3A%22true%22%7D%5D%7D&key=ABQIAAAAWD4huxUNaVOdJ012YX-mnBSpPsyX8dqa9XBaF5Rze7w_stWU3xR2Z0IovGffrviWO3n6CghmFNclZw"></script>'."\n";
+
+?>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 }

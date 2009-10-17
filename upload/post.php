@@ -491,7 +491,9 @@ else {
 		$focus_element[] = 'req_username';
 	}
 
-	require PUN_ROOT.'header.php';
+define('PUN_GOOGLE_API', 1);
+
+require PUN_ROOT.'header.php';
 
 ?>
 <div class="linkst">
@@ -563,6 +565,12 @@ $cur_index = 1;
 	<h2><span><?php echo $action ?></span></h2>
 	<div class="box">
 		<?php echo $form."\n" ?>
+			<div id="google-container" class="inform" style="display:none">
+				<fieldset>
+					<legend><?php echo $lang_post['Related topics'] ?></legend>
+					<div id="google-results" class="infldset"></div>
+				</fieldset>
+			</div>
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
@@ -585,7 +593,7 @@ if ($pun_user['is_guest'])
 }
 
 if ($fid): ?>
-						<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo pun_htmlspecialchars($subject); ?>" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
+						<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input id="google" class="longinput" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo pun_htmlspecialchars($subject); ?>" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 <?php endif; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label>
 						<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>

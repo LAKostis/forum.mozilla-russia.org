@@ -128,3 +128,12 @@ img.smileyimg,img.browserimg{margin:2px 1px -4px}
 .pun ol.list[type="A"]>li{list-style-type:upper-latin}
 .pun ol.list[type="1"]>li{list-style-type:decimal}
 div.noindex{opacity:0.7}
+/* 11.6 Google Search */
+#google-results{padding:10px 0}
+#google-results .gsc-resultsHeader,#google-results .gs-result .gs-visibleUrl,#google-results .gs-result .gs-watermark{display:none}
+#google-results .gs-result{padding:0 0 8px}
+#google-results .gsc-cursor-box{text-align:right}
+#google-results .gsc-cursor-box .gsc-cursor:before{content:"Страницы: "}
+#google-results .gsc-cursor-box .gsc-cursor-page{display:inline;margin:3px;cursor:pointer}
+#google-results .gsc-cursor-box .gsc-cursor-current-page{font-weight:bold}
+#google-results .gs-no-results-result{padding:3px}

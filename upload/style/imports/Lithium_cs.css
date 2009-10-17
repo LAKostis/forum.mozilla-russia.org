@@ -40,7 +40,7 @@ without interferring with IE's rather nice default */
 .pun div>fieldset{border-color:#ACA899}
 /* 4. LINK COLOURS */
 /* 4.1 This is the default for all links */
-.pun a:link,.pun a:visited{color:#638137}
+#google-results .gsc-cursor-box .gsc-cursor-page:not(.gsc-cursor-current-page),.pun a:link,.pun a:visited{color:#638137;text-decoration:underline}
 .pun a:hover{color:#8EB653}
 /* 4.2 This is the colour for links in header rows and the navigation bar */
 .pun h2 a:link,.pun h2 a:visited,#brdmenu a:link,#brdmenu a:visited{color:#FFF}

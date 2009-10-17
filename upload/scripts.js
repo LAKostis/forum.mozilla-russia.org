@@ -134,6 +134,40 @@ function toggleReports(group, obj) {
 	}
 }
 
+function googleSearch() {
+	var mozInput = document.getElementById("google");
+	var mozResult = document.getElementById("google-results");
+	if (!mozInput || !mozResult)
+		return;
+
+	var mozContainer = document.getElementById("google-container");
+
+	var mozWebSearch = new google.search.WebSearch();
+	mozWebSearch.setUserDefinedLabel("Форум Mozilla Россия");
+	mozWebSearch.setSiteRestriction("forum.mozilla-russia.org");
+	mozWebSearch.setRestriction(google.search.Search.RESTRICT_SAFESEARCH, google.search.Search.SAFESEARCH_OFF);
+
+	var mozSearcherOptions = new google.search.SearcherOptions();
+	mozSearcherOptions.setRoot(mozResult);
+	mozSearcherOptions.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
+
+	var mozDrawOptions = new google.search.DrawOptions();
+	mozDrawOptions.setInput(mozInput);
+
+	var mozSearchControl = new google.search.SearchControl();
+	mozSearchControl.setSearchCompleteCallback(this, function() {
+		mozContainer.style.display = mozInput.value ? "block" : "none";
+	});
+	mozSearchControl.addSearcher(mozWebSearch, mozSearcherOptions);
+	mozSearchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+	mozSearchControl.setTimeoutInterval(google.search.SearchControl.TIMEOUT_SHORT);
+	mozSearchControl.setNoResultsString("Похожих тем не найдено");
+	mozSearchControl.draw(null, mozDrawOptions);
+
+	if (mozInput.value)
+		mozSearchControl.execute(mozInput.value);
+}
+
 function trim(str) {
 	return str.replace(/^\s+/g, "").replace(/\s+$/g, "");
 }

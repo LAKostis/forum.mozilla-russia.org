@@ -22,6 +22,7 @@ $lang_post = array(
 'Topic review'			=>	'Topic review (newest first)',
 'Flood start'			=>	'At least',
 'flood end'				=>	'seconds have to pass between posts. Please wait a little while and try posting again.',
+'Related topics'		=>	'Related forum topics',
 
 // Edit post
 'Edit post legend'		=>	'Edit the post and submit changes',

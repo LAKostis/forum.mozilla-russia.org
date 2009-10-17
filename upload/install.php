@@ -1373,6 +1373,7 @@ else
 					reputation_plus INT(11) UNSIGNED DEFAULT 0,
 					last_reputation_voice INT(10) UNSIGNED DEFAULT NULL,
 					imgaward varchar(255) NOT NULL DEFAULT '',
+					show_redirect TINYINT(1) NOT NULL DEFAULT 1,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
@@ -1424,6 +1425,7 @@ else
 					reputation_plus INT NOT NULL DEFAULT 0,
 					last_reputation_voice INT,
 					imgaward varchar(255) NOT NULL DEFAULT '',
+					show_redirect SMALLINT NOT NULL DEFAULT 1,
 					PRIMARY KEY (id)
 					)";
 			break;
@@ -1475,6 +1477,7 @@ else
 					reputation_plus INTEGER NOT NULL DEFAULT 0,
 					last_reputation_voice INTEGER,
 					imgaward varchar(255) NOT NULL DEFAULT '',
+					show_redirect INTEGER NOT NULL DEFAULT 1,
 					PRIMARY KEY (id)
 					)";
 			break;

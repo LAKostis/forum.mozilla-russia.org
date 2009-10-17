@@ -770,7 +770,7 @@ else if (isset($_POST['form_sent']))
 
 		case 'display':
 		{
-			$form = extract_elements(array('disp_topics', 'disp_posts', 'show_smilies', 'show_img', 'show_img_sig', 'show_avatars', 'show_sig', 'style'));
+			$form = extract_elements(array('disp_topics', 'disp_posts', 'show_smilies', 'show_img', 'show_img_sig', 'show_avatars', 'show_sig', 'style', 'show_redirect'));
 
 			if ($form['disp_topics'] != '' && intval($form['disp_topics']) < 3) $form['disp_topics'] = 3;
 			if ($form['disp_topics'] != '' && ((intval($form['disp_topics']) > 75) && ($pun_user['g_id'] > PUN_ADMIN))) $form['disp_topics'] = 75;
@@ -782,6 +782,7 @@ else if (isset($_POST['form_sent']))
 			if (!isset($form['show_img_sig']) || $form['show_img_sig'] != '1') $form['show_img_sig'] = '0';
 			if (!isset($form['show_avatars']) || $form['show_avatars'] != '1') $form['show_avatars'] = '0';
 			if (!isset($form['show_sig']) || $form['show_sig'] != '1') $form['show_sig'] = '0';
+			if (!isset($form['show_redirect']) || $form['show_redirect'] != '1') $form['show_redirect'] = '0';
 
 			break;
 		}
@@ -866,7 +867,7 @@ else if (isset($_POST['form_sent']))
 }
 
 
-$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.pm_email_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, g.g_id, g.g_user_title, g.g_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.pm_email_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.show_online, u.membergroupids, u.show_redirect, g.g_id, g.g_user_title, g.g_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 if (!$db->num_rows($result))
 	message($lang_common['Bad request']);
@@ -1413,6 +1414,17 @@ else
 <?php if ($pun_config['o_avatars'] == '1'): ?>							<label><input type="checkbox" name="form[show_avatars]" value="1"<?php if ($user['show_avatars'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Show avatars'] ?><br /></label>
 <?php endif; ?>								<label><input type="checkbox" name="form[show_img]" value="1"<?php if ($user['show_img'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Show images'] ?><br /></label>
 								<label><input type="checkbox" name="form[show_img_sig]" value="1"<?php if ($user['show_img_sig'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Show images sigs'] ?><br /></label>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="inform">
+					<fieldset>
+						<legend><?php echo $lang_profile['Redirect page legend']?></legend>
+						<div class="infldset">
+							<p><?php echo $lang_profile['Redirect page info'] ?></p>
+							<div class="rbox">
+								<label><input type="checkbox" name="form[show_redirect]" value="1"<?php if ($user['show_redirect'] == '1') echo ' checked="checked"' ?> /><?php echo $lang_profile['Show redirect page']?><br /></label>
 							</div>
 						</div>
 					</fieldset>

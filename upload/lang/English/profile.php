@@ -116,12 +116,15 @@ $lang_profile = array(
 'Show avatars info'				=>	'This option toggles whether user avatar images will be displayed in posts or not.',
 'Show sigs'						=>	'Show user signatures.',
 'Show sigs info'				=>	'Enable if you would like to see user signatures.',
+'Show redirect page'			=>	'Show redirect pages.',
 'Style legend'					=>	'Select your preferred style',
 'Style info'					=>	'If you like you can use a different visual style for this forum.',
 'Admin note'					=>	'Admin note',
 'Pagination legend'				=>	'Enter your pagination options',
 'Post display legend'			=>	'Set your options for viewing posts',
 'Post display info'				=>	'If you are on a slow connection, disabling these options, particularly showing images in posts and signatures, will make pages load faster.',
+'Redirect page legend'			=>	'Redirect pages',
+'Redirect page info'			=>	'The redirect page shows message when your any action takes effect at the forum. It could be new message, changing profile settings or something other.',
 'Instructions'					=>	'When you update your profile, you will be redirected back to this page.',
 
 // Administration stuff

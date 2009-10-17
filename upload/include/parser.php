@@ -265,7 +265,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	{
 		global $lang_prof_reg;
 
-		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]#i', $text))
+		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]|\[quote\]|\[/quote\]|\[code\]|\[/code\]|\[spoiler=(&quot;|"|\'|)(.*)\\1\]|\[spoiler\]|\[/spoiler\]|\[noindex\]|\[/noindex\]#i', $text))
 			message($lang_prof_reg['Signature quote/code']);
 	}
 
@@ -768,5 +768,5 @@ function handle_noindex_tag($text)
 
 	if ($pun_user['g_id'] == PUN_GUEST)
 		return '<div class="noindex" title="Текстовый блок не индексируется поисковыми системами"><a href="' . $pun_config['o_base_url']. '/login.php">Войдите</a> или <a href="' . $pun_config['o_base_url']. '/register.php">зарегистрируйтесь</a>, чтобы увидеть скрытый текст.</div>';
-	return '<div class="noindex" title="Текстовый блок не индексируется поисковыми системами">' . $text . '</div>';
+	return '<div class="noindex" title="Текстовый блок не индексируется поисковыми системами">' . stripslashes($text) . '</div>';
 }

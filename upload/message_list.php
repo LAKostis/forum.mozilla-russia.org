@@ -207,11 +207,11 @@ if ($db->num_rows($result))
 	while ($cur_mess = $db->fetch_assoc($result))
 	{
 		$icon_text = $lang_common['Normal icon'];
-		$icon_type = 'icon';
+		$icon_type = '';
 		if ($cur_mess['showed'] == '0')
 		{
 			$icon_text .= ' '.$lang_common['New icon'];
-			$icon_type = 'icon inew';
+			$icon_type = 'inew';
 		}
 
 		($new_messages == false && $cur_mess['showed'] == '0') ? $new_messages = true : null;
@@ -228,13 +228,13 @@ if ($db->num_rows($result))
 			}
 
 ?>
-	<tr>
+	<tr class="<?php echo $icon_type ?>">
 <?php if(isset($_GET['action']) && $_GET['action'] == 'multidelete') { ?>
 		<td class="tcmod"><input type="checkbox" name="delete_messages[]" value="<?php echo $cur_mess['id']; ?>"></td>
 <?php } ?>
 		<td class="tcl">
 			<div class="intd">
-				<div class="<?php echo $icon_type ?>"><div class="nosize"><?php echo trim($icon_text) ?></div></div>
+				<div class="icon <?php echo $icon_type ?>"><div class="nosize"><?php echo trim($icon_text) ?></div></div>
 				<div class="tclcon">
 					<?php echo $subject."\n" ?>
 				</div>

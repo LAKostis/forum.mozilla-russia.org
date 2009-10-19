@@ -127,7 +127,7 @@ $lang_common = array(
 'Logged in as'			=>	'Вы зашли как',
 'Admin'					=>	'Администрирование',
 'Last visit'			=>	'Ваш последний визит',
-'Show new posts'		=>	'Показать новые сообщения, с момента Вашего последнего визита',
+'Show new posts'		=>	'Показать новые сообщения, с момента последнего визита',
 'Mark all as read'		=>	'Пометить все форумы как прочитанные',
 'Link separator'		=>	'',	// The text that separates links in the navigator
 'Mark forum as read'	=>	'Пометить форум как прочитанный', // MOD: MARK TOPICS AS READ
@@ -136,7 +136,7 @@ $lang_common = array(
 // Stuff for the page footer
 'Board footer'			=>	'Board footer',
 'Search links'			=>	'Search links',
-'Show recent posts'		=>	'Показать последние сообщения',
+'Show recent posts'		=>	'Показать новые сообщения за последние 24 часа',
 'Show unanswered posts'	=>	'Показать сообщения, не имеющие ответов',
 'Show your posts'		=>	'Показать Ваши сообщения',
 'Show subscriptions'	=>	'Показать темы, на которые Вы подписаны',

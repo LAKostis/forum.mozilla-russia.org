@@ -586,7 +586,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 								$subject_highlight = preg_replace('#('.str_replace('*', '[^\s]+', str_replace('#', '\#', $highword)).')#i', '<span style="background-color: #FFFF00; color: #000000">$1</span>', $subject_highlight);
 				}
 
-				$subject = ($search_set[$i]['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b> : ' : '').'<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.$subject_highlight.'</a>';
+				$subject = ($search_set[$i]['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b>: ' : '').'<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.$subject_highlight.'</a>';
 				if (!$pun_user['is_guest'] && $search_set[$i]['last_post'] > $pun_user['last_visit'])
 					$icon = '<div class="icon inew"><div class="nosize">'.$lang_common['New icon'].'</div></div>'."\n";
 
@@ -659,7 +659,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if ($search_set[$i]['question'] == "")
 					$subject = '<a href="viewtopic.php?id='.$search_set[$i]['tid'].'">'.iconize_topic(pun_htmlspecialchars($search_set[$i]['subject']), $search_set[$i]['forum_id']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				else
-					$subject = '<b>'.$lang_polls['Poll'].'</b> : <a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.iconize_topic(pun_htmlspecialchars($search_set[$i]['question']), $search_set[$i]['forum_id']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+					$subject = '<b>'.$lang_polls['Poll'].'</b>: <a href="viewtopic.php?id='.$search_set[$i]['tid'].'"><b>'.iconize_topic(pun_htmlspecialchars($search_set[$i]['question']), $search_set[$i]['forum_id']).'</b><BR>'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 				if ($search_set[$i]['closed'] != '0')
 				{
 					$icon_text = $lang_common['Closed icon'];
@@ -677,6 +677,13 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				}
 				else
 					$subject_new_posts = null;
+
+				if ($search_set[$i]['question'])
+					$item_status .= ' ipool';
+				if ($search_set[$i]['num_replies'] > 50)
+					$item_status .= ' ihot';
+				if ($search_set[$i]['num_replies'] == 0)
+					$item_status .= ' iempty';
 
 				$num_pages_topic = ceil(($search_set[$i]['num_replies'] + 1) / $pun_user['disp_posts']);
 
@@ -713,11 +720,11 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					<?php
 					if ($search_set[$i]['question'] == "")
 					{
-						?><td class="tcr"><?php echo '<a href="viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td><?php
+						?><td class="tcr"><?php echo '<a href="viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'" class="last">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td><?php
 					}
 					else
 					{
-					?><td class="tcr"><?php echo '<a href="viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td></tr><?php
+						?><td class="tcr"><?php echo '<a href="viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'" class="last">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td></tr><?php
 					} ?>
 				</tr>
 		<?php

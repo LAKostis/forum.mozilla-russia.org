@@ -51,22 +51,22 @@ if ($footer_style == 'index' || $footer_style == 'search')
 {
 	if (!$pun_user['is_guest'])
 	{
-		echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt>'."\n\t\t\t\t".'<dd><a href="search.php?action=show_24h">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
-		echo "\t\t\t\t".'<dd><a href="search.php?action=show_unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
-		echo "\t\t\t\t".'<dd><a href="search.php?action=show_active">'.$lang_common['Show active posts'].'</a></dd>'."\n";
+		echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt>'."\n";
+		echo "\t\t\t\t".'<dd><a href="search.php?action=show_unanswered" class="unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
+		echo "\t\t\t\t".'<dd><a href="search.php?action=show_active" class="active">'.$lang_common['Show active posts'].'</a></dd>'."\n";
 
 		if ($pun_config['o_subscriptions'] == '1')
-			echo "\t\t\t\t".'<dd><a href="search.php?action=show_subscriptions">'.$lang_common['Show subscriptions'].'</a></dd>'."\n";
+			echo "\t\t\t\t".'<dd><a href="search.php?action=show_subscriptions" class="subscribed">'.$lang_common['Show subscriptions'].'</a></dd>'."\n";
 
-		echo "\t\t\t\t".'<dd><a href="search.php?action=show_user&amp;user_id='.$pun_user['id'].'">'.$lang_common['Show your posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
+		echo "\t\t\t\t".'<dd><a href="search.php?action=show_user&amp;user_id='.$pun_user['id'].'" class="own">'.$lang_common['Show your posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
 	}
 	else
 	{
 		if ($pun_user['g_search'] == '1')
 		{
-			echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt><dd><a href="search.php?action=show_24h">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
-			echo "\t\t\t\t".'<dd><a href="search.php?action=show_unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
-			echo "\t\t\t\t".'<dd><a href="search.php?action=show_active">'.$lang_common['Show active posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
+			echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt>'."\n";
+			echo "\t\t\t\t".'<dd><a href="search.php?action=show_unanswered" class="unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
+			echo "\t\t\t\t".'<dd><a href="search.php?action=show_active" class="active">'.$lang_common['Show active posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
 		}
 	}
 }
@@ -89,37 +89,41 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 	}
 
 	if ($footer_style == 'viewforum' && $is_admmod)
-		echo "\t\t\t".'<p id="modcontrols"><a href="moderate.php?fid='.$forum_id.'&amp;p='.$p.'">'.$lang_common['Moderate forum'].'</a></p>'."\n";
+		echo "\t\t\t".'<p id="modcontrols"><a href="moderate.php?fid='.$forum_id.'&amp;p='.$p.'" class="admin">'.$lang_common['Moderate forum'].'</a></p>'."\n";
 	else if ($footer_style == 'viewtopic' && ($is_admmod || $cur_topic['poster'] == $pun_user['username']))
 	{
 		echo "\t\t\t".'<dl id="modcontrols">';
 
 		if ($is_admmod && $cur_topic['announcement'] != '1')
 		{
+			echo "\t\t\t".'<dd>';
+		
 			if ($cur_topic['closed'] == '1')
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'">'.$lang_common['Open topic'].'</a> | '."\n";
+				echo '<a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'" class="open">'.$lang_common['Open topic'].'</a> | ';
 			else
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a> | '."\n";
+				echo '<a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'" class="close">'.$lang_common['Close topic'].'</a> | ';
 
-			echo "\t\t\t".'<a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
-
-			if ($cur_topic['sticky'] == '1')
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a> | '."\n";
-			else
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a> | '."\n";
-
-			if ($cur_topic['post_sticky'] == '1')
-				echo "\t\t\t".'<a href="moderate.php?fid='.$forum_id.'&amp;unstick_post='.$id.'">'.$lang_common['Unstick post'].'</a></dd>'."\n";
-			else
-				echo "\t\t\t".'<a href="moderate.php?fid='.$forum_id.'&amp;stick_post='.$id.'">'.$lang_common['Stick post'].'</a></dd>'."\n";
-
-			echo "\t\t\t".'<dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
+			echo '<a href="moderate.php?fid='.$forum_id.'&amp;move_topics='.$id.'" class="move">'.$lang_common['Move topic'].'</a>';
 
 			if ($cur_topic['question'] != '')
-				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;totopic='.$id.'">'.$lang_common['Poll to topic'].'</a></dd>'."\n";
+				echo ' | <a href="moderate.php?fid='.$forum_id.'&amp;totopic='.$id.'" class="totopic">'.$lang_common['Poll to topic'].'</a>';
+
+			echo '</dd>'."\n";
+
+			if ($cur_topic['sticky'] == '1')
+				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;unstick='.$id.'" class="unstick">'.$lang_common['Unstick topic'].'</a> | '."\n";
+			else
+				echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;stick='.$id.'" class="stick">'.$lang_common['Stick topic'].'</a> | '."\n";
+
+			if ($cur_topic['post_sticky'] == '1')
+				echo "\t\t\t".'<a href="moderate.php?fid='.$forum_id.'&amp;unstick_post='.$id.'" class="unstick">'.$lang_common['Unstick post'].'</a></dd>'."\n";
+			else
+				echo "\t\t\t".'<a href="moderate.php?fid='.$forum_id.'&amp;stick_post='.$id.'" class="stick">'.$lang_common['Stick post'].'</a></dd>'."\n";
+
+			echo "\t\t\t".'<dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'" class="admin">'.$lang_common['Delete posts'].'</a></dd>'."\n";
 		}
 		elseif ($cur_topic['closed'] == '0')
-			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";
+			echo "\t\t\t".'<dd><a href="moderate.php?fid='.$forum_id.'&amp;close='.$id.'" class="close">'.$lang_common['Close topic'].'</a></dd>'."\n";
 
 		echo "\t\t\t".'</dl>';
 	}
@@ -128,7 +132,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 }
 
 ?>
-			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />&copy; Copyright 2002&#8211;2008 PunBB<br />Modified by LAKostis<br />Russian Mozilla theme by <a href="profile.php?id=57">ragnaar</a></p>
+			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />Modified by <a href="http://www.mozilla-russia.org/">Mozilla Russia</a><br />Copyright © 2004–2009 Mozilla Russia</p>
 <?php
 
 // Display debug info (if enabled/defined)

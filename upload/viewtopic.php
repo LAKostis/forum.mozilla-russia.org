@@ -145,7 +145,7 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 if ($cur_topic['closed'] == '0')
 {
 	if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $is_admmod)
-		$post_link = '<p class="pagelink conl"><a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a></p>'."\n";
+		$post_link = '<p class="pagelink conl"><a href="post.php?tid='.$id.'" class="reply">'.$lang_topic['Post reply'].'</a></p>'."\n";
 	else
 		$post_link = '';
 }
@@ -154,7 +154,7 @@ else
 	$post_link = '<p class="pagelink conl">' . $lang_topic['Topic closed'];
 
 	if ($is_admmod)
-		$post_link .= '<br /><a href="post.php?tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+		$post_link .= '<br /><a href="post.php?tid='.$id.'" class="reply">'.$lang_topic['Post reply'].'</a>';
 
 	$post_link .= '</p>'."\n";
 }
@@ -254,7 +254,7 @@ while (($result_post && $cur_post = $db->fetch_assoc($result_post)) || $cur_post
 			$user_title = censor_words($user_title);
 
 		// Format the online indicator
-		$is_online = ($cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong>'.$lang_topic['Online'].'</strong>' : $is_online = $lang_topic['Offline'];
+		$is_online = ($cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
 
 		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0' && $pun_user['is_guest'] != '1')
 		{
@@ -287,12 +287,12 @@ while (($result_post && $cur_post = $db->fetch_assoc($result_post)) || $cur_post
 
 			// Now let's deal with the contact links (E-mail and URL)
 			if (($cur_post['email_setting'] == '0' && !$pun_user['is_guest']) || $pun_user['g_id'] < PUN_GUEST)
-				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'">'.$lang_common['E-mail'].'</a>';
+				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
-				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'">'.$lang_common['E-mail'].'</a>';
+				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
 			if ($cur_post['url'] != '')
-				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
+				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'" class="website">'.$lang_topic['Website'].'</a>';
 		}
 
 		if ($pun_user['g_id'] < PUN_GUEST)
@@ -316,39 +316,39 @@ while (($result_post && $cur_post = $db->fetch_assoc($result_post)) || $cur_post
 			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
 		if ($pun_config['o_show_user_info'] == '1' && $cur_post['poster_email'] != '' && !$pun_user['is_guest'])
-			$user_contacts[] = '<a href="mailto:'.$cur_post['poster_email'].'">'.$lang_common['E-mail'].'</a>';
+			$user_contacts[] = '<a href="mailto:'.$cur_post['poster_email'].'" class="email">'.$lang_common['E-mail'].'</a>';
 	}
 
 	// Generation post action array (quote, edit, delete etc.)
 	if (!$is_admmod)
 	{
 		if (($cur_post['poster_id'] != '1') && $quickpost)
-			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
+			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'" class="profile">'.$lang_common['Profile'].'</a>';
 		if (!$pun_user['is_guest'])
-			$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
+			$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'" class="report">'.$lang_topic['Report'].'</a>';
 
 		if ($cur_topic['closed'] == '0')
 		{
 			if ($cur_post['poster_id'] == $pun_user['id'])
 			{
 				if ((($start_from + $post_count) == 1 && $pun_user['g_delete_topics'] == '1') || (($start_from + $post_count) > 1 && $pun_user['g_delete_posts'] == '1'))
-					$post_actions[] = '<li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>';
+					$post_actions[] = '<li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'" class="delete">'.$lang_topic['Delete'].'</a>';
 				if ($pun_user['g_edit_posts'] == '1')
-					$post_actions[] = '<li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>';
+					$post_actions[] = '<li class="postedit"><a href="edit.php?id='.$cur_post['id'].'" class="edit">'.$lang_topic['Edit'].'</a>';
 			}
 
 			if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
-			$post_actions[] = '</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>';
+			$post_actions[] = '</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'" class="reply">'.$lang_topic['Reply'].'</a>';
 			if ($quickpost)
-			$post_actions[] = '</li><li class="postquote" onmouseover="copyQ(this);"><a href="viewtopic.php?pid='.$cur_post['id'].'#p'.$cur_post['id'].'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '", ' . $cur_post['id'] . ');return false;\'>'.$lang_topic['Quote'].'</a>';
+			$post_actions[] = '</li><li class="postquote" onmouseover="copyQ(this);"><a href="viewtopic.php?pid='.$cur_post['id'].'#p'.$cur_post['id'].'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '", ' . $cur_post['id'] . ');return false;\' class="quote">'.$lang_topic['Quote'].'</a>';
 		}
 	}
 	else
 	{
 		if (($cur_post['poster_id'] != '1') && $quickpost)
-			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'">'.$lang_common['Profile'].'</a>';
+			$post_actions[] = '<li class="postreport"><a href="profile.php?id='.$cur_post['poster_id'].'" class="profile">'.$lang_common['Profile'].'</a>';
 
-		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover="copyQ(this);"><a href="viewtopic.php?pid='.$cur_post['id'].'#p'.$cur_post['id'].'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '", ' . $cur_post['id'] . ');return false;\'>'.$lang_topic['Quote'].'</a>';
+		$post_actions[] = '<li class="postreport"><a href="misc.php?report='.$cur_post['id'].'" class="report">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'" class="delete">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="edit.php?id='.$cur_post['id'].'" class="edit">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="post.php?tid='.$id.'&amp;qid='.$cur_post['id'].'" class="reply">'.$lang_topic['Reply'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote" onmouseover="copyQ(this);"><a href="viewtopic.php?pid='.$cur_post['id'].'#p'.$cur_post['id'].'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '", ' . $cur_post['id'] . ');return false;\' class="quote">'.$lang_topic['Quote'].'</a>';
 	}
 
 	// Switch the background color for every message.

@@ -12,6 +12,7 @@ $lang_uploads = array(
 'Size'					=>	'Размер',
 'Delete'				=>	'Удалить',	// The submit button
 'Posted by'				=>	'Размещено',
-'Topic del redirect'	=>	'Тема удалена. Перенаправление &hellip;'
+'Topic del redirect'	=>	'Тема удалена. Перенаправление &hellip;',
+'Uploader search'		=>	'Поиск файлов'
 
 );

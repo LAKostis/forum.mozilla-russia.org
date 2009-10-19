@@ -118,7 +118,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 
 	// If there is a last_post/last_poster.
 	if ($cur_forum['last_post'] != '')
-		$last_post = ($cur_forum['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b> : ' : '').'<a href="viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id'].'">'.pun_htmlspecialchars($cur_forum['subject']).'</a> <span class="byuser">'.format_time($cur_forum['last_post']).' '.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
+		$last_post = ($cur_forum['question'] != '' ? '<b>'.$lang_polls['Poll'].'</b>: ' : '').'<a href="viewtopic.php?pid='.$cur_forum['last_post_id'].'#p'.$cur_forum['last_post_id'].'" class="last">'.pun_htmlspecialchars($cur_forum['subject']).'</a> <span class="byuser">'.format_time($cur_forum['last_post']).' '.$lang_common['by'].' '.pun_htmlspecialchars($cur_forum['last_poster']).'</span>';
 	else
 		$last_post = '&nbsp;';
 
@@ -175,7 +175,7 @@ list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 			</dl>
 			<dl class="conl">
 				<dt><strong><?php echo $lang_index['User info'] ?></strong></dt>
-				<dd><?php echo $lang_index['Newest user'] ?>: <a href="profile.php?id=<?php echo $pun_last_user['id'] ?>"><?php echo pun_htmlspecialchars($pun_last_user['username']) ?></a></dd>
+				<dd><?php echo $lang_index['Newest user'] ?>: <a href="profile.php?id=<?php echo $pun_last_user['id'] ?>" class="user"><?php echo pun_htmlspecialchars($pun_last_user['username']) ?></a></dd>
 <?php
 
 if ($pun_config['o_users_online'] == '1')
@@ -183,7 +183,7 @@ if ($pun_config['o_users_online'] == '1')
 	// Fetch users online info and generate strings for output
 	$num_users = $num_hidden = $num_guests = 0;
 	$users = $hidden = array();
-	$result = $db->query('SELECT user_id, ident, show_online FROM '.$db->prefix.'online WHERE idle=0 ORDER BY logged', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT o.user_id, o.ident, o.show_online, u.group_id FROM '.$db->prefix.'online AS o LEFT JOIN '.$db->prefix.'users AS u ON o.user_id=u.id WHERE idle=0 ORDER BY u.username, logged', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 	while ($pun_user_online = $db->fetch_assoc($result))
 	{
@@ -193,12 +193,12 @@ if ($pun_config['o_users_online'] == '1')
 			{
 				++$num_hidden;
 				if ($pun_user['g_id'] <= PUN_MOD)
-					$hidden[] = '<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+					$hidden[] = '<dd><a href="profile.php?id='.$pun_user_online['user_id'].'" class="' . ($pun_user_online['group_id'] <= PUN_MOD ? 'admin' : 'user') . '">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			}
 			else
 			{
 				++$num_users;
-				$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+				$users[] = "\n\t\t\t\t".'<dd><a href="profile.php?id='.$pun_user_online['user_id'].'" class="' . ($pun_user_online['group_id'] <= PUN_MOD ? 'admin' : 'user') . '">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			}
 		}
 		else

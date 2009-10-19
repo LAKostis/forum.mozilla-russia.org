@@ -156,7 +156,7 @@ require PUN_ROOT.'header.php';
 
 <div class="linkst">
 	<div class="inbox">
-		<p class="pagelink conl"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
+		<p class="pagelink conl"><a href="message_send.php" class="pm"><?php echo $lang_pms['New message']; ?></a></p>
 		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'message_list.php?box='.$box) ?></p>
 		<ul><li><a href="index.php"><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="message_list.php"><?php echo $lang_pms['Private Messages'].'</a>&nbsp;</li><li>&raquo;&nbsp;'.$page_name ?></li></ul>
 		<div class="clearer"></div>
@@ -295,7 +295,7 @@ if(isset($_GET['id'])){
 			$user_title = censor_words($user_title);
 
 		// Format the online indicator
-		$is_online = ($cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong>'.$lang_topic['Online'].'</strong>' : $is_online = $lang_topic['Offline'];
+		$is_online = ($cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
 
 		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0')
 		{
@@ -329,12 +329,12 @@ if(isset($_GET['id'])){
 
 			// Now let's deal with the contact links (E-mail and URL)
 			if (($cur_post['email_setting'] == '0' && !$pun_user['is_guest']) || $pun_user['g_id'] < PUN_GUEST)
-				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'">'.$lang_common['E-mail'].'</a>';
+				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
-				$user_contacts[] = '<a href="misc.php?email='.$cur_post['id'].'">'.$lang_common['E-mail'].'</a>';
+				$user_contacts[] = '<a href="misc.php?email='.$cur_post['id'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
 			if ($cur_post['url'] != '')
-				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
+				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'" class="website">'.$lang_topic['Website'].'</a>';
 		}
 
 		//Moderator and Admin stuff
@@ -346,13 +346,13 @@ if(isset($_GET['id'])){
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
 		}
 		// Generation post action array (reply, delete etc.)
-		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['mid'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'">'.$lang_pms['Delete'].'</a>';
+		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['mid'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'" class="delete">'.$lang_pms['Delete'].'</a>';
 
 		if(!$status)
-			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'">'.$lang_pms['Reply'].'</a>';
+			$post_actions[] = '<li><a href="message_send.php?id='.$cur_post['id'].'&amp;quote='.$cur_post['mid'].'" class="reply">'.$lang_pms['Reply'].'</a>';
 
 		if(!$status)
-			$post_actions[] = '<li onmouseover="copyQ(this);"><a href="'.$post_link.'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '");return false;\'>'.$lang_pms['Quote'].'</a>';
+			$post_actions[] = '<li onmouseover="copyQ(this);"><a href="'.$post_link.'" onclick=\'pasteQ("' . pun_htmlspecialchars($cur_post['username']) . '");return false;\' class="quote">'.$lang_pms['Quote'].'</a>';
 
 	}
 	// If the sender has been deleted
@@ -364,7 +364,7 @@ if(isset($_GET['id'])){
 		$username = pun_htmlspecialchars($cur_post['sender']);
 		$user_title = "Deleted User";
 
-		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['id'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'">'.$lang_pms['Delete'].'</a>';
+		$post_actions[] = '<li><a href="message_delete.php?id='.$cur_post['id'].'&amp;box='.(int)$_GET['box'].'&amp;p='.(int)$_GET['p'].'" class="delete">'.$lang_pms['Delete'].'</a>';
 
 		$is_online = $lang_topic['Offline'];
 	}
@@ -425,7 +425,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'multidelete')
 else
 {
 ?>
-		<p class="pagelink conl"><a href="message_send.php"><?php echo $lang_pms['New message']; ?></a></p>
+		<p class="pagelink conl"><a href="message_send.php" class="pm"><?php echo $lang_pms['New message']; ?></a></p>
 <?php
 }
 ?>

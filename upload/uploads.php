@@ -32,12 +32,12 @@ if ($pun_user['g_read_board'] == '0')
 
 require PUN_ROOT.'include/parser.php';
 
-$page_title='&nbsp;&raquo;&nbsp; Uploader | '.pun_htmlspecialchars($pun_config['o_board_title']);
 // Load the viewtopic.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/'.'topic.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/'.'uploads.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 
+$page_title=$lang_uploads['Uploader'].' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 
 // FIXME
 $files_per_page = 30;
@@ -69,7 +69,7 @@ require PUN_ROOT.'header.php';
 ?>
 
 <div class="blockform">
-	<h2><span><?php echo 'Uploader Search' ?></span></h2>
+	<h2><span><?php echo $lang_uploads['Uploader search'] ?></span></h2>
 	<div class="box">
 	<form id="userlist" method="get" action="uploads.php">
 		<div class="inform">
@@ -98,7 +98,7 @@ require PUN_ROOT.'header.php';
 </div>
 <div class="linkst">
 	<div class="inbox">
-		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
 		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>
@@ -106,15 +106,15 @@ require PUN_ROOT.'header.php';
 </div>
 
 <?php
-    $result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$pun_user['g_id']); 
+    $result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$pun_user['g_id']);
 	$upl_conf= $db->fetch_assoc($result);
     if (!$upl_conf) {
-    	$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');    	
+    	$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');
     	$upl_conf= $db->fetch_assoc($result);
-    }	
-    
-   
- 	$result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups') or error('Unable to get useergroups', __FILE__, __LINE__, $db->error()); 
+    }
+
+
+ 	$result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups') or error('Unable to get useergroups', __FILE__, __LINE__, $db->error());
  	$i=0;
 	while ($i < $db->num_rows($result)) {
 
@@ -122,18 +122,18 @@ require PUN_ROOT.'header.php';
 		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$groups[$i]['g_id']) or error('Unable to upload persmissions', __FILE__, __LINE__, $db->error());
 		$perms[$i]= $db->fetch_assoc($result2);
     	if (!$perms[$i]) {
-    		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');    	
+    		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');
     		$perms[$i]= $db->fetch_assoc($result2);
    		}
-	 	$i++;   			
+	 	$i++;
 	}
-	
+
 
   $allowed = array(".txt",".gif",".jpg",".jpeg",".png", ".xpi", ".zip", ".src");
   $pics = array(".gif",".jpg",".jpeg",".png");
 
  ?>
- 
+
 
 <div class="inform">
 <?php
@@ -149,8 +149,8 @@ require PUN_ROOT.'header.php';
 		</div>
 	</div>
 <?php }
-	elseif (!isset($_POST['act'])) { 
-	
+	elseif (!isset($_POST['act'])) {
+
 ?>
 		<h2><span><?php echo $lang_uploads['File list'] ?></span></h2>
 		<fieldset>
@@ -158,14 +158,14 @@ require PUN_ROOT.'header.php';
 				<p class="clearb"><?php echo $lang_uploads['File list info'] ?></p>
 				<table class="punmain" cellspacing="1" cellpadding="4">
  					<tr class="punhead">
-    					<td class="punhead" style="width: 20%"><?php echo $lang_uploads['File']; ?></td>    
+    					<td class="punhead" style="width: 20%"><?php echo $lang_uploads['File']; ?></td>
     					<td class="punhead" style="width: 5%"><?php echo $lang_uploads['Size']; ?></td>
 					<td class="punhead" style="width: 14%"><?php echo $lang_uploads['Posted by']; ?></td>
     <?php
     		if($upl_conf['p_delete'])
 	echo '	<td class="punhead" style="width: 14%; white-space: nowrap">'.$lang_uploads['Delete'].'</td>' ?>
 		</tr>
-		<?php	
+		<?php
    		if($upl_conf['p_globalview']) {
     			$result = $db->query('SELECT * FROM '.$db->prefix.'uploaded WHERE id>1'.(!empty($where_sql) ? ' AND '.implode(' OR ', $where_sql) : '').' ORDER BY '.$sort_by.' '.$sort_dir.' LIMIT '.$start_from.', '.$files_per_page) or error('Error getting file list', __FILE__, __LINE__, $db->error());
     		} else $result = $db->query('SELECT * FROM '.$db->prefix.'uploaded WHERE id ='.$pun_user['id'].''.(!empty($where_sql) ? ' AND '.implode(' OR ', $where_sql) : '').' ORDER BY '.$sort_by.' '.$sort_dir.' LIMIT '.$start_from.', '.$files_per_page) or error('Error getting file list', __FILE__, __LINE__, $db->error());
@@ -179,7 +179,7 @@ require PUN_ROOT.'header.php';
             else
 				echo'					<td class="puncon1"><a href="./uploaded/'.$info['file'].'">'.$info['file'].'</td>';
 	?>
-					<td class="puncon2"><?php echo round(filesize('./uploaded/'.$info['file']) / 1024).'KB'; ?></td>
+					<td class="puncon2"><?php echo round(@filesize('./uploaded/'.$info['file']) / 1024).'KB'; ?></td>
 					<td class="puncon1"><?php echo '<a href="profile.php?id='.$info['id'].'">'.$info['user'].'</a>'; ?></td>
 	<?php
 			if($upl_conf['p_globaldelete'])
@@ -195,10 +195,10 @@ require PUN_ROOT.'header.php';
 	?>
 				</table>
 			   </div>
-		</fieldset>	
+		</fieldset>
 </div>
-<?php } 
-  
+<?php }
+
 elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_FILES))  {
 
     setlocale (LC_ALL, 'en_US');
@@ -206,7 +206,7 @@ elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_F
     $file_name = pun_trim($_FILES['file']['name']);
     $file_type = pun_trim($_FILES['file']['type']);
     $file_size = intval($_FILES['file']['size']);
-    $result    = pun_trim($_FILES['file']['error']); 	
+    $result    = pun_trim($_FILES['file']['error']);
 	if(($upl_conf['p_upload'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
     $ext = strtolower(strrchr($file_name,'.'));
     if($file_name == "")
@@ -223,7 +223,7 @@ elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_F
     	$result = $db->query('INSERT INTO '.$db->prefix.'uploaded(`file`,`user`,`id`) VALUES(\''.$file_name.'\',\''.pun_trim($_POST['user_name']).'\',\''.intval($_POST['user_id']).'\')') or error('Unable to add upload data', __FILE__, __LINE__, $db->error());
     	@copy($temp_name, './uploaded/'.$file_name) or error('Could not copy file to server', __FILE__, __LINE__, $db->error());
 
-?>    	
+?>
 <div class="inform">
 	<fieldset>
 		<legend>Uploading...</legend>
@@ -237,7 +237,7 @@ elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_F
     }
 }
 elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_POST['delfile'])) {
-	
+
 	$delfile = pun_trim($_POST['delfile']);
 	if(($upl_conf['p_delete'] <> 1)&&($upl_conf['p_globaldelete'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
 
@@ -256,7 +256,7 @@ elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_PO
 		</div>
 	</fieldset>
 </div>
-    
+
 <?php
     }
 }
@@ -264,7 +264,7 @@ elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_PO
 ?>
 <div class="linksb">
 	<div class="inbox">
-		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
 		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>

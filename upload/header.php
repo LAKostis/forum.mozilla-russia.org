@@ -125,7 +125,7 @@ if (defined('PUN_GOOGLE_API'))
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 }
-	
+
 if (defined('PUN_ADMIN_CONSOLE'))
 	echo '<link rel="stylesheet" type="text/css" href="style/imports/base_admin.css" />'."\n";
 
@@ -231,15 +231,17 @@ if ($pun_user['is_guest'])
 	// Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
 	$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
 
-	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li><form method="post" action="login.php?action=in"><input type="hidden" name="form_sent" value="1" /> <input type="hidden" name="redirect_url" value="' . $redirect_url .'" /> <input type="text" id="qlogin-username" name="req_username" size="16" maxlength="25" tabindex="101" value="'. $lang_common['Username'] .'" onfocus="this.value=\'\'" /> <input type="password"  id="qlogin-password"name="req_password" size="12" maxlength="16" tabindex="102" value="'. $lang_common['Password'] .'" onfocus="this.value=\'\'" /> <input type="submit" id="qlogin-submit" name="login" value="'. $lang_common['Login'] .'" tabindex="103" /></form></li></ul>'."\n\t\t\t";
+	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li><form method="post" action="login.php?action=in"><input type="hidden" name="form_sent" value="1" /> <input type="hidden" name="redirect_url" value="' . $redirect_url .'" /> <input type="text" id="qlogin-username" name="req_username" size="20" maxlength="25" tabindex="101" value="'. $lang_common['Username'] .'" onfocus="this.value=\'\'" /> <input type="password"  id="qlogin-password"name="req_password" size="15" maxlength="16" tabindex="102" value="'. $lang_common['Password'] .'" onfocus="this.value=\'\'" /> <input type="submit" id="qlogin-submit" name="login" value="'. $lang_common['Login'] .'" tabindex="103" /></form></li></ul>'."\n\t\t\t";
 	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
-	$tpl_temp .= "\n\t\t\t".'<ul class="conr"><li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+		$tpl_temp .= "\n\t\t\t".'<ul class="conr"><li><a href="viewprintable.php?id='.$id.'" class="viewprintable">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	elseif (in_array(basename($_SERVER['PHP_SELF']), array('index.php', 'search.php')))
+		$tpl_temp .= "\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_24h" class="latest">'.$lang_common['Show recent posts'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else
-	$tpl_temp .= '<div class="clearer"></div></div>';
+		$tpl_temp .= '<div class="clearer"></div></div>';
 }
 else
 {
-	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li>'.$lang_common['Logged in as'].' <strong>'.pun_htmlspecialchars($pun_user['username']).'</strong></li>'."\n\t\t\t\t".'<li>'.$lang_common['Last visit'].': '.format_time($pun_user['last_visit']).'</li>';
+	$tpl_temp = '<div id="brdwelcome" class="inbox">'."\n\t\t\t".'<ul class="conl">'."\n\t\t\t\t".'<li>'.$lang_common['Logged in as'].' <a href="profile.php?id='.$pun_user['id'].'" class="user"><strong>'.pun_htmlspecialchars($pun_user['username']).'</strong></a></li>'."\n\t\t\t\t".'<li>'.$lang_common['Last visit'].': '.format_time($pun_user['last_visit']).'</li>';
 
 	if ($pun_user['g_id'] < PUN_GUEST)
 	{
@@ -253,18 +255,21 @@ else
 	}
 	require(PUN_ROOT.'include/pms/header_new_messages.php');
 	if (in_array(basename($_SERVER['PHP_SELF']), array('index.php', 'search.php')))
-		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markread">'.$lang_common['Mark all as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new" class="new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="search.php?action=show_24h" class="latest">'.$lang_common['Show recent posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markread" class="markread">'.$lang_common['Mark all as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	// MOD: MARK TOPICS AS READ - 2 LINES NEW CODE FOLLOW
 		else if (in_array(basename($_SERVER['PHP_SELF']), array('viewforum.php')) && isset($id))
-			$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
-	else
-	if (basename($_SERVER['PHP_SELF']) == 'viewtopic.php'){
-		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="viewprintable.php?id='.$id.'">'.$lang_common['Print version'].'</a></li>';
+			$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="search.php?action=show_new" class="new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="misc.php?action=markforumread&amp;id='.$id.'" class="markread">'.$lang_common['Mark forum as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+	elseif (basename($_SERVER['PHP_SELF']) == 'viewtopic.php')
+	{
+		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t";
 
 		if ($cur_topic['is_subscribed'])
-			$tpl_temp .= '<li>'.$lang_topic['Is subscribed'].' - <a href="misc.php?unsubscribe='.$id.'">'.$lang_topic['Unsubscribe'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+			$tpl_temp .= '<li>'.$lang_topic['Is subscribed'].' / <a href="misc.php?unsubscribe='.$id.'" class="unsubscribe">'.$lang_topic['Unsubscribe'].'</a></li>';
 		else
-			$tpl_temp .= '<li>'.'<a href="misc.php?subscribe='.$id.'">'.$lang_topic['Subscribe'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+			$tpl_temp .= '<li>'.'<a href="misc.php?subscribe='.$id.'" class="subscribe">'.$lang_topic['Subscribe'].'</a></li>';
+
+		$tpl_temp .= '<li><a href="viewprintable.php?id='.$id.'" class="viewprintable">'.$lang_common['Print version'].'</a></li></ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+
 	}
 	else $tpl_temp .= '</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 }

@@ -56,7 +56,7 @@
     nfid:   One or more forum ID's (comma-separated) that are to be
             excluded. E.g. the ID of a a test forum.
 
-    type:   RSS or gen_news (for template-based news). Anything else 
+    type:   RSS or gen_news (for template-based news). Anything else
             means HTML .
 
   Here are some examples using PHP include().
@@ -279,7 +279,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 		// Generate front page news
 		$result = $db->query('SELECT t.id, t.poster, t.posted, t.subject, t.num_replies, t.question FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 //Change Ragnaar line 266		$result = $db->query('SELECT t.id, t.poster, t.subject, t.num_replies FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL'.$forum_sql.' ORDER BY '.$order_by.' DESC LIMIT '.$show) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
-		
+
 		if (!$db->num_rows($result))
 			message('There are no topics to generate news based on in forum with ID = '.$fid.'.');
 
@@ -301,7 +301,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 
 			$search = array('<news_subject>', '<news_author>', '<news_posted>', '<news_message>', '<news_comments>', '<news_link>');
 			if ($cur_topic['question'] != '')
-				$replace = array('<strong>'.$lang_polls['Poll'].' : '.pun_htmlspecialchars($cur_topic['subject']).'</strong>', $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
+				$replace = array('<strong>'.$lang_polls['Poll'].': '.pun_htmlspecialchars($cur_topic['subject']).'</strong>', $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
 			else
 				$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
 
@@ -349,7 +349,7 @@ else if ($_GET['action'] == 'online' || $_GET['action'] == 'online_full')
 {
 	// Load the index.php language file
 	require PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/index.php';
-	
+
 	// Fetch users online info and generate strings for output
 	$num_guests = $num_hidden = $num_users = 0;
 	$users = array();
@@ -359,7 +359,7 @@ else if ($_GET['action'] == 'online' || $_GET['action'] == 'online_full')
 	{
 		if ($pun_user_online['user_id'] > 1)
 		{
-			if ($pun_user_online['show_online'] == '1') 
+			if ($pun_user_online['show_online'] == '1')
 			{
 				$users[] = '<a href="'.$pun_config['o_base_url'].'/profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 				++$num_users;
@@ -376,7 +376,7 @@ else if ($_GET['action'] == 'online' || $_GET['action'] == 'online_full')
 		echo $lang_index['Users online'].': '.implode(', ', $users).'<br />';
 	else
 		echo $lang_index['Users online'].': '.$num_users.'<br />';
-	
+
 	echo $lang_index['Hidden online'].': '.$num_hidden.'<br />';
 
 	return;

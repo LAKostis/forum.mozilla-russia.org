@@ -9,6 +9,6 @@ if (!defined('PUN'))
 	{
 		$pid = isset($cur_post['poster_id']) ? $cur_post['poster_id'] : $cur_post['id'];
 		if($pid != $pun_user['id'])
-		  $user_contacts[] = '<a href="message_send.php?id='.$pid.'&amp;tid='.$id.'">'.$lang_pms['PM'].'</a>';
+		  $user_contacts[] = '<a href="message_send.php?id='.$pid.'&amp;tid='.$id.'" class="pm">'.$lang_pms['PM'].'</a>';
 	}
 ?>

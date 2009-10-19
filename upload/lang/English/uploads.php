@@ -12,6 +12,7 @@ $lang_uploads = array(
 'Size'					=>	'Size',
 'Delete'				=>	'Delete',	// The submit button
 'Posted by'				=>	'Posted by',
-'Topic del redirect'	=>	'Topic deleted. Redirecting &hellip;'
+'Topic del redirect'	=>	'Topic deleted. Redirecting &hellip;',
+'Uploader search'		=>	'Uploader Search'
 
 );

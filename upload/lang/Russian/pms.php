@@ -39,7 +39,7 @@ $lang_pms = array(
 'Show smilies'				=>	'Показывать смайлики',
 
 // Send or delete message
-'Send to'					=>	'Отправить',
+'Send to'					=>	'Получатель',
 'Send a message'			=>	'Отправить сообщение',
 'Delete message'			=>	'Удалить сообщение',
 'Del redirect'				=>	'Сообщения удалены, идет перенаправление...',

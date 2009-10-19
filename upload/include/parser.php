@@ -229,7 +229,9 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is',
 				'#\[spoiler=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[spoiler\]\s*#i',
-				'#\s*\[/spoiler\]#i');
+				'#\s*\[/spoiler\]#i',
+				'#\[noindex\]\s*#i',
+				'#\s*\[/noindex\]#i');
 
 	$b = array(	'[url=$2]',
 				'[url]',
@@ -241,7 +243,9 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'[color=$2]$3[/color]',
 				'[spoiler=$2]',
 				'[spoiler]',
-				'[/spoiler]');
+				'[/spoiler]',
+				'[noindex]',
+				'[/noindex]');
 
 	if (!$is_signature)
 	{
@@ -532,7 +536,7 @@ function do_bbcode($text)
 		'#\[h\](.*?)\[/h\]#s',
 		'#\[spoiler\](.*?)\[/spoiler\]#s',
 		'#\[spoiler=(.*?)\](.*?)\[/spoiler\]#s',
-		'#\[noindex\](.*?)\[/noindex\]#e'
+		'#\[noindex\](.*?)\[/noindex\]#es'
 	);
 
 	$replace = array(
@@ -690,10 +694,7 @@ function parse_message($text, $hide_smilies)
 		$text = do_bbcode($text);
 
 		if ($pun_config['p_message_img_tag'] == '1')
-		{
-//			$text = preg_replace('#\[img\]((ht|f)tps?://)([^\s<"]*?)\.(jpg|jpeg|png|gif)\[/img\]#e', 'handle_img_tag(\'$1$3.$4\')', $text);
 			$text = preg_replace('#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e', 'handle_img_tag(\'$1$3\')', $text);
-		}
 	}
 
 	// Deal with newlines, tabs and multiple spaces
@@ -754,10 +755,7 @@ function parse_signature($text)
 		$text = do_bbcode($text);
 
 		if ($pun_config['p_sig_img_tag'] == '1')
-		{
-//			$text = preg_replace('#\[img\]((ht|f)tps?://)([^\s<"]*?)\.(jpg|jpeg|png|gif)\[/img\]#e', 'handle_img_tag(\'$1$3.$4\', true)', $text);
 			$text = preg_replace('#\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]#e', 'handle_img_tag(\'$1$3\', true)', $text);
-		}
 	}
 
 	// Deal with newlines, tabs and multiple spaces

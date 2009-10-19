@@ -19,20 +19,24 @@
 <div id="pun<pun_page>" class="pun">
 
 <div class="top-menu">
-	<div class="projects">
-		<b>Наши проекты:</b>
-		<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
-		<a href="http://wiki.mozilla-russia.org/">Wiki</a>
-		<a href="http://flock.mozilla-russia.org/">Flock</a>
-		<a href="http://www.kmeleon.ru/">K-meleon</a>
-		<a href="http://nvu.mozilla-russia.org/">Nvu</a>
-		<a href="http://mozutil.mozilla-russia.org/">MozUtil</a>
-		<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>
-		<a href="https://bugzilla.mozilla-russia.org/">Bugzilla</a>
-		<a href="http://planet.mozilla-russia.org/">Планета</a>
+	<div class="projects" onmouseover="this.className='projects more'" onmouseout="this.className='projects'">
+		<b>Наши проекты</b>
+		<span class="links">
+			<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
+			<a href="http://wiki.mozilla-russia.org/">Wiki</a>
+			<a href="http://flock.mozilla-russia.org/">Flock</a>
+			<a href="http://www.kmeleon.ru/">K-meleon</a>
+			<a href="http://nvu.mozilla-russia.org/">Nvu</a>
+			<a href="http://mozutil.mozilla-russia.org/">MozUtil</a>
+			<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>
+			<a href="https://bugzilla.mozilla-russia.org/">Bugzilla</a>
+			<a href="http://planet.mozilla-russia.org/">Планета</a>
+			<a href="http://www.mozilla-russia.org/about/allprojects.html" class="all">Все проекты</a>
+		</span>
 		<img src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 	</div>
-	<div class="search">
+	<div class="search" onmouseover="this.className='search more'" onmouseout="this.className='search'">
+		<span class="label" style="display:none">Быстрый поиск</span>
 		<form id="search" method="get" action="search.php">
 			<input type="hidden" name="action" value="search" />
 			<input type="text" name="keywords" size="20" maxlength="100" id="search-input" />

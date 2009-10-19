@@ -34,7 +34,6 @@ label.conl{width:auto;overflow:visible;margin-right:10px}
 /* 5.2 Set up page numbering and posts links */
 div.linkst .conl,div.linksb .conl,div.postlinksb .conl{width:18em}
 div.linkst .conr,div.linksb .conr,div.postlinksb .conr{width:auto;padding-left:10px}
-div.linkst ul{margin:0 0 0 18em}
 form div.linksb .conr{width:32em}
 /* 5.3 Settings for Profile and Admin interface.*/
 div.block2col{padding-bottom:1px}
@@ -104,7 +103,7 @@ div.txtarea textarea,input.longinput{width:100%;max-width:100%}
 #punredirect div.block,#punmaint div.block{margin:50px 20% 12px}
 /* 11. ADDITIONAL STYLES */
 /* 11.1 Styles for top menu */
-div.top-menu{width:100%;margin:5px 0}
+div.top-menu{margin:5px 0}
 div.top-menu div.projects a{margin:0 3px}
 div.projects{float:left}
 /* 11.2 Top menu links */
@@ -128,7 +127,7 @@ img.smileyimg,img.browserimg{margin:2px 1px -4px}
 .pun ol.list[type="A"]>li{list-style-type:upper-latin}
 .pun ol.list[type="1"]>li{list-style-type:decimal}
 div.noindex{opacity:0.7}
-div.spoiler div.noindex:only-child,div.noindex div.spoiler:only-child{margin:0}
+div.spoiler div.noindex,div.noindex div.spoiler{margin:0}
 /* 11.6 Google Search */
 #google-results{padding:10px 0}
 #google-results .gsc-resultsHeader,#google-results .gs-result .gs-visibleUrl,#google-results .gs-result .gs-watermark{display:none}

@@ -1,0 +1,100 @@
+/* 1. BACKGROUND AND TEXT COLOURS */
+/* 1.1 Default background colour and text colour */
+body{background:url('../img/Moz-infinity/pun_body_bg.png') repeat-x 0 20px #FFF}
+.pun{color:#333}
+div.box,.pun blockquote,div.codebox,#adminconsole fieldset th,.rowodd,.roweven,div.spoiler,div.noindex{background-color:#f4f6f9}
+#adminconsole td,#adminconsole th{border-color:#F1F1F1}
+/* 1. 2 Darker background colours */
+td.tc2,td.tc3,td.tc4,td.tcmod,#postpreview,#viewprofile dd,div.forminfo,#adminconsole fieldset td,div.blockmenu div.box,#adstats dd,.puntopic{background-color:#EAEAEA}
+/* 1.3 Main headers and navigation bar background and text colour */
+.pun h2{background:url('../img/Moz-infinity/pun_h2_left_bg.png') no-repeat left top;color:#3B5281;font-weight:700}
+#brdmenu{background:url('../img/Moz-infinity/pun_menu_bg.png') repeat-x top right #d7d7d7;padding:2px 25px;border-bottom:1px solid #ffffff}
+#brdmenu a{white-space:nowrap;line-height:20px}
+#ajaxpostpreview #postpreview h2 span,#postpreview h2 span,.inform h2 span,.blockform h2 span,.blocktable h2 span,.block h2 span,.blockmenu h2 span{background:url('../img/Moz-infinity/pun_h2_right_bg.png') no-repeat right top;display:block;color:#3B5281;width:100%;text-align:left;margin:-4px -6px;padding:4px 6px}
+#punredirect .block h2 span{background-image:url('../img/Moz-infinity/pun_h2_redirect_bg.png')}
+/* 1.4 Table header rows */
+.pun th{background-color:#d2dde7}
+/* 1.5 Fieldset legend text colour */
+.pun legend{color:#005CB1}
+/* 1.6 Highlighted text for various items */
+.pun div.blockmenu li.isactive a,#posterror li strong{color:#333}
+/* 2. POST BACKGROUNDS AND TEXT */
+/* 2.1 This is the setup for posts. */
+div.blockpost div.box,div.postright,div.postfootright{background-color:#fff}
+div.postright,div.postfootright{border-left-color:#f4f6f9}
+div.postleft,div.postfootleft,div.blockpost label{background-color:#f4f6f9}
+/* 2.2 Background for post headers and text colour for post numbers in viewtopic */
+div.blockpost h2{background:url('../img/Moz-infinity/pun_h2_left_bg.png') no-repeat top left}
+div.blockpost h2 span.conr{color:#3B5281;background:url('../img/Moz-infinity/pun_h2_conr_bg.png') no-repeat right top;margin:-4px -6px;padding:4px 6px;font-weight:400}
+/* 2.3 This is the line above the signature in posts. Colour and background should be the same */
+.pun hr{background-color:#CECECE;border:none;height:2px}
+.div.postsignature hr{height:1px}
+/* 3. BORDER COLOURS */
+/* 3.1 All external borders */
+div.box{border-color:#E0E1E3}
+/* add Ragnaar */
+/* 3.2 Makes the top border of posts match the colour used for post headers */
+div.blockpost div.box,#brdwelcome{border-color:#E0E1E3}
+/* 3.3 Table internal borders. By default TH is same as background so border is invisible */
+.pun td{border-color:#fff}
+.pun th{border-color:#fff}
+/* 3.4 Creates the inset border for quote boxes, code boxes and form info boxes */
+.pun blockquote,div.codebox,div.forminfo,div.blockpost label,div.noindex{border-color:#b4c6d7 #dfe6ee #dfe6ee #b4c6d7}
+div.spoiler{border-color:#dfe6ee #b4c6d7 #b4c6d7 #dfe6ee}
+/* 3.5 Gecko's default fieldset borders are really nasty so this gives them a colour
+without interferring with IE's rather nice default */
+.pun div>fieldset{border-color:#b4c6d7}
+/* 4. LINK COLOURS */
+/* 4.1 This is the default for all links */
+#google-results .gsc-cursor-box .gsc-cursor-page:not(.gsc-cursor-current-page),.pun a:link,.pun a:visited{color:#3B5281;text-decoration:underline}
+.pun a:hover{color:#B42000}
+/* 4.2 This is the colour for links in header rows and the navigation bar */
+.pun h2 a:link,.pun h2 a:visited{color:#3B5281}
+.pun h2 a:hover{color:#B42000}
+#brdmenu a:link,#brdmenu a:visited{color:#666666}
+#brdmenu a:hover{color:#333333}
+/* 4.3 This is for closed topics and "hot" links */
+li.postreport a:link,li.postreport a:visited,tr.iclosed td.tcl a:link,tr.iclosed td.tcl a:visited{color:#888}
+li.postreport a:hover,tr.iclosed td.tcl a:hover{color:#AAA}
+li.maintenancelink a:link,li.maintenancelink a:visited{color:#B42000}
+li.maintenancelink a:hover{color:#B42000}
+li.reportlink a:link,li.reportlink a:hover,li.reportlink a:visited{color:#B42000}
+li.pmlink a:link,li.pmlink a:hover,li.pmlink a:visited{color:#B42000}
+/* 5. POST STATUS INDICATORS */
+/* These are the post status indicators which appear at the left of some tables. */
+
+div.icon{background:url('../img/Moz-infinity/pun_icon_unactive.png') no-repeat}
+
+tr.inew{background-color:#CCE7F3}
+tr.inew td.tc2,tr.inew td.tc3,tr.inew td.tc4{background-color:#B2DBED}
+tr.iclosed{background-color:#EAEAEA}
+tr.iclosed td.tc2,tr.iclosed td.tc3,tr.iclosed td.tc4{background-color:#D6D6D6}
+
+tr.inew div.icon,.intd div.inew{background:url('../img/Moz-infinity/pun_icon_active.png') no-repeat}
+tr.ihot div.icon{background:url('../img/Moz-infinity/pun_icon_hot.png') no-repeat}
+tr.iempty div.icon{background:url('../img/Moz-infinity/pun_icon_empty.png') no-repeat}
+tr.ipool div.icon{background:url('../img/Moz-infinity/pun_icon_pool.png') no-repeat}
+tr.iclosed div.icon{background:url('../img/Moz-infinity/pun_icon_close.png') no-repeat}
+tr.isticky div.icon{background:url('../img/Moz-infinity/pun_icon_sticky.png') no-repeat}
+tr.iredirect div.icon{background:url('../img/Moz-infinity/pun_icon_redirect.png') no-repeat}
+/* 11. ADDITIONAL STYLES */
+/* 11.2 Top menu links */
+div.top-menu{margin:0}
+div.top-menu div.search{position:absolute;right:120px;top:3px}
+div.top-menu div.search .label{display:block!important;color:#6B6B6B;font-size:11px}
+div.top-menu div.search #search{display:none}
+div.top-menu div.more #search{display:block;border:1px solid #DDD;background-color:#FFF;padding:10px}
+div.top-menu div.projects{position:absolute;right:20px;top:2px}
+div.top-menu div.projects span.links{display:none}
+div.top-menu div.more span.links{display:block;border:1px solid #DDD;background-color:#FFF;width:160px;position:absolute;top:14px;text-align:left;right:0;z-index:1000;padding:6px}
+div.top-menu div.more span.links a{list-style:disc outside url('../img/Moz-infinity/fam_list.png');display:list-item;margin:4px 30px}
+div.top-menu div.more span.links a.all{list-style:none;font-weight:bold;text-align:right;margin:12px 15px 4px}
+div.top-menu div.projects b{font-weight:normal;color:#6B6B6B;font-size:11px;z-index:100}
+div.projects a:link,div.projects a:visited{color:#6B6B6B}
+div.projects a:hover{color:#333;text-decoration:underline}
+/* 6. MISC */
+/* Spoiler */
+div.spoiler div.spoiler-plus,div.spoiler div.spoiler-minus{padding:0 0 0 14px;cursor:pointer;font-weight:700}
+div.spoiler div.spoiler-plus{background:url(../../img/plus.png) no-repeat 2px 4px}
+div.spoiler div.spoiler-minus{background:url(../../img/minus.png) no-repeat 2px 4px}
+div.spoiler div.spoiler-body{display:none;border-top:1px solid #CECECE;padding:8px 0 0;margin:10px 0 0}

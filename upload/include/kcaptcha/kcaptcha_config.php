@@ -27,7 +27,7 @@ $no_spaces = true;
 
 # show credits
 $show_credits = false; # set to false to remove credits line. Credits adds 12 pixels to image height
-$credits = 'forum.mozilla.ru'; # if empty, HTTP_HOST will be shown
+$credits = 'forum.mozilla-russia.org'; # if empty, HTTP_HOST will be shown
 
 # CAPTCHA image colors (RGB, 0-255)
 $foreground_color = array(mt_rand(0,100), mt_rand(0,100), mt_rand(0,100));

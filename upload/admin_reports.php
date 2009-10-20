@@ -52,7 +52,8 @@ if (isset($_POST['zap_id']))
 
 	if ($unzapped)
 	{
-		$result = $db->query('SELECT DISTINCT post_id '.$db->prefix.'FROM reports WHERE id IN('.join(',', $zap_array) . ')') or error('Unable to select posts for unblock', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT DISTINCT post_id FROM '.$db->prefix.'reports WHERE id IN('.join(',', $zap_array) . ')') or error('Unable to select posts for unblock', __FILE__, __LINE__, $db->error());
+
 		if ($db->num_rows($result))
 		{
 			$blocked = array();

@@ -63,7 +63,13 @@
 
 </div>
 </div>
-
+<!-- Yandex.Metrika -->
+<script src="//mc.yandex.ru/resource/watch.js" type="text/javascript"></script>
+<script type="text/javascript">
+try { var yaCounter338616 = new Ya.Metrika(338616); } catch(e){}
+</script>
+<noscript><div style="position: absolute;"><img src="//mc.yandex.ru/watch/338616" alt="" /></div></noscript>
+<!-- /Yandex.Metrika -->
 </body>
 
 </html>

@@ -65,6 +65,8 @@ li.pmlink a:link,li.pmlink a:hover,li.pmlink a:visited{color:#B42000}
 
 div.icon{background:url('../img/Moz-infinity/pun_icon_unactive.png') no-repeat}
 
+tr.isticky{background-color:#B9F4FF}
+tr.isticky td.tc2,tr.isticky td.tc3,tr.isticky td.tc4{background-color:#94EEFF}
 tr.inew{background-color:#CCE7F3}
 tr.inew td.tc2,tr.inew td.tc3,tr.inew td.tc4{background-color:#B2DBED}
 tr.iclosed{background-color:#EAEAEA}

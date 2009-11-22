@@ -8,7 +8,7 @@
 * html .pun{font-size:68.75%}
 /* End IE Win Font Size */
 /* Set font size for tables because IE requires it */
-.pun table,.pun input,.pun select,.pun optgroup,.pun textarea,div.postmsg p.postedit{font-size:1em}
+.pun table,.pun input,.pun select,.pun optgroup,.pun textarea,div.postmsg p.postedit,div.postmsg p.sticky{font-size:1em}
 /* 2.2 Set the font-size for preformatted text i.e in code boxes */
 .pun pre{font-family:monaco, "Bitstream Vera Sans Mono", "Courier New", courier, monospace}
 /* 2.3 Font size for headers */
@@ -142,8 +142,9 @@ div.inbox p.conl .upload{padding:2px 0 2px 20px;background:url('./img/Moz-infini
 div.inbox div.postfootleft .online{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_online.png') no-repeat 0 2px transparent}
 div.inbox div.postfootleft .offline{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_offline.png') no-repeat 0 2px transparent}
 
-div.inbox div.postright p.postedit{text-align:right;font-size:0.9em}
+div.inbox div.postright p.postedit,div.inbox div.postright p.sticky{text-align:right;font-size:0.9em}
 div.inbox div.postright p.postedit em{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_edited.png') no-repeat 0 0 transparent}
+div.inbox div.postright p.sticky em{padding:2px 0 2px 14px;background:url('./img/Moz-infinity/fam_list.png') no-repeat 0 4px transparent}
 
 div.inbox div.postfootright a.profile{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_profile.png') no-repeat 0 2px transparent}
 div.inbox div.postfootright a.report{padding:2px 0 2px 18px;background:url('./img/Moz-infinity/fam_report.png') no-repeat 0 2px transparent}

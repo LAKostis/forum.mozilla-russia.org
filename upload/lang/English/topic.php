@@ -11,6 +11,7 @@ $lang_topic = array(
 'Online'			=>	'Online',
 'Offline'			=>	'Offline',
 'Last edit'			=>	'Last edited by',
+'Sticky'			=>	'Message sticked',
 'Report'			=>	'Report',
 'User agent'		=>	'UA: ',
 'Delete'			=>	'Delete',

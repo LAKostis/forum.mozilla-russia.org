@@ -11,6 +11,7 @@ $lang_topic = array(
 'Online'			=>	'На форуме',
 'Offline'			=>	'Отсутствует',
 'Last edit'			=>	'Отредактировано',
+'Sticky'			=>	'Сообщение прикреплено',
 'Report'			=>	'Сообщить модератору',
 'User agent'		=>	'UA: ',
 'Delete'			=>	'Удалить',

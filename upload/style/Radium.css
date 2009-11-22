@@ -8,7 +8,7 @@
 * html .pun{font-size:68.75%}
 /* End IE Win Font Size */
 /* Set font size for tables because IE requires it */
-.pun table,.pun input,.pun select,.pun optgroup,.pun textarea,div.postmsg p.postedit{font-size:1em}
+.pun table,.pun input,.pun select,.pun optgroup,.pun textarea,div.postmsg p.postedit,div.postmsg p.sticky{font-size:1em}
 /* 2.2 Set the font-size for preformatted text i.e in code boxes */
 .pun pre{font-family:monaco, "Bitstream Vera Sans Mono", "Courier New", courier, monospace}
 /* 2.3 Font size for headers */

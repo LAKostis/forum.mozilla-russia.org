@@ -66,6 +66,7 @@ $lang_misc = array(
 'Unstick topic redirect'	=>	'Topic unsticked. Redirecting &hellip;',
 'Stick post redirect'		=>	'Post sticked. Redirecting &hellip;',
 'Unstick post redirect'		=>	'Post unsticked. Redirecting &hellip;',
+'Unblock post redirect'		=>	'Post unblocked. Redirecting &hellip;',
 'Poll to topic redirect'	=>	'Convert poll to topic redirect',
 'Poll to topic warning'		=>	'Warning! This operation can not be undone. Question, all variants and all votes will be deleted.',
 

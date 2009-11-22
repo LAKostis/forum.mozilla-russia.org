@@ -397,7 +397,9 @@ while ($cur_post = $db->fetch_assoc($result))
 			<div class="postright">
 				<h3><?php if (($post_count + $start_from) > 1) echo ' Re: '; ?><?php echo pun_htmlspecialchars($cur_topic['subject']) ?></h3>
 				<div class="postmsg" id="message<?php echo $cur_post['id'] ?>">
-					<?php echo $cur_post['blocked'] ? (parse_message('[i]' . $lang_topic['Message blocked'] . '[/i]' . "\n\n", 1) . ($pun_user['g_id'] > PUN_MOD ? '' : $cur_post['message'] )) : $cur_post['message']."\n" ?>
+					<?php echo $cur_post['blocked'] ? (
+						parse_message('[i]' . $lang_topic['Message blocked'] . '[/i]' . ($pun_user['g_id'] > PUN_MOD ? '' : ' [url='.$pun_config['o_base_url'].'/moderate.php?fid='.$forum_id.'&unblock='.$cur_post['id'].']' . $lang_topic['Unblock message'] . '[/url]' . "\n\n"), 1) . ($pun_user['g_id'] > PUN_MOD ? '' : $cur_post['message'] )
+					) : $cur_post['message']."\n" ?>
 <?php if ($cur_post['edited'] != '') echo "\t\t\t\t\t".'<p class="postedit"><em>'.$lang_topic['Last edit'].' '.pun_htmlspecialchars($cur_post['edited_by']).' ('.format_time($cur_post['edited']).')</em></p>'."\n"; ?>
 <?php if ($cur_topic['post_sticky'] == 1) echo "\t\t\t\t\t".'<p class="sticky"><em>'.$lang_topic['Sticky'].'</em></p>'."\n"; ?>
 				</div>

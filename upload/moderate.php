@@ -638,6 +638,21 @@ else if (isset($_GET['unstick_post']))
 }
 
 
+// Unblock a post
+else if (isset($_GET['unblock']))
+{
+	confirm_referrer('viewtopic.php');
+
+	$unblock = intval($_GET['unblock']);
+	if ($unblock < 1)
+		message($lang_common['Bad request']);
+
+	$db->query('UPDATE '.$db->prefix.'posts SET blocked=\'0\' WHERE id='.$unblock) or error('Unable to unblock post', __FILE__, __LINE__, $db->error());
+
+	redirect('viewtopic.php?pid='.$unblock, $lang_misc['Unblock post redirect']);
+}
+
+
 // Convert poll to topic
 else if (isset($_GET['totopic']))
 {

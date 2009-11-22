@@ -26,6 +26,7 @@ $lang_topic = array(
 'Link separator'	=>	' | ',	// The text that separates links in posts (website, e-mail, report, edit etc.)
 'Mod controls'		=>	'Контролируется модератором',
 
-'Message blocked'	=>	'Сообщение временно заблокировано на основании жалоб пользователей и ожидает проверки администратором.'
+'Message blocked'	=>	'Сообщение временно заблокировано на основании жалоб пользователей и ожидает проверки администратором.',
+'Unblock message'	=>	'Разблокировать.'
 
 );

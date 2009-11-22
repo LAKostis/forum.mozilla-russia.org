@@ -26,6 +26,7 @@ $lang_topic = array(
 'Link separator'	=>	' | ',	// The text that separates links in posts (website, e-mail, report, edit etc.)
 'Mod controls'		=>	'Moderator controls',
 
-'Message blocked'	=>	'The message is temporarily blocked on the basis of complaints of users and awaiting verification of administrator.'
+'Message blocked'	=>	'The message is temporarily blocked on the basis of complaints of users and awaiting verification of administrator.',
+'Unblock message'	=>	'Unblock it.'
 
 );

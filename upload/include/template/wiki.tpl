@@ -19,7 +19,7 @@
 <div id="pun<pun_page>" class="pun">
 
 <div class="top-menu">
-	<div class="projects" onmouseover="this.className='projects more'" onmouseout="this.className='projects'">
+	<div class="projects" onclick="this.className = (this.className=='projects' ? 'projects more' : 'projects')">
 		<b>Наши проекты</b>
 		<span class="links">
 			<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
@@ -35,7 +35,7 @@
 		</span>
 		<img src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 	</div>
-	<div class="search" onmouseover="this.className='search more'" onmouseout="this.className='search'">
+	<div class="search" onclick="this.className = (this.className=='search' ? 'search more' : 'search')">
 		<span class="label" style="display:none">Быстрый поиск</span>
 		<form id="search" method="get" action="search.php">
 			<input type="hidden" name="action" value="search" />

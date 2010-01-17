@@ -178,20 +178,26 @@ function toggleSpamReport(obj) {
 
 function toggleSearch(obj, e) {
 	if (e.target.className == 'label')
-		if (obj.className=='search')
+	{
+		if (obj.className=='search' || obj.id=='search-submit')
 		{
 			obj.className = 'search more';
 			document.getElementById('search-input').focus();
 		}
 		else
 			obj.className = 'search';
-	return false;
+		return false;
+	}
+	return true;
 }
 
 function toggleProjects(obj, e) {
 	if (e.target.className == 'label')
+	{
 		obj.className = (obj.className=='projects' ? 'projects more' : 'projects');
-	return false;
+		return false;
+	}
+	return true;
 }
 
 /*@cc_on

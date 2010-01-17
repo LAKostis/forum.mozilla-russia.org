@@ -82,9 +82,9 @@ tr.iredirect div.icon{background:url('../img/Moz-infinity/pun_icon_redirect.png'
 /* 11. ADDITIONAL STYLES */
 /* 11.2 Top menu links */
 div.top-menu{margin:0}
-div.top-menu div.search{position:absolute;right:120px;top:3px}
-div.top-menu div.search .label{display:block!important;color:#6B6B6B;font-size:11px;cursor:pointer}
-div.top-menu div.search #search{display:none}
+div.top-menu div.search{position:absolute;right:120px;top:2px}
+div.top-menu div.search .label,div.top-menu div.projects .label{display:block!important;color:#6B6B6B;font-size:11px;cursor:pointer}
+div.top-menu div.search #search{display:none;margin:1px}
 div.top-menu div.more #search{display:block;border:1px solid #DDD;background-color:#FFF;padding:10px}
 div.top-menu div.projects{position:absolute;right:20px;top:2px}
 div.top-menu div.projects span.links{display:none}
@@ -92,8 +92,8 @@ div.top-menu div.more span.links{display:block;border:1px solid #DDD;background-
 div.top-menu div.more span.links a{list-style:disc outside url('../img/Moz-infinity/fam_list.png');display:list-item;margin:4px 30px}
 div.top-menu div.more span.links a.all{list-style:none;font-weight:bold;text-align:right;margin:12px 15px 4px}
 div.top-menu div.projects b{font-weight:normal;color:#6B6B6B;font-size:11px;z-index:100;cursor:pointer}
-div.projects a:link,div.projects a:visited{color:#6B6B6B}
-div.projects a:hover{color:#333;text-decoration:underline}
+div.top-menu div.projects a:link,div.projects a:visited{color:#6B6B6B}
+div.top-menu div.projects a:hover{color:#333;text-decoration:underline}
 /* 6. MISC */
 /* Spoiler */
 div.spoiler div.spoiler-plus,div.spoiler div.spoiler-minus{padding:0 0 0 14px;cursor:pointer;font-weight:700}

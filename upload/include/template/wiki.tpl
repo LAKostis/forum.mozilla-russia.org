@@ -35,7 +35,7 @@
 		</span>
 	</div>
 	<div class="search" onclick="return toggleSearch(this, event)">
-		<a class="label" href="http://localhost/pub/forum.mozilla.ru/search.php">Быстрый поиск</a>
+		<a class="label" style="display:none" href="http://forum.mozilla-russia.org/search.php">Быстрый поиск</a>
 		<form id="search" method="get" action="search.php">
 			<input type="hidden" name="action" value="search" />
 			<input type="text" name="keywords" size="20" maxlength="100" id="search-input" />

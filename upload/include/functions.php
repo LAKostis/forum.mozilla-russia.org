@@ -1497,6 +1497,7 @@ function pun_get_browser($uagent) {
 		'orca',
 		'phoenix',
 		'rekonq',
+		's60',
 		'safari',
 		'seamonkey',
 		'shiira',

@@ -375,7 +375,14 @@ while ($cur_post = $db->fetch_assoc($result))
 
 ?>
 <div id="p<?php echo $cur_post['id'] ?>" class="blockpost<?php echo $vtbg ?><?php if (($post_count + $start_from) == 1) echo ' firstpost'; ?>">
-	<h2><span><span class="conr"><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>">№<?php echo ($start_from + $post_count) ?></a></span><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
+	<h2><span><span class="conr"><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>">№<?php
+	if ($cur_topic['post_sticky']) {
+		$cur_topic['post_sticky'] = 0;
+		echo 1;
+	}
+	else
+		echo $start_from + $post_count;
+	?></a></span><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -413,8 +420,6 @@ while ($cur_post = $db->fetch_assoc($result))
 </div>
 
 <?php
-
-$cur_topic['post_sticky'] = 0;
 
 }
 

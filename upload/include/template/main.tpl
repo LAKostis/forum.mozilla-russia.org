@@ -19,8 +19,8 @@
 <div id="pun<pun_page>" class="pun">
 
 <div class="top-menu">
-	<div class="projects" onclick="this.className = (this.className=='projects' ? 'projects more' : 'projects')">
-		<b>Наши проекты</b>
+	<div class="projects" onclick="return toggleProjects(this, event)">
+		<a class="label" href="http://www.mozilla-russia.org/about/allprojects.html">Наши проекты</a>
 		<span class="links">
 			<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
 			<a href="http://wiki.mozilla-russia.org/">Wiki</a>
@@ -33,16 +33,16 @@
 			<a href="http://planet.mozilla-russia.org/">Планета</a>
 			<a href="http://www.mozilla-russia.org/about/allprojects.html" class="all">Все проекты</a>
 		</span>
-		<img src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 	</div>
-	<div class="search" onclick="this.className = (this.className=='search' ? 'search more' : 'search')">
-		<span class="label" style="display:none">Быстрый поиск</span>
+	<div class="search" onclick="return toggleSearch(this, event)">
+		<a class="label" href="http://localhost/pub/forum.mozilla.ru/search.php">Быстрый поиск</a>
 		<form id="search" method="get" action="search.php">
 			<input type="hidden" name="action" value="search" />
 			<input type="text" name="keywords" size="20" maxlength="100" id="search-input" />
 			<pun_search>
 		</form>
 	</div>
+	<img style="float:left" src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 </div>
 
 <div id="brdheader" class="block">

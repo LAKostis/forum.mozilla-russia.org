@@ -176,6 +176,24 @@ function toggleSpamReport(obj) {
 	document.getElementById('reason').style.display = !obj.checked ? 'block' : 'none';
 }
 
+function toggleSearch(obj, e) {
+	if (e.target.className == 'label')
+		if (obj.className=='search')
+		{
+			obj.className = 'search more';
+			document.getElementById('search-input').focus();
+		}
+		else
+			obj.className = 'search';
+	return false;
+}
+
+function toggleProjects(obj, e) {
+	if (e.target.className == 'label')
+		obj.className = (obj.className=='projects' ? 'projects more' : 'projects');
+	return false;
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

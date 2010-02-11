@@ -1489,6 +1489,7 @@ function pun_get_browser($uagent) {
 		'midori',
 		'minefield',
 		'mozilla',
+		'mozilladeveloperpreview',
 		'namoroka',
 		'netpositive',
 		'netscape',

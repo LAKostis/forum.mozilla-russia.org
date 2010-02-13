@@ -1192,9 +1192,11 @@ else
 						<div class="infldset">
 							<p><?php echo $lang_common['Registered'] ?>: <?php echo format_time($user['registered'], true); if ($pun_user['g_id'] < PUN_GUEST) echo ' (<a href="moderate.php?get_host='.pun_htmlspecialchars($user['registration_ip']).'">'.pun_htmlspecialchars($user['registration_ip']).'</a>)'; ?></p>
 							<p><?php echo $lang_common['Last post'] ?>: <?php echo $last_post ?></p>
-								<?php echo $posts_field ?>
+							<?php echo $posts_field ?>
 <?php if ($pun_user['g_id'] < PUN_GUEST): ?>							<label><?php echo $lang_profile['Admin note'] ?><br />
 							<input id="admin_note" type="text" name="admin_note" value="<?php echo pun_htmlspecialchars($user['admin_note']) ?>" size="30" maxlength="30" /><br /></label>
+						</div>
+<?php elseif ($pun_user['g_id'] > PUN_GUEST && $pun_user['id'] == $id && $user['admin_note'] != ''): ?>							<label><?php echo $lang_profile['Admin note'] ?>: <?php echo pun_htmlspecialchars($user['admin_note']) ?></label>
 						</div>
 <?php endif; ?>					</fieldset>
 				</div>

@@ -298,12 +298,10 @@ while ($cur_post = $db->fetch_assoc($result))
 		}
 
 		if ($pun_user['g_id'] < PUN_GUEST)
-		{
 			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
-			if ($cur_post['admin_note'] != '')
+		if (($pun_user['g_id'] < PUN_GUEST || ($pun_user['g_id'] > PUN_GUEST && $pun_user['id'] == $cur_post['poster_id'])) && $cur_post['admin_note'] != '')
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
-		}
 	}
 	// If the poster is a guest (or a user that has been deleted)
 	else

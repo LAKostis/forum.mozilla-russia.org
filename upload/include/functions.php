@@ -1497,6 +1497,7 @@ function pun_get_browser($uagent) {
 		'omniweb',
 		'orca',
 		'phoenix',
+		'qtweb',
 		'rekonq',
 		's60',
 		'safari',

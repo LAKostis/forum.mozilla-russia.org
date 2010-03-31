@@ -1485,6 +1485,7 @@ function pun_get_browser($uagent) {
 		'konqueror',
 		'links',
 		'lolifox',
+		'lorentz',
 		'lunascape',
 		'lynx',
 		'midori',

@@ -113,6 +113,10 @@ $lang_common = array(
 'BBCode error 3'		=>	'Missing start tag for [/code].',
 'BBCode error 4'		=>	'Missing one or more end tags for [quote].',
 'BBCode error 5'		=>	'Missing one or more start tags for [/quote].',
+'BBCode error 6'		=>	'Missing end tag for [spoiler].',
+'BBCode error 7'		=>	'Missing start tag for [/spoiler].',
+'BBCode error 8'		=>	'Missing end tag for [noindex].',
+'BBCode error 9'		=>	'Missing start tag for [/noindex].',
 
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Index',

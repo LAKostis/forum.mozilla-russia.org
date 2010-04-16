@@ -219,7 +219,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	$text = str_replace($a, $b, $text);
 
 	// Do the more complex BBCodes (also strip excessive whitespace and useless quotes)
-	$a = array( '#\[url=("|\'|)(.*?)\\1\]\s*#i',
+	$a = array(	'#\[url=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[url\]\s*#i',
 				'#\s*\[/url\]#i',
 				'#\[email=("|\'|)(.*?)\\1\]\s*#i',
@@ -327,6 +327,10 @@ function check_tag_order($text, &$error)
 		$c_end = strpos($text, '[/code]');
 		$q_start = strpos($text, '[quote]');
 		$q_end = strpos($text, '[/quote]');
+		$s_start = strpos($text, '[spoiler]');
+		$s_end = strpos($text, '[/spoiler]');
+		$n_start = strpos($text, '[noindex]');
+		$n_end = strpos($text, '[/noindex]');
 
 		// Look for [quote=username] style quote tags
 		if (preg_match('#\[quote=(&quot;|"|\'|)(.*)\\1\]#sU', $text, $matches))
@@ -334,22 +338,35 @@ function check_tag_order($text, &$error)
 		else
 			$q2_start = 65536;
 
+		// Look for [spoiler=text] style spoiler tags
+		if (preg_match('#\[spoiler=(&quot;|"|\'|)(.*)\\1\]#sU', $text, $matches))
+			$s2_start = strpos($text, $matches[0]);
+		else
+			$s2_start = 65536;
+
 		// Deal with strpos() returning false when the string is not found
 		// (65536 is one byte longer than the maximum post length)
 		if ($c_start === false) $c_start = 65536;
 		if ($c_end === false) $c_end = 65536;
 		if ($q_start === false) $q_start = 65536;
 		if ($q_end === false) $q_end = 65536;
+		if ($s_start === false) $s_start = 65536;
+		if ($s_end === false) $s_end = 65536;
+		if ($n_start === false) $n_start = 65536;
+		if ($n_end === false) $n_end = 65536;
 
 		// If none of the strings were found
-		if (min($c_start, $c_end, $q_start, $q_end, $q2_start) == 65536)
+		if (min($c_start, $c_end, $q_start, $q_end, $q2_start, $s_start, $s_end, $s2_start, $n_start, $n_end) == 65536)
 			break;
 
 		// We are interested in the first quote (regardless of the type of quote)
 		$q3_start = ($q_start < $q2_start) ? $q_start : $q2_start;
 
+		// We are interested in the first spoiler (regardless of the type of spoiler)
+		$s3_start = ($s_start < $s2_start) ? $s_start : $s2_start;
+
 		// We found a [quote] or a [quote=username]
-		if ($q3_start < min($q_end, $c_start, $c_end))
+		if ($q3_start < min($c_start, $c_end, $q_end, $s_start, $s_end, $n_start, $n_end))
 		{
 			$step = ($q_start < $q2_start) ? 7 : strlen($matches[0]);
 
@@ -364,7 +381,7 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [/quote]
-		else if ($q_end < min($q_start, $c_start, $c_end))
+		else if ($q_end < min($c_start, $c_end, $q_start, $s_start, $s_end, $n_start, $n_end))
 		{
 			if ($q_depth == 0)
 			{
@@ -383,7 +400,7 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [code]
-		else if ($c_start < min($c_end, $q_start, $q_end))
+		else if ($c_start < min($c_end, $q_start, $q_end, $s_start, $s_end, $n_start, $n_end))
 		{
 			// Make sure there's a [/code] and that any new [code] doesn't occur before the end tag
 			$tmp = strpos($text, '[/code]');
@@ -403,11 +420,68 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [/code] (this shouldn't happen since we handle both start and end tag in the if clause above)
-		else if ($c_end < min($c_start, $q_start, $q_end))
+		else if ($c_end < min($c_start, $q_start, $q_end, $s_start, $s_end, $n_start, $n_end))
 		{
 			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 3'];
 			return;
 		}
+
+		// We found a [spoiler]
+		else if ($s_start < min($c_start, $c_end, $q_start, $q_end, $s_end, $n_start, $n_end))
+		{
+			$step = ($s_start < $s2_start) ? 9 : strlen($matches[0]);
+
+			// Make sure there's a [/spoiler] and that any new [spoiler] doesn't occur before the end tag
+			$tmp = strpos($text, '[/spoiler]');
+			$tmp2 = strpos(substr($text, $s_start+$step), '[spoiler]');
+			if ($tmp2 !== false)
+				$tmp2 += $s_start+$step;
+
+			if ($tmp === false || ($tmp2 !== false && $tmp2 < $tmp))
+			{
+				$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 6'];
+				return;
+			}
+			else
+				$text = substr($text, $tmp+7);
+
+			$cur_index += $tmp+7;
+		}
+
+		// We found a [/spoiler] (this shouldn't happen since we handle both start and end tag in the if clause above)
+		else if ($s_end < min($c_start, $c_end, $q_start, $q_end, $s_start, $n_start, $n_end))
+		{
+			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 7'];
+			return;
+		}
+
+		// We found a [noindex]
+		else if ($n_start < min($c_start, $c_end, $q_start, $q_end, $s_start, $s_end, $n_end))
+		{
+			// Make sure there's a [/noindex] and that any new [noindex] doesn't occur before the end tag
+			$tmp = strpos($text, '[/noindex]');
+			$tmp2 = strpos(substr($text, $n_start+9), '[noindex]');
+			if ($tmp2 !== false)
+				$tmp2 += $n_start+9;
+
+			if ($tmp === false || ($tmp2 !== false && $tmp2 < $tmp))
+			{
+				$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 8'];
+				return;
+			}
+			else
+				$text = substr($text, $tmp+7);
+
+			$cur_index += $tmp+7;
+		}
+
+		// We found a [/noindex] (this shouldn't happen since we handle both start and end tag in the if clause above)
+		else if ($n_end < min($c_start, $c_end, $q_start, $q_end, $s_start, $s_end, $n_start))
+		{
+			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 9'];
+			return;
+		}
+
 	}
 
 	// If $q_depth <> 0 something is wrong with the quote syntax

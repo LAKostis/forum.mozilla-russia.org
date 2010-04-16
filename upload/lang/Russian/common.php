@@ -113,6 +113,10 @@ $lang_common = array(
 'BBCode error 3'		=>	'Отсутствует начальный тег для [/code].',
 'BBCode error 4'		=>	'Отсутствует один или более конечных тегов для [quote].',
 'BBCode error 5'		=>	'Отсутствует один или более начальных тегов для [/quote].',
+'BBCode error 6'		=>	'Отсутствует конечный тег для [spoiler].',
+'BBCode error 7'		=>	'Отсутствует начальный тег для [/spoiler].',
+'BBCode error 8'		=>	'Отсутствует конечный тег для [noindex].',
+'BBCode error 9'		=>	'Отсутствует начальный тег для [/noindex].',
 
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Форумы',

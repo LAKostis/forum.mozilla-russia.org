@@ -1023,7 +1023,9 @@ if ($view || $section == 'view')
 						<dl>
 <?php if ($posts_field != ''): ?>							<dt><?php echo $lang_common['Posts'] ?>: </dt>
 							<dd><?php echo $posts_field ?></dd>
-<?php endif; ?>							<dt><?php echo $lang_common['Last post'] ?>: </dt>
+<?php endif; ?>							<dt><?php echo $lang_profile['Files'] ?></dt>
+							<dd><a href="uploads.php?filename=<?php echo pun_htmlspecialchars($user['username']) ?>"><?php echo $lang_profile['Show files'] ?></a></dd>
+							<dt><?php echo $lang_common['Last post'] ?>: </dt>
 							<dd><?php echo $last_post ?></dd>
 							<dt><?php echo $lang_common['Registered'] ?>: </dt>
 							<dd><?php echo format_time($user['registered'], true) ?></dd>

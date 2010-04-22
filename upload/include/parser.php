@@ -339,8 +339,8 @@ function check_tag_order($text, &$error)
 			$q2_start = 65536;
 
 		// Look for [spoiler=text] style spoiler tags
-		if (preg_match('#\[spoiler=(&quot;|"|\'|)(.*)\\1\]#sU', $text, $matches))
-			$s2_start = strpos($text, $matches[0]);
+		if (preg_match('#\[spoiler=(&quot;|"|\'|)(.*)\\1\]#sU', $text, $matches2))
+			$s2_start = strpos($text, $matches2[0]);
 		else
 			$s2_start = 65536;
 
@@ -429,7 +429,7 @@ function check_tag_order($text, &$error)
 		// We found a [spoiler]
 		else if ($s_start < min($c_start, $c_end, $q_start, $q_end, $s_end, $n_start, $n_end))
 		{
-			$step = ($s_start < $s2_start) ? 9 : strlen($matches[0]);
+			$step = ($s_start < $s2_start) ? 9 : strlen($matches2[0]);
 
 			// Make sure there's a [/spoiler] and that any new [spoiler] doesn't occur before the end tag
 			$tmp = strpos($text, '[/spoiler]');

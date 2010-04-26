@@ -1506,6 +1506,7 @@ function pun_get_browser($uagent) {
 		'seamonkey',
 		'shiira',
 		'shiretoko',
+		'soe-denver',
 		'songbird',
 		'splashtop',
 		'stainless',

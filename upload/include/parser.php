@@ -427,15 +427,15 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [spoiler]
-		else if ($s_start < min($c_start, $c_end, $q_start, $q_end, $s_end, $n_start, $n_end))
+		else if ($s3_start < min($c_start, $c_end, $q_start, $q_end, $s_end, $n_start, $n_end))
 		{
 			$step = ($s_start < $s2_start) ? 9 : strlen($matches2[0]);
 
 			// Make sure there's a [/spoiler] and that any new [spoiler] doesn't occur before the end tag
 			$tmp = strpos($text, '[/spoiler]');
-			$tmp2 = strpos(substr($text, $s_start+$step), '[spoiler]');
+			$tmp2 = strpos(substr($text, $s3_start+$step), '[spoiler]');
 			if ($tmp2 !== false)
-				$tmp2 += $s_start+$step;
+				$tmp2 += $s3_start+$step;
 
 			if ($tmp === false || ($tmp2 !== false && $tmp2 < $tmp))
 			{

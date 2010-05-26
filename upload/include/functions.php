@@ -293,7 +293,7 @@ function generate_navlinks()
 			$links[] = '<li id="navsearch"><a href="search.php">'.$lang_common['Search'].'</a>';
 
 		$links[] = '<li id="navregister"><a href="register.php">'.$lang_common['Register'].'</a>';
-		$links[] = '<li id="navlogin"><a href="login.php" onclick="if(document.getElementById(\'qlogin-username\')){document.getElementById(\'qlogin-username\').focus();return false}">'.$lang_common['Login'].'</a>';
+		$links[] = '<li id="navlogin"><a href="login.php">'.$lang_common['Login'].'</a>';
 
 		$info = $lang_common['Not logged in'];
 	}

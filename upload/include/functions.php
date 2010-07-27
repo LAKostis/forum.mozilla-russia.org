@@ -1488,6 +1488,7 @@ function pun_get_browser($uagent) {
 		'lorentz',
 		'lunascape',
 		'lynx',
+		'maxthon',
 		'midori',
 		'minefield',
 		'mozilla',

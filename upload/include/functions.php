@@ -1487,6 +1487,7 @@ function pun_get_browser($uagent) {
 		'links',
 		'lolifox',
 		'lorentz',
+		'luakit',
 		'lunascape',
 		'lynx',
 		'maxthon',

@@ -1516,6 +1516,7 @@ function pun_get_browser($uagent) {
 		'sunrise',
 		'swift',
 		'uzbl',
+		'w3m',
 		'wyzo'
 	);
 	$ua = get_browser($uagent,true);

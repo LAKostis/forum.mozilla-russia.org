@@ -3,7 +3,7 @@
 /* 2. TEXT SETTINGS */
 /* 2.1 This sets the default Font Group */
 .pun,.pun input,.pun select,.pun textarea,.pun optgroup{font-family:Verdana, Arial, Helvetica, sans-serif}
-.pun{font-size:11px;line-height:normal}
+.pun{font-size:12px;line-height:normal}
 /* IEWin Font Size only - to allow IEWin to zoom. Do not remove comments */
 * html .pun{font-size:68.75%}
 /* End IE Win Font Size */

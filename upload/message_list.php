@@ -40,6 +40,7 @@ if ($pun_user['is_guest'])
 require PUN_ROOT.'lang/'.$pun_user['language'].'/pms.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
+require PUN_ROOT.'lang/'.$pun_user['language'].'/reputation.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/userlist.php';
 
@@ -269,7 +270,7 @@ if(isset($_GET['id'])){
 	list($status, $owner) = $db->fetch_row($result);
 	$status == 0 ? $where = 'u.id=m.sender_id' : $where = 'u.id=m.owner';
 
-	$result = $db->query('SELECT m.id AS mid,m.subject,m.sender_ip,m.message,m.smileys,m.posted,m.showed,u.id,u.group_id as g_id,g.g_user_title,g.g_title,u.username,u.registered,u.email,u.title,u.url,u.icq,u.msn,u.aim,u.yahoo,u.location,u.use_avatar,u.email_setting,u.num_posts,u.admin_note,u.signature,u.show_online,o.user_id AS is_online FROM '.$db->prefix.'messages AS m,'.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.idle=0) LEFT JOIN '.$db->prefix.'groups AS g ON u.group_id = g.g_id WHERE '.$where.' AND m.id='.$id) or error('Unable to fetch message and user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT m.id AS mid,m.subject,m.sender_ip,m.message,m.smileys,m.posted,m.showed,m.sender_id AS poster_id,u.id,u.group_id as g_id,g.g_user_title,g.g_title,u.username,u.registered,u.email,u.title,u.url,u.icq,u.msn,u.aim,u.yahoo,u.location,u.use_avatar,u.email_setting,u.num_posts,u.admin_note,u.signature,u.show_online,u.reputation_minus,u.reputation_plus,o.user_id AS is_online FROM '.$db->prefix.'messages AS m,'.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.idle=0) LEFT JOIN '.$db->prefix.'groups AS g ON u.group_id = g.g_id WHERE '.$where.' AND m.id='.$id) or error('Unable to fetch message and user info', __FILE__, __LINE__, $db->error());
 	$cur_post = $db->fetch_assoc($result);
 
 	if ($owner != $pun_user['id'])
@@ -392,6 +393,10 @@ if(isset($_GET['id'])){
 					<dd class="usertitle"><strong><?php echo $user_title ?></strong></dd>
 					<dd class="postavatar"><?php if (isset($user_avatar)) echo $user_avatar ?></dd>
 <?php if (isset($user_info)) if (count($user_info)) echo "\t\t\t\t\t".implode('</dd>'."\n\t\t\t\t\t", $user_info).'</dd>'."\n"; ?>
+					<dd><?php
+	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1 && $cur_post['g_id'] > PUN_MOD) {
+		echo $lang_reputation['Reputation'];
+?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
 <?php if (isset($user_contacts)) if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
 				</dl>
 			</div>

@@ -402,7 +402,7 @@ if (isset($_POST['form_sent']))
 if ($tid)
 {
 	$action = $lang_post['Post a reply'];
-	$form = '<form id="post" method="post" action="post.php?action=post&amp;tid='.$tid.'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">';
+	$form = '<form id="post" method="post" action="post.php?action=post&amp;tid='.$tid.'" onsubmit="return process_form(this)">';
 
 	// If a quote-id was specified in the url.
 	if (isset($_GET['qid']))

@@ -119,7 +119,7 @@ form input#qlogin-submit{font-size:85%;padding:1px 4px}
 .useragent img{margin-bottom:-4px}
 /* 11.5 Misc */
 .bbincrement{float:right}
-img.smileyimg,img.browserimg{margin:2px 1px -4px}
+img.smileyimg,img.browserimg{margin:4px 1px -4px;padding-bottom:1px}
 .pun ul.list,.pun ol.list,.pun ul.list[type="circle"]>li{margin:0 30px 0}
 .pun ul.list>li,.pun ol.list>li{padding:5px 0}
 .pun ul.list[type="disc"]>li{list-style-type:disc}

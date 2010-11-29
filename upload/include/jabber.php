@@ -35,7 +35,7 @@ function pun_jabber($to, $message)
 {
 	global $pun_config;
 
-	// Do a little spring cleaning
+	// Do a little string cleaning
 	$to = split(',', trim(preg_replace('#[\n\r]+#s', '', $to)));
 
 	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
@@ -49,10 +49,11 @@ function pun_jabber($to, $message)
 			$printlog=false, $loglevel=XMPPHP_Log::LEVEL_ERROR
 	);
 
+	$jabber->useSSL();
 	$jabber->autoSubscribe();
 
 	try {
-		$jabber->connect();
+		$jabber->connect(15);
 		$jabber->processUntil('session_start');
 		foreach ($to as $value)
 			$jabber->message($value, $message);

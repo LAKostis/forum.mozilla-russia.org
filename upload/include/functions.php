@@ -1481,6 +1481,7 @@ function pun_get_browser($uagent) {
 		'icecat',
 		'iceweasel',
 		'iron',
+		'jigsaw',
 		'k-meleon',
 		'kazehakase',
 		'konqueror',

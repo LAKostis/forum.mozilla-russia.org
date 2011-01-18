@@ -7,6 +7,7 @@ $lang_search = array(
 'User search'				=>	'User search',
 'No search permission'		=>	'You do not have permission to use the search feature.',
 'Search'					=>	'Search',
+'Extended search'			=>	'Extended Search',
 'Search criteria legend'	=>	'Enter your search criteria',
 'Search info'				=>	'To search by keyword, enter a term or terms to search for. Separate terms with spaces. Use AND, OR and NOT to refine your search.<br />To search by author enter the username of the author whose posts you wish to search for. Use wildcard character * for partial matches.',
 'Keyword search'			=>	'Keyword search',

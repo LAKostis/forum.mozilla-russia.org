@@ -757,8 +757,30 @@ $focus_element = array('search', 'keywords');
 require PUN_ROOT.'header.php';
 
 ?>
+<div id="google" class="blockform">
+	<h2><span><?php echo $lang_common['Google search'] ?></span></h2>
+	<div class="box">
+
+		<div id="cse"><div style="padding:10px"><?php echo $lang_common['Google loading'] ?></div></div>
+		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+		<script type="text/javascript">
+			google.load('search', '1', {language : '<?php echo ($pun_user['language'] == 'Russian' ? 'ru' : 'en') ?>'});
+			google.setOnLoadCallback(function() {
+				var customSearchControl = new google.search.CustomSearchControl('002000707098631292328:agyedqlqcg0');
+				customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+				customSearchControl.draw('cse');
+<?php if(!empty($_GET['google']))
+	echo '				customSearchControl.execute(\'' . addslashes($_GET['google']) . '\');';
+?>
+
+			}, true);
+		</script>
+
+	</div>
+</div>
+
 <div id="searchform" class="blockform">
-	<h2><span><?php echo $lang_search['Search'] ?></span></h2>
+	<h2><span><?php echo $lang_search['Extended search'] ?></span></h2>
 	<div class="box">
 		<form id="search" method="get" action="search.php">
 			<div class="inform">

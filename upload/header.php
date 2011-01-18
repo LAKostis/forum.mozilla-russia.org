@@ -195,16 +195,18 @@ $tpl_main = str_replace('<pun_page>', htmlspecialchars(basename($_SERVER['PHP_SE
 // START SUBST - <pun_search>
 $tpl_main = str_replace('<pun_search>',
 
+'<input type="button" value="'. $lang_common['Google search'] . '" id="search-google" onclick="return searchGoogle()"/>' .
+
 (defined('TOPIC_ID') ? '<input type="hidden" name="show_as" value="posts" />
 			<input type="hidden" name="topic" value="' . TOPIC_ID . '" />
-			<input type="submit" value="Поиск по теме" accesskey="g" id="search-submit" />' : (
+			<input type="submit" value="'. $lang_common['Search topic'] . '" accesskey="g" id="search-submit" />' : (
 
 defined('FORUM_ID') ? '<input type="hidden" name="show_as" value="topics" />
 			<input type="hidden" name="forum" value="' . FORUM_ID . '" />
-			<input type="submit" value="Поиск по разделу " accesskey="g" id="search-submit" />' :
+			<input type="submit" value="'. $lang_common['Search forum'] . '" accesskey="g" id="search-submit" />' :
 
 '<input type="hidden" name="show_as" value="topics" />
-			<input type="submit" value="Поиск по форуму" accesskey="g" id="search-submit" />'))
+			<input type="submit" value="'. $lang_common['Search forums'] . '" accesskey="g" id="search-submit" />'))
 
 , $tpl_main);
 // END SUBST - <pun_search>

@@ -200,6 +200,11 @@ function toggleProjects(obj, e) {
 	return true;
 }
 
+function searchGoogle()
+{
+	window.location.href = 'search.php?google=' + document.getElementById('search-input').value;
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

@@ -111,7 +111,7 @@ div.projects a{font-size:90%}
 /* 11.3 Top menu search form */
 div.search{text-align:right}
 form input#search-input{font-size:85%;padding:2px;width:170px}
-form input#search-submit{font-size:85%;font-weight:700;padding:1px 4px}
+form input#search-google,form input#search-submit{font-size:85%;font-weight:700;padding:1px 4px}
 form input#qlogin-username,form input#qlogin-password{font-size:85%;padding:2px}
 form input#qlogin-submit{font-size:85%;padding:1px 4px}
 /* 11.4 User agent mod */
@@ -137,3 +137,11 @@ div.spoiler div.noindex,div.noindex div.spoiler{margin:0}
 #google-results .gsc-cursor-box .gsc-cursor-page{display:inline;margin:3px;cursor:pointer}
 #google-results .gsc-cursor-box .gsc-cursor-current-page{font-weight:bold}
 #google-results .gs-no-results-result{padding:3px}
+/* 11.7 Google Site Search */
+#cse .gsc-search-box{margin:5px;padding:0;width:auto}
+#cse .gsc-branding,#cse .gsc-clear-button,#cse .gs-visibleurl-short,#cse .gsc-resultsHeader{display:none!important}
+#cse td{border-width:0}
+#cse .gsc-results{padding:0 15px 5px}
+#cse .gsc-result{padding:0 0 10px}
+#cse .gsc-cursor{float:right;padding:5px}
+#cse .gsc-cursor:before{content:"Страницы: "}

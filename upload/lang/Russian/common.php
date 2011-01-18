@@ -97,6 +97,11 @@ $lang_common = array(
 'Mailer'				=>	'Почтовый робот',	// As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Важная информация',
 'Write message legend'	=>	'Напишите ваше сообщение и нажмите отправить (Ctrl+Enter)',
+'Google search'			=>	'Поиск в Google',
+'Google loading'		=>	'Загрузка поиска Google...',
+'Search topic'			=>	'Поиск по теме',
+'Search forum'			=>	'Поиск по разделу',
+'Search forums'			=>	'Поиск по форуму',
 
 // Title
 'Title'					=>	'Статус',

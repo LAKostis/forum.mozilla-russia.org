@@ -97,6 +97,11 @@ $lang_common = array(
 'Mailer'				=>	'Mailer',	// As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Important information',
 'Write message legend'	=>	'Write your message and submit (Ctrl+Enter)',
+'Google search'			=>	'Google Search',
+'Google loading'		=>	'Loading Google Search...',
+'Search topic'			=>	'Search in topic',
+'Search forum'			=>	'Search in forum',
+'Search forums'			=>	'Search in all forums',
 
 // Title
 'Title'					=>	'Title',

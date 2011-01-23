@@ -1470,6 +1470,7 @@ function pun_get_browser($uagent) {
 		'demobrowser',
 		'dillo',
 		'elinks',
+		'epic',
 		'epiphany',
 		'fennec',
 		'flock',

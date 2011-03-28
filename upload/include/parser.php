@@ -158,8 +158,8 @@ $browser_text = array(
 	'[macos]'
 );
 $browser_img = array(
-	'firefox.png',
-	'firefox.png',
+	'firefox35.png',
+	'firefox35.png',
 	'thunderbird.png',
 	'thunderbird.png',
 	'mozilla.png',

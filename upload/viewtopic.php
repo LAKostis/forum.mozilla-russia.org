@@ -437,6 +437,10 @@ while ($cur_post = $db->fetch_assoc($result))
 if ($quickpost)
 {
 
+$result = $db->query('SELECT posted, edited FROM '.$db->prefix.'posts WHERE topic_id='.$id.' ORDER BY id DESC LIMIT 1') or error('Unable to fetch last post date', __FILE__, __LINE__, $db->error());
+$lastmodified = $db->fetch_assoc($result);
+$maxmodified = $lastmodified['posted'] < $lastmodified['edited'] ? $lastmodified['edited'] : $lastmodified['posted'];
+
 ?>
 <!-- MOD AJAX post preview -->
 <div id="ajaxpostpreview"></div>
@@ -462,7 +466,7 @@ if ($quickpost)
 					</div>
 				</fieldset>
 			</div>
-		<p><input type="submit" id="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" accesskey="p" /></p>
+		<p><input type="hidden" name="modified" value="<?php echo $maxmodified ?>" /><input type="submit" id="submit" name="submit" tabindex="2" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" accesskey="p" /></p>
 		</form>
 	</div>
 </div>

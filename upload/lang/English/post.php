@@ -22,6 +22,7 @@ $lang_post = array(
 'Flood start'		=>	'At least',
 'flood end'			=>	'seconds have to pass between posts. Please wait a little while and try posting again.',
 'Related topics'	=>	'Related forum topics',
+'Modified'			=>	'There are some changes in the topic, perhaps you should correct your message.',
 
 // Edit post
 'Edit post legend'	=>	'Edit the post and submit changes',

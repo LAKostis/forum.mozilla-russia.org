@@ -179,14 +179,16 @@ if (isset($_POST['form_sent']))
 			redirect('viewtopic.php?pid='.$last_message['id'].'#p'.$last_message['id'], $lang_post['Post redirect']);
 	}
 
-	// hcs merge posts
-	$merged=false;
-	if (!$pun_user['is_guest'] && !$fid && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
+	// Check for new post in topic
+	if ($_POST['modified'])
 	{
-		$message = pun_linebreaks('[added='.time().']') . "\n" . $message;
-		$merged=true;
+		$result = $db->query('SELECT posted, edited FROM '.$db->prefix.'posts WHERE topic_id='.$tid.' ORDER BY id DESC LIMIT 1') or error('Unable to fetch last post date', __FILE__, __LINE__, $db->error());
+		$lastmodified = $db->fetch_assoc($result);
+		$maxmodified = $lastmodified['posted'] < $lastmodified['edited'] ? $lastmodified['edited'] : $lastmodified['posted'];
+
+		if((int)$_POST['modified'] != $maxmodified)
+			$errors[] = $lang_post['Modified'];
 	}
-	// end merge posts
 
 	if ($message == '')
 		$errors[] = $lang_post['No message'];
@@ -212,6 +214,14 @@ if (isset($_POST['form_sent']))
 	// Did everything go according to plan?
 	if (empty($errors) && !isset($_POST['preview']))
 	{
+		// Merge only if no errors
+		$merged=false;
+		if (!$pun_user['is_guest'] && !$fid && $cur_posting['poster_id']!=NULL && $cur_posting['message']!=NULL && time()-$cur_posting['posted']<$pun_config['o_merge_timeout'])
+		{
+			$message = pun_linebreaks('[added='.time().']') . "\n" . $message;
+			$merged=true;
+		}
+
 		// If it's a reply
 		if ($tid)
 		{

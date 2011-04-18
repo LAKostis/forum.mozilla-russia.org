@@ -28,7 +28,7 @@
 //
 function check_cookie(&$pun_user)
 {
-	global $db, $db_type, $pun_config, $cookie_name, $cookie_seed;
+	global $db, $db_type, $pun_config, $cookie_name, $cookie_path, $cookie_domain, $cookie_seed;
 
 	$now = time();
 	$expire = $now + 31536000;	// The cookie expires after a year
@@ -54,10 +54,6 @@ function check_cookie(&$pun_user)
 
 			return;
 		}
-
-		// Set a default language if the user selected language no longer exists
-		if (!@file_exists(PUN_ROOT.'lang/'.$pun_user['language']))
-			$pun_user['language'] = $pun_config['o_default_lang'];
 
 		// Set a default style if the user selected style no longer exists
 		if (!@file_exists(PUN_ROOT.'style/'.$pun_user['style'].'.css'))
@@ -118,6 +114,29 @@ function check_cookie(&$pun_user)
 	}
 	else
 		set_default_user();
+
+	if (!empty($_GET['language']))
+	{
+		$_COOKIE['language'] = $_GET['language'];
+		if ($cookie['user_id'] == 1) // Save cookie for guests
+			setcookie('language', $_COOKIE['language'], time() + 31536000, $cookie_path, $cookie_domain);
+	}
+
+	if (!empty($_COOKIE['language']))
+	{
+		$pun_user['language'] = $_COOKIE['language'];
+		if ($cookie['user_id'] != 1) // Remove cookie for logined users
+			setcookie('language');
+	}
+
+	// Set a default language if the user selected language no longer exists
+	if (!@file_exists(PUN_ROOT.'lang/'.$pun_user['language']))
+		$pun_user['language'] = $pun_config['o_default_lang'];
+
+	// Update config for logined users
+	elseif ($cookie['user_id'] != 1 && (!empty($_GET['language']) || !empty($_COOKIE['language'])))
+		$db->query('UPDATE '.$db->prefix.'users SET language=\''.$db->escape($pun_user['language']).'\' WHERE id='.$pun_user['id']) or error('Unable to update user language', __FILE__, __LINE__, $db->error());
+
 }
 
 

@@ -101,6 +101,7 @@ $lang_common = array(
 'Search topic'			=>	'Search in topic',
 'Search forum'			=>	'Search in forum',
 'Search forums'			=>	'Search in all forums',
+'Forum language'		=>	'Forum view language',
 
 // Title
 'Title'					=>	'Title',

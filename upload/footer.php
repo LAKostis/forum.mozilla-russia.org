@@ -132,8 +132,15 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 }
 
 ?>
-			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />Modified by <a href="http://mozilla-russia.org/">Mozilla Russia</a><br />Copyright © 2004–2011 Mozilla Russia</p>
-<?php
+			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />Modified by <a href="http://mozilla-russia.org/">Mozilla Russia</a><br />Copyright © 2004–2011 Mozilla Russia<br /><?php
+
+echo $lang_common['Forum language'].': ';
+if ($pun_user['language'] == 'Russian')
+	echo '<b>[Русский]</b> <a href="index.php?language=English">[English]</a>';
+else
+	echo '<a href="index.php?language=Russian">[Русский]</a> <b>[English]</b>';
+
+?></p><?php
 
 // Display debug info (if enabled/defined)
 if (defined('PUN_DEBUG'))

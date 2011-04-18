@@ -101,6 +101,7 @@ $lang_common = array(
 'Search topic'			=>	'Поиск по теме',
 'Search forum'			=>	'Поиск по разделу',
 'Search forums'			=>	'Поиск по форуму',
+'Forum language'		=>	'Язык отображения форума',
 
 // Title
 'Title'					=>	'Статус',

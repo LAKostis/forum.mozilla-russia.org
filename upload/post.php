@@ -221,7 +221,7 @@ if (isset($_POST['form_sent']))
 				if ($merged)
 				{
 					$message = $cur_posting['message'] . "\n\n" . $message;
-					$db->query('UPDATE '.$db->prefix.'posts SET message=\''.$db->escape($message).'\' WHERE  id='.$cur_posting['post_id']) or error('Unable to merge post', __FILE__, __LINE__, $db->error());
+					$db->query('UPDATE '.$db->prefix.'posts SET message=\''.$db->escape($message).'\', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\' WHERE  id='.$cur_posting['post_id']) or error('Unable to merge post', __FILE__, __LINE__, $db->error());
 					$new_pid=$cur_posting['post_id'];
 				}
 				else

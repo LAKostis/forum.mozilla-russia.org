@@ -105,6 +105,9 @@ ul.bblinks li{padding-right:20px}
 ul.bblinks{padding-bottom:10px;padding-left:4px}
 /* 9.5 Horizontal positioning for the submit button on forms */
 div.blockform p input{margin-left:12px}
+/* 9.6 */
+.codebox a{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_select.png') no-repeat 0 2px transparent}
+.codebox h4{padding:2px 0 2px 20px;background:url('./img/Moz-infinity/fam_code.png') no-repeat 0 2px transparent}
 /* 10. POST STATUS INDICATORS */
 /* 10.1 These are the post status indicators which appear at the left of some tables. */
 div.icon{display:block;float:left;width:24px;height:24px}

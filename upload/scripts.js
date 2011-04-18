@@ -205,6 +205,29 @@ function searchGoogle()
 	window.location.href = 'search.php?google=' + document.getElementById('search-input').value;
 }
 
+function codeSelect(obj)
+{
+	var pre = obj.parentNode.lastChild.firstChild;
+
+	if (document.selection)
+	{
+		document.selection.empty();
+		var range = document.body.createTextRange();
+		range.moveToElementText(pre);
+		range.select();
+	}
+
+	else if (window.getSelection)
+	{
+		window.getSelection().removeAllRanges()
+		var range = document.createRange();
+		range.selectNode(pre);
+		window.getSelection().addRange(range);
+	}
+
+	return false;
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

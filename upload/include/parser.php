@@ -801,7 +801,7 @@ function parse_message($text, $hide_smilies)
 			{
 				$num_lines = ((substr_count($inside[$i], "\n")) + 3) * 1.5;
 				$height_str = ($num_lines > 35) ? '35em' : $num_lines.'em';
-				$text .= '</p><div class="codebox"><div class="incqbox"><h4>'.$lang_common['Code'].':</h4><div class="scrollbox" style="height: '.$height_str.'"><pre>'.$inside[$i].'</pre></div></div></div><p>';
+				$text .= '</p><div class="codebox"><div class="incqbox"><a href="#" style="float:right" onclick="return codeSelect(this)">'.$lang_common['Code select'].'</a><h4>'.$lang_common['Code'].':</h4><div class="scrollbox" style="height: '.$height_str.'"><pre>'.$inside[$i].'</pre></div></div></div><p>';
 			}
 		}
 	}

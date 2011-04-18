@@ -93,6 +93,7 @@ $lang_common = array(
 'Image link'			=>	'image', // This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
 'wrote'					=>	'wrote', // For [quote]'s
 'Code'					=>	'Code', // For [code]'s
+'Code select'			=>	'Select code',
 'Mailer'				=>	'Mailer', // As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Important information',
 'Write message legend'	=>	'Write your message and submit (Ctrl+Enter)',

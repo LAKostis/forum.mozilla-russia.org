@@ -1,10 +1,9 @@
 <?php
 
-// Language definitions used in various scripts
 $lang_misc = array(
 
 'Mark read redirect'		=>	'Все темы в этом форуме были отмечены как прочтённые. Переадресация...',
-'Mark forum read redirect'  =>  'Все темы в этом форуме были отмечены как прочтённые. Переадресация...', // MOD: MARK TOPICS AS READ
+'Mark forum read redirect'	=>	'Все темы в этом форуме были отмечены как прочтённые. Переадресация...', // MOD: MARK TOPICS AS READ
 
 // Send e-mail
 'Form e-mail disabled'		=>	'Пользователь, которому Вы хотите послать сообщение, отказался от получения сообщений по e-mail.',
@@ -35,7 +34,7 @@ $lang_misc = array(
 
 // General forum and topic moderation
 'Moderate'					=>	'Модерировать',
-'Select'					=>	'Выбрать',	// the header of a column of checkboxes
+'Select'					=>	'Выбрать', // the header of a column of checkboxes
 'Move'						=>	'Переместить',
 'Delete'					=>	'Удалить',
 'Agree'						=>	'Согласен',

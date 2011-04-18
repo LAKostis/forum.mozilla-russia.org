@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in help.php
 $lang_help = array(
 
 'Help'					=>	'Help',

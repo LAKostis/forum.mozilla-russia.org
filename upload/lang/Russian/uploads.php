@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in uploads.php
 $lang_uploads = array(
 
 'Uploader'				=>	'Загрузки',
@@ -10,7 +9,7 @@ $lang_uploads = array(
 'File list'				=>	'Список файлов',
 'File list info'		=>	'Загруженные пользователями файлы могут иметь опасное содержимое и содержать ошибки. Для скачивания файла просто нажмите на ссылку. Если вы обнаружили файл с опасным содержимым, пожалуйста, сообщите об этом администрации форума.',
 'Size'					=>	'Размер',
-'Delete'				=>	'Удалить',	// The submit button
+'Delete'				=>	'Удалить', // The submit button
 'Posted by'				=>	'Размещено',
 'Topic del redirect'	=>	'Тема удалена. Перенаправление &hellip;',
 'Uploader search'		=>	'Поиск файлов'

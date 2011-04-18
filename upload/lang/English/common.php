@@ -24,11 +24,10 @@ setlocale(LC_CTYPE, $locale);
 // hcs merge posts update
 setlocale(LC_TIME, $locale);
 
-// Language definitions for frequently used strings
 $lang_common = array(
 
 // Text orientation and encoding
-'lang_direction'		=>	'ltr',	// ltr (Left-To-Right) or rtl (Right-To-Left)
+'lang_direction'		=>	'ltr', // ltr (Left-To-Right) or rtl (Right-To-Left)
 'lang_encoding'			=>	'utf-8',
 'lang_multibyte'		=>	true,
 'db_lang_encoding'		=>	'utf8',
@@ -51,8 +50,8 @@ $lang_common = array(
 'Helpful info'			=>	'Helpful info',
 'Options'				=>	'Options',
 'Actions'				=>	'Actions',
-'Submit'				=>	'Submit',	// "name" of submit buttons
-'Preview'				=>	'Preview',	// submit button to preview message
+'Submit'				=>	'Submit', // "name" of submit buttons
+'Preview'				=>	'Preview', // submit button to preview message
 'Ban message'			=>	'You are banned from this forum.',
 'Ban message 2'			=>	'The ban expires at the end of',
 'Ban message 3'			=>	'The administrator or moderator that banned you left the following message:',
@@ -60,19 +59,19 @@ $lang_common = array(
 'Never'					=>	'Never',
 'Today'					=>	'Today',
 'Yesterday'				=>	'Yesterday',
-'Info'					=>	'Info',		// a common table header
+'Info'					=>	'Info', // a common table header
 'Go back'				=>	'Go back',
 'Maintenance'			=>	'Maintenance',
 'Redirecting'			=>	'Redirecting',
 'Click redirect'		=>	'Click here if you do not want to wait any longer (or if your browser does not automatically forward you)',
-'on'					=>	'on',		// as in "BBCode is on"
+'on'					=>	'on', // as in "BBCode is on"
 'off'					=>	'off',
 'Invalid e-mail'		=>	'The e-mail address you entered is invalid.',
-'required field'		=>	'is a required field in this form.',	// for javascript form validation
+'required field'		=>	'is a required field in this form.', // for javascript form validation
 'Last post'				=>	'Last post',
-'by'					=>	'by',	// as in last post by someuser
-'New posts'				=>	'New&nbsp;posts',	// the link that leads to the first new post (use &nbsp; for spaces)
-'New posts info'		=>	'Go to the first new post in this topic.',	// the popup text for new posts links
+'by'					=>	'by', // as in last post by someuser
+'New posts'				=>	'New&nbsp;posts', // the link that leads to the first new post (use &nbsp; for spaces)
+'New posts info'		=>	'Go to the first new post in this topic.', // the popup text for new posts links
 'Username'				=>	'Username',
 'Password'				=>	'Password',
 'E-mail'				=>	'E-mail',
@@ -87,14 +86,14 @@ $lang_common = array(
 'Replies'				=>	'Replies',
 'Author'				=>	'Author',
 'Pages'					=>	'Pages',
-'BBCode'				=>	'BBCode',	// You probably shouldn't change this
+'BBCode'				=>	'BBCode', // You probably shouldn't change this
 'img tag'				=>	'Images',
 'Smilies'				=>	'Smilies',
 'and'					=>	'and',
-'Image link'			=>	'image',	// This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
-'wrote'					=>	'wrote',	// For [quote]'s
-'Code'					=>	'Code',		// For [code]'s
-'Mailer'				=>	'Mailer',	// As in "MyForums Mailer" in the signature of outgoing e-mails
+'Image link'			=>	'image', // This is displayed (i.e. <image>) instead of images when "Show images" is disabled in the profile
+'wrote'					=>	'wrote', // For [quote]'s
+'Code'					=>	'Code', // For [code]'s
+'Mailer'				=>	'Mailer', // As in "MyForums Mailer" in the signature of outgoing e-mails
 'Important information'	=>	'Important information',
 'Write message legend'	=>	'Write your message and submit (Ctrl+Enter)',
 'Google search'			=>	'Google Search',
@@ -105,7 +104,7 @@ $lang_common = array(
 
 // Title
 'Title'					=>	'Title',
-'Member'				=>	'Member',	// Default title
+'Member'				=>	'Member', // Default title
 'Moderator'				=>	'Moderator',
 'Administrator'			=>	'Administrator',
 'Banned'				=>	'Banned',
@@ -138,7 +137,7 @@ $lang_common = array(
 'Last visit'			=>	'Last visit',
 'Show new posts'		=>	'Show new posts since last visit',
 'Mark all as read'		=>	'Mark all topics as read',
-'Link separator'		=>	'',	// The text that separates links in the navigator
+'Link separator'		=>	'', // The text that separates links in the navigator
 'Mark forum as read'	=>	'Mark this forum as read', // MOD: MARK TOPICS AS READ
 'New reports'			=>	'There are new reports',
 
@@ -151,7 +150,7 @@ $lang_common = array(
 'Show subscriptions'	=>	'Show your subscribed topics',
 'Show active posts'		=>	'Show most active topics',
 'Jump to'				=>	'Jump to',
-'Go'					=>	' Go ',		// submit button in forum jump
+'Go'					=>	' Go ', // submit button in forum jump
 'Move topic'			=>	'Move topic',
 'Open topic'			=>	'Open topic',
 'Close topic'			=>	'Close topic',
@@ -165,12 +164,12 @@ $lang_common = array(
 'Debug table'			=>	'Debug information',
 
 // For extern.php RSS feed
-'RSS Desc Active'		=>	'The most recently active topics at',	// board_title will be appended to this string
-'RSS Desc New'			=>	'The newest topics at',					// board_title will be appended to this string
+'RSS Desc Active'		=>	'The most recently active topics at', // board_title will be appended to this string
+'RSS Desc New'			=>	'The newest topics at', // board_title will be appended to this string
 'RSS Desc Messages'		=>	'The new messages at',
 'RSS Site News'			=>	'The news at',
-'Posted'				=>	'Posted',	// The date/time a topic was started
-'Comments'				=>	'Comments',	// The reply count for topic
+'Posted'				=>	'Posted', // The date/time a topic was started
+'Comments'				=>	'Comments', // The reply count for topic
 // MOD Printable topic version string
 'Print version'			=>	'Printable version',
 

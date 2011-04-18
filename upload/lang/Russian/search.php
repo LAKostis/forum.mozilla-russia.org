@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in search.php
 $lang_search = array(
 
 // The search form

@@ -1,7 +1,7 @@
 <?php
 
-// Language definitions used by the Private Message System-mod
 $lang_pms = array(
+
 // Common
 'Messages'					=>	'Messages',
 'Message'					=>	'Message',
@@ -54,4 +54,5 @@ $lang_pms = array(
 'Sent full'					=>	'Can\'t save message to Sent, your box is full.',
 'Flood start'				=>	'At least',
 'Flood end'					=>	'seconds have to pass between sends. Please wait a little while and try send the message again.'
+
 );

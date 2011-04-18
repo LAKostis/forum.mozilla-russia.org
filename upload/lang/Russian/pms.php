@@ -1,7 +1,7 @@
 <?php
 
-// Language definitions used by the Private Message System-mod
 $lang_pms = array(
+
 // Common
 'Messages'					=>	'Сообщения',
 'Message'					=>	'Сообщение',
@@ -54,4 +54,5 @@ $lang_pms = array(
 'Sent full'					=>	'Не могу сохранить сообщение в &quot;Отправленные&quot;, так как ваш ящик переполнен.',
 'Flood start'				=>	'Минимум',
 'Flood end'					=>	'секунд должно пройти между отправками сообщения. Пожалуйста, подождите немного и попробуйте снова.'
+
 );

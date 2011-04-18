@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in various scripts
 $lang_misc = array(
 
 'Mark read redirect'		=>	'All topics and forums have been marked as read. Redirecting &hellip;',
@@ -35,7 +34,7 @@ $lang_misc = array(
 
 // General forum and topic moderation
 'Moderate'					=>	'Moderate',
-'Select'					=>	'Select',	// the header of a column of checkboxes
+'Select'					=>	'Select', // the header of a column of checkboxes
 'Move'						=>	'Move',
 'Delete'					=>	'Delete',
 'Agree'						=>	'Agree',

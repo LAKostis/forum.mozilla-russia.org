@@ -1,11 +1,10 @@
 <?php
 
-// Language definitions used in viewtopic.php
 $lang_topic = array(
 
 'Post reply'		=>	'Ответить',
 'Topic closed'		=>	'Тема закрыта',
-'From'				=>	'Откуда',				// User location
+'From'				=>	'Откуда', // User location
 'Website'			=>	'Веб-сайт',
 'Guest'				=>	'Гость',
 'Online'			=>	'На форуме',
@@ -23,7 +22,7 @@ $lang_topic = array(
 'Subscribe'			=>	'Подписаться и отслеживать тему',
 'Quick post'		=>	'Быстрый ответ',
 
-'Link separator'	=>	' | ',	// The text that separates links in posts (website, e-mail, report, edit etc.)
+'Link separator'	=>	' | ', // The text that separates links in posts (website, e-mail, report, edit etc.)
 'Mod controls'		=>	'Контролируется модератором',
 
 'Message blocked'	=>	'Сообщение временно заблокировано на основании жалоб пользователей и ожидает проверки администратором.',

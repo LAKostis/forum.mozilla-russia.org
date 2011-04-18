@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in profile.php
 $lang_profile = array(
 
 // Navigation and sections
@@ -61,9 +60,9 @@ $lang_profile = array(
 'Avatar desc'					=>	'Аватар - это маленькое изображение, которое будет отображаться под Вашим именем в сообщениях на форуме. Оно не может быть больше чем',
 'Upload avatar'					=>	'Загрузить аватар',
 'Upload avatar legend'			=>	'Укажите файл с аватаром для загрузки',
-'Delete avatar'					=>	'Удалить аватар',	// only for admins
+'Delete avatar'					=>	'Удалить аватар', // only for admins
 'File'							=>	'Файл',
-'Upload'						=>	'Загрузить',	// submit button
+'Upload'						=>	'Загрузить', // submit button
 
 // Form validation stuff
 'Dupe username'					=>	'Кто-то уже зарегистрирован с таким именем. Пожалуйста, вернитесь и попробуйте другое имя.',
@@ -72,8 +71,8 @@ $lang_profile = array(
 
 // Profile display stuff
 'Not activated'					=>	'Этот пользователь ещё не активировал свой аккаунт (учетную запись). Аккаунт активируется при первом логине на форум.',
-'Unknown'						=>	'(Неизвестно)',	// This is displayed when a user hasn't filled out profile field (e.g. Location)
-'Private'						=>	'(Скрыт)',	// This is displayed when a user does not want to receive e-mails
+'Unknown'						=>	'(Неизвестно)', // This is displayed when a user hasn't filled out profile field (e.g. Location)
+'Private'						=>	'(Скрыт)', // This is displayed when a user does not want to receive e-mails
 'No avatar'						=>	'(Нет аватара)',
 'Show posts'					=>	'Показать все сообщения',
 'Files'							=>	'Загружено файлов',
@@ -142,10 +141,10 @@ $lang_profile = array(
 'Ban user'						=>	'Забанить пользователя',
 'Confirm delete legend'			=>	'Важно: прочтите перед удалением пользователя',
 'Confirm delete user'			=>	'Подтвердите удаление пользователя',
-'Confirmation info'				=>	'Пожалуйста, подтвердите, что вы хотите удалить пользователя',	// the username will be appended to this string
+'Confirmation info'				=>	'Пожалуйста, подтвердите, что вы хотите удалить пользователя', // the username will be appended to this string
 'Delete warning'				=>	'Внимание! Удалённые пользователи и/или сообщения не могут быть восстановлены. Если вы решили не удалять сообщения, сделанные пользователем, то в дальнейшем эти сообщения могут быть удалены только вручную.',
 'Delete posts'					=>	'Удаление всех сообщений и тем сделанных пользователем.',
-'Delete'						=>	'Удалить',		// submit button (confirm user delete)
+'Delete'						=>	'Удалить', // submit button (confirm user delete)
 'User delete redirect'			=>	'Пользователь удалён. Переадресация...',
 'Group membership redirect'		=>	'Изменение группы сохранено. Переадресация...',
 'Update forums redirect'		=>	'Права модерирования форума обновлены. Переадресация...',

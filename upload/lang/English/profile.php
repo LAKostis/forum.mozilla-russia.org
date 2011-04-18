@@ -1,6 +1,5 @@
 <?php
 
-// Language definitions used in profile.php
 $lang_profile = array(
 
 // Navigation and sections
@@ -61,9 +60,9 @@ $lang_profile = array(
 'Avatar desc'					=>	'An avatar is a small image that will be displayed under your username in your posts. It must not be any bigger than',
 'Upload avatar'					=>	'Upload avatar',
 'Upload avatar legend'			=>	'Enter an avatar file to upload',
-'Delete avatar'					=>	'Delete avatar',	// only for admins
+'Delete avatar'					=>	'Delete avatar', // only for admins
 'File'							=>	'File',
-'Upload'						=>	'Upload',	// submit button
+'Upload'						=>	'Upload', // submit button
 
 // Form validation stuff
 'Dupe username'					=>	'Someone else has already registered with that username. Please go back and try a different username.',
@@ -72,8 +71,8 @@ $lang_profile = array(
 
 // Profile display stuff
 'Not activated'					=>	'This user hasn\'t activated his/her account yet. The account is activated when he/she logs in the first time.',
-'Unknown'						=>	'(Unknown)',	// This is displayed when a user hasn't filled out profile field (e.g. Location)
-'Private'						=>	'(Private)',	// This is displayed when a user does not want to receive e-mails
+'Unknown'						=>	'(Unknown)', // This is displayed when a user hasn't filled out profile field (e.g. Location)
+'Private'						=>	'(Private)', // This is displayed when a user does not want to receive e-mails
 'No avatar'						=>	'(No avatar)',
 'Show posts'					=>	'Show all posts',
 'Files'							=>	'Uploaded files',
@@ -142,10 +141,10 @@ $lang_profile = array(
 'Ban user'						=>	'Ban user',
 'Confirm delete legend'			=>	'Important: read before deleting user',
 'Confirm delete user'			=>	'Confirm delete user',
-'Confirmation info'				=>	'Please confirm that you want to delete the user',	// the username will be appended to this string
+'Confirmation info'				=>	'Please confirm that you want to delete the user', // the username will be appended to this string
 'Delete warning'				=>	'Warning! Deleted users and/or posts cannot be restored. If you choose not to delete the posts made by this user, the posts can only be deleted manually at a later time.',
 'Delete posts'					=>	'Delete any posts and topics this user has made.',
-'Delete'						=>	'Delete',		// submit button (confirm user delete)
+'Delete'						=>	'Delete', // submit button (confirm user delete)
 'User delete redirect'			=>	'User deleted. Redirecting &hellip;',
 'Group membership redirect'		=>	'Group membership saved. Redirecting &hellip;',
 'Update forums redirect'		=>	'Forum moderator rights updated. Redirecting &hellip;',

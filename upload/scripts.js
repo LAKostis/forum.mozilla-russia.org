@@ -9,13 +9,13 @@ function pasteQ(nick, msg) {
 	if (!txt && message)
 		txt = message.textContent ? message.textContent : message.innerHTML;
 	if (txt && document.forms['post']['req_message'])
-		insert_text('[quote=' + nick + ']' + trim(txt) + '[/quote]\n', '');
+		insertText('[quote=' + nick + ']' + trim(txt) + '[/quote]\n', '', true);
 }
 
 function pasteN(obj) {
 	var nick = obj.textContent ? obj.textContent : (obj.innerHTML ? obj.innerHTML : null);
 	if (nick && document.forms['post']['req_message'])
-		insert_text('[b]' + nick + '[/b]\n', '');
+		insertText('[b]' + nick + '[/b]\n', '', true);
 }
 
 function setCaret(textObj) {
@@ -23,7 +23,7 @@ function setCaret(textObj) {
 		textObj.caretPos = document.selection.createRange().duplicate();
 }
 
-function insert_text(open, close, focus) {
+function insertText(open, close, nofocus) {
 	var msgfield = document.all ? document.all.req_message : document.forms['post'] ? document.forms['post']['req_message'] : document.forms['edit']['req_message'];
 	var ss = msgfield.selectionStart, st = msgfield.scrollTop, sh = msgfield.scrollHeight;
 	if (!ss && document.selection && msgfield.caretPos) {
@@ -35,19 +35,20 @@ function insert_text(open, close, focus) {
 	}
 	else if (ss || ss == '0') {
 		var se = msgfield.selectionEnd;
-		var text = msgfield.value.substring(0, ss) + open;
+		var text = msgfield.value.substring(0, ss) + open, selection = msgfield.value.substring(ss, se);
 		if (close != '')
-			text += msgfield.value.substring(ss, se);
+			text += selection;
 		text += close + msgfield.value.substring(se, msgfield.value.length);
 		msgfield.value = text;
 		se = close.length ? se : ss;
-		msgfield.selectionStart = se + open.length + close.length;
-		msgfield.selectionEnd = se + open.length + close.length;
+		if(close)
+			msgfield.selectionStart = se + open.length - selection.length;
+		msgfield.selectionEnd = se + open.length;
 	}
 	else
 		msgfield.value += open + close;
 	msgfield.scrollTop = st + msgfield.scrollHeight - sh;
-	if (focus)
+	if(!nofocus)
 		msgfield.focus();
 }
 

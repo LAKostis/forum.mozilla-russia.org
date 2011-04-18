@@ -259,7 +259,6 @@ else
 				<div class="clearer"></div>
 				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php echo $subject ?>" size="80" maxlength="70" tabindex="3" /><br /></label>
 				<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
-				<label><strong><?php echo $lang_common['Message'] ?></strong><br />
 				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="4"><?php echo $quote ?></textarea><br /></label>
 				<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 				<ul class="bblinks">

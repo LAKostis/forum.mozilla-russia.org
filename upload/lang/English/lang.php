@@ -58,7 +58,7 @@ $lang['mediaselect']	=	'Mediafile Selection';
 $lang['fileupload']		=	'Mediafile Upload';
 $lang['uploadsucc']		=	'Upload successful';
 $lang['uploadfail']		=	'Upload failed. Maybe wrong permissions?';
-$lang['uploadwrong'	=	'Upload denied. This file extension is forbidden';
+$lang['uploadwrong']	=	'Upload denied. This file extension is forbidden';
 $lang['namespaces']		=	'Namespaces';
 $lang['mediafiles']		=	'Available files in';
 

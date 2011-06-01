@@ -1539,6 +1539,7 @@ function pun_get_browser($uagent) {
 		'sunrise',
 		'swift',
 		'uzbl',
+		'webianshell',
 		'w3m',
 		'wyzo'
 	);

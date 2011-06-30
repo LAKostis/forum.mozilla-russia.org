@@ -23,7 +23,6 @@
 		<a class="label" href="http://www.mozilla-russia.org/about/allprojects.html">Наши проекты</a>
 		<span class="links">
 			<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
-			<a href="http://wiki.mozilla-russia.org/">Wiki</a>
 			<a href="http://flock.mozilla-russia.org/">Flock</a>
 			<a href="http://www.kmeleon.ru/">K-meleon</a>
 			<a href="http://nvu.mozilla-russia.org/">Nvu</a>
@@ -31,7 +30,6 @@
 			<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>
 			<a href="https://bugzilla.mozilla-russia.org/">Bugzilla</a>
 			<a href="http://planet.mozilla-russia.org/">Планета</a>
-			<a href="http://www.mozilla-russia.org/about/allprojects.html" class="all">Все проекты</a>
 		</span>
 	</div>
 	<div class="search" onclick="return toggleSearch(this, event)">

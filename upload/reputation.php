@@ -28,56 +28,55 @@ require PUN_ROOT.'include/common.php';
 
 if ($pun_user['is_guest'])
 	message($lang_common['No permission']);
-	
-if (empty($_GET['id']))
+
+if (!isset($_GET['csrf_token']) || $_GET['csrf_token'] != sha1($pun_user['id'].sha1(get_remote_address())))
 	message($lang_common['Bad request']);
 
-$id = intval($_GET['id']); //User ID
+if ((empty($_GET['plus']) && empty($_GET['minus'])) || (isset($_GET["plus"]) && isset($_GET["minus"])))
+	message($lang_reputation['Invalid voice value']);
+
+$id = empty($_GET['minus']) ? intval($_GET['plus']) : intval($_GET['minus']); //User ID
 
 require PUN_ROOT.'lang/'.$pun_user['language'].'/reputation.php';
 
-//Is rep. system  enabled ?
+//Is rep. system enabled ?
 if($pun_config['o_reputation_enabled'] != '1')
-  message($lang_reputation['Disabled']);
-  
+	message($lang_reputation['Disabled']);
+
 //Is ID valid?
 $query = $db->query("select id, group_id from ".$db->prefix."users where id='".$id."';");
 $target_user = $db->fetch_assoc($query);
 
 //Check is user exists
 if(empty($target_user["id"]) || $target_user["group_id"] <= PUN_MOD)
-  message($lang_reputation['No user']);
-  
+	message($lang_reputation['No user']);
+
 //Compare ID's
 if($target_user["id"] == $pun_user['id'])
-  message($lang_reputation['Silly user']);
-  
+	message($lang_reputation['Silly user']);
+
 //Check last reputation point given timestamp
 if($pun_config['o_reputation_timeout'] > (time()-$pun_user['last_reputation_voice']))
-  message($lang_reputation['Timeout 1'].$pun_config['o_reputation_timeout'].$lang_reputation['Timeout 2']);
+	message($lang_reputation['Timeout 1'].$pun_config['o_reputation_timeout'].$lang_reputation['Timeout 2']);
 
 //Plus or minus voice?
 $plus = $minus = false;
-if(isset($_GET["plus"]) && isset($_GET["minus"]))  {
-  message($lang_reputation['Invalid voice value']);
-} else {
-  if(isset($_GET["plus"])) {
-      $plus = true;
-  }
-  if(isset($_GET["minus"])) {
-      $minus = true;
-  }
+if(isset($_GET["plus"])) {
+	$plus = true;
+}
+if(isset($_GET["minus"])) {
+	$minus = true;
 }
 
 //Add voice
 if($plus) //Plus voice
-  $db->query("UPDATE ".$db->prefix."users SET reputation_plus=reputation_plus+1 where id='".$id."';");
+	$db->query("UPDATE ".$db->prefix."users SET reputation_plus=reputation_plus+1 where id='".$id."';");
 if($minus) //Minus voice
-  $db->query("UPDATE ".$db->prefix."users SET reputation_minus=reputation_minus+1 where id='".$id."';");
+	$db->query("UPDATE ".$db->prefix."users SET reputation_minus=reputation_minus+1 where id='".$id."';");
 
 //Update logged user last voice time
 $db->query("UPDATE ".$db->prefix."users SET last_reputation_voice='".mktime()."' where id='".$pun_user["id"]."';");
 
-//Redirect client back
-header("Location: ".$_SERVER["HTTP_REFERER"]);
+//Redirect back
+redirect($_SERVER["HTTP_REFERER"], $lang_reputation['Vote success']);
 ?>

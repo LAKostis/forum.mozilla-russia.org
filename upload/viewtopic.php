@@ -213,6 +213,8 @@ $topic_sql = 'SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signat
 if($start_from && $cur_topic['post_sticky'])
 	$topic_sql = '(SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, u.reputation_minus, u.reputation_plus, u.show_online, u.imgaward, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, p.blocked, g.g_id, g.g_user_title, g.g_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT 0,1) UNION (' . $topic_sql . ')';
 
+$csrf_token = $pun_config['o_reputation_enabled'] == '1' ? sha1($pun_user['id'].sha1(get_remote_address())) : null;
+
 // Retrieve the posts (and their respective poster/online status)
 $result = $db->query($topic_sql, true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
@@ -395,7 +397,7 @@ while ($cur_post = $db->fetch_assoc($result))
 					<dd><?php
 	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1 && $cur_post['g_id'] > PUN_MOD) {
 		echo $lang_reputation['Reputation'];
-?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
+?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?plus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?minus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
 <?php if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
 				</dl>
 			</div>

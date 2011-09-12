@@ -90,7 +90,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 		// NeoSecurityTeam PunBB 1.2.10 login Patch by K4P0 (Part 3/3)
 		$actualtime = $logintime + $pun_config['o_timeout_login'];
 		$db->query('INSERT INTO '.$db->prefix.'iptrylog (ip, lasttry) VALUES(\''.get_remote_address().'\', \''.$actualtime.'\')') or error('Unable to update user status', __FILE__, __LINE__, $db->error());
-		// End of Part 3.		
+		// End of Part 3.
 
 		message($lang_login['Wrong user/pass'].' <a href="login.php?action=forget">'.$lang_login['Forgotten pass'].'</a>');
 	}

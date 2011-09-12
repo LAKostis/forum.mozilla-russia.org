@@ -8,6 +8,7 @@ $lang_reputation = array(
 'Silly user'			=>	'You can\'t give your voice to yourself.',
 'No user'				=>	'Incorrect user ID,there aren\'t any user with this ID.',
 'Timeout 1'				=>	'You must wait ',
-'Timeout 2'				=>	' seconds before you can give new voice.'
+'Timeout 2'				=>	' seconds before you can give new voice.',
+'Vote success'			=>	'Your vote has been submitted ;)'
 
 );

@@ -162,7 +162,7 @@ else if (isset($_GET['email']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Send e-mail to'] ?> <?php echo pun_htmlspecialchars($recipient) ?></span></h2>
 	<div class="box">
-		<form id="email" method="post" action="misc.php?email=<?php echo $recipient_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="email" method="post" action="misc.php?email=<?php echo $recipient_id ?>" onsubmit="return process_form(this)">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Write e-mail'] ?></legend>
@@ -300,7 +300,7 @@ else if (isset($_GET['report']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Report post'] ?></span></h2>
 	<div class="box">
-		<form id="report" method="post" action="misc.php?report=<?php echo $post_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="report" method="post" action="misc.php?report=<?php echo $post_id ?>" onsubmit="return process_form(this)">
 			<div class="inform" id="reason">
 				<fieldset>
 					<legend><?php echo $lang_misc['Reason desc'] ?></legend>

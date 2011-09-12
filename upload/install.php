@@ -128,7 +128,7 @@ function process_form(the_form)
 <div class="blockform">
 	<h2><span>Install PunBB 1.2</span></h2>
 	<div class="box">
-		<form id="install" method="post" action="install.php" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
+		<form id="install" method="post" action="install.php" onsubmit="return process_form(this)">
 		<div><input type="hidden" name="form_sent" value="1" /></div>
 			<div class="inform">
 				<div class="forminfo">

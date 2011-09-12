@@ -287,7 +287,7 @@ function generate_topics_autoclose_cache()
 	if(!empty($pun_config['o_autoclose_subforums']))
 	{
 		// Close old topics
-		$result = $db->query('UPDATE '.$db->prefix.'topics SET closed=1 WHERE forum_id IN('.$pun_config['o_autoclose_subforums'].') AND last_post<'.strtotime('-'.$pun_config['o_autoclose_timeout'].' days')) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+		$result = $db->query('UPDATE '.$db->prefix.'topics SET closed=1 WHERE forum_id IN('.$pun_config['o_autoclose_subforums'].') AND sticky=0 AND last_post<'.strtotime('-'.$pun_config['o_autoclose_timeout'].' days')) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
 	}
 
 	// Output topics autoclose as PHP code

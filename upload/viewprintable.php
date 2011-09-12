@@ -60,12 +60,15 @@ $page_title = pun_htmlspecialchars($cur_topic['subject']).' | '.pun_htmlspecialc
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html dir="<?php echo $lang_common['lang_direction']?>">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $lang_common['lang_direction']?>">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang_common['lang_encoding']?>" />
+<meta name="robots" content="noindex,nofollow" />
 <link rel="stylesheet" href="style/imports/printable.css" type="text/css" />
 <title><?php echo $page_title ?></title>
 </head>
+
 <body>
 
 <table class="links">
@@ -102,5 +105,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 </tbody>
 </table>
+
 </body>
+
 </html>

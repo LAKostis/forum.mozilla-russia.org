@@ -450,7 +450,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 						<br /></label>
 						<div class="rbox">
 							<label><input type="checkbox" name="with_redirect" value="1"<?php if ($action == 'single') echo ' checked="checked"' ?> /><?php echo $lang_misc['Leave redirect'] ?><br /></label>
-							<label><input id="notify" type="checkbox" name="with_notify" value="1" /><?php echo $lang_misc['Post redirect message'] ?><br /></label>
+							<label><input id="notify" type="checkbox" name="with_notify" value="1" checked="checked" /><?php echo $lang_misc['Post redirect message'] ?><br /></label>
 							<label><input id="close" type="checkbox" name="with_close" value="1" onchange="if (this.checked)document.getElementById('open').checked = false;"<?php if ($action == 'single') echo ' checked="checked"' ?> /><?php echo $lang_misc['Close topics'] ?><br /></label>
 							<label><input id="open" type="checkbox" name="with_open" value="1" onchange="if (this.checked)document.getElementById('close').checked = false;" /><?php echo $lang_misc['Open topics'] ?><br /></label>
 						</div>

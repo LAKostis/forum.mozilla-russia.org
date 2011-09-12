@@ -121,11 +121,20 @@ require PUN_ROOT.'header.php';
 			<tbody>
 <?php
 
+$sorter = array('last_post', 'posted', 'num_replies', 'num_views');
+
+if(isset($_GET['sort']))
+	$cur_forum['sort_by'] = (int)$_GET['sort'];
+
+$sort_by = $sorter[(int)$cur_forum['sort_by']];
+if(!$sort_by)
+	$sort_by = $sorter[0];
+
 // Fetch list of topics to display on this page
 if ($pun_user['is_guest'] || $pun_config['o_show_dot'] == '0')
 {
 	// Without "the dot"
-	$sql = 'SELECT id, poster, subject, posted, last_post, last_post_id, last_poster, num_views, num_replies, closed, sticky, moved_to, question, announcement FROM '.$db->prefix.'topics WHERE forum_id='.$id.' OR announcement=\'1\' ORDER BY announcement DESC,sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 'posted' : 'last_post').' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
+	$sql = 'SELECT id, poster, subject, posted, last_post, last_post_id, last_poster, num_views, num_replies, closed, sticky, moved_to, question, announcement FROM '.$db->prefix.'topics WHERE forum_id='.$id.' OR announcement=\'1\' ORDER BY announcement DESC,sticky DESC, '.$sort_by.' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
 }
 else
 {
@@ -134,15 +143,15 @@ else
 	{
 		case 'mysql':
 		case 'mysqli':
-			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.forum_id='.$id.' OR t.announcement=\'1\' GROUP BY t.id ORDER BY announcement DESC,sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 'posted' : 'last_post').' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
+			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.forum_id='.$id.' OR t.announcement=\'1\' GROUP BY t.id ORDER BY announcement DESC,sticky DESC, '.$sort_by.' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
 			break;
 
 		case 'sqlite':
-			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.id IN(SELECT id FROM '.$db->prefix.'topics WHERE forum_id='.$id.' OR announcement=\'1\' ORDER BY announcement DESC,sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 'posted' : 'last_post').' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'].') GROUP BY t.id ORDER BY t.sticky DESC, t.last_post DESC';
+			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.id IN(SELECT id FROM '.$db->prefix.'topics WHERE forum_id='.$id.' OR announcement=\'1\' ORDER BY announcement DESC,sticky DESC, '.$sort_by.' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'].') GROUP BY t.id ORDER BY t.sticky DESC, t.last_post DESC';
 			break;
 
 		default:
-			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.forum_id='.$id.' OR announcement=\'1\' GROUP BY t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement, p.poster_id ORDER BY announcement DESC, sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 'posted' : 'last_post').' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
+			$sql = 'SELECT p.poster_id AS has_posted, t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'posts AS p ON t.id=p.topic_id AND p.poster_id='.$pun_user['id'].' WHERE t.forum_id='.$id.' OR announcement=\'1\' GROUP BY t.id, t.subject, t.poster, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.question, t.announcement, p.poster_id ORDER BY announcement DESC, sticky DESC, '.$sort_by.' DESC LIMIT '.$start_from.', '.$pun_user['disp_topics'];
 			break;
 
 	}

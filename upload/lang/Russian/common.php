@@ -86,6 +86,7 @@ $lang_common = array(
 'Replies'				=>	'Ответов',
 'Author'				=>	'Автор',
 'Pages'					=>	'Страницы',
+'Pages manual'			=>	'Перейти на страницу',
 'BBCode'				=>	'BB-коды', // You probably shouldn't change this
 'img tag'				=>	'Картинки',
 'Smilies'				=>	'Смайлики',

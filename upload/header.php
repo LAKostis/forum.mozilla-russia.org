@@ -115,7 +115,7 @@ else {
 		$xajax->printJavascript();
 	}
 ?>
-<script type="text/javascript" src="scripts.js?8"></script>
+<script type="text/javascript" src="scripts.js?9"></script>
 <?php
 
 if (defined('PUN_GOOGLE_API'))

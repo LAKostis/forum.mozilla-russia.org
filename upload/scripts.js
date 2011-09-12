@@ -229,6 +229,15 @@ function codeSelect(obj)
 	return false;
 }
 
+function manualPage(msg, page, link)
+{
+	var oldpage = page;
+	if((page = parseInt(prompt(msg + ":", page))) && oldpage != page)
+		window.location.href = link + "&p=" + page;
+
+	return false;
+}
+
 /*@cc_on
 @if (@_win32 && @_jscript_version>4)
 

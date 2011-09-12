@@ -667,6 +667,8 @@ function get_title($user)
 //
 function paginate($num_pages, $cur_page, $link_to)
 {
+	global $lang_common;
+
 	$pages = array();
 	$link_to_all = false;
 	$nav_links = true;
@@ -688,7 +690,10 @@ function paginate($num_pages, $cur_page, $link_to)
 			$pages[] = '<a href="'.$link_to.'&amp;p=1">1</a>';
 
 			if ($cur_page != 4)
+			{
 				$pages[] = '&hellip;';
+				$manual = true;
+			}
 		}
 
 		// Don't ask me how the following works. It just does, OK? :-)
@@ -705,7 +710,10 @@ function paginate($num_pages, $cur_page, $link_to)
 		if ($cur_page <= ($num_pages-3))
 		{
 			if ($cur_page != ($num_pages-3))
+			{
 				$pages[] = '&hellip;';
+				$manual = true;
+			}
 
 			$pages[] = '<a href="'.$link_to.'&amp;p='.$num_pages.'">'.$num_pages.'</a>';
 		}
@@ -718,6 +726,8 @@ function paginate($num_pages, $cur_page, $link_to)
 			$back_page = '<a href="'.$link_to.'&amp;p='.$back_page_number.'">&laquo;</a>';
 			array_splice($pages, 0, 0, $back_page);
 		}
+		if($manual)
+			array_push($pages, '<a href="#" onclick="return manualPage(\''.$lang_common['Pages manual'].'\', '.$cur_page.', \''.$link_to.'\')">#</a>');
 		if($cur_page < $num_pages){
 			$next_page_number = $cur_page+1;
 			$next_page = '<a href="'.$link_to.'&amp;p='.$next_page_number.'">&raquo;</a>';

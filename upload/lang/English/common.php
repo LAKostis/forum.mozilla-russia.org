@@ -86,6 +86,7 @@ $lang_common = array(
 'Replies'				=>	'Replies',
 'Author'				=>	'Author',
 'Pages'					=>	'Pages',
+'Pages manual'			=>	'Jump to page number',
 'BBCode'				=>	'BBCode', // You probably shouldn't change this
 'img tag'				=>	'Images',
 'Smilies'				=>	'Smilies',

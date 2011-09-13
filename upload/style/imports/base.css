@@ -145,3 +145,4 @@ div.spoiler div.noindex,div.noindex div.spoiler{margin:0}
 #cse .gsc-result{padding:0 0 10px}
 #cse .gsc-cursor{float:right;padding:5px}
 #cse .gsc-cursor:before{content:"Страницы: "}
+#cse .gcsc-branding {float:left}

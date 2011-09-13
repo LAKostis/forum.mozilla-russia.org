@@ -95,6 +95,15 @@ $page_title = pun_htmlspecialchars($cur_forum['forum_name']).' | '.pun_htmlspeci
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT.'header.php';
 
+$sorter = array('last_post', 'posted', 'num_replies', 'num_views');
+
+if(isset($_GET['sort']))
+	$cur_forum['sort_by'] = (int)$_GET['sort'];
+
+$sort_by = $sorter[(int)$cur_forum['sort_by']];
+if(!$sort_by)
+	$sort_by = $sorter[0];
+
 ?>
 <div class="linkst">
 	<div class="inbox">
@@ -112,23 +121,14 @@ require PUN_ROOT.'header.php';
 			<table cellspacing="0">
 			<thead>
 				<tr>
-					<th class="tcl" scope="col"><?php echo $lang_common['Topic'] ?></th>
-					<th class="tc2" scope="col"><?php echo $lang_common['Replies'] ?></th>
-					<th class="tc3" scope="col"><?php echo $lang_forum['Views'] ?></th>
-					<th class="tcr" scope="col"><?php echo $lang_common['Last post'] ?></th>
+					<th class="tcl" scope="col"><?php echo $cur_forum['sort_by'] == '1' ? $lang_common['Topic'] : '<a href="viewforum.php?id=' . $id . '&amp;sort=1">' . $lang_common['Topic']. '</a>' ?></th>
+					<th class="tc2" scope="col"><?php echo $cur_forum['sort_by'] == '2' ? $lang_common['Replies'] : '<a href="viewforum.php?id=' . $id . '&amp;sort=2">' . $lang_common['Replies']. '</a>' ?></th>
+					<th class="tc3" scope="col"><?php echo $cur_forum['sort_by'] == '3' ? $lang_forum['Views'] : '<a href="viewforum.php?id=' . $id . '&amp;sort=3">' . $lang_forum['Views']. '</a>' ?></th>
+					<th class="tcr" scope="col"><?php echo $cur_forum['sort_by'] == '0' ? $lang_common['Last post'] : '<a href="viewforum.php?id=' . $id . '&amp;sort=0">' . $lang_common['Last post']. '</a>' ?></th>
 				</tr>
 			</thead>
 			<tbody>
 <?php
-
-$sorter = array('last_post', 'posted', 'num_replies', 'num_views');
-
-if(isset($_GET['sort']))
-	$cur_forum['sort_by'] = (int)$_GET['sort'];
-
-$sort_by = $sorter[(int)$cur_forum['sort_by']];
-if(!$sort_by)
-	$sort_by = $sorter[0];
 
 // Fetch list of topics to display on this page
 if ($pun_user['is_guest'] || $pun_config['o_show_dot'] == '0')

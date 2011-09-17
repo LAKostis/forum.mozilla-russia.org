@@ -1503,6 +1503,7 @@ function pun_get_browser($uagent) {
 		'epic',
 		'epiphany',
 		'fennec',
+		'firebird',
 		'flock',
 		'foxware',
 		'google',

@@ -265,6 +265,8 @@ if(isset($_GET['id'])){
 	//Yes! Lets get the details
 	$id = intval($_GET['id']);
 
+	$csrf_token = $pun_config['o_reputation_enabled'] == '1' ? sha1($pun_user['id'].sha1(get_remote_address())) : null;
+
 	// Set user
 	$result = $db->query('SELECT status,owner FROM '.$db->prefix.'messages WHERE id='.$id) or error('Unable to get message status', __FILE__, __LINE__, $db->error());
 	list($status, $owner) = $db->fetch_row($result);
@@ -396,7 +398,7 @@ if(isset($_GET['id'])){
 					<dd><?php
 	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1 && $cur_post['g_id'] > PUN_MOD) {
 		echo $lang_reputation['Reputation'];
-?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;plus"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?id=<?php echo $cur_post['poster_id']; ?>&amp;minus"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
+?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?plus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?minus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
 <?php if (isset($user_contacts)) if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
 				</dl>
 			</div>

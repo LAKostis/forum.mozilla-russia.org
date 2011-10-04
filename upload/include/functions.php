@@ -1543,6 +1543,7 @@ function pun_get_browser($uagent) {
 		'seamonkey',
 		'shiira',
 		'shiretoko',
+		'sleipnir',
 		'soe-denver',
 		'songbird',
 		'splashtop',

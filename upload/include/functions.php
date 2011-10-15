@@ -1537,6 +1537,7 @@ function pun_get_browser($uagent) {
 		'orca',
 		'phoenix',
 		'qtweb',
+		'raven',
 		'rekonq',
 		's60',
 		'safari',

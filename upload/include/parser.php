@@ -226,12 +226,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'#\[email\]\s*#i',
 				'#\s*\[/email\]#i',
 				'#\[img\]\s*(.*?)\s*\[/img\]#is',
-				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is',
-				'#\[spoiler=("|\'|)(.*?)\\1\]\s*#i',
-				'#\[spoiler\]\s*#i',
-				'#\s*\[/spoiler\]#i',
-				'#\[noindex\]\s*#i',
-				'#\s*\[/noindex\]#i');
+				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is');
 
 	$b = array(	'[url=$2]',
 				'[url]',
@@ -240,12 +235,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 				'[email]',
 				'[/email]',
 				'[img]$1[/img]',
-				'[color=$2]$3[/color]',
-				'[spoiler=$2]',
-				'[spoiler]',
-				'[/spoiler]',
-				'[noindex]',
-				'[/noindex]');
+				'[color=$2]$3[/color]');
 
 	if (!$is_signature)
 	{
@@ -254,11 +244,21 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 		$a[] = '#\[quote\]\s*#i';
 		$a[] = '#\s*\[/quote\]\s*#i';
 		$a[] = '#\[code\][\r\n]*(.*?)\s*\[/code\]\s*#is';
+		$a[] = '#\[spoiler=(&quot;|"|\'|)(.*?)\\1\]\s*#i';
+		$a[] = '#\[spoiler\]\s*#i';
+		$a[] = '#\s*\[/spoiler\]\s*#i';
+		$a[] = '#\[noindex\]\s*#i';
+		$a[] = '#\s*\[/noindex\]\s*#i';
 
 		$b[] = '[quote=$1$2$1]';
 		$b[] = '[quote]';
 		$b[] = '[/quote]'."\n";
 		$b[] = '[code]$1[/code]'."\n";
+		$b[] = '[spoiler=$1$2$1]';
+		$b[] = '[spoiler]';
+		$b[] = '[/spoiler]'."\n";
+		$b[] = '[noindex]';
+		$b[] = '[/noindex]'."\n";
 	}
 
 	// Run this baby!
@@ -319,6 +319,7 @@ function check_tag_order($text, &$error)
 
 	$cur_index = 0;
 	$q_depth = 0;
+	$s_depth = 0;
 
 	while (true)
 	{
@@ -366,7 +367,7 @@ function check_tag_order($text, &$error)
 		$s3_start = ($s_start < $s2_start) ? $s_start : $s2_start;
 
 		// We found a [quote] or a [quote=username]
-		if ($q3_start < min($c_start, $c_end, $q_end, $s_start, $s_end, $n_start, $n_end))
+		if ($q3_start < min($c_start, $c_end, $q_end, $s3_start, $s_end, $n_start, $n_end))
 		{
 			$step = ($q_start < $q2_start) ? 7 : strlen($matches[0]);
 
@@ -381,7 +382,7 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [/quote]
-		else if ($q_end < min($c_start, $c_end, $q_start, $s_start, $s_end, $n_start, $n_end))
+		else if ($q_end < min($c_start, $c_end, $q3_start, $s3_start, $s_end, $n_start, $n_end))
 		{
 			if ($q_depth == 0)
 			{
@@ -400,7 +401,7 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [code]
-		else if ($c_start < min($c_end, $q_start, $q_end, $s_start, $s_end, $n_start, $n_end))
+		else if ($c_start < min($c_end, $q3_start, $q_end, $s3_start, $s_end, $n_start, $n_end))
 		{
 			// Make sure there's a [/code] and that any new [code] doesn't occur before the end tag
 			$tmp = strpos($text, '[/code]');
@@ -420,43 +421,48 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [/code] (this shouldn't happen since we handle both start and end tag in the if clause above)
-		else if ($c_end < min($c_start, $q_start, $q_end, $s_start, $s_end, $n_start, $n_end))
+		else if ($c_end < min($c_start, $q3_start, $q_end, $s3_start, $s_end, $n_start, $n_end))
 		{
 			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 3'];
 			return;
 		}
 
 		// We found a [spoiler]
-		else if ($s3_start < min($c_start, $c_end, $q_start, $q_end, $s_end, $n_start, $n_end))
+		else if ($s3_start < min($c_start, $c_end, $q3_start, $q_end, $s_end, $n_start, $n_end))
 		{
 			$step = ($s_start < $s2_start) ? 9 : strlen($matches2[0]);
 
-			// Make sure there's a [/spoiler] and that any new [spoiler] doesn't occur before the end tag
-			$tmp = strpos($text, '[/spoiler]');
-			$tmp2 = strpos(substr($text, $s3_start+$step), '[spoiler]');
-			if ($tmp2 !== false)
-				$tmp2 += $s3_start+$step;
+			$cur_index += $s3_start + $step;
 
-			if ($tmp === false || ($tmp2 !== false && $tmp2 < $tmp))
-			{
-				$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 6'];
-				return;
-			}
-			else
-				$text = substr($text, $tmp+7);
+			// Did we reach $max_depth?
+			if ($s_depth == $max_depth)
+				$overflow_begin = $cur_index - $step;
 
-			$cur_index += $tmp+7;
+			++$s_depth;
+			$text = substr($text, $s3_start + $step);
 		}
 
 		// We found a [/spoiler] (this shouldn't happen since we handle both start and end tag in the if clause above)
-		else if ($s_end < min($c_start, $c_end, $q_start, $q_end, $s_start, $n_start, $n_end))
+		else if ($s_end < min($c_start, $c_end, $q3_start, $q_end, $s3_start, $n_start, $n_end))
 		{
-			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 7'];
-			return;
+			if ($s_depth == 0)
+			{
+				$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 1'];
+				return;
+			}
+
+			$s_depth--;
+			$cur_index += $s_end+10;
+
+			// Did we reach $max_depth?
+			if ($s_depth == $max_depth)
+				$overflow_end = $cur_index;
+
+			$text = substr($text, $s_end+10);
 		}
 
 		// We found a [noindex]
-		else if ($n_start < min($c_start, $c_end, $q_start, $q_end, $s_start, $s_end, $n_end))
+		else if ($n_start < min($c_start, $c_end, $q3_start, $q_end, $s3_start, $s_end, $n_end))
 		{
 			// Make sure there's a [/noindex] and that any new [noindex] doesn't occur before the end tag
 			$tmp = strpos($text, '[/noindex]');
@@ -476,7 +482,7 @@ function check_tag_order($text, &$error)
 		}
 
 		// We found a [/noindex] (this shouldn't happen since we handle both start and end tag in the if clause above)
-		else if ($n_end < min($c_start, $c_end, $q_start, $q_end, $s_start, $s_end, $n_start))
+		else if ($n_end < min($c_start, $c_end, $q3_start, $q_end, $s3_start, $s_end, $n_start))
 		{
 			$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 9'];
 			return;

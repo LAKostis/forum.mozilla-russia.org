@@ -2,11 +2,11 @@
 
 include 'include/kcaptcha/kcaptcha.php';
 
+session_start();
+
 $captcha = new KCAPTCHA();
 
-if(isset($_REQUEST[session_name()]))
-{
-	session_start();
+if(isset($_REQUEST[session_name()])) {
 	$_SESSION['text'] = $captcha->getKeyString();
 }
 

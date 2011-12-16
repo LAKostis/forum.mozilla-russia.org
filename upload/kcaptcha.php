@@ -6,8 +6,6 @@ session_start();
 
 $captcha = new KCAPTCHA();
 
-if(isset($_REQUEST[session_name()])) {
-	$_SESSION['text'] = $captcha->getKeyString();
-}
+$_SESSION['text'] = $captcha->getKeyString();
 
 ?>

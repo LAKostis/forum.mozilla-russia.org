@@ -1535,6 +1535,7 @@ function pun_get_browser($uagent) {
 		'nightly',
 		'omniweb',
 		'orca',
+		'palemoon',
 		'phoenix',
 		'qtweb',
 		'raven',

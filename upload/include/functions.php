@@ -1556,7 +1556,8 @@ function pun_get_browser($uagent) {
 		'webkit',
 		'webianshell',
 		'w3m',
-		'wyzo'
+		'wyzo',
+		'yandex'
 	);
 	$ua = get_browser($uagent,true);
 	$ua_browser = pun_strtolower($ua['browser']);

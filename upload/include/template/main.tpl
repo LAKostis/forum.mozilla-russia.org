@@ -23,7 +23,6 @@
 		<a class="label" href="http://www.mozilla-russia.org/about/allprojects.html">Наши проекты</a>
 		<span class="links">
 			<a href="http://www.mozilla-russia.org/">Mozilla Россия</a>
-			<a href="http://www.kmeleon.ru/">K-meleon</a>
 			<a href="http://nvu.mozilla-russia.org/">Nvu</a>
 			<a href="http://mozutil.mozilla-russia.org/">MozUtil</a>
 			<a href="http://pastebin.mozilla-russia.org/">Pastebin</a>

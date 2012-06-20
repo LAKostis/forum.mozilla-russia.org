@@ -904,6 +904,13 @@ function get_remote_address()
 
 	// If HTTP_X_FORWARDED_FOR or HTTP_X_REAL_IP is set, we try to grab the first non-LAN IP
 	// patch for nginx proxied setup
+	// 0.0.0.0/8 reserved for self-identification [RFC5735]
+	// 127.0.0.0/8 is reserved for Loopback [RFC5735]
+	// RFC1918:
+	// 10.0.0.0        -   10.255.255.255  (10/8 prefix)
+	// 172.16.0.0      -   172.31.255.255  (172.16/12 prefix)
+	// 192.168.0.0     -   192.168.255.255 (192.168/16 prefix)
+	// 224/8 Multicast
 	$via_proxy = '';
 	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) || !empty($_SERVER['HTTP_X_REAL_IP']))
 	{

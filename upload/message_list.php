@@ -343,7 +343,7 @@ if(isset($_GET['id'])){
 		//Moderator and Admin stuff
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{
-			$user_info[] = '<dd>IP: <a href="moderate.php?get_host='.$cur_post['id'].'">'.$cur_post['sender_ip'].'</a>';
+			$user_info[] = '<dd>IP: <a href="moderate.php?get_host='.$cur_post['sender_ip'].'">'.$cur_post['sender_ip'].'</a>';
 
 			if ($cur_post['admin_note'] != '')
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';

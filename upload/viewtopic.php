@@ -296,7 +296,7 @@ while ($cur_post = $db->fetch_assoc($result))
 				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
 			if ($cur_post['url'] != '')
-				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'" class="website">'.$lang_topic['Website'].'</a>';
+				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'" class="website" rel="nofollow">'.$lang_topic['Website'].'</a></noindex>';
 		}
 
 		if ($pun_user['g_id'] < PUN_GUEST)
@@ -398,7 +398,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	if($pun_config['o_reputation_enabled'] == '1' && $cur_post['poster_id'] > 1 && $cur_post['g_id'] > PUN_MOD) {
 		echo $lang_reputation['Reputation'];
 ?>: <strong><small>[ <?php $can_vote = ($pun_user['is_guest'] != true && $pun_user['username'] != $cur_post['username']); if($can_vote) { ?><a href="./reputation.php?plus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/plus.png" alt="+" border="0" /></a><?php } else { ?>+<?php } ?> <?php echo $cur_post['reputation_plus']; ?> / <?php if($can_vote) { ?><a href="./reputation.php?minus=<?php echo $cur_post['poster_id']; ?>&amp;csrf_token=<?php echo $csrf_token; ?>"><img src="./img/minus.png" alt="−" border="0" /></a><?php } else { ?>−<?php } ?> <?php echo $cur_post['reputation_minus']; ?> ]</small></strong><?php } ?></dd>
-<?php if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts">'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
+<?php if (count($user_contacts)) echo "\t\t\t\t\t".'<dd class="usercontacts"><noindex>'.implode('&nbsp;&nbsp;', $user_contacts).'</dd>'."\n"; ?>
 				</dl>
 			</div>
 			<div class="postright">

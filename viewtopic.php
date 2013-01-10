@@ -20,6 +20,13 @@ $pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
 if ($id < 1 && $pid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
+// [modif oto] - mod VSABR Very Simple AntiBot Registration - Add language file
+if(file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php'))
+  require PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php';
+else
+  require PUN_ROOT.'lang/English/mod_very_simple_antibot.php';
+$mod_vsabr_index = rand(0,count($mod_vsabr_questions)-1);
+// [modif oto] - End mod VSABR
 // Load the viewtopic.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 
@@ -442,7 +449,25 @@ else
 					</div>
 				</fieldset>
 			</div>
-			<p class="buttons"><input type="submit" name="submit" tabindex="<?php echo $cur_index++ ?>" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /> <input type="submit" name="preview" value="<?php echo $lang_topic['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /></p>
+			<?php //[modif oto] - mod VSABR Very Simple AntiBot Registration
+if($pun_user['is_guest']) : ?>
+<div class="inform">
+	<fieldset>
+		<legend><?php	echo $lang_mod_vsabr['Robot title']	?></legend>
+		<div class="infldset">
+			<p><?php echo	$lang_mod_vsabr['Robot info']	?></p>
+			<label class="required"><strong><?php
+				 $question = array_keys($mod_vsabr_questions);
+				 $qencoded = md5($question[$mod_vsabr_index]);
+				 echo	sprintf($lang_mod_vsabr['Robot question'],$question[$mod_vsabr_index]);?>
+				 <span><?php echo	$lang_common['Required'] ?></span></strong>
+				 <input	name="captcha" id="captcha"	type="text"	size="10"	maxlength="30" /><input name="captcha_q"	value="<?php echo	$qencoded	?>"	type="hidden"	/><br	/>
+			</label>
+		</div>
+	</fieldset>
+</div>
+<?php endif; //[modif oto] - End mod VSABR ?>
+<p class="buttons"><input type="submit" name="submit" tabindex="<?php echo $cur_index++ ?>" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /> <input type="submit" name="preview" value="<?php echo $lang_topic['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /></p>
 		</form>
 	</div>
 </div>

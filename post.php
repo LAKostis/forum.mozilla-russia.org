@@ -49,6 +49,13 @@ if ((($tid && (($cur_posting['post_replies'] == '' && $pun_user['g_post_replies'
 	!$is_admmod)
 	message($lang_common['No permission'], false, '403 Forbidden');
 
+// [modif oto] - mod VSABR Very Simple AntiBot Registration - Add language file
+if(file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php'))
+  require PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php';
+else
+  require PUN_ROOT.'lang/English/mod_very_simple_antibot.php';
+$mod_vsabr_index = rand(0,count($mod_vsabr_questions)-1);
+// [modif oto] - End mod VSABR
 // Load the post.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 
@@ -59,6 +66,17 @@ $errors = array();
 // Did someone just hit "Submit" or "Preview"?
 if (isset($_POST['form_sent']))
 {
+//[modif oto] - mod VSABR Very Simple AntiBot Registration - Validate  answer to the question
+if($pun_user['is_guest']) {
+	$mod_vsabr_p_question = isset($_POST['captcha_q']) ? trim($_POST['captcha_q']) : '';
+	$mod_vsabr_p_answer = isset($_POST['captcha']) ? trim($_POST['captcha']) : '';
+	$mod_vsabr_questions_array = array();
+	foreach ($mod_vsabr_questions as $k => $v)
+  	$mod_vsabr_questions_array[md5($k)] = $v;
+	if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_questions_array[$mod_vsabr_p_question] != $mod_vsabr_p_answer)
+  	$errors[] = $lang_mod_vsabr['Robot test fail'];
+}
+//[modif oto] - End mod VSABR
 	// Flood protection
 	if (!isset($_POST['preview']) && $pun_user['last_post'] != '' && (time() - $pun_user['last_post']) < $pun_user['g_post_flood'])
 		$errors[] = sprintf($lang_post['Flood start'], $pun_user['g_post_flood'], $pun_user['g_post_flood'] - (time() - $pun_user['last_post']));
@@ -535,6 +553,8 @@ if (!$pun_user['is_guest'])
 else
 {
 	$required_fields['req_username'] = $lang_post['Guest name'];
+	//[modif oto] - mod VSABR Very Simple AntiBot Registration - Line added
+	$required_fields['captcha'] = $lang_mod_vsabr['Robot title'];
 	$focus_element[] = 'req_username';
 }
 
@@ -695,7 +715,25 @@ if (!empty($checkboxes))
 
 ?>
 			</div>
-			<p class="buttons"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /> <input type="submit" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /> <a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
+			<?php //[modif oto] - mod VSABR Very Simple AntiBot Registration
+if($pun_user['is_guest']) : ?>
+<div class="inform">
+	<fieldset>
+		<legend><?php	echo $lang_mod_vsabr['Robot title']	?></legend>
+		<div class="infldset">
+			<p><?php echo	$lang_mod_vsabr['Robot info']	?></p>
+			<label class="required"><strong><?php
+				 $question = array_keys($mod_vsabr_questions);
+				 $qencoded = md5($question[$mod_vsabr_index]);
+				 echo	sprintf($lang_mod_vsabr['Robot question'],$question[$mod_vsabr_index]);?>
+				 <span><?php echo	$lang_common['Required'] ?></span></strong>
+				 <input	name="captcha" id="captcha"	type="text"	size="10"	maxlength="30" /><input name="captcha_q"	value="<?php echo	$qencoded	?>"	type="hidden"	/><br	/>
+			</label>
+		</div>
+	</fieldset>
+</div>
+<?php endif; //[modif oto] - End mod VSABR ?>
+<p class="buttons"><input type="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /> <input type="submit" name="preview" value="<?php echo $lang_post['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /> <a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		</form>
 	</div>
 </div>

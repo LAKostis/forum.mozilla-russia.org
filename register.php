@@ -17,6 +17,13 @@ if (!$pun_user['is_guest'])
 	exit;
 }
 
+// [modif oto] - mod VSABR Very Simple AntiBot Registration - Add language file
+if(file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php'))
+  require PUN_ROOT.'lang/'.$pun_user['language'].'/mod_very_simple_antibot.php';
+else
+  require PUN_ROOT.'lang/English/mod_very_simple_antibot.php';
+$mod_vsabr_index = rand(0,count($mod_vsabr_questions)-1);
+// [modif oto] - End mod VSABR
 // Load the register.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
 
@@ -25,6 +32,10 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/prof_reg.php';
 
 if ($pun_config['o_regs_allow'] == '0')
 	message($lang_register['No new regs']);
+//[modif oto] - VSABR Very Simple Anti Bot Registration
+//If the hidden field username contains something is that it was completed by a BOT.
+if(!empty($_REQUEST['username']))
+  message($lang_register['No new regs']);
 
 
 // User pressed the cancel button
@@ -96,6 +107,15 @@ if (isset($_POST['form_sent']))
 	else if ($password1 != $password2)
 		$errors[] = $lang_prof_reg['Pass not match'];
 
+//[modif oto] - mod VSABR Very Simple AntiBot Registration - Validate  answer to the question
+$mod_vsabr_p_question = isset($_POST['captcha_q']) ? trim($_POST['captcha_q']) : '';
+$mod_vsabr_p_answer = isset($_POST['captcha']) ? trim($_POST['captcha']) : '';
+$mod_vsabr_questions_array = array();
+foreach ($mod_vsabr_questions as $k => $v)
+  $mod_vsabr_questions_array[md5($k)] = $v;
+if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_questions_array[$mod_vsabr_p_question] != $mod_vsabr_p_answer)
+  $errors[] = $lang_mod_vsabr['Robot test fail'];
+//[modif oto] - End mod VSABR
 	// Validate email
 	require PUN_ROOT.'include/email.php';
 
@@ -258,6 +278,8 @@ if (isset($_POST['form_sent']))
 
 $page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_register['Register']);
 $required_fields = array('req_user' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['Email'], 'req_email2' => $lang_common['Email'].' 2');
+//[modif oto] - mod VSABR Very Simple AntiBot Registration - Line added
+$required_fields['captcha'] = $lang_mod_vsabr['Robot title'];
 $focus_element = array('register', 'req_user');
 define('PUN_ACTIVE_PAGE', 'register');
 require PUN_ROOT.'header.php';
@@ -427,7 +449,24 @@ if (!empty($errors))
 					</div>
 				</fieldset>
 			</div>
-			<p class="buttons"><input type="submit" name="register" value="<?php echo $lang_register['Register'] ?>" /></p>
+			<!-- [modif oto] - mod VSABR Very Simple AntiBot Registration -->
+<div class="inform">
+	<fieldset>
+		<legend><?php	echo $lang_mod_vsabr['Robot title']	?></legend>
+		<div class="infldset">
+			<p><?php echo	$lang_mod_vsabr['Robot info']	?></p>
+			<label class="required"><strong><?php
+				 $question = array_keys($mod_vsabr_questions);
+				 $qencoded = md5($question[$mod_vsabr_index]);
+				 echo	sprintf($lang_mod_vsabr['Robot question'],$question[$mod_vsabr_index]);?>
+				 <span><?php echo	$lang_common['Required'] ?></span></strong>
+				 <input	name="captcha" id="captcha"	type="text"	size="10"	maxlength="30" /><input name="captcha_q"	value="<?php echo	$qencoded	?>"	type="hidden"	/><input type="hidden" name="username" value="" /><br />
+			</label>
+		</div>
+	</fieldset>
+</div>
+<!-- [modif oto] - End mod VSABR -->
+<p class="buttons"><input type="submit" name="register" value="<?php echo $lang_register['Register'] ?>" /></p>
 		</form>
 	</div>
 </div>

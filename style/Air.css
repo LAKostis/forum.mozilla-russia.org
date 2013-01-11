@@ -847,6 +847,13 @@ MAIN POSTS
 	background: url(Air/img/bull.png) center left no-repeat;
 }
 
+.pun .blockpost .postfootright div.yashare-auto-init {
+	display: inline-block;
+	padding-left: 16px;
+	margin-left: 8px;
+	line-height: normal;
+}
+
 .pun .blockpost .usercontacts {
 	padding: 7px 0;
 }

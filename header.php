@@ -140,6 +140,8 @@ function process_form(the_form)
 }
 /* ]]> */
 </script>
+<!-- load yashare plugin -->
+<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
 <?php
 
 }

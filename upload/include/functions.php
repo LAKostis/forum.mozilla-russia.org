@@ -1583,7 +1583,7 @@ function pun_get_browser($uagent) {
 		}
 		if($ua_browser == "ie")
 			$ua_browser_alt = "IE";
-		if ($ua_browser == "firefox" && $ua_version >= "17.0") {
+		if ($ua_browser == "firefox" && $ua_version >= "18.0") {
 			$ua_browser = "firefox35";
 			$ua_browser_alt = "FIREFOX";
 		}

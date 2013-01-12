@@ -644,7 +644,7 @@ generate_admin_menu('options');
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><?php echo $lang_admin_options['Jabber list help'] ?></th>
+									<th scope="row"><?php echo $lang_admin_options['Jabber list label'] ?></th>
 									<td>
 										<textarea name="form[jabber_list]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_jabber_list']) ?></textarea>
 										<span><?php echo $lang_admin_options['Jabber list help'] ?></span>

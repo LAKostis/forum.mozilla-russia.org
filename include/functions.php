@@ -2065,6 +2065,122 @@ function display_saved_queries()
 
 }
 
+//
+// Try to determine the user-agent string for user
+//
+function get_user_ua() {
+	$user_ua = '';
+	if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+		$user_ua = pun_htmlspecialchars($_SERVER['HTTP_USER_AGENT']);
+	}
+
+	return $user_ua;
+}
+
+//
+// For show User Agent in users info
+//
+function pun_get_browser($uagent) {
+	$known_bw = array(
+		'firefox',
+		'opera',
+		'ie',
+		'android',
+		'aurora',
+		'arora',
+		'camino',
+		'chrome',
+		'chromium',
+		'comodo_dragon',
+		'cometbird',
+		'demobrowser',
+		'dillo',
+		'elinks',
+		'epic',
+		'epiphany',
+		'fennec',
+		'firebird',
+		'flock',
+		'foxware',
+		'google',
+		'granparadiso',
+		'icab',
+		'iceape',
+		'icecat',
+		'iceweasel',
+		'iron',
+		'jigsaw',
+		'k-meleon',
+		'kazehakase',
+		'konqueror',
+		'links',
+		'lolifox',
+		'lorentz',
+		'luakit',
+		'lunascape',
+		'lynx',
+		'maxthon',
+		'midori',
+		'minefield',
+		'mozilla',
+		'mozilladeveloperpreview',
+		'namoroka',
+		'netpositive',
+		'netscape',
+		'netsurf',
+		'nightly',
+		'omniweb',
+		'orca',
+		'palemoon',
+		'phoenix',
+		'qtweb',
+		'rekonq',
+		'robin',
+		's60',
+		'safari',
+		'seamonkey',
+		'shiira',
+		'shiretoko',
+		'sleipnir',
+		'soe-denver',
+		'songbird',
+		'splashtop',
+		'stainless',
+		'sunrise',
+		'swift',
+		'uzbl',
+		'webkit',
+		'webianshell',
+		'w3m',
+		'wyzo',
+		'yandex'
+	);
+	$ua = get_browser($uagent,true);
+	$ua_browser = utf8_strtolower($ua['browser']);
+	$ua_version = $ua['version'];
+	$ua_browser_alt = utf8_ucwords($ua_browser);
+
+	if (!in_array($ua_browser,$known_bw)) {
+		$ua_browser = "unknown";
+		$ua_version = "0.0";
+		$ua_browser_alt = "unknown";
+	}
+	else {
+		if ($ua_browser == "ie" && $ua_version >= "7.0") {
+			$ua_browser = "ie7";
+			$ua_browser_alt = "IE";
+		}
+		if($ua_browser == "ie")
+			$ua_browser_alt = "IE";
+		if ($ua_browser == "firefox" && $ua_version >= "18.0") {
+			$ua_browser = "firefox35";
+			$ua_browser_alt = "FIREFOX";
+		}
+		if ($ua_browser == "firefox")
+			$ua_browser_alt = "FIREFOX";
+	}
+	return array($ua_browser,$ua_version,$ua_browser_alt);
+}
 
 //
 // Dump contents of variable(s)

@@ -1047,6 +1047,10 @@ else
 				'datatype'		=> 'VARCHAR(80)',
 				'allow_null'	=> true
 			),
+			'poster_uagent'	=> array(
+				'datatype'		=> 'VARCHAR(200)',
+				'allow_null'	=> true
+			),
 			'message'		=> array(
 				'datatype'		=> 'MEDIUMTEXT',
 				'allow_null'	=> true

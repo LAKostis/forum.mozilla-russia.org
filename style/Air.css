@@ -1671,3 +1671,8 @@ html, body, .pun {
 .pun .inew .icon {
 	border-color: #91b3d9 #87a8d1 #6c85bb #7292c3;
 }
+
+/* 11.4 User agent mod */
+.useragent span{font-family:"Georgia", verdana, sans-serif;font-weight:400}
+.useragent img{margin-bottom:-4px}
+

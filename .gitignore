@@ -7,8 +7,11 @@
 /cache/*.cache
 /cache/db_update.lock
 /modules/
+/mods/
+/forum_db
 /include/user/*.php
 /img/avatars/*.png
 /img/avatars/*.jpg
 /img/avatars/*.gif
 /config.php
+/config_jabber.php

@@ -1612,6 +1612,7 @@ else
 		'o_regs_report'				=> 0,
 		'o_default_email_setting'	=> 1,
 		'o_mailing_list'			=> $email,
+		'o_jabber_list'				=> '',
 		'o_avatars'					=> $avatars,
 		'o_avatars_dir'				=> 'img/avatars',
 		'o_avatars_width'			=> 60,

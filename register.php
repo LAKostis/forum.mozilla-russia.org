@@ -179,11 +179,11 @@ if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_quest
 		$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, timezone, dst, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($username).'\', '.$intial_group_id.', \''.$password_hash.'\', \''.$db->escape($email1).'\', '.$email_setting.', '.$timezone.' , '.$dst.', \''.$db->escape($language).'\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.$db->escape(get_remote_address()).'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
 		$new_uid = $db->insert_id();
 
-		// If the mailing list isn't empty, we may need to send out some alerts
-		if ($pun_config['o_mailing_list'] != '')
+		// If we previously found out that the email was banned
+		if ($banned_email)
 		{
-			// If we previously found out that the email was banned
-			if ($banned_email)
+			// If the mailing list isn't empty, we may need to send out some alerts
+			if ($pun_config['o_mailing_list'] != '')
 			{
 				// Load the "banned email register" template
 				$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$pun_user['language'].'/mail_templates/banned_email_register.tpl'));
@@ -201,8 +201,17 @@ if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_quest
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
 
-			// If we previously found out that the email was a dupe
-			if (!empty($dupe_list))
+			if ($pun_config['o_jabber_list'] != '')
+			{
+				$jabber_message = 'User \''.$username.'\' registered with banned e-mail address: '.$email1."\n\n".'User profile: '.get_base_url().'/profile.php?id='.$new_uid;
+				pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+			}
+		}
+		// If we previously found out that the email was a dupe
+		if (!empty($dupe_list))
+		{
+			// If the mailing list isn't empty, we may need to send out some alerts
+			if ($pun_config['o_mailing_list'] != '')
 			{
 				// Load the "dupe email register" template
 				$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$pun_user['language'].'/mail_templates/dupe_email_register.tpl'));
@@ -219,9 +228,20 @@ if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_quest
 
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
+	
+			if ($pun_config['o_jabber_list'] != '')
+			{
+				$jabber_message = 'User \''.$username.'\' registered with an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.get_base_url().'/profile.php?id='.$new_uid;
 
-			// Should we alert people on the admin mailing list that a new user has registered?
-			if ($pun_config['o_regs_report'] == '1')
+			pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+			}
+		}
+
+		// Should we alert people on the admin mailing list that a new user has registered?
+		if ($pun_config['o_regs_report'] == '1')
+		{
+			// If the mailing list isn't empty, we may need to send out some alerts
+			if ($pun_config['o_mailing_list'] != '')
 			{
 				// Load the "new user" template
 				$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$pun_user['language'].'/mail_templates/new_user.tpl'));
@@ -238,29 +258,40 @@ if (empty($mod_vsabr_questions_array[$mod_vsabr_p_question]) || $mod_vsabr_quest
 
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
+
+			if ($pun_config['o_jabber_list'] != '')
+			{
+				$jabber_message = 'User \''.$username.'\' registered in the forums at '.$pun_config['o_base_url']."\n\n".'User profile: '.get_base_url().'/profile.php?id='.$new_uid;
+
+				pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+			}
 		}
 
-		// Must the user verify the registration or do we log him/her in right now?
-		if ($pun_config['o_regs_verify'] == '1')
+		// If the mailing list isn't empty, we may need to send out some alerts
+		if ($pun_config['o_mailing_list'] != '')
 		{
-			// Load the "welcome" template
-			$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$pun_user['language'].'/mail_templates/welcome.tpl'));
+			// Must the user verify the registration or do we log him/her in right now?
+			if ($pun_config['o_regs_verify'] == '1')
+			{
+				// Load the "welcome" template
+				$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$pun_user['language'].'/mail_templates/welcome.tpl'));
 
-			// The first row contains the subject
-			$first_crlf = strpos($mail_tpl, "\n");
-			$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
-			$mail_message = trim(substr($mail_tpl, $first_crlf));
+				// The first row contains the subject
+				$first_crlf = strpos($mail_tpl, "\n");
+				$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
+				$mail_message = trim(substr($mail_tpl, $first_crlf));
 
-			$mail_subject = str_replace('<board_title>', $pun_config['o_board_title'], $mail_subject);
-			$mail_message = str_replace('<base_url>', get_base_url().'/', $mail_message);
-			$mail_message = str_replace('<username>', $username, $mail_message);
-			$mail_message = str_replace('<password>', $password1, $mail_message);
-			$mail_message = str_replace('<login_url>', get_base_url().'/login.php', $mail_message);
-			$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'], $mail_message);
+				$mail_subject = str_replace('<board_title>', $pun_config['o_board_title'], $mail_subject);
+				$mail_message = str_replace('<base_url>', get_base_url().'/', $mail_message);
+				$mail_message = str_replace('<username>', $username, $mail_message);
+				$mail_message = str_replace('<password>', $password1, $mail_message);
+				$mail_message = str_replace('<login_url>', get_base_url().'/login.php', $mail_message);
+				$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'], $mail_message);
 
-			pun_mail($email1, $mail_subject, $mail_message);
+				pun_mail($email1, $mail_subject, $mail_message);
 
-			message($lang_register['Reg email'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+				message($lang_register['Reg email'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+			}
 		}
 
 		// Regenerate the users info cache

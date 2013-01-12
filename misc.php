@@ -266,7 +266,17 @@ else if (isset($_GET['report']))
 
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
-		}
+
+			// We send it to the complete jabber-list in one swoop
+			if ($pun_config['o_jabber_list'] != '')
+			{
+				$jabber_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/viewtopic.php?pid='.$post_id.'#p'.$post_id."\n\n".'Reason:'."\n".$reason;
+
+				require PUN_ROOT.'include/jabber.php';
+
+				pun_jabber($pun_config['o_jabber_list'], $jabber_message);
+			}
+	}
 
 		$db->query('UPDATE '.$db->prefix.'users SET last_report_sent='.time().' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 

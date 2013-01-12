@@ -157,6 +157,8 @@ $lang_admin_options = array(
 'Reporting method help'				=>	'Select the method for handling topic/post reports. You can choose whether topic/post reports should be handled by the internal report system, emailed to the addresses on the mailing list (see below) or both.',
 'Mailing list label'				=>	'Mailing list',
 'Mailing list help'					=>	'A comma separated list of subscribers. The people on this list are the recipients of reports.',
+'Jabber list label'				=>	'Jabber/XMPP list',
+'Jabber list help'					=>	'A comma separated list of subscribers. The people on this list are the recipients of reports.',
 
 // Avatars section
 'Avatars subhead'					=>	'Avatars',

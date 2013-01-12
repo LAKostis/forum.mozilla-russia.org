@@ -62,6 +62,7 @@ if (isset($_POST['form_sent']))
 		'feed_ttl'				=> intval($_POST['form']['feed_ttl']),
 		'report_method'			=> intval($_POST['form']['report_method']),
 		'mailing_list'			=> pun_trim($_POST['form']['mailing_list']),
+		'jabber_list'			=> pun_trim($_POST['form']['jabber_list']),
 		'avatars'				=> $_POST['form']['avatars'] != '1' ? '0' : '1',
 		'avatars_dir'			=> pun_trim($_POST['form']['avatars_dir']),
 		'avatars_width'			=> (intval($_POST['form']['avatars_width']) > 0) ? intval($_POST['form']['avatars_width']) : 1,
@@ -118,6 +119,9 @@ if (isset($_POST['form_sent']))
 
 	if ($form['mailing_list'] != '')
 		$form['mailing_list'] = strtolower(preg_replace('%\s%S', '', $form['mailing_list']));
+
+	if ($form['jabber_list'] != '')
+		$form['jabber_list'] = strtolower(preg_replace('%\s%S', '', $form['jabber_list']));
 
 	// Make sure avatars_dir doesn't end with a slash
 	if (substr($form['avatars_dir'], -1) == '/')
@@ -637,6 +641,13 @@ generate_admin_menu('options');
 									<td>
 										<textarea name="form[mailing_list]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_mailing_list']) ?></textarea>
 										<span><?php echo $lang_admin_options['Mailing list help'] ?></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php echo $lang_admin_options['Jabber list help'] ?></th>
+									<td>
+										<textarea name="form[jabber_list]" rows="5" cols="55"><?php echo pun_htmlspecialchars($pun_config['o_jabber_list']) ?></textarea>
+										<span><?php echo $lang_admin_options['Jabber list help'] ?></span>
 									</td>
 								</tr>
 							</table>

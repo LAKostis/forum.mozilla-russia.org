@@ -1498,6 +1498,7 @@ function pun_get_browser($uagent) {
 		'ie',
 		'android',
 		'aurora',
+		'amigo',
 		'arora',
 		'camino',
 		'chrome',

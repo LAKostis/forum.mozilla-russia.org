@@ -1560,6 +1560,7 @@ function pun_get_browser($uagent) {
 		'stainless',
 		'sunrise',
 		'swift',
+		'ucbrowser',
 		'uzbl',
 		'webkit',
 		'webianshell',

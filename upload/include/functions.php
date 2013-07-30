@@ -1583,10 +1583,6 @@ function pun_get_browser($uagent) {
 			$ua_browser = "ie9";
 			$ua_browser_alt = "IE";
 		}
-		if ($ua_browser == "ie" && $ua_version >= "7.0") {
-			$ua_browser = "ie7";
-			$ua_browser_alt = "IE";
-		}
 		if($ua_browser == "ie")
 			$ua_browser_alt = "IE";
 		if ($ua_browser == "firefox" && $ua_version >= "22.0") {

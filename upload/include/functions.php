@@ -1585,12 +1585,6 @@ function pun_get_browser($uagent) {
 		}
 		if($ua_browser == "ie")
 			$ua_browser_alt = "IE";
-		if ($ua_browser == "firefox" && $ua_version >= "22.0") {
-			$ua_browser = "firefox35";
-			$ua_browser_alt = "FIREFOX";
-		}
-		if ($ua_browser == "firefox")
-			$ua_browser_alt = "FIREFOX";
 	}
 	return array($ua_browser,$ua_version,$ua_browser_alt);
 }

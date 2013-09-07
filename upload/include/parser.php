@@ -158,8 +158,8 @@ $browser_text = array(
 	'[android]'
 );
 $browser_img = array(
-	'firefox35.png',
-	'firefox35.png',
+	'firefox.png',
+	'firefox.png',
 	'thunderbird.png',
 	'thunderbird.png',
 	'seamonkey.png',
@@ -181,7 +181,7 @@ $browser_img = array(
 	'flock.png',
 	'aurora.png',
 	'nightly.png',
-	'ie7.png',
+	'ie9.png',
 	'opera.png',
 	'chrome.png',
 	'chromium.png',

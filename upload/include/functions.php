@@ -1547,6 +1547,7 @@ function pun_get_browser($uagent) {
 		'palemoon',
 		'phoenix',
 		'qtweb',
+		'qupzilla',
 		'rekonq',
 		'robin',
 		's60',

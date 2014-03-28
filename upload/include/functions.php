@@ -860,7 +860,7 @@ function confirm_referrer($script)
 {
 	global $pun_config, $lang_common;
 
-	if (!preg_match('#^'.preg_quote(str_replace('http://', '', $pun_config['o_base_url']).'/'.$script, '#').'#i', preg_replace('/^https?:\/\//', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',1))))
+	if (!preg_match('#^'.preg_quote(str_replace('http://', '', $pun_config['o_base_url']).'/'.$script, '#').'#i', preg_replace('/^https?:\/\//', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''),1)))
 		message($lang_common['Bad referrer']);
 }
 

@@ -42,7 +42,7 @@ if (isset($_POST['form_sent']))
 		message($lang_common['No permission']);
 
 	// Custom referrer check (so we can output a custom error message)
-	if (!preg_match('#^'.preg_quote(str_replace('www.', '', $pun_config['o_base_url']).'/admin_options.php', '#').'#i', str_replace('www.', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''))))
+	if (!preg_match('#^'.preg_quote(str_replace('http://', '', $pun_config['o_base_url']).'/admin_options.php', '#').'#i', preg_replace('/^https?:\/\//', '', (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''),1)))
 		message('Bad HTTP_REFERER. If you have moved these forums from one location to another or switched domains, you need to update the Base URL manually in the database (look for o_base_url in the config table) and then clear the cache by deleting all .php files in the /cache directory.');
 
 	$form = array_map('trim', $_POST['form']);

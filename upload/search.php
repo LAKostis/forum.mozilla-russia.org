@@ -762,7 +762,7 @@ require PUN_ROOT.'header.php';
 	<div class="box">
 
 		<div id="cse"><div style="padding:10px"><?php echo $lang_common['Google loading'] ?></div></div>
-		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+		<script src="https://www.google.com/jsapi" type="text/javascript"></script>
 		<script type="text/javascript">
 			google.load('search', '1', {language : '<?php echo ($pun_user['language'] == 'Russian' ? 'ru' : 'en') ?>'});
 			google.setOnLoadCallback(function() {

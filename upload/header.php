@@ -303,7 +303,7 @@ elseif ($pun_config['o_rannouncement'] == '1')
 {
 	ob_start();
 
-	$pun_rannouncements = split("\n", $pun_config['o_rannouncement_message']);
+	$pun_rannouncements = explode("\n", $pun_config['o_rannouncement_message']);
 	$pun_rannouncement = $pun_rannouncements[mt_rand(0, count($pun_rannouncements) - 1)];
 
 ?>

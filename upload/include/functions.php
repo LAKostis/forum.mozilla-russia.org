@@ -1415,7 +1415,7 @@ function multigrp_getSql($db) {
 	$retJoin = "LEFT JOIN ".$db->prefix."forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=".$pun_user['g_id'].")";
 	$retWhere = " (fp.read_forum IS NULL OR fp.read_forum=1)";
 
-	$mgrps = split(',', $pun_user["membergroupids"]);
+	$mgrps = explode(',', $pun_user["membergroupids"]);
 	$count = 1;
 	foreach($mgrps as $mgrp) {
 		if((int)$mgrp != 0) {

@@ -55,6 +55,7 @@ list($usec, $sec) = explode(' ', microtime());
 $pun_start = ((float)$usec + (float)$sec);
 
 // Turn off magic_quotes_runtime
+if (version_compare(PHP_VERSION, '5.3.0', '<'))
 set_magic_quotes_runtime(0);
 
 // Strip slashes from GET/POST/COOKIE (if magic_quotes_gpc is enabled)

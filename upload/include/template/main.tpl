@@ -38,7 +38,7 @@
 			<pun_search>
 		</form>
 	</div>
-	<img style="float:left" src="http://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
+	<img style="float:left" src="https://counter.rambler.ru/top100.cnt?648851" width="1" height="1" border="0" />
 </div>
 
 <div id="brdheader" class="block">

@@ -142,7 +142,7 @@ else if (isset($_POST['form_sent']))
 	$listed_usernames = file(PUN_ROOT.'cache/listed_username_1.txt', FILE_IGNORE_NEW_LINES);
 	if($listed_usernames) {
 		foreach ($listed_usernames as $listed_username) {
-			if ($username == $listed_username)
+			if ($username == urldecode($listed_username))
 				error('Unable to create user', 'register.php','', '');
 		}
 	}

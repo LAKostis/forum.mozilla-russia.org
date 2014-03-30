@@ -36,7 +36,7 @@ function pun_jabber($to, $message)
 	global $pun_config;
 
 	// Do a little string cleaning
-	$to = split(',', trim(preg_replace('#[\n\r]+#s', '', $to)));
+	$to = explode(',', trim(preg_replace('#[\n\r]+#s', '', $to)));
 
 	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
 	$message = str_replace(array("\n", "\0"), array("\r\n", ''), pun_linebreaks($message));

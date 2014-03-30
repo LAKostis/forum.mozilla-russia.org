@@ -139,6 +139,14 @@ else if (isset($_POST['form_sent']))
 			unset($_SESSION['text']);
 	}
 
+	$listed_usernames = file(PUN_ROOT.'cache/listed_username_1.txt', FILE_IGNORE_NEW_LINES);
+	if($listed_usernames) {
+		foreach ($listed_usernames as $listed_username) {
+			if ($username == $listed_username)
+				error('Unable to create user', 'register.php','', '');
+		}
+	}
+
 	// Check that the username (or a too similar username) is not already registered
 	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE UPPER(username)=UPPER(\''.$db->escape($username).'\') OR UPPER(username)=UPPER(\''.$db->escape(preg_replace('/[^\w]/', '', $username)).'\')') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
@@ -211,6 +219,14 @@ else if (isset($_POST['form_sent']))
 	$result = $db->query('SELECT * FROM '.$db->prefix.'users WHERE registration_ip =\''.get_remote_address().'\' AND registered > \''.$reglimit.'\'') or error('Unable to create user', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result)) error('Please wait some minutes to register again', 'register.php', '', '');
 	// IP doesn't try to flood our forum, insert user safely. :)
+
+	$listed_address = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
+	if($listed_ips) {
+		foreach ($listed_ips as $listed_ip) {
+			if ($get_remote_address() == $listed_ip)
+				error('Unable to create user', 'register.php','', '');
+		}
+	}
 
 	// Add the user
 	$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($username).'\', '.$intial_group_id.', \''.$password_hash.'\', \''.$email1.'\', '.$email_setting.', '.$save_pass.', '.$timezone.' , \''.$db->escape($language).'\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());

@@ -101,6 +101,14 @@ function is_banned_email($email)
 			return true;
 	}
 
+	$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
+	if($listed_emails) {
+		foreach ($listed_emails as $cur_listed) {
+			if ($email == $cur_listed)
+				return true;
+		}
+	}
+
 	return false;
 }
 

@@ -54,7 +54,7 @@ if (isset($_GET['get_host']))
 		$ip = $db->result($result);
 	}
 
-	message('The IP address is: '.$ip.'<br />The host name is: '.@gethostbyaddr($ip).'<br /><br /><a href="admin_users.php?show_users='.$ip.'">Show more users for this IP</a>');
+	message('The IP address is: '.$ip.'<br />The host name is: '.@gethostbyaddr($ip).'<br /><br /><a href="admin_users.php?show_users='.$ip.'">Show more users for this IP</a><br /><a href="http://www.stopforumspam.com/ipcheck/'.$ip.'">Check RBL status for this IP</a>');
 }
 
 

@@ -220,7 +220,7 @@ else if (isset($_POST['form_sent']))
 	if ($db->num_rows($result)) error('Please wait some minutes to register again', 'register.php', '', '');
 	// IP doesn't try to flood our forum, insert user safely. :)
 
-	$listed_address = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
+	$listed_ips = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
 	if($listed_ips) {
 		foreach ($listed_ips as $listed_ip) {
 			if ($get_remote_address() == $listed_ip)

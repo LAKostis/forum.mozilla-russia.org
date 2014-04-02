@@ -227,7 +227,7 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   preg_match_all('#\[\[(.+?)\]\]#si',$text,$matches,PREG_SET_ORDER);
   foreach($matches as $match){
     //get ID from link and discard most non wikilinks
-    list($mid) = split('\|',$match[1],2);
+    list($mid) = explode('\|',$match[1],2);
     if(preg_match("#^(https?|telnet|gopher|file|wais|ftp|ed2k|irc)://#",$mid)) continue;
     if(preg_match("#\w+>#",$mid)) continue;
     $mns = getNS($mid);

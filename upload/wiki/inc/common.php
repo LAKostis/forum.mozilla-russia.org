@@ -28,14 +28,15 @@ if (!defined('PUN_ROOT'))
 
   //kill magic quotes
   if (get_magic_quotes_gpc()) {
-    if (!empty($_GET))    remove_magic_quotes($_GET);
-    if (!empty($_POST))   remove_magic_quotes($_POST);
-    if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
-    if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
-    if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
-    ini_set('magic_quotes_gpc', 0);
+	  if (!empty($_GET))    remove_magic_quotes($_GET);
+	  if (!empty($_POST))   remove_magic_quotes($_POST);
+	  if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
+	  if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
+	  if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
+	  ini_set('magic_quotes_gpc', 0);
   }
-  set_magic_quotes_runtime(0);
+  if (version_compare(PHP_VERSION, '5.3.0', '<'))
+	  set_magic_quotes_runtime(0);
   ini_set('magic_quotes_sybase',0);
 
   //disable gzip if not available
@@ -747,7 +748,7 @@ function getRevisionInfo($id,$rev){
   $loglines = file($conf['changelog']);
   $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
   rsort($loglines); //reverse sort on timestamp (shouldn't be needed)
-  $line = split("\t",$loglines[0]);
+  $line = explode("\t",$loglines[0]);
   $info['date'] = $line[0];
   $info['ip']   = $line[1];
   $info['user'] = $line[3];

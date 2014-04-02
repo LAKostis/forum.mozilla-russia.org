@@ -223,7 +223,7 @@ else if (isset($_POST['form_sent']))
 	$listed_ips = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
 	if($listed_ips) {
 		foreach ($listed_ips as $listed_ip) {
-			if ($get_remote_address() == $listed_ip)
+			if (get_remote_address() = $listed_ip)
 				error('Unable to create user', 'register.php','', '');
 		}
 	}

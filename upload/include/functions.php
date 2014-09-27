@@ -1433,8 +1433,10 @@ function multigrp_getSql($db) {
 //
 function get_user_ua() {
 	$user_ua = '';
+	$uastring = '';
 	if (!empty($_SERVER['HTTP_USER_AGENT'])) {
-		$user_ua = pun_htmlspecialchars($_SERVER['HTTP_USER_AGENT']);
+		$uastring = filter_var($_SERVER['HTTP_USER_AGENT'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
+		$user_ua = pun_htmlspecialchars($uastring);
 	}
 
 	return $user_ua;

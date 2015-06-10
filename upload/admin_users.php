@@ -364,7 +364,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
-	if (!isset($conditions))
+	if (!isset($conditions)||$spam_email_match=='0'||$spam_ip_match=='0')
 		message('You didn\'t enter any search terms.');
 	
 	// Fetch user count

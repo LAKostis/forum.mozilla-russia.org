@@ -156,7 +156,7 @@ if (isset($_GET['show_users']))
 		{
 			list($poster_id, $poster) = $db->fetch_row($result);
 
-			$result2 = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND u.id='.$poster_id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+			$result2 = $db->query('SELECT u.id, u.username, u.email, u.title, u.registration_ip, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND u.id='.$poster_id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 			if (($user_data = $db->fetch_assoc($result2)))
 			{
@@ -176,6 +176,7 @@ if (isset($_GET['show_users']))
 				</tr>
 <?php
 
+				}
 			}
 			else
 			{

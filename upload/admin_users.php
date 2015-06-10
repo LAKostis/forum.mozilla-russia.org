@@ -321,8 +321,8 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$direction = $_POST['direction'];
 	$user_group = intval($_POST['user_group']);
 	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
-	$spam_email_match = intval($_POST['spam_email_match']) > 0 ? $_POST['spam_email_match'] : 0;
-	$spam_ip_match = intval($_POST['spam_ip_match']) > 0 ? $_POST['spam_ip_match'] : 0;
+	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
+	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -364,7 +364,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
-	if (!isset($conditions)||$spam_email_match=='0'||$spam_ip_match=='0')
+	if (!isset($conditions)||($spam_email_match=='0')||($spam_ip_match=='0'))
 		message('You didn\'t enter any search terms.');
 	
 	// Fetch user count

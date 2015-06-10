@@ -33,7 +33,6 @@ define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
-
 if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
@@ -163,7 +162,8 @@ if (isset($_GET['show_users']))
 			{
 				$user_title = get_title($user_data);
 
-				$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+
+					$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
 
 ?>
 				<tr>
@@ -191,7 +191,7 @@ if (isset($_GET['show_users']))
 				</tr>
 <?php
 
-			}
+				}
 		}
 	}
 	else
@@ -270,6 +270,8 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$direction = $_POST['direction'];
 	$user_group = intval($_POST['user_group']);
 	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
+	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
+	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -311,7 +313,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
-	if (!isset($conditions))
+	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0'))
 		message('You didn\'t enter any search terms.');
 	
 	// Fetch user count
@@ -353,7 +355,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 			<tbody>
 <?php
 
-	$result = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND '.implode(' AND ', $conditions).' ORDER BY '.$db->escape($order_by).' '.$db->escape($direction).' LIMIT '.$start_from.', '.$search_limit) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT u.id, u.username, u.email, u.title, u.registration_ip, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1'.(!empty($conditions) ? ' AND '.implode(' AND ', $conditions) : '').' ORDER BY '.$db->escape($order_by).' '.$db->escape($direction).' LIMIT '.$start_from.', '.$search_limit) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))
 	{
 		$button_status = '';
@@ -365,6 +367,54 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 			// This script is a special case in that we want to display "Not verified" for non-verified users
 			if (($user_data['g_id'] == '' || $user_data['g_id'] == PUN_UNVERIFIED) && $user_title != $lang_common['Banned'])
 				$user_title = '<span class="warntext">Not verified</span>';
+
+				if ($spam_email_match == '1')
+				{
+					$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
+					if($listed_emails) 
+					{
+						foreach ($listed_emails as $listed_email) {
+							if ($user_data['email'] == $listed_email)
+								$spam_status[$user_data['id']]='Spam email found!';
+
+						}
+					}
+				}
+
+
+				if ($spam_ip_match == '1')
+				{
+					$listed_ips = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
+					if($listed_ips) 
+					{
+						foreach ($listed_ips as $listed_ip) {
+							if ($user_data['registration_ip'] == $listed_ip)
+								$spam_status[$user_data['id']]='Spam ip found!';
+
+						}
+					}
+				}
+
+				if ($spam_status[$user_data['id']])
+				{
+					$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+
+?>
+
+				<tr>
+					<input type="hidden" name="users_array[]" value="<?php echo $user_data['id']; ?>">
+					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
+					<td class="tc3"><?php echo $user_title ?></td>
+					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
+					<td class="tc5"><?php echo $spam_status[$user_data['id']].'&nbsp;'?></td>
+					<td class="tcr"><?php echo $actions ?></td>
+				</tr>
+<?php
+
+				} 
+				elseif ($spam_email_match=='0' && $spam_ip_match=='0')
+				{
 
 			$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
 
@@ -379,7 +429,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 					<td class="tcr"><?php echo $actions ?></td>
 				</tr>
 <?php
-
+		}
 		}
 	}
 	else
@@ -508,6 +558,14 @@ else
 									<th scope="row">Registered before</th>
 									<td><input type="text" name="registered_before" size="24" maxlength="19" tabindex="19" />
 									<span>(yyyy-mm-dd hh:mm:ss)</span></td>
+								</tr>
+								<tr>
+									<th scope="row">Matched spam email</th>
+									<td><input type="checkbox" name="spam_email_match" value="1"/></td>
+								</tr>
+								<tr>
+									<th scope="row">Matched spam ip</th>
+									<td><input type="checkbox" name="spam_ip_match" value="1"/></td>
 								</tr>
 								<tr>
 									<th scope="row">Order by</th>

@@ -176,7 +176,6 @@ if (isset($_GET['show_users']))
 				</tr>
 <?php
 
-				}
 			}
 			else
 			{

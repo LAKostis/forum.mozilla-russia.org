@@ -128,15 +128,7 @@ else if (isset($_POST['form_sent']))
 	// Image verifcation
 	if ($pun_config['o_regs_verify_image'] == '1')
 	{
-		session_start();
-		// Make sure what they submitted is not empty
-		if (trim($_POST['req_image']) == '')
-			message($lang_register['Text mismatch']);
-
-		if (strtolower(trim($_POST['req_image'])) != strtolower($_SESSION['text']))
-			message($lang_register['Text mismatch']);
-		else
-			unset($_SESSION['text']);
+		require_once("funcaptcha.php");
 	}
 
 	$listed_usernames = file(PUN_ROOT.'cache/listed_username_1.txt', FILE_IGNORE_NEW_LINES);
@@ -355,9 +347,7 @@ require PUN_ROOT.'header.php';
 		<fieldset>
 			<legend><?php echo $lang_register['Image verification'] ?></legend>
 			<div class="infldset">
-				<img id="kcaptcha" src="kcaptcha.php"><br />
-			<label class="conl"><strong><?php echo $lang_register['Image text'] ?></strong><br /><input type="text" id="req_image" name="req_image" size="16" maxlength="16" /> <input type="button" value="<?php echo $lang_register['Image reload'] ?>" onclick="captchaReload()" /><br /></label>
-			<p class="clearb"><?php echo $lang_register['Image info'] ?></p>
+			<?php require_once("funcaptcha.php"); ?><br />
 			</div>
 		</fieldset>
 	</div>

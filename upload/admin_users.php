@@ -33,7 +33,6 @@ define('PUN_ROOT', './');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
-
 if ($pun_user['g_id'] > PUN_MOD)
 	message($lang_common['No permission']);
 
@@ -157,13 +156,64 @@ if (isset($_GET['show_users']))
 		{
 			list($poster_id, $poster) = $db->fetch_row($result);
 
-			$result2 = $db->query('SELECT u.id, u.username, u.email, u.title, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND u.id='.$poster_id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+			$result2 = $db->query('SELECT u.id, u.username, u.email, u.title, u.registration_ip, u.num_posts, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id>1 AND u.id='.$poster_id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 			if (($user_data = $db->fetch_assoc($result2)))
 			{
 				$user_title = get_title($user_data);
 
-				$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+				if ($spam_email_match == '1')
+				{
+					$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
+					if($listed_emails) {
+						foreach ($listed_emails as $listed_email) {
+							if ($user_data['email'] == $listed_email)
+								$spam_email_listed=1;
+
+						}
+					}
+				}
+
+
+				if ($spam_ip_match == '1')
+				{
+					$listed_ips = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
+					if($listed_ips) {
+						foreach ($listed_ips as $listed_ip) {
+							if ($user_data['registration_ip'] == $listed_ip)
+								$spam_ip_listed=1;
+
+						}
+					}
+				}
+
+				if ($spam_email_listed == '1' || $spam_ip_listed == '1')
+				{
+					$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id    ='.$user_data['id'].'">Show posts</a>';
+
+?>
+
+				<tr>
+					<td class="tcl"><?php echo '<a href="profile.php?id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
+					<td class="tc3"><?php echo $user_title ?></td>
+					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
+					<td class="tc5"><?php 
+					if ($spam_email_listed == '1')
+						echo 'Spam email matched &nbsp;';
+					if ($spam_ip_listed == '1')
+						echo 'Spam ip matched &nbsp;';
+					else	
+						echo ($user_data['admin_note'] != '') ? $user_data['admin_note'] : '&nbsp;' ?></td>
+					<td class="tcr"><?php echo $actions ?></td>
+				</tr>
+<?php
+
+				} 
+				else
+				{
+
+					$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
 
 ?>
 				<tr>
@@ -176,6 +226,7 @@ if (isset($_GET['show_users']))
 				</tr>
 <?php
 
+				}
 			}
 			else
 			{
@@ -191,7 +242,7 @@ if (isset($_GET['show_users']))
 				</tr>
 <?php
 
-			}
+				}
 		}
 	}
 	else
@@ -270,6 +321,8 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$direction = $_POST['direction'];
 	$user_group = intval($_POST['user_group']);
 	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
+	$spam_email_match = intval($_POST['spam_email_match']) > 0 ? $_POST['spam_email_match'] : 0;
+	$spam_ip_match = intval($_POST['spam_ip_match']) > 0 ? $_POST['spam_ip_match'] : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -508,6 +561,14 @@ else
 									<th scope="row">Registered before</th>
 									<td><input type="text" name="registered_before" size="24" maxlength="19" tabindex="19" />
 									<span>(yyyy-mm-dd hh:mm:ss)</span></td>
+								</tr>
+								<tr>
+									<th scope="row">Matched spam email</th>
+									<td><input type="radio" name="spam_email_match" value="0" /></td>
+								</tr>
+								<tr>
+									<th scope="row">Matched spam ip</th>
+									<td><input type="radio" name="spam_ip_match" value="0" /></td>
 								</tr>
 								<tr>
 									<th scope="row">Order by</th>

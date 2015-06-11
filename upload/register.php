@@ -2,7 +2,7 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russia.org)
+  Copyright (C) 2005-2015  LAKostis (lakostis@mozilla-russia.org)
 
   This file is part of Russian Mozilla Team PunBB modification.
 
@@ -219,6 +219,15 @@ else if (isset($_POST['form_sent']))
 				error('Unable to create user', 'register.php','', '');
 		}
 	}
+
+	// final clearance check
+	require_once(PUN_ROOT.'include/stopforumspam.php');
+	$sfs = new StopForumSpam();
+	$args = array('email' => $email1, 'ip' => get_remote_address(), 'username' => $username);
+	
+	$spamcheck = $sfs->is_spammer( $args );
+	if ($spamcheck['spammer']=='1' && $spamcheck['known']=='1')
+		error('Unable to create user', 'register.php','', '');
 
 	// Add the user
 	$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($username).'\', '.$intial_group_id.', \''.$password_hash.'\', \''.$email1.'\', '.$email_setting.', '.$save_pass.', '.$timezone.' , \''.$db->escape($language).'\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());

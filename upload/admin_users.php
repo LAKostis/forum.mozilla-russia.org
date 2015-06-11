@@ -272,6 +272,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
 	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
 	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;
+	$spam_online_match = isset($_POST['spam_online_match']) ? intval($_POST['spam_online_match']) : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -313,7 +314,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
-	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0'))
+	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0'))
 		message('You didn\'t enter any search terms.');
 	
 	// Fetch user count
@@ -395,6 +396,16 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 					}
 				}
 
+				if(!isset($spam_status[$user_data['id']]) && $spam_online_match == '1')
+				{
+					require_once(PUN_ROOT.'include/stopforumspam.php');
+					$sfs = new StopForumSpam();
+					$args = array('email' => $user_data['email'], 'ip' => $user_data['registration_ip'], 'username' => $user_data['username']);
+					$spamcheck = $sfs->is_spammer( $args );
+					if ($spamcheck)
+						$spam_status[$user_data['id']]='Spam found online!';
+				}
+
 				if ($spam_status[$user_data['id']])
 				{
 					$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
@@ -413,7 +424,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 <?php
 
 				} 
-				elseif ($spam_email_match=='0' && $spam_ip_match=='0')
+				elseif ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0')
 				{
 
 			$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
@@ -566,6 +577,10 @@ else
 								<tr>
 									<th scope="row">Matched spam ip</th>
 									<td><input type="checkbox" name="spam_ip_match" value="1"/></td>
+								</tr>
+								<tr>
+									<th scope="row">Validate spam online</th>
+									<td><input type="checkbox" name="spam_online_match" value="1"/></td>
 								</tr>
 								<tr>
 									<th scope="row">Order by</th>

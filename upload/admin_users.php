@@ -400,9 +400,9 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 				{
 					require_once(PUN_ROOT.'include/stopforumspam.php');
 					$sfs = new StopForumSpam();
-					$args = array('email' => $user_data['email'], 'ip' => $user_data['registration_ip'], 'username' => $user_data['username']);
+					$args = array('email' => $user_data['email'], 'ip' => $user_data['registration_ip'], 'username' => $user_data['username'], 'notorexit');
 					$spamcheck = $sfs->is_spammer( $args );
-					if ($spamcheck)
+					if ($spamcheck['spammer']=='1' && $spamcheck['known']=='1')
 						$spam_status[$user_data['id']]='Spam found online!';
 				}
 

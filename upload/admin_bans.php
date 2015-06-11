@@ -2,7 +2,7 @@
 /***********************************************************************
 
   Copyright (C) 2002-2005  Rickard Andersson (rickard@punbb.org)
-  Copyright (C) 2005-2006  LAKostis (lakostis@mozilla-russia.org)
+  Copyright (C) 2005-2015  LAKostis (lakostis@mozilla-russia.org)
 
   This file is part of Russian Mozilla Team PunBB modification.
 
@@ -37,7 +37,7 @@ if ($pun_user['g_id'] > PUN_MOD || ($pun_user['g_id'] == PUN_MOD && $pun_config[
 
 
 // Add/edit a ban (stage 1)
-if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
+if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']) || isset($_GET['report_spam']))
 {
 	if (isset($_GET['add_ban']) || isset($_POST['add_ban']))
 	{
@@ -281,6 +281,28 @@ else if (isset($_GET['del_ban']))
 	redirect('admin_bans.php', 'Ban removed. Redirecting &hellip;');
 }
 
+// Report spam
+else if (isset($_GET['report_spam']))
+{
+	confirm_referrer('admin_bans.php');
+
+	$ban_id = intval($_GET['report_spam']);
+	if ($ban_id < 1)
+		message($lang_common['Bad request']);
+
+	require_once PUN_ROOT.'config_stopforumspam.php';
+	require_once PUN_ROOT.'include/stopforumspam.php';
+	$sfs = new StopForumSpam();
+	// $ban_user, $ban_ip, $ban_email, $ban_message
+	$args = array('email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message, 'api_key' => $sfs_api_key );
+	
+	$spam_report = $sfs->add( $args );
+
+	if ($spam_report == '1')
+		redirect('admin_bans.php', 'Report '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
+	else
+		redirect('admin_bans.php', 'Something gone wrong. Report submit '.(($_POST['mode'] == 'edit') ? 'failed' : 'failed').'. Redirecting &hellip;');
+}
 
 else if (isset($_POST['cleanup_bans']))
 {
@@ -375,7 +397,7 @@ if ($db->num_rows($result))
 									<td><?php echo pun_htmlspecialchars($cur_ban['message']) ?></td>
 								</tr>
 <?php endif; ?>							</table>
-							<p class="linkactions"><a href="admin_bans.php?edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="admin_bans.php?del_ban=<?php echo $cur_ban['id'] ?>">Remove</a></p>
+							<p class="linkactions"><a href="admin_bans.php?edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="admin_bans.php?del_ban=<?php echo $cur_ban['id'] ?>">Remove</a> - <a href="admin_bans.php?report_spam=<?php echo $cur_ban['id'] ?>">Report as spammer</a></p>
 						</div>
 					</fieldset>
 				</div>

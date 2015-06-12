@@ -296,13 +296,23 @@ else if (isset($_GET['report_spam']))
 	else
 		message($lang_common['Bad request']);
 
-	require_once PUN_ROOT.'config_stopforumspam.php';
+	// Blind ban - get the ip from registration data 
+	if (empty($ban_ip)) 
+	{
+		$result = $db->query('SELECT registration_ip FROM '.$db->prefix.'users WHERE email='.$ban_email) or error('Unable to fetch ip address', __FILE__, __LINE__, $db->error());
+		if ($db->num_rows($result))
+			$ban_ip = $db->fetch_row($result);
+		else
+			message($lang_common['Bad request']);
+	}
+
 	require_once PUN_ROOT.'include/stopforumspam.php';
-	$sfs = new StopForumSpam();
+	require_once PUN_ROOT.'config_stopforumspam.php';
+	$sfs = new StopForumSpam( $api_key );
 	// $ban_user, $ban_ip, $ban_email, $ban_message
 	$args = array('email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message );
-	$report = $sfs->add( $args );
-	
+	$report = $sfs->add($args);
+
 	if ($report)
 		redirect('admin_bans.php', 'Report added. Redirecting &hellip;');
 	else

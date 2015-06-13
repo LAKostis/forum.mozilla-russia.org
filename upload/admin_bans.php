@@ -296,21 +296,26 @@ else if (isset($_GET['report_spam']))
 	else
 		message($lang_common['Bad request']);
 
-	// Blind ban - get the ip from registration data 
+	// Blind ban - get the ip from the last post or registration data 
 	if (empty($ban_ip)) 
 	{
-		$result = $db->query('SELECT registration_ip FROM '.$db->prefix.'users WHERE email='.$ban_email) or error('Unable to fetch ip address', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT id,registration_ip FROM '.$db->prefix.'users WHERE email=\''.$db->escape($ban_email).'\' AND id>1') or error('Unable to fetch ip address from registration data', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result))
-			$ban_ip = $db->fetch_row($result);
+			list($user_id,$registration_ip) = $db->fetch_row($result);
 		else
 			message($lang_common['Bad request']);
+
+		$result = $db->query('SELECT poster_ip FROM '.$db->prefix.'posts WHERE poster_id='.$user_id.' ORDER BY posted DESC LIMIT 1') or error('Unable to fetch ip info from last post', __FILE__, __LINE__, $db->error());
+		$ban_ip = ($db->num_rows($result)) ? $db->result($result) : $registration_ip;
 	}
 
 	require_once PUN_ROOT.'include/stopforumspam.php';
 	require_once PUN_ROOT.'config_stopforumspam.php';
+
 	$sfs = new StopForumSpam( $api_key );
 	// $ban_user, $ban_ip, $ban_email, $ban_message
 	$args = array('email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message );
+
 	$report = $sfs->add($args);
 
 	if ($report)

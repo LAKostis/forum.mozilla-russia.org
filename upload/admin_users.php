@@ -273,7 +273,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
 	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;
 	$spam_online_match = isset($_POST['spam_online_match']) ? intval($_POST['spam_online_match']) : 0;
-	$email_validate = isset($_POST['email_vaidate']) ? intval($_POST['email_validate']) : 0;
+	$email_validate = isset($_POST['email_validate']) ? intval($_POST['email_validate']) : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -375,6 +375,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 					// Validate e-mail
 					require PUN_ROOT.'include/email.php';
 
+					echo "checking ".$user_data['email']."..";
 					if (!is_valid_email($user_data['email']))
 							$spam_status[$user_data['id']]='Invalid email found!';
 

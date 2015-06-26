@@ -82,6 +82,10 @@ function is_valid_email($email)
 	if (strlen($email) > 50)
 		return false;
 
+	// filter out toxic mail services
+	if (preg_match('/(divermail\.com|flurred\.com|lastmail\.co|ubismail\.net|valemail\.net|bladesmail\.net|trickmail\.net|wickmail\.net)$/i',$email))
+		return false;
+
 	return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
 }
 
@@ -102,9 +106,10 @@ function is_banned_email($email)
 	}
 
 	$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
-	if($listed_emails) {
+	if($listed_emails) 
+	{
 		foreach ($listed_emails as $cur_listed) {
-			if ($email == $cur_listed)
+			if ($email == $cur_listed || (strpos($cur_listed, '@') === false && stristr($email, '@'.$cur_listed)))
 				return true;
 		}
 	}

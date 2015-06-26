@@ -435,7 +435,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 <?php
 
 				} 
-				elseif ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0')
+				elseif ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0' && $email_validate=='0')
 				{
 
 			$actions = '<a href="admin_users.php?ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="search.php?action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';

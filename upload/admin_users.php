@@ -273,6 +273,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
 	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;
 	$spam_online_match = isset($_POST['spam_online_match']) ? intval($_POST['spam_online_match']) : 0;
+	$email_validate = isset($_POST['email_vaidate']) ? intval($_POST['email_validate']) : 0;
 
 	if (preg_match('/[^0-9]/', $posts_greater.$posts_less))
 		message('You entered a non-numeric value into a numeric only column.');
@@ -314,7 +315,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.intval($user_group).' OR membergroupids LIKE \'%,'.intval($user_group).',%\' OR membergroupids LIKE \''.intval($user_group).',%\' OR membergroupids LIKE \'%,'.intval($user_group).'\'';
 
-	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0'))
+	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0' && $email_validate=='0'))
 		message('You didn\'t enter any search terms.');
 	
 	// Fetch user count
@@ -368,6 +369,16 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 			// This script is a special case in that we want to display "Not verified" for non-verified users
 			if (($user_data['g_id'] == '' || $user_data['g_id'] == PUN_UNVERIFIED) && $user_title != $lang_common['Banned'])
 				$user_title = '<span class="warntext">Not verified</span>';
+
+				if ($email_validate == '1')
+				{
+					// Validate e-mail
+					require PUN_ROOT.'include/email.php';
+
+					if (!is_valid_email($user_data['email']))
+							$spam_status[$user_data['id']]='Invalid email found!';
+
+				}
 
 				if ($spam_email_match == '1')
 				{
@@ -581,6 +592,10 @@ else
 								<tr>
 									<th scope="row">Validate spam online</th>
 									<td><input type="checkbox" name="spam_online_match" value="1"/></td>
+								</tr>
+								<tr>
+									<th scope="row">Re-validate email</th>
+									<td><input type="checkbox" name="email_validate" value="1"/></td>
 								</tr>
 								<tr>
 									<th scope="row">Order by</th>

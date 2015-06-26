@@ -375,7 +375,6 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 					// Validate e-mail
 					require PUN_ROOT.'include/email.php';
 
-					echo "checking ".$user_data['email']."..";
 					if (!is_valid_email($user_data['email']))
 							$spam_status[$user_data['id']]='Invalid email found!';
 

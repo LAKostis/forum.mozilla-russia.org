@@ -91,7 +91,7 @@ function is_valid_reg_email($email)
 		return false;
 
 	// filter out toxic mail services
-	if (preg_match('/(divermail\.com|flurred\.com|lastmail\.co|ubismail\.net|valemail\.net|bladesmail\.net|trickmail\.net|wickmail\.net|sina\.com|yahoo\.com|pecdo\.com|mail\.ua|outlook\.com|\.in)$/i',$email))
+	if (preg_match('/(divermail\.com|flurred\.com|lastmail\.co|ubismail\.net|valemail\.net|bladesmail\.net|trickmail\.net|wickmail\.net|sina\.com|yahoo\.com|pecdo\.com|mail\.ua|outlook\.com|hotmail\.com|\.in)$/i',$email))
 		return false;
 
 	return true;

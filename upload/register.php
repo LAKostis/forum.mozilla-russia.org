@@ -155,7 +155,7 @@ else if (isset($_POST['form_sent']))
 	// ... and jabber
 	require PUN_ROOT.'include/jabber.php';
 
-	if (!is_valid_email($email1))
+	if (!is_valid_reg_email($email1))
 		message($lang_common['Invalid e-mail']);
 	else if ($pun_config['o_regs_verify'] == '1' && $email1 != $email2)
 		message($lang_register['E-mail not match']);

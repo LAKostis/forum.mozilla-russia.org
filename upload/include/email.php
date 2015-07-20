@@ -82,11 +82,19 @@ function is_valid_email($email)
 	if (strlen($email) > 50)
 		return false;
 
-	// filter out toxic mail services
-	if (preg_match('/(divermail\.com|flurred\.com|lastmail\.co|ubismail\.net|valemail\.net|bladesmail\.net|trickmail\.net|wickmail\.net|sina\.com|yahoo\.com|pecdo\.com|\.in)$/i',$email))
+	return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
+}
+
+function is_valid_reg_email($email)
+{
+	if (!is_valid_email($email))
 		return false;
 
-	return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
+	// filter out toxic mail services
+	if (preg_match('/(divermail\.com|flurred\.com|lastmail\.co|ubismail\.net|valemail\.net|bladesmail\.net|trickmail\.net|wickmail\.net|sina\.com|yahoo\.com|pecdo\.com|mail\.ua|outlook\.com|\.in)$/i',$email))
+		return false;
+
+	return true;
 }
 
 

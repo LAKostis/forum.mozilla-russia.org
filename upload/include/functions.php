@@ -1498,6 +1498,7 @@ function pun_get_browser($uagent) {
 		'firefox',
 		'opera',
 		'ie',
+		'edge',
 		'android',
 		'aurora',
 		'amigo',

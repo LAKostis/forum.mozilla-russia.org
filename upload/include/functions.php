@@ -895,6 +895,38 @@ function pun_hash($str)
 }
 
 
+// 
+// validate ip correct ipv4 and ipv6 address
+//
+function is_valid_ip($ip='', $ip_type=''){
+
+	$isValid=false;
+
+	if($ip_type=='ipv4'){
+
+		//validates IPV4
+		$isValid = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4);
+	}
+	elseif($ip_type=='ipv6'){
+
+		//validates IPV6
+		$isValid = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
+	}
+	else{
+
+		//validates IPV4 and IPV6
+		$isValid = filter_var($ip, FILTER_VALIDATE_IP);
+	}
+
+	if($isValid == $ip){
+
+		$isValid=true;
+	}
+
+	return $isValid;
+}
+
+
 //
 // Try to determine the correct remote IP-address
 //
@@ -918,25 +950,21 @@ function get_remote_address()
 	}
 	if ($via_proxy)
 	{
-		if (preg_match_all('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $via_proxy, $address_list))
-		{
 			$lan_ips = array('/^0\./', '/^127\.0\.0\.1/', '/^192\.168\..*/', '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', '/^10\..*/', '/^224\..*/', '/^240\..*/');
-			$address_list = preg_replace($lan_ips, null, $address_list[0]);
+			$via_proxy = preg_replace($lan_ips, null, $via_proxy[0]);
 
-			while (list(, $cur_address) = each($address_list))
+			while (list(, $cur_address) = each($via_proxy))
 			{
-				if ($cur_address)
+				if (is_valid_ip($cur_address))
 				{
 					$remote_address = $cur_address;
 					break;
 				}
 			}
-		}
 	}
 
 	return $remote_address;
 }
-
 
 //
 // Equivalent to htmlspecialchars(), but allows &#[0-9]+ (for unicode)

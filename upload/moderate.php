@@ -39,7 +39,7 @@ if (isset($_GET['get_host']))
 		message($lang_common['No permission']);
 
 	// Is get_host an IP address or a post ID?
-	if (@preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $_GET['get_host']))
+	if (is_valid_ip($_GET['get_host']))
 		$ip = $_GET['get_host'];
 	else
 	{

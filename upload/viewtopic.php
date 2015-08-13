@@ -300,7 +300,10 @@ while ($cur_post = $db->fetch_assoc($result))
 		}
 
 		if ($pun_user['g_id'] < PUN_GUEST)
-			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
+			if (is_valid_ip($cur_post['poster_ip'],'ipv6'))
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'IPV6'</a>';
+			else
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
 		if (($pun_user['g_id'] < PUN_GUEST || ($pun_user['g_id'] > PUN_GUEST && $pun_user['id'] == $cur_post['poster_id'])) && $cur_post['admin_note'] != '')
 				$user_info[] = '<dd><strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
@@ -315,7 +318,11 @@ while ($cur_post = $db->fetch_assoc($result))
 		$user_info[] = '<dd>'.$lang_ul['User group'].': <strong>'.$group_title.'</strong>';
 
 		if ($pun_user['g_id'] < PUN_GUEST)
-			$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
+			if (is_valid_ip($cur_post['poster_ip'],'ipv6'))
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'IPV6'</a>';
+			else
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
+
 
 		if ($pun_config['o_show_user_info'] == '1' && $cur_post['poster_email'] != '' && !$pun_user['is_guest'])
 			$user_contacts[] = '<a href="mailto:'.$cur_post['poster_email'].'" class="email">'.$lang_common['E-mail'].'</a>';

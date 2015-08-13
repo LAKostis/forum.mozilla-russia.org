@@ -943,18 +943,18 @@ function get_remote_address()
 	// 172.16.0.0      -   172.31.255.255  (172.16/12 prefix)
 	// 192.168.0.0     -   192.168.255.255 (192.168/16 prefix)
 	// 224/8 Multicast
-	$via_proxy = '';
+	$via_proxy =array('');
 	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) || !empty($_SERVER['HTTP_X_REAL_IP']))
 	{
 		$via_proxy = (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['HTTP_X_REAL_IP'];
 	}
 	if ($via_proxy)
 	{
-			$address_list=str_split($via_proxy);
 			$lan_ips = array('/^0\./', '/^127\.0\.0\.1/', '/^192\.168\..*/', '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', '/^10\..*/', '/^224\..*/', '/^240\..*/');
-			$via_proxy = preg_replace($lan_ips, null, $address_list[0]);
+			if (is_valid_ip($via_proxy[0],'ipv4'))
+				$via_proxy = preg_replace($lan_ips, null, $via_proxy[0]);
 
-			while (list(, $cur_address) = each($address_list))
+			foreach ($via_proxy as $cur_address)
 			{
 				if (is_valid_ip($cur_address))
 				{

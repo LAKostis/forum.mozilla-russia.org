@@ -950,10 +950,11 @@ function get_remote_address()
 	}
 	if ($via_proxy)
 	{
+			$address_list=str_split($via_proxy);
 			$lan_ips = array('/^0\./', '/^127\.0\.0\.1/', '/^192\.168\..*/', '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', '/^10\..*/', '/^224\..*/', '/^240\..*/');
-			$via_proxy = preg_replace($lan_ips, null, $via_proxy[0]);
+			$via_proxy = preg_replace($lan_ips, null, $address_list[0]);
 
-			while (list(, $cur_address) = each($via_proxy))
+			while (list(, $cur_address) = each($address_list))
 			{
 				if (is_valid_ip($cur_address))
 				{

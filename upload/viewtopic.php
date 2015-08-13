@@ -301,7 +301,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 		if ($pun_user['g_id'] < PUN_GUEST)
 			if (is_valid_ip($cur_post['poster_ip'],'ipv6'))
-				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'IPV6'</a>';
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">IPV6</a>';
 			else
 				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 
@@ -319,7 +319,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 		if ($pun_user['g_id'] < PUN_GUEST)
 			if (is_valid_ip($cur_post['poster_ip'],'ipv6'))
-				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'IPV6'</a>';
+				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">IPV6</a>';
 			else
 				$user_info[] = '<dd>IP: <a href="admin_users.php?show_users='.$cur_post['poster_ip'].'">'.$cur_post['poster_ip'].'</a>';
 

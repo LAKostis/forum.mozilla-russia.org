@@ -898,32 +898,20 @@ function pun_hash($str)
 // 
 // validate ip correct ipv4 and ipv6 address
 //
-function is_valid_ip($ip='', $ip_type=''){
+function is_valid_ip($ip,$ip_type='')
+{
 
-	$isValid=false;
+	if($ip_type=='ipv4')
+		$result = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4);
+	elseif($ip_type=='ipv6')
+		$result = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
+	else
+		$result = filter_var($ip, FILTER_VALIDATE_IP);
 
-	if($ip_type=='ipv4'){
-
-		//validates IPV4
-		$isValid = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4);
-	}
-	elseif($ip_type=='ipv6'){
-
-		//validates IPV6
-		$isValid = filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
-	}
-	else{
-
-		//validates IPV4 and IPV6
-		$isValid = filter_var($ip, FILTER_VALIDATE_IP);
-	}
-
-	if($isValid == $ip){
-
-		$isValid=true;
-	}
-
-	return $isValid;
+	if($result == $ip)
+		return true;
+	else
+		return false;
 }
 
 
@@ -934,35 +922,21 @@ function get_remote_address()
 {
 	$remote_address = $_SERVER['REMOTE_ADDR'];
 
-	// If HTTP_X_FORWARDED_FOR or HTTP_X_REAL_IP is set, we try to grab the first non-LAN IP
-	// patch for nginx proxied setup
-	// 0.0.0.0/8 reserved for self-identification [RFC5735]
-	// 127.0.0.0/8 is reserved for Loopback [RFC5735]
-	// RFC1918:
-	// 10.0.0.0        -   10.255.255.255  (10/8 prefix)
-	// 172.16.0.0      -   172.31.255.255  (172.16/12 prefix)
-	// 192.168.0.0     -   192.168.255.255 (192.168/16 prefix)
-	// 224/8 Multicast
-	$via_proxy =array('');
-	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) || !empty($_SERVER['HTTP_X_REAL_IP']))
+        // The general format of the field is:
+	// X-Forwarded-For: client1, proxy1, proxy2
+	// where the value is a comma+space separated list of IP addresses, the left-most being the farthest downstream client,
+	// and each successive proxy that passed the request adding the IP address where it received the request from.
+	if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) || isset($_SERVER['HTTP_X_REAL_IP']))
 	{
-		$via_proxy = (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['HTTP_X_REAL_IP'];
+		$via_proxy = $via_proxy = explode(",",((isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['HTTP_X_REAL_IP']));
+		$via_proxy = trim($via_proxy[0]);
+		// filter out private/reserved ranges
+		$via_proxy = filter_var($via_proxy, FILTER_VALIDATE_IP,FILTER_FLAG_NO_PRIV_RANGE);
+		$via_proxy = filter_var($via_proxy, FILTER_VALIDATE_IP,FILTER_FLAG_NO_RES_RANGE);
 	}
-	if ($via_proxy)
-	{
-			$lan_ips = array('/^0\./', '/^127\.0\.0\.1/', '/^192\.168\..*/', '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', '/^10\..*/', '/^224\..*/', '/^240\..*/');
-			if (is_valid_ip($via_proxy[0],'ipv4'))
-				$via_proxy = preg_replace($lan_ips, null, $via_proxy[0]);
 
-			foreach ($via_proxy as $cur_address)
-			{
-				if (is_valid_ip($cur_address))
-				{
-					$remote_address = $cur_address;
-					break;
-				}
-			}
-	}
+	if ($via_proxy)
+		$remote_address=$via_proxy;
 
 	return $remote_address;
 }

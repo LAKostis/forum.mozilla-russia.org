@@ -1554,6 +1554,7 @@ function pun_get_browser($uagent) {
 		'phoenix',
 		'qtweb',
 		'qupzilla',
+		'qutebrowser',
 		'rekonq',
 		'robin',
 		's60',

@@ -182,7 +182,6 @@ $browser_img = array(
 	'aurora.png',
 	'nightly.png',
 	'ie9.png',
-	'edge.png',
 	'opera.png',
 	'chrome.png',
 	'chromium.png',

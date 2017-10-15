@@ -1551,6 +1551,7 @@ function pun_get_browser($uagent) {
 		'omniweb',
 		'orca',
 		'palemoon',
+		'playstation',
 		'phoenix',
 		'qtweb',
 		'qupzilla',

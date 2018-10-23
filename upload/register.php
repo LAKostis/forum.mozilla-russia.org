@@ -128,7 +128,7 @@ else if (isset($_POST['form_sent']))
 	// Image verifcation
 	if ($pun_config['o_regs_verify_image'] == '1')
 	{
-		require_once("funcaptcha.php");
+		require_once("recaptcha.php");
 	}
 
 	$listed_usernames = file(PUN_ROOT.'cache/listed_username_1.txt', FILE_IGNORE_NEW_LINES);
@@ -356,7 +356,7 @@ require PUN_ROOT.'header.php';
 		<fieldset>
 			<legend><?php echo $lang_register['Image verification'] ?></legend>
 			<div class="infldset">
-			<?php require_once("funcaptcha.php"); ?><br />
+			<div class="g-recaptcha" data-sitekey="6LeuiXYUAAAAADW9ew-ye8BFi0vI0IPJiZQ-GV9u"></div>
 			</div>
 		</fieldset>
 	</div>

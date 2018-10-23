@@ -56,13 +56,23 @@
 
 </div>
 </div>
-<!-- Yandex.Metrika -->
-<script src="//mc.yandex.ru/resource/watch.js" type="text/javascript"></script>
-<script type="text/javascript">
-try { var yaCounter338616 = new Ya.Metrika(338616); } catch(e){}
+
+<div style="text-align: center">
+<script async defer src='https://www.google.com/recaptcha/api.js'></script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- forum 970 x 90 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:970px;height:90px"
+     data-ad-client="ca-pub-2064273351495406"
+     data-ad-slot="1027425266"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-<noscript><div style="position: absolute;"><img src="//mc.yandex.ru/watch/338616" alt="" /></div></noscript>
-<!-- /Yandex.Metrika -->
+</div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter338616 = new Ya.Metrika({ id:338616, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/338616" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 
 </html>

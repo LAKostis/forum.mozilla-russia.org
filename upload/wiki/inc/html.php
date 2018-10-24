@@ -899,15 +899,15 @@ function html_diff($text='',$intro=true){
 	global $lang;
 	global $conf;
 	if($text){
-		$df	= new Diff(split("\n",htmlspecialchars(rawWiki($ID,''))),
-										split("\n",htmlspecialchars(cleanText($text))));
+		$df	= new Diff(explode("\n",htmlspecialchars(rawWiki($ID,''))),
+										explode("\n",htmlspecialchars(cleanText($text))));
 		$left	= '<a class="wikilink1" href="'.wl($ID).'">'.
 							$ID.' '.date($conf['dformat'],@filemtime(wikiFN($ID))).'</a>'.
 							$lang['current'];
 		$right = $lang['yours'];
 	}else{
-		$df	= new Diff(split("\n",htmlspecialchars(rawWiki($ID,$REV))),
-										split("\n",htmlspecialchars(rawWiki($ID,''))));
+		$df	= new Diff(explode("\n",htmlspecialchars(rawWiki($ID,$REV))),
+										explode("\n",htmlspecialchars(rawWiki($ID,''))));
 		$left	= '<a class="wikilink1" href="'.wl($ID,"rev=$REV").'">'.
 							$ID.' '.date($conf['dformat'],$REV).'</a>';
 		$right = '<a class="wikilink1" href="'.wl($ID).'">'.

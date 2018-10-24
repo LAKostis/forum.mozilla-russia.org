@@ -63,7 +63,7 @@ function mail_send($to, $subject, $body, $from='', $cc='', $bcc='', $headers=nul
  */
 function mail_encode_address($string,$header='To'){
   $headers = '';
-  $parts = split(',',$string);
+  $parts = explode(',',$string);
   foreach ($parts as $part){
     $part = trim($part);
 

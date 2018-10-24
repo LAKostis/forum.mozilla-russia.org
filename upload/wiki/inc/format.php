@@ -232,7 +232,7 @@ function format_link_interwiki($link){
   $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
 
   //get interwiki short name
-  list($wiki,$link['url']) = split('>',$link['url'],2);
+  list($wiki,$link['url']) = explode('>',$link['url'],2);
   $wiki   = strtolower(trim($wiki)); //always use lowercase
   $link['url']   = trim($link['url']);
   if(!$link['name']) $link['name'] = $link['url'];
@@ -317,7 +317,7 @@ function format_link_media($link){
   $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
   $class          = 'media';
 
-  list($link['name'],$title) = split('\|',$link['name'],2);
+  list($link['name'],$title) = explode('|',$link['name'],2);
   $t = htmlspecialchars($title);
 
   //set alignment from spaces
@@ -334,7 +334,7 @@ function format_link_media($link){
   $link['name'] = trim($link['name']);
   
   //split into src and parameters
-  list($src,$param) = split('\?',$link['name'],2);
+  list($src,$param) = explode('?',$link['name'],2);
   //parse width and height
   if(preg_match('#(\d*)(x(\d*))?#i',$param,$size)){
     if($size[1]) $w = $size[1];

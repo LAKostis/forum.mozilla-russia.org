@@ -230,9 +230,9 @@ else if (isset($_GET['report']))
 			$result = $db->query('SELECT DISTINCT forum_id, topic_id, post_id, reported_by FROM '.$db->prefix.'reports WHERE message = \'Spam\' AND zapped IS NULL') or error('Unable to select reports', __FILE__, __LINE__, $db->error());
 			if ($db->num_rows($result))
 			{
-				$whitelist = !empty($pun_config['o_spamreport_whitelist']) ? split(',', $pun_config['o_spamreport_whitelist']) : array();
-				$blacklist = !empty($pun_config['o_spamreport_blacklist']) ? split(',', $pun_config['o_spamreport_blacklist']) : array();
-				$forums = !empty($pun_config['o_spamreport_forums']) ? split(',', $pun_config['o_spamreport_forums']) : array();
+				$whitelist = !empty($pun_config['o_spamreport_whitelist']) ? explode(',', $pun_config['o_spamreport_whitelist']) : array();
+				$blacklist = !empty($pun_config['o_spamreport_blacklist']) ? explode(',', $pun_config['o_spamreport_blacklist']) : array();
+				$forums = !empty($pun_config['o_spamreport_forums']) ? explode(',', $pun_config['o_spamreport_forums']) : array();
 				$count = (int)$pun_config['o_spamreport_count'] > 1 ? (int)$pun_config['o_spamreport_count'] : 2;
 
 				$blocked = array();

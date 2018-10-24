@@ -616,9 +616,9 @@ function rawWiki($id,$rev=''){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWikiSlices($range,$id,$rev=''){
-  list($from,$to) = split('-',$range,2);
+  list($from,$to) = explode('-',$range,2);
   $text = io_readFile(wikiFN($id,$rev));
-  $text = split("\n",$text);
+  $text = explode("\n",$text);
   if(!$from) $from = 0;
   if(!$to)   $to   = count($text);
 
@@ -713,7 +713,7 @@ function getRecents($num=0,$incdel=false){
   foreach ($loglines as $line){
     $line = rtrim($line);        //remove newline
     if(empty($line)) continue;   //skip empty lines
-    $info = split("\t",$line);   //split into parts
+    $info = explode("\t",$line);   //split into parts
     //add id if not in yet and file still exists and is allowed to read
     if(!$recent[$info[2]] && 
        (@file_exists(wikiFN($info[2])) || $incdel) &&
@@ -842,8 +842,8 @@ function notify($id,$rev="",$summary=""){
     $subject = $lang['mail_changed'].' '.$id;
     $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",'doku.php',true),$text);
     require_once("inc/DifferenceEngine.php");
-    $df  = new Diff(split("\n",rawWiki($id,$rev)),
-                    split("\n",rawWiki($id)));
+    $df  = new Diff(explode("\n",rawWiki($id,$rev)),
+                    explode("\n",rawWiki($id)));
     $dformat = new UnifiedDiffFormatter();
     $diff    = $dformat->format($df);
   }else{

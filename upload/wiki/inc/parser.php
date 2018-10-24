@@ -139,7 +139,7 @@ function parse($text){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function preparse($text,&$table,&$hltable){
-  $lines = split("\n",$text);
+  $lines = explode("\n",$text);
 
   //prepare a tokens for paragraphs
   $po = mkToken();
@@ -173,7 +173,7 @@ function preparse($text,&$table,&$hltable){
       $line = preg_replace("#<php>(.*?)</php>#","",$line);
       //check for start of multiline noparse areas
       if(preg_match('#^.*?<(nowiki|code|php|html|file)( (\w+))?>#',$line,$matches)){
-				list($noparse) = split(" ",$matches[1]); //remove options
+				list($noparse) = explode(" ",$matches[1]); //remove options
         $noparse = '</'.$noparse.'>';
         continue;
       }elseif(preg_match('#^.*?%%#',$line)){
@@ -549,7 +549,7 @@ function mkToken(){
  */
 function quoteformat($block){
   $block = trim($block);
-  $lines = split("\n",$block);
+  $lines = explode("\n",$block);
 
   $lvl = 0;
   $ret = "";
@@ -600,7 +600,7 @@ function quoteformat($block){
  */
 function tableformat($block) {
   $block = trim($block);
-  $lines = split("\n",$block);
+  $lines = explode("\n",$block);
   $ret = "";
   //build a row array 
   $rows = array();
@@ -687,7 +687,7 @@ function listformat($block){
   $lst=0;
   $lvl=0;
   $enc=0;
-  $lines = split("\n",$block);
+  $lines = explode("\n",$block);
 
   //build an item array 
   $cnt=0;
@@ -805,7 +805,7 @@ function preformat($text,$type,$option=''){
       break;
     case 'block':
       $text  = substr($text,1);   //remove 1st newline
-      $lines = split("\n",$text); //break into lines
+      $lines = explode("\n",$text); //break into lines
       $text  = '';
       foreach($lines as $line){
         $text .= substr($line,2)."\n"; //remove indents

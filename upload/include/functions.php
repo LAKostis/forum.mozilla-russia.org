@@ -1609,7 +1609,7 @@ function pun_increment_pm($str) {
 		return 'Re('.(++$arr[1]).'): '.$arr[2];
 	}
 	elseif (preg_match('/^(Re: )+/i', $str, $matches))
-		return preg_replace('/^(Re: )+/i', 'Re('.sizeof(split(' ',$matches[0])).'): ', $str);
+		return preg_replace('/^(Re: )+/i', 'Re('.sizeof(explode(' ',$matches[0])).'): ', $str);
 	else
 		return 'Re: '.$str;
 }

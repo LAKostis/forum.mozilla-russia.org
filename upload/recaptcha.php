@@ -48,17 +48,21 @@ session_start();
 // Effectively we're providing an API endpoint here that will accept the token, verify it, and return the action / score to the page
 // In production, always sanitize and validate the input you retrieve from the request.
 
-if (isset($_POST['form_sent']) && isset($_POST['g-recaptcha-response']))
+if (isset($_POST['form_sent']))
 {
-    $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-    $gRecaptchaResponse = $_POST['g-recaptcha-response'];
-    $resp = $recaptcha->verify($gRecaptchaResponse, $_SERVER['REMOTE_ADDR']);
-    if ($resp->isSuccess()) {
-        // Verified!
-    } else {
-    	$errors = $resp->getErrorCodes();
-//    	print_r ($errors);
-    	message($lang_register['Text mismatch']);
-    }
+    if (isset($_POST['g-recaptcha-response']))
+    {
+        $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+        $gRecaptchaResponse = $_POST['g-recaptcha-response'];
+        $resp = $recaptcha->verify($gRecaptchaResponse, $_SERVER['REMOTE_ADDR']);
+        if ($resp->isSuccess()) {
+            // Verified!
+	} else
+	{
+            $errors = $resp->getErrorCodes();
+//          print_r ($errors);
+            message($lang_register['Text mismatch']);
+	}
+    } else message($lang_register['Text mismatch']);
 }
 ?>

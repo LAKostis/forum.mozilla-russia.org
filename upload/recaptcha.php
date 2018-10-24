@@ -33,13 +33,11 @@ require("include/google/appengine-https.php");
 require_once("include/google/autoload.php");
 
 // Register API keys at https://www.google.com/recaptcha/admin
-$siteKey = '';
 $secret = '';
 
 // Copy the config.php.dist file to config.php and update it with your keys to run the examples
-if ($siteKey == '' && is_readable(__DIR__ . '/config_recaptcha.php')) {
+if ($secret == '' && is_readable(__DIR__ . '/config_recaptcha.php')) {
     $config = include __DIR__ . '/config_recaptcha.php';
-    $siteKey = $v2_config['site'];
     $secret = $v2_config['secret'];
 }
 
@@ -47,22 +45,27 @@ session_start();
 
 // Effectively we're providing an API endpoint here that will accept the token, verify it, and return the action / score to the page
 // In production, always sanitize and validate the input you retrieve from the request.
-
 if (isset($_POST['form_sent']))
 {
     if (isset($_POST['g-recaptcha-response']))
     {
-        $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-        $gRecaptchaResponse = $_POST['g-recaptcha-response'];
-        $resp = $recaptcha->verify($gRecaptchaResponse, $_SERVER['REMOTE_ADDR']);
-        if ($resp->isSuccess()) {
-            // Verified!
-	} else
-	{
-            $errors = $resp->getErrorCodes();
-//          print_r ($errors);
-            message($lang_register['Text mismatch']);
-	}
+        try
+        {
+             $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+             $gRecaptchaResponse = $_POST['g-recaptcha-response'];
+             $resp = $recaptcha->verify($gRecaptchaResponse, $_SERVER['REMOTE_ADDR']);
+             if ($resp->isSuccess()) {
+                 // Verified!
+             } else
+             {
+                 $errors = $resp->getErrorCodes();
+//               print_r ($errors);
+                 message($lang_register['Text mismatch']);
+             }
+        } catch (Exception $e) {
+             // echo 'Caught exception: ',  $e->getMessage(), "\n";
+	     message($lang_register['Text mismatch']);
+        }
     } else message($lang_register['Text mismatch']);
 }
 ?>

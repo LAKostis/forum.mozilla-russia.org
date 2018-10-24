@@ -328,7 +328,7 @@ function linkformat($match){
 
   //prepare variables for the formaters
 	$link = array();
-  list($link['url'],$link['name']) = split('\|',$match,2);
+  list($link['url'],$link['name']) = explode('|',$match,2);
   $link['url']    = trim($link['url']);
   $link['name']   = trim($link['name']);
   $link['class']  = '';

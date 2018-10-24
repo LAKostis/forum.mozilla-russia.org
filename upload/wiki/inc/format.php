@@ -86,7 +86,7 @@ function format_link_wiki($link){
   }
 
   //keep hashlink if exists
-  list($link['url'],$hash) = split('#',$link['url'],2);
+  list($link['url'],$hash) = explode('#',$link['url'],2);
   $hash = cleanID($hash);
 
   //use link without namespace as name

@@ -12,7 +12,7 @@ if ($db->num_rows($result))
 
 	$cur_poll = $db->fetch_assoc($result);
 
-	$options = unserialize($cur_poll['options']);
+	$options = pun_unserialize($cur_poll['options']);
 	if (!is_array($options))
 		$options = array();
 	if (!empty($cur_poll['voters']))

@@ -116,7 +116,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$result = $db->query('SELECT search_data FROM '.$db->prefix.'search_cache WHERE id='.$search_id.' AND ident=\''.$db->escape($ident).'\'') or error('Unable to fetch search results', __FILE__, __LINE__, $db->error());
 		if ($row = $db->fetch_assoc($result))
 		{
-			$temp = unserialize($row['search_data']);
+			$temp = pun_unserialize($row['search_data']);
 
 			$search_results = $temp['search_results'];
 			$num_hits = $temp['num_hits'];

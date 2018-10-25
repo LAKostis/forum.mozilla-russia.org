@@ -988,6 +988,15 @@ function pun_trim($str)
 		return trim($str);
 }
 
+//
+// Unicode-friendly unserialize
+// http://snippets.dzone.com/posts/show/6592
+//
+function pun_unserialize($str)
+{
+	$str = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $str);
+	return unserialize($string);
+}
 
 //
 // Display a message when board is in maintenance mode

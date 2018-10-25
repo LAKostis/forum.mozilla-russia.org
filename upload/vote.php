@@ -78,7 +78,7 @@ if (isset($_POST['form_sent']))
 
 
     // Grab the options for the poll
-    $options = unserialize($cur_poll['options']);
+    $options = pun_unserialize($cur_poll['options']);
     
     // If there have already been voters grab them and their respective voters
     if (!empty($cur_poll['voters']))

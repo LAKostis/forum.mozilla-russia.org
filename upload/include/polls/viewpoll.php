@@ -13,10 +13,14 @@ if ($db->num_rows($result))
 	$cur_poll = $db->fetch_assoc($result);
 
 	$options = unserialize($cur_poll['options']);
+	if (!is_array($options))
+		$options = array();
 	if (!empty($cur_poll['voters']))
-	$voters = unserialize($cur_poll['voters']);
+		$voters = unserialize($cur_poll['voters']);
+		if (!is_array($voters))
+			$voters = array();
 	else
-	$voters = array();
+		$voters = array();
 
 	$ptype = $cur_poll['ptype']; 
 	// yay memory!
@@ -74,9 +78,10 @@ if ($db->num_rows($result))
 			<strong><?php echo pun_htmlspecialchars($cur_topic['question']) ?></strong><br /><br />
 			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; PADDING: 0;">
 			<?php
-		        $options = unserialize($cur_poll['options']);
 		        if (!empty($cur_poll['votes']))
 				$votes = unserialize($cur_poll['votes']);
+				if (!is_array($votes))
+					$votes = array();
 			else
 				$votes = array();
 

@@ -321,7 +321,7 @@ else if (isset($_GET['report_spam']))
 	if ($report)
 		redirect('admin_bans.php', 'Report added. Redirecting &hellip;');
 	else
-		error('Something gone wrong. Report submit failed');
+		error('Something gone wrong. Report submit failed', __FILE__, __LINE__);
 }
 
 else if (isset($_POST['cleanup_bans']))

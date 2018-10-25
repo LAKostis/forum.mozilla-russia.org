@@ -74,7 +74,8 @@ if ($db->num_rows($result))
 			<strong><?php echo pun_htmlspecialchars($cur_topic['question']) ?></strong><br /><br />
 			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; PADDING: 0;">
 			<?php
-			if (!empty($cur_poll['votes']))
+		        $options = unserialize($cur_poll['options']);
+		        if (!empty($cur_poll['votes']))
 				$votes = unserialize($cur_poll['votes']);
 			else
 				$votes = array();

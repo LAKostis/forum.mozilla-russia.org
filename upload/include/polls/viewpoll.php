@@ -15,11 +15,11 @@ if ($db->num_rows($result))
 	$options = pun_unserialize($cur_poll['options']);
 	if (!is_array($options))
 		$options = array();
-	if (!empty($cur_poll['voters']))
+	if (!empty($cur_poll['voters'])) {
 		$voters = unserialize($cur_poll['voters']);
 		if (!is_array($voters))
 			$voters = array();
-	else
+	} else
 		$voters = array();
 
 	$ptype = $cur_poll['ptype']; 
@@ -78,11 +78,11 @@ if ($db->num_rows($result))
 			<strong><?php echo pun_htmlspecialchars($cur_topic['question']) ?></strong><br /><br />
 			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; PADDING: 0;">
 			<?php
-		        if (!empty($cur_poll['votes']))
+		        if (!empty($cur_poll['votes'])) {
 				$votes = unserialize($cur_poll['votes']);
 				if (!is_array($votes))
 					$votes = array();
-			else
+			} else
 				$votes = array();
 
 		if ($ptype == 1 || $ptype == 2) 

@@ -995,7 +995,7 @@ function pun_trim($str)
 function pun_unserialize($str)
 {
 	$str = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $str);
-	return unserialize($string);
+	return unserialize($str);
 }
 
 //

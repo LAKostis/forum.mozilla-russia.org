@@ -95,19 +95,6 @@ if [ "$1" == php-fpm ]; then
 		fi
 	done
 
-	# linking backwards-compatibility
-	if [ -n "${!MYSQL_ENV_MYSQL_*}" ]; then
-		haveConfig=1
-		# host defaults to "mysql" below if unspecified
-		: "${WORDPRESS_DB_USER:=${MYSQL_ENV_MYSQL_USER:-root}}"
-		if [ "$WORDPRESS_DB_USER" = 'root' ]; then
-			: "${WORDPRESS_DB_PASSWORD:=${MYSQL_ENV_MYSQL_ROOT_PASSWORD:-}}"
-		else
-			: "${WORDPRESS_DB_PASSWORD:=${MYSQL_ENV_MYSQL_PASSWORD:-}}"
-		fi
-		: "${WORDPRESS_DB_NAME:=${MYSQL_ENV_MYSQL_DATABASE:-}}"
-	fi
-
 	# only touch "config.php" if we have environment-supplied configuration values
 	if [ "$haveConfig" ]; then
 		: "${FORUM_DB_HOST:=mysql}"

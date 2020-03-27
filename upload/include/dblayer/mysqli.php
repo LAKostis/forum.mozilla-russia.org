@@ -54,6 +54,11 @@ class DBLayer
 
 		if (!$this->link_id)
 			error('Unable to connect to MySQL and select database. MySQL reported: '.mysqli_connect_error(), __FILE__, __LINE__);
+
+		// change character set to utf8
+		if (!mysqli_set_charset($this->link_id, "utf8")) {
+    			error('Error loading character set utf8: '.mysqli_error($this->link_id), __FILE__, __LINE__);
+		}
 	}
 
 

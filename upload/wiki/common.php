@@ -12,7 +12,7 @@
 	require_once PUN_ROOT.'wiki/inc/auth.php';
 
 	//import variables
-	$QUERY = trim($_REQUEST['id']);
+	$QUERY = trim((string)$_REQUEST['id']);
 	$ID		= cleanID($_REQUEST['id']);
 	$REV	 = $_REQUEST['rev'];
 	$ACT	 = $_REQUEST['do'];
@@ -52,7 +52,7 @@
 	}
 
 	//handle register
-	if($ACT=='register' && register()){
+	if($ACT==='register' && register()){
 		$ACT='login';
 	}
 

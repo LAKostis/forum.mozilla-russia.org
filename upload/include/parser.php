@@ -532,7 +532,7 @@ function split_text($text, $start, $end)
 
 	if ($pun_config['o_indent_num_spaces'] != 8 && $start == '[code]')
 	{
-		$spaces = str_repeat(' ', $pun_config['o_indent_num_spaces']);
+		$spaces = str_repeat(' ', (int)$pun_config['o_indent_num_spaces']);
 		$inside = str_replace("\t", $spaces, $inside);
 	}
 
@@ -652,14 +652,14 @@ function do_bbcode($text)
 	// This thing takes a while! :)
 	$text = preg_replace($pattern, $replace, $text);
 
-	if (strpos($text, 'quote') !== false)
+	if (strpos((string)$text, 'quote') !== false)
 	{
 		$text = str_replace('[quote]', '</p><blockquote><div class="incqbox"><p>', $text);
 		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><blockquote><div class=\"incqbox\"><h4>".str_replace(\'[\', \'&#91;\', \'$2\')." ".$lang_common[\'wrote\'].": </h4><p>"', $text);
 		$text = preg_replace('#\[\/quote\]\s*#', '</p></div></blockquote><p>', $text);
 	}
 
-	if (strpos($text, 'added') !== false)
+	if (strpos((string)$text, 'added') !== false)
 	{
 		preg_match_all('#\[added=((\d){9,11})\]#i', $text, $added, PREG_SET_ORDER);
 		if(count($added))

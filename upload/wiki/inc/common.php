@@ -33,11 +33,11 @@ if (!defined('PUN_ROOT'))
 	  if (!empty($_COOKIE)) remove_magic_quotes($_COOKIE);
 	  if (!empty($_REQUEST)) remove_magic_quotes($_REQUEST);
 	  if (!empty($_SESSION)) remove_magic_quotes($_SESSION);
-	  ini_set('magic_quotes_gpc', 0);
+	  ini_set('magic_quotes_gpc', '0');
   }
   if (version_compare(PHP_VERSION, '5.3.0', '<'))
 	  set_magic_quotes_runtime(0);
-  ini_set('magic_quotes_sybase',0);
+  ini_set('magic_quotes_sybase','0');
 
   //disable gzip if not available
   if($conf['usegzip'] && !function_exists('gzopen')){
@@ -64,8 +64,8 @@ function remove_magic_quotes(&$array) {
     }else {
       $array[$key] = stripslashes($array[$key]);
     }
-  } 
-} 
+  }
+}
 
 /**
  * Returns the full absolute URL to the directory where
@@ -169,10 +169,10 @@ function pageinfo(){
 /**
  * print a message
  *
- * If HTTP headers were not sent yet the message is added 
+ * If HTTP headers were not sent yet the message is added
  * to the global message array else it's printed directly
  * using html_msgarea()
- * 
+ *
  *
  * Levels can be:
  *
@@ -209,7 +209,7 @@ function breadcrumbs(){
   global $ACT;
   global $conf;
   $crumbs = $_SESSION[$conf['title']]['bc'];
-  
+
   //first visit?
   if (!is_array($crumbs)){
     $crumbs = array();
@@ -283,7 +283,7 @@ function wl($id='',$more='',$script='doku.php',$canonical=false){
     $xlink .= $id;
     if($more) $xlink .= '?'.$more;
   }
-  
+
   return $xlink;
 }
 
@@ -339,7 +339,7 @@ function checkwordblock(){
     //old versions of PCRE define a maximum of parenthesises even if no
     //backreferences are used - the maximum is 99
     //this is very bad performancewise and may even be too high still
-    $chunksize = 40; 
+    $chunksize = 40;
   }else{
     //read file in chunks of 600 - this should work around the
     //MAX_PATTERN_SIZE in modern PCRE
@@ -385,22 +385,22 @@ function clientIP(){
 function checklock($id){
   global $conf;
   $lock = wikiFN($id).'.lock';
-  
+
   //no lockfile
   if(!@file_exists($lock)) return false;
-  
+
   //lockfile expired
   if((time() - filemtime($lock)) > $conf['locktime']){
     unlink($lock);
     return false;
   }
-  
+
   //my own lock
   $ip = io_readFile($lock);
   if( ($ip == clientIP()) || ($ip == $_SERVER['REMOTE_USER']) ){
     return false;
   }
-  
+
   return $ip;
 }
 
@@ -447,7 +447,7 @@ function unlock($id){
 function cleanID($id){
   global $conf;
   global $lang;
-  $id = trim($id);
+  $id = trim((string)$id);
   $id = utf8_strtolower($id);
 
   //alternative namespace seperator
@@ -528,7 +528,7 @@ function cleanText($text){
 /**
  * Prepares text for print in Webforms by encoding special chars.
  * It also converts line endings to Windows format which is
- * pseudo standard for webforms. 
+ * pseudo standard for webforms.
  *
  * @see    cleanText() for 2unix conversion
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -576,11 +576,11 @@ function rawLocale($id){
 function parsedWiki($id,$rev='',$excuse=true){
   $file = wikiFN($id,$rev);
   $ret  = '';
-  
+
   //ensure $id is in global $ID (needed for parsing)
   global $ID;
   $ID = $id;
-  
+
   if($rev){
     if(@file_exists($file)){
       $ret = parse(io_readFile($file));
@@ -715,7 +715,7 @@ function getRecents($num=0,$incdel=false){
     if(empty($line)) continue;   //skip empty lines
     $info = explode("\t",$line);   //split into parts
     //add id if not in yet and file still exists and is allowed to read
-    if(!$recent[$info[2]] && 
+    if(!$recent[$info[2]] &&
        (@file_exists(wikiFN($info[2])) || $incdel) &&
        (auth_quickaclcheck($info[2]) >= AUTH_READ)
       ){
@@ -748,7 +748,7 @@ function getRevisionInfo($id,$rev){
   $loglines = file($conf['changelog']);
   $loglines = preg_grep("/$rev\t\d+\.\d+\.\d+\.\d+\t$id\t/",$loglines);
   rsort($loglines); //reverse sort on timestamp (shouldn't be needed)
-  $line = explode("\t",$loglines[0]);
+  $line = explode("\t",(string)$loglines[0]);
   $info['date'] = $line[0];
   $info['ip']   = $line[1];
   $info['user'] = $line[3];
@@ -787,7 +787,7 @@ function saveWikiText($id,$text,$summary){
 
   addLogEntry(@filemtime($file),$id,$summary);
   notify($id,$old,$summary);
-  
+
   //purge cache on add by updating the purgefile
   if($conf['purgeonadd'] && (!$old || $del)){
     io_saveFile($conf['datadir'].'/.cache/purgefile',time());
@@ -827,7 +827,7 @@ function notify($id,$rev="",$summary=""){
   global $conf;
   $hdrs ='';
   if(empty($conf['notify'])) return; //notify enabled?
-  
+
   $text = rawLocale('mailtext');
   $text = str_replace('@DATE@',date($conf['dformat']),$text);
   $text = str_replace('@BROWSER@',$_SERVER['HTTP_USER_AGENT'],$text);
@@ -837,7 +837,7 @@ function notify($id,$rev="",$summary=""){
   $text = str_replace('@DOKUWIKIURL@',getBaseURL(true),$text);
   $text = str_replace('@SUMMARY@',$summary,$text);
   $text = str_replace('@USER@',$_SERVER['REMOTE_USER'],$text);
-  
+
   if($rev){
     $subject = $lang['mail_changed'].' '.$id;
     $text = str_replace('@OLDPAGE@',wl($id,"rev=$rev",'doku.php',true),$text);
@@ -899,7 +899,7 @@ function download($url,$file){
   fwrite($fp2,$cont);
   fclose($fp2);
   return true;
-} 
+}
 
 /**
  * extracts the query from a google referer
@@ -907,9 +907,9 @@ function download($url,$file){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getGoogleQuery(){
-  $url = parse_url($_SERVER['HTTP_REFERER']);
+  $url = parse_url((string)$_SERVER['HTTP_REFERER']);
 
-  if(!preg_match("#google\.#i",$url['host'])) return '';
+  if(!preg_match("#google\.#i",(string)$url['host'])) return '';
   $query = array();
   parse_str($url['query'],$query);
 
@@ -950,7 +950,7 @@ function filesize_h($size, $dec = 1){
   $sizes = array('B', 'KB', 'MB', 'GB');
   $count = count($sizes);
   $i = 0;
-    
+
   while ($size >= 1024 && ($i < $count - 1)) {
     $size /= 1024;
     $i++;
@@ -1033,7 +1033,7 @@ function check(){
   }else{
     msg('mb_string extension not available - PHP only replacements will be used',0);
   }
- 
+
   msg('Your current permission for this page is '.$INFO['perm'],0);
 
   if(is_writable($INFO['filepath'])){

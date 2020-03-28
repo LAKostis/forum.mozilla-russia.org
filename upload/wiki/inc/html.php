@@ -150,11 +150,11 @@ function html_secedit($text,$show=true){
  */
 function html_breadcrumbs(){
 	global $lang;
-	global $conf; 
+	global $conf;
 
 	//check if enabled
 	if(!$conf['breadcrumbs']) return;
- 
+
 	$crumbs = breadcrumbs(); //setup crumb trace
 	print '<div class="breadcrumbs">';
 	print $lang['breadcrumb'].':';
@@ -286,15 +286,15 @@ function html_media_head(){
 function html_btn($name,$id,$akey,$params,$method='get'){
 	global $conf;
 	global $lang;
-	
+
 	$label = $lang['btn_'.$name];
-	
+
 	$ret = '';
 
 	//filter id (without urlencoding)
 	$id = idfilter($id,false);
 
-	//make nice URLs even for buttons	
+	//make nice URLs even for buttons
 	$link = getBaseURL().'/';
 	$link = preg_replace('#//$#','/',$link);
 	if(!$conf['userewrite']){
@@ -303,15 +303,15 @@ function html_btn($name,$id,$akey,$params,$method='get'){
 	}else{
 		$script = $link.$id;
 	}
-	
+
 	$ret .= '<form class="button" method="'.$method.'" action="'.$script.'" onsubmit="return svchk()"><div class="inlineform">';
-	
+
 	reset($params);
 	while (list($key, $val) = each($params)) {
 		$ret .= '<input type="hidden" name="'.$key.'" ';
-		$ret .= 'value="'.htmlspecialchars($val).'" />';
+		$ret .= 'value="'.htmlspecialchars((string)$val).'" />';
 	}
-	
+
 	$ret .= '<input type="submit" value="'.htmlspecialchars($label).'" class="button" ';
 	if($akey){
 		$ret .= 'title="ALT+'.strtoupper($akey).'" ';
@@ -381,7 +381,7 @@ function html_header(){
 				</form>&nbsp;
 			</div>
 		</div>
-	
+
 		<?php
 			flush();
 			html_breadcrumbs();
@@ -469,7 +469,7 @@ function html_footer(){
 				<?php echo html_editbutton()?>
 				<?php echo html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
 			</div>
-		
+
 			<div class="bar-right" id="bar_bottomright">
 				<?php echo html_btn(index,$ID,'x',array('do' => 'index'))?>
 				<a href="#top"><input type="button" class="button" value="<?php echo $lang['btn_top']?>" /></a>&nbsp;
@@ -633,7 +633,7 @@ function html_locked($ip){
 	global $ID;
 	global $conf;
 	global $lang;
-	
+
 	$locktime = filemtime(wikiFN($ID).'.lock');
 	$expire = @date($conf['dformat'], $locktime + $conf['locktime'] );
 	$min		= round(($conf['locktime'] - (time() - $locktime) )/60);
@@ -656,9 +656,9 @@ function html_revisions(){
 	global $conf;
 	global $lang;
 	global $pun_user;
-	$revisions = getRevisions($ID); 
+	$revisions = getRevisions($ID);
 	$date = @date($conf['dformat'],$INFO['lastmod']);
-	
+
 	print parsedLocale('revisions');
 	print '<ul>';
 	if($INFO['exists']){
@@ -836,7 +836,7 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
 			$ret .= "</li>\n";
 		}
 
-		//remember current level 
+		//remember current level
 		$level = $item['level'];
 
 		//print item
@@ -946,7 +946,7 @@ function html_conflict($text,$summary){
 	<input type="hidden" name="id" value="<?php echo $ID?>" />
 	<input type="hidden" name="wikitext" value="<?php echo formText($text)?>" />
 	<input type="hidden" name="summary" value="<?php echo formText($summary)?>" />
-	
+
 	<div align="center">
 		<input class="button" type="submit" name="do" value="<?php echo $lang['btn_save']?>" accesskey="s" title="[ALT+S]" />
 		<input class="button" type="submit" name="do" value="<?php echo $lang['btn_cancel']?>" />
@@ -1073,7 +1073,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 				<script language="JavaScript" type="text/javascript">
 					<?php /* sets changed to true when previewed */?>
 					textChanged = <?php  ($pr) ? print 'true' : print 'false' ?>;
-					
+
 					formatButton('wiki/images/bold.png','<?php echo $lang['qb_bold']?>','**','**','<?php echo $lang['qb_bold']?>','b');
 					formatButton('wiki/images/italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');
 					formatButton('wiki/images/underline.png','<?php echo $lang['qb_underl']?>','__','__','<?php echo $lang['qb_underl']?>','u');
@@ -1185,7 +1185,7 @@ function html_debug(){
 	print '<b>abs baseURL:</b><pre>';
 	print getBaseURL(true);
 	print '</pre>';
-	
+
 	print '<b>rel baseURL:</b><pre>';
 	print dirname($_SERVER['PHP_SELF']).'/';
 	print '</pre>';

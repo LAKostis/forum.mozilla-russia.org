@@ -67,7 +67,7 @@ function generate_admin_menu($page = '')
 	$d = dir(PUN_ROOT.'plugins');
 	while (($entry = $d->read()) !== false)
 	{
-		$prefix = substr($entry, 0, strpos($entry, '_'));
+		$prefix = substr($entry, 0, (int)strpos($entry, '_'));
 		$suffix = substr($entry, strlen($entry) - 4);
 
 		if ($suffix == '.php' && ((!$is_admin && $prefix == 'AMP') || ($is_admin && ($prefix == 'AP' || $prefix == 'AMP'))))

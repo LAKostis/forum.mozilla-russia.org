@@ -18,7 +18,7 @@
  * Accepts raw data and returns valid xhtml
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- */  
+ */
 function parse($text){
   global $parser;
   global $conf;
@@ -86,13 +86,13 @@ function parse($text){
   //match full URLs (adapted from Perl cookbook)
   firstpass($table,$text,"#(\b)($urls://[$any]+?)([$punc]*[^$any])#ie","linkformat('\\2')",'\1','\4');
 
-  //short www URLs 
+  //short www URLs
   firstpass($table,$text,"#(\b)(www\.[$host]+?\.[$host]+?[$any]+?)([$punc]*[^$any])#ie","linkformat('http://\\2|\\2')",'\1','\3');
 
-  //windows shares 
+  //windows shares
   firstpass($table,$text,"#([$gunk$punc\s])(\\\\\\\\[$host]+?\\\\[$any]+?)([$punc]*[^$any])#ie","linkformat('\\2')",'\1','\3');
 
-  //short ftp URLs 
+  //short ftp URLs
   firstpass($table,$text,"#(\b)(ftp\.[$host]+?\.[$host]+?[$any]+?)([$punc]*[^$any])#ie","linkformat('ftp://\\2')",'\1','\3');
 
   // email@domain.tld
@@ -113,7 +113,7 @@ function parse($text){
 
   /* second pass for simple formating */
   $text = simpleformat($text);
-  
+
   /* third pass - insert the matches from 1st pass */
   reset($table);
   while (list($key, $val) = each($table)) {
@@ -298,7 +298,7 @@ function format_headlines(&$table,&$hltable,&$text){
     $secedit = '<!-- SECTION ['.$last.'-] -->';
     $token    = mktoken();
     $text    .= $token;
-    $table[$token] = $secedit; 
+    $table[$token] = $secedit;
   }
 
   //close last div
@@ -376,7 +376,7 @@ function linkformat($match){
  */
 function simpleformat($text){
   global $conf;
-  
+
   $text = preg_replace('/__(.+?)__/s','<span style="text-decoration: underline">\1</span>',$text);  //underline
   $text = preg_replace('/\/\/(.+?)\/\//s','<em>\1</em>',$text);  //emphasize
   $text = preg_replace('/\*\*(.+?)\*\*/s','<strong>\1</strong>',$text);  //bold
@@ -387,10 +387,10 @@ function simpleformat($text){
   //sub and superscript
   $text = preg_replace('#&lt;sub&gt;(.*?)&lt;/sub&gt;#is','<sub>\1</sub>',$text);
   $text = preg_replace('#&lt;sup&gt;(.*?)&lt;/sup&gt;#is','<sup>\1</sup>',$text);
- 
-  //do quoting 
+
+  //do quoting
   $text = preg_replace("/\n((&gt;)[^\n]*?\n)+/se","'\n'.quoteformat('\\0').'\n'",$text);
-  
+
   // Typography
   if($conf['typography']){
     $text = preg_replace('/([^-])--([^-])/s','\1&#8211;\2',$text); //endash
@@ -442,7 +442,7 @@ function simpleformat($text){
  */
 function footnotes($text){
   $num = 0;
-  while (preg_match('/\(\((.+?)\)\)/s',$text,$match)){
+  while (preg_match('/\(\((.+?)\)\)/s',(string)$text,$match)){
     $num++;
     $fn    = $match[1];
     $linkt = '<a href="#fn'.$num.'" name="fnt'.$num.'" class="fn_top">'.$num.')</a>';
@@ -490,7 +490,7 @@ function acronyms(&$table,&$text){
     $ac   = preg_quote($ac,'/');
     firstpass($table,$text,'/(\b)('.$ac.')(\b)/s',"<acronym title=\"$desc\">\\2</acronym>","\\1","\\3");
   }
-} 
+}
 
 /**
  * Apply custom text replacements
@@ -539,7 +539,7 @@ function firstpass(&$table,&$text,$regexp,$replace,$lpad='',$rpad=''){
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function mkToken(){
-  return '~'.md5(uniqid(rand(), true)).'~';
+  return '~'.md5(uniqid((string)rand(), true)).'~';
 }
 
 /**
@@ -602,7 +602,7 @@ function tableformat($block) {
   $block = trim($block);
   $lines = explode("\n",$block);
   $ret = "";
-  //build a row array 
+  //build a row array
   $rows = array();
   for($r=0; $r < count($lines); $r++){
     $line = $lines[$r];
@@ -675,7 +675,7 @@ function tableformat($block) {
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function listformat($block){
-  //remove 1st newline 
+  //remove 1st newline
   $block = substr($block,1);
   //unescape
   $block = str_replace('\\"','"',$block);
@@ -689,7 +689,7 @@ function listformat($block){
   $enc=0;
   $lines = explode("\n",$block);
 
-  //build an item array 
+  //build an item array
   $cnt=0;
   $items = array();
   foreach ($lines as $line){
@@ -764,10 +764,10 @@ function preformat($text,$type,$option=''){
   global $lang;
   //unescape
   $text = str_replace('\\"','"',$text);
-  
+
   if($type == 'php' && !$conf['phpok']) $type='file';
   if($type == 'html' && !$conf['htmlok']) $type='file';
-  
+
   switch ($type){
     case 'php':
         ob_start();

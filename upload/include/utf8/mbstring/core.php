@@ -72,13 +72,13 @@ function utf8_strrpos($str, $search, $offset = FALSE){
             trigger_error('utf8_strrpos expects parameter 3 to be long',E_USER_WARNING);
             return FALSE;
         }
-        
+
         $str = mb_substr($str, $offset);
-        
+
         if ( FALSE !== ( $pos = mb_strrpos($str, $search) ) ) {
             return $pos + $offset;
         }
-        
+
         return FALSE;
     }
 }
@@ -118,7 +118,7 @@ function utf8_substr($str, $offset, $length = FALSE){
 * @subpackage strings
 */
 function utf8_strtolower($str){
-    return mb_strtolower($str);
+    return mb_strtolower((string)$str);
 }
 
 //--------------------------------------------------------------------

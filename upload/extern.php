@@ -260,8 +260,8 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 				echo "\t\t".'<title>'.pun_htmlspecialchars($cur_topic['forum_name']).' : '.pun_htmlspecialchars($cur_topic['subject']).'</title>'."\r\n";
 			}
 			echo "\t\t".'<link>'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].$url_action.'</link>'."\r\n";
-			echo "\t\t".'<pubDate>'.date('r', $cur_topic['posted']).'</pubDate>'."\r\n";
-			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].($site ? '' : '<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', $cur_topic['last_post'])).'<br />')."\r\n".parse_message($cur_message['message'], $cur_message['hide_smilies']).']]></description>'."\r\n";
+			echo "\t\t".'<pubDate>'.date('r', (int)$cur_topic['posted']).'</pubDate>'."\r\n";
+			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].($site ? '' : '<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', (int)$cur_topic['last_post'])).'<br />')."\r\n".parse_message($cur_message['message'], $cur_message['hide_smilies']).']]></description>'."\r\n";
 			echo "\t".'</item>'."\r\n";
 		}
 

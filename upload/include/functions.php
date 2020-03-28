@@ -197,7 +197,7 @@ function pun_setcookie($user_id, $password_hash, $expire)
 	@header('P3P: CP="CUR ADM"');
 
 	if (version_compare(PHP_VERSION, '5.2.0', '>='))
-		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, $cookie_secure, true);
+		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, (bool)$cookie_secure, true);
 	else
 		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
 }
@@ -344,7 +344,7 @@ function generate_navlinks()
 		{
 			// Insert any additional links into the $links array (at the correct index)
 			for ($i = 0; $i < count($extra_links[1]); ++$i)
-				array_splice($links, $extra_links[1][$i], 0, array('<li id="navextra'.($i + 1).'">'.$extra_links[2][$i]));
+				array_splice($links, (int)$extra_links[1][$i], 0, array('<li id="navextra'.($i + 1).'">'.$extra_links[2][$i]));
 		}
 	}
 
@@ -895,7 +895,7 @@ function pun_hash($str)
 }
 
 
-// 
+//
 // validate ip correct ipv4 and ipv6 address
 //
 function is_valid_ip($ip,$ip_type='')
@@ -995,7 +995,7 @@ function pun_trim($str)
 function pun_unserialize($str)
 {
 	$str = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $str);
-	return unserialize($str);
+	return unserialize((string)$str);
 }
 
 //
@@ -1313,7 +1313,7 @@ function display_saved_queries()
 function unregister_globals()
 {
 	$register_globals = @ini_get('register_globals');
-	if ($register_globals === "" || $register_globals === "0" || strtolower($register_globals) === "off")
+	if ($register_globals === "" || $register_globals === "0" || $register_globals === "off")
 		return;
 
 	// Prevent script.php?GLOBALS[foo]=bar
@@ -1427,13 +1427,15 @@ function multigrp_getSql($db) {
 	$retJoin = "LEFT JOIN ".$db->prefix."forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=".$pun_user['g_id'].")";
 	$retWhere = " (fp.read_forum IS NULL OR fp.read_forum=1)";
 
-	$mgrps = explode(',', $pun_user["membergroupids"]);
-	$count = 1;
-	foreach($mgrps as $mgrp) {
-		if((int)$mgrp != 0) {
-			$retJoin  .= " LEFT JOIN ".$db->prefix."forum_perms AS fp".$count." ON (fp".$count.".forum_id=f.id AND fp".$count.".group_id=".$mgrp.")";
-			$retWhere .= " OR (fp".$count.".read_forum IS NULL OR fp".$count.".read_forum=1)";
-			$count++;
+	if ($pun_user["membergroupids"]) {
+		$mgrps = explode(',', $pun_user["membergroupids"]);
+		$count = 1;
+		foreach($mgrps as $mgrp) {
+			if((int)$mgrp != 0) {
+				$retJoin  .= " LEFT JOIN ".$db->prefix."forum_perms AS fp".$count." ON (fp".$count.".forum_id=f.id AND fp".$count.".group_id=".$mgrp.")";
+				$retWhere .= " OR (fp".$count.".read_forum IS NULL OR fp".$count.".read_forum=1)";
+				$count++;
+			}
 		}
 	}
 

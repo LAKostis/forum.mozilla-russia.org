@@ -999,6 +999,138 @@ function pun_htmlspecialchars($str)
 
 
 //
+// Removes invalid characters from a UTF-8 XML string
+// https://www.ryadel.com/en/php-skip-invalid-characters-utf-8-xml-file-string/
+//
+function sanitizeXML($str)
+{
+    if (!empty($str))
+    {
+        // remove EOT+NOREP+EOX|EOT+<char> sequence (FatturaPA)
+        $str = preg_replace('/(\x{0004}(?:\x{201A}|\x{FFFD})(?:\x{0003}|\x{0004}).)/u', '', $str);
+
+        $regex = '/(
+            [\xC0-\xC1] # Invalid UTF-8 Bytes
+            | [\xF5-\xFF] # Invalid UTF-8 Bytes
+            | \xE0[\x80-\x9F] # Overlong encoding of prior code point
+            | \xF0[\x80-\x8F] # Overlong encoding of prior code point
+            | [\xC2-\xDF](?![\x80-\xBF]) # Invalid UTF-8 Sequence Start
+            | [\xE0-\xEF](?![\x80-\xBF]{2}) # Invalid UTF-8 Sequence Start
+            | [\xF0-\xF4](?![\x80-\xBF]{3}) # Invalid UTF-8 Sequence Start
+            | (?<=[\x0-\x7F\xF5-\xFF])[\x80-\xBF] # Invalid UTF-8 Sequence Middle
+            | (?<![\xC2-\xDF]|[\xE0-\xEF]|[\xE0-\xEF][\x80-\xBF]|[\xF0-\xF4]|[\xF0-\xF4][\x80-\xBF]|[\xF0-\xF4][\x80-\xBF]{2})[\x80-\xBF] # Overlong Sequence
+            | (?<=[\xE0-\xEF])[\x80-\xBF](?![\x80-\xBF]) # Short 3 byte sequence
+            | (?<=[\xF0-\xF4])[\x80-\xBF](?![\x80-\xBF]{2}) # Short 4 byte sequence
+            | (?<=[\xF0-\xF4][\x80-\xBF])[\x80-\xBF](?![\x80-\xBF]) # Short 4 byte sequence (2)
+        )/x';
+        $str = preg_replace($regex, '', $str);
+
+        $result = "";
+        $current;
+        $length = strlen($str);
+        for ($i=0; $i < $length; $i++)
+        {
+            $current = ord($str{$i});
+            if (($current == 0x9) ||
+                ($current == 0xA) ||
+                ($current == 0xD) ||
+                (($current >= 0x20) && ($current <= 0xD7FF)) ||
+                (($current >= 0xE000) && ($current <= 0xFFFD)) ||
+                (($current >= 0x10000) && ($current <= 0x10FFFF)))
+            {
+                $result .= chr($current);
+            }
+            else
+            {
+                // $ret;    // use this to strip invalid character(s)
+                $ret .= " ";    // use this to replace them with spaces
+            }
+        }
+        $str = $result;
+    }
+    return $str;
+}
+
+
+//
+// Removes any "bad" characters (characters which mess with the display of a page, are invisible, etc) from user input
+//
+function forum_remove_bad_characters()
+{
+	$_GET = remove_bad_characters($_GET);
+	$_POST = remove_bad_characters($_POST);
+	$_COOKIE = remove_bad_characters($_COOKIE);
+	$_REQUEST = remove_bad_characters($_REQUEST);
+}
+
+//
+// Removes any "bad" characters (characters which mess with the display of a page, are invisible, etc) from the given string
+// See: http://kb.mozillazine.org/Network.IDN.blacklist_chars
+//
+function remove_bad_characters($array)
+{
+	static $bad_utf8_chars;
+
+	if (!isset($bad_utf8_chars))
+	{
+		$bad_utf8_chars = array(
+			"\xcc\xb7"		=> '',		// COMBINING SHORT SOLIDUS OVERLAY		0337	*
+			"\xcc\xb8"		=> '',		// COMBINING LONG SOLIDUS OVERLAY		0338	*
+			"\xe1\x85\x9F"	=> '',		// HANGUL CHOSEONG FILLER				115F	*
+			"\xe1\x85\xA0"	=> '',		// HANGUL JUNGSEONG FILLER				1160	*
+			"\xe2\x80\x8b"	=> '',		// ZERO WIDTH SPACE						200B	*
+			"\xe2\x80\x8c"	=> '',		// ZERO WIDTH NON-JOINER				200C
+			"\xe2\x80\x8d"	=> '',		// ZERO WIDTH JOINER					200D
+			"\xe2\x80\x8e"	=> '',		// LEFT-TO-RIGHT MARK					200E
+			"\xe2\x80\x8f"	=> '',		// RIGHT-TO-LEFT MARK					200F
+			"\xe2\x80\xaa"	=> '',		// LEFT-TO-RIGHT EMBEDDING				202A
+			"\xe2\x80\xab"	=> '',		// RIGHT-TO-LEFT EMBEDDING				202B
+			"\xe2\x80\xac"	=> '', 		// POP DIRECTIONAL FORMATTING			202C
+			"\xe2\x80\xad"	=> '',		// LEFT-TO-RIGHT OVERRIDE				202D
+			"\xe2\x80\xae"	=> '',		// RIGHT-TO-LEFT OVERRIDE				202E
+			"\xe2\x80\xaf"	=> '',		// NARROW NO-BREAK SPACE				202F	*
+			"\xe2\x81\x9f"	=> '',		// MEDIUM MATHEMATICAL SPACE			205F	*
+			"\xe2\x81\xa0"	=> '',		// WORD JOINER							2060
+			"\xe3\x85\xa4"	=> '',		// HANGUL FILLER						3164	*
+			"\xef\xbb\xbf"	=> '',		// ZERO WIDTH NO-BREAK SPACE			FEFF
+			"\xef\xbe\xa0"	=> '',		// HALFWIDTH HANGUL FILLER				FFA0	*
+			"\xef\xbf\xb9"	=> '',		// INTERLINEAR ANNOTATION ANCHOR		FFF9	*
+			"\xef\xbf\xba"	=> '',		// INTERLINEAR ANNOTATION SEPARATOR		FFFA	*
+			"\xef\xbf\xbb"	=> '',		// INTERLINEAR ANNOTATION TERMINATOR	FFFB	*
+			"\xef\xbf\xbc"	=> '',		// OBJECT REPLACEMENT CHARACTER			FFFC	*
+			"\xef\xbf\xbd"	=> '',		// REPLACEMENT CHARACTER				FFFD	*
+			"\xe2\x80\x80"	=> ' ',		// EN QUAD								2000	*
+			"\xe2\x80\x81"	=> ' ',		// EM QUAD								2001	*
+			"\xe2\x80\x82"	=> ' ',		// EN SPACE								2002	*
+			"\xe2\x80\x83"	=> ' ',		// EM SPACE								2003	*
+			"\xe2\x80\x84"	=> ' ',		// THREE-PER-EM SPACE					2004	*
+			"\xe2\x80\x85"	=> ' ',		// FOUR-PER-EM SPACE					2005	*
+			"\xe2\x80\x86"	=> ' ',		// SIX-PER-EM SPACE						2006	*
+			"\xe2\x80\x87"	=> ' ',		// FIGURE SPACE							2007	*
+			"\xe2\x80\x88"	=> ' ',		// PUNCTUATION SPACE					2008	*
+			"\xe2\x80\x89"	=> ' ',		// THIN SPACE							2009	*
+			"\xe2\x80\x8a"	=> ' ',		// HAIR SPACE							200A	*
+			"\xE3\x80\x80"	=> ' ',		// IDEOGRAPHIC SPACE					3000	*
+		);
+	}
+
+	if (is_array($array))
+		return array_map('remove_bad_characters', $array);
+
+	// Strip out any invalid characters
+	$array = utf8_bad_strip($array);
+
+	// Remove control characters
+	$array = preg_replace('%[\x00-\x08\x0b-\x0c\x0e-\x1f]%', '', $array);
+
+	// Replace some "bad" characters
+	$array = str_replace(array_keys($bad_utf8_chars), array_values($bad_utf8_chars), $array);
+
+	return $array;
+}
+
+
+//
 // Calls htmlspecialchars_decode with a few options already set
 //
 function pun_htmlspecialchars_decode($str)
@@ -1023,8 +1155,8 @@ function pun_htmlspecialchars_decode($str)
 //
 function pun_strlen($str)
 {
-//	return strlen(preg_replace('/&#([0-9]+);/', '!', $str));
-	return strlen(utf8_decode($str));
+	return strlen(preg_replace('/&#([0-9]+);/', '!', $str));
+//	return strlen(utf8_decode($str));
 }
 
 

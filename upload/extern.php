@@ -112,37 +112,9 @@ $max_message_length = 150;
 
 // DO NOT EDIT ANYTHING BELOW THIS LINE! (unless you know what you are doing)
 
-
-define('PUN_ROOT', './');
-@include PUN_ROOT.'config.php';
-
-// If PUN isn't defined, config.php is missing or corrupt
-if (!defined('PUN'))
-	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run install.php to install PunBB first.');
-
-
-// Make sure PHP reports all errors except E_NOTICE
-error_reporting(E_ALL ^ E_NOTICE);
-
-// Turn off magic_quotes_runtime
-if (version_compare(PHP_VERSION, '5.3.0', '<'))
-set_magic_quotes_runtime(0);
-
-
-// Load the functions script
-require PUN_ROOT.'include/functions.php';
-
-// Load DB abstraction layer and try to connect
-require PUN_ROOT.'include/dblayer/common_db.php';
-
-// set db encoding
-if ($db_type == 'mysql')
-{
-	require PUN_ROOT.'lang/'.$language.'/common.php';
-	// FIXME - we need more accurate charset handling
-	if (strpos($lang_common['lang_encoding'], '8859') == false)
-		define('DB_INIT_CHARSET', "SET NAMES ".$lang_common['db_lang_encoding']);
-}
+if (!defined('PUN_ROOT'))
+	define('PUN_ROOT', dirname(__FILE__).'/');
+require PUN_ROOT.'include/common.php';
 
 // Load cached config
 @include PUN_ROOT.'cache/cache_config.php';
@@ -261,7 +233,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 			}
 			echo "\t\t".'<link>'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].$url_action.'</link>'."\r\n";
 			echo "\t\t".'<pubDate>'.date('r', (int)$cur_topic['posted']).'</pubDate>'."\r\n";
-			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].($site ? '' : '<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', (int)$cur_topic['last_post'])).'<br />')."\r\n".parse_message($cur_message['message'], $cur_message['hide_smilies']).']]></description>'."\r\n";
+			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].($site ? '' : '<br />'."\r\n".$lang_common['Comments'].': '.$cur_topic['num_replies'].'<br />'.$lang_common['Last post'].': '.date('r', (int)$cur_topic['last_post'])).'<br />')."\r\n".sanitizeXML(parse_message($cur_message['message'], $cur_message['hide_smilies'])).']]></description>'."\r\n";
 			echo "\t".'</item>'."\r\n";
 		}
 

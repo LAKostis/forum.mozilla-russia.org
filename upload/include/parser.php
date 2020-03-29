@@ -755,7 +755,7 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<sup>$1</sup>';
 	$replace[] = '<sub>$1</sub>';
 	$replace[] = '<span style="background-color: #FFFF00; color: #000000">$1</span>';
-	$replace[] = '<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">' . $lang_comm;n['Spoiler'].'</div><div class="spoiler-body">$1</div></div>';
+	$replace[] = '<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">' . $lang_common['Spoiler'].'</div><div class="spoiler-body">$1</div></div>';
 	$replace[] = '<div class="spoiler"><div class="spoiler-plus" onclick="toggleSpoiler(this)">$1</div><div class="spoiler-body">$2</div></div>';
 
 	if (($is_signature && $pun_config['p_sig_img_tag'] == '1') || (!$is_signature && $pun_config['p_message_img_tag'] == '1'))

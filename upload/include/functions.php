@@ -1648,3 +1648,197 @@ function hidden_redirect($location) {
 	else
 		header('Location:' . htmlspecialchars($location));
 }
+
+//
+// Extract blocks from a text with a starting and ending string
+// This function always matches the most outer block so nesting is possible
+//
+function extract_blocks($text, $start, $end, $retab = true)
+{
+	global $pun_config;
+
+	$code = array();
+	$start_len = strlen($start);
+	$end_len = strlen($end);
+	$regex = '%(?:'.preg_quote($start, '%').'|'.preg_quote($end, '%').')%';
+	$matches = array();
+
+	if (preg_match_all($regex, $text, $matches))
+	{
+		$counter = $offset = 0;
+		$start_pos = $end_pos = false;
+
+		foreach ($matches[0] as $match)
+		{
+			if ($match == $start)
+			{
+				if ($counter == 0)
+					$start_pos = strpos($text, $start);
+				$counter++;
+			}
+			elseif ($match == $end)
+			{
+				$counter--;
+				if ($counter == 0)
+					$end_pos = strpos($text, $end, $offset + 1);
+				$offset = strpos($text, $end, $offset + 1);
+			}
+
+			if ($start_pos !== false && $end_pos !== false)
+			{
+				$code[] = substr($text, $start_pos + $start_len,
+					$end_pos - $start_pos - $start_len);
+				$text = substr_replace($text, "\1", $start_pos,
+					$end_pos - $start_pos + $end_len);
+				$start_pos = $end_pos = false;
+				$offset = 0;
+			}
+		}
+	}
+
+	if ($pun_config['o_indent_num_spaces'] != 8 && $retab)
+	{
+		$spaces = str_repeat(' ', $pun_config['o_indent_num_spaces']);
+		$text = str_replace("\t", $spaces, $text);
+	}
+
+	return array($code, $text);
+}
+
+
+//
+// function url_valid($url) {
+//
+// Return associative array of valid URI components, or FALSE if $url is not
+// RFC-3986 compliant. If the passed URL begins with: "www." or "ftp.", then
+// "http://" or "ftp://" is prepended and the corrected full-url is stored in
+// the return array with a key name "url". This value should be used by the caller.
+//
+// Return value: FALSE if $url is not valid, otherwise array of URI components:
+// e.g.
+// Given: "http://www.jmrware.com:80/articles?height=10&width=75#fragone"
+// Array(
+//	  [scheme] => http
+//	  [authority] => www.jmrware.com:80
+//	  [userinfo] =>
+//	  [host] => www.jmrware.com
+//	  [IP_literal] =>
+//	  [IPV6address] =>
+//	  [ls32] =>
+//	  [IPvFuture] =>
+//	  [IPv4address] =>
+//	  [regname] => www.jmrware.com
+//	  [port] => 80
+//	  [path_abempty] => /articles
+//	  [query] => height=10&width=75
+//	  [fragment] => fragone
+//	  [url] => http://www.jmrware.com:80/articles?height=10&width=75#fragone
+// )
+function url_valid($url)
+{
+	if (strpos($url, 'www.') === 0) $url = 'http://'. $url;
+	if (strpos($url, 'ftp.') === 0) $url = 'ftp://'. $url;
+	if (!preg_match('/# Valid absolute URI having a non-empty, valid DNS host.
+		^
+		(?P<scheme>[A-Za-z][A-Za-z0-9+\-.]*):\/\/
+		(?P<authority>
+		  (?:(?P<userinfo>(?:[A-Za-z0-9\-._~!$&\'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?
+		  (?P<host>
+			(?P<IP_literal>
+			  \[
+			  (?:
+				(?P<IPV6address>
+				  (?:												 (?:[0-9A-Fa-f]{1,4}:){6}
+				  |												   ::(?:[0-9A-Fa-f]{1,4}:){5}
+				  | (?:							 [0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}
+				  | (?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}
+				  | (?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}
+				  | (?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::	[0-9A-Fa-f]{1,4}:
+				  | (?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::
+				  )
+				  (?P<ls32>[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}
+				  | (?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}
+					   (?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
+				  )
+				|	(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::	[0-9A-Fa-f]{1,4}
+				|	(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::
+				)
+			  | (?P<IPvFuture>[Vv][0-9A-Fa-f]+\.[A-Za-z0-9\-._~!$&\'()*+,;=:]+)
+			  )
+			  \]
+			)
+		  | (?P<IPv4address>(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}
+							   (?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))
+		  | (?P<regname>(?:[A-Za-z0-9\-._~!$&\'()*+,;=]|%[0-9A-Fa-f]{2})+)
+		  )
+		  (?::(?P<port>[0-9]*))?
+		)
+		(?P<path_abempty>(?:\/(?:[A-Za-z0-9\-._~!$&\'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)
+		(?:\?(?P<query>		  (?:[A-Za-z0-9\-._~!$&\'()*+,;=:@\\/?]|%[0-9A-Fa-f]{2})*))?
+		(?:\#(?P<fragment>	  (?:[A-Za-z0-9\-._~!$&\'()*+,;=:@\\/?]|%[0-9A-Fa-f]{2})*))?
+		$
+		/mx', $url, $m)) return FALSE;
+	switch ($m['scheme'])
+	{
+	case 'https':
+	case 'http':
+		if ($m['userinfo']) return FALSE; // HTTP scheme does not allow userinfo.
+		break;
+	case 'ftps':
+	case 'ftp':
+		break;
+	default:
+		return FALSE;	// Unrecognised URI scheme. Default to FALSE.
+	}
+	// Validate host name conforms to DNS "dot-separated-parts".
+	if ($m{'regname'}) // If host regname specified, check for DNS conformance.
+	{
+		if (!preg_match('/# HTTP DNS host name.
+			^					   # Anchor to beginning of string.
+			(?!.{256})			   # Overall host length is less than 256 chars.
+			(?:					   # Group dot separated host part alternatives.
+			  [0-9A-Za-z]\.		   # Either a single alphanum followed by dot
+			|					   # or... part has more than one char (63 chars max).
+			  [0-9A-Za-z]		   # Part first char is alphanum (no dash).
+			  [\-0-9A-Za-z]{0,61}  # Internal chars are alphanum plus dash.
+			  [0-9A-Za-z]		   # Part last char is alphanum (no dash).
+			  \.				   # Each part followed by literal dot.
+			)*					   # One or more parts before top level domain.
+			(?:					   # Explicitly specify top level domains.
+			  com|edu|gov|int|mil|net|org|biz|
+			  info|name|pro|aero|coop|museum|
+			  asia|cat|jobs|mobi|tel|travel|
+			  [A-Za-z]{2})		   # Country codes are exqactly two alpha chars.
+			$					   # Anchor to end of string.
+			/ix', $m['host'])) return FALSE;
+	}
+	$m['url'] = $url;
+	for ($i = 0; isset($m[$i]); ++$i) unset($m[$i]);
+	return $m; // return TRUE == array of useful named $matches plus the valid $url.
+}
+
+//
+// Replace string matching regular expression
+//
+// This function takes care of possibly disabled unicode properties in PCRE builds
+//
+function ucp_preg_replace($pattern, $replace, $subject)
+{
+	$replaced = preg_replace($pattern, $replace, $subject);
+
+	// If preg_replace() returns false, this probably means unicode support is not built-in, so we need to modify the pattern a little
+	if ($replaced === false)
+	{
+		if (is_array($pattern))
+		{
+			foreach ($pattern as $cur_key => $cur_pattern)
+				$pattern[$cur_key] = str_replace('\p{L}\p{N}', '\w', $cur_pattern);
+
+			$replaced = preg_replace($pattern, $replace, $subject);
+		}
+		else
+			$replaced = preg_replace(str_replace('\p{L}\p{N}', '\w', $pattern), $replace, $subject);
+	}
+
+	return $replaced;
+}

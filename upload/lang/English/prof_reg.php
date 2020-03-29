@@ -1,6 +1,6 @@
 <?php
 
-$lang_prof_reg = array(
+$lang_prof_reg = [
 
 'E-mail legend'				=>	'Enter a valid e-mail address',
 'E-mail legend 2'			=>	'Enter and confirm a valid e-mail address',
@@ -38,4 +38,4 @@ $lang_prof_reg = array(
 'Bad ICQ'					=>	'You entered an invalid ICQ UIN. Please go back and correct.',
 'Show online'				=>	'Show my name on the users online list.'
 
-);
+];

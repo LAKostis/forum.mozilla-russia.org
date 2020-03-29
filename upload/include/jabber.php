@@ -39,7 +39,7 @@ function pun_jabber($to, $message)
 	$to = explode(',', trim(preg_replace('#[\n\r]+#s', '', $to)));
 
 	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
-	$message = str_replace(array("\n", "\0"), array("\r\n", ''), pun_linebreaks($message));
+	$message = str_replace(["\n", "\0"], ["\r\n", ''], pun_linebreaks($message));
 
 	require PUN_ROOT.'include/XMPPHP/XMPP.php';
 	require PUN_ROOT.'config_jabber.php';

@@ -61,11 +61,11 @@ if ($cur_forum['redirect_url'] != '')
 }
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
-$mods_array = array();
+$mods_array = [];
 if ($cur_forum['moderators'] != '')
 	$mods_array = unserialize($cur_forum['moderators']);
 
-$is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
+$is_admmod = $pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array)) ? true : false;
 
 // Can we or can we not post new topics?
 if (($cur_forum['post_topics'] == '' && $pun_user['g_post_topics'] == '1') || $cur_forum['post_topics'] == '1' || $is_admmod)
@@ -84,7 +84,7 @@ else
 // Determine the topic offset (based on $_GET['p'])
 $num_pages = ceil($cur_forum['num_topics'] / $pun_user['disp_topics']);
 
-$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = !isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 $start_from = $pun_user['disp_topics'] * ($p - 1);
 
 // Generate paging links
@@ -95,7 +95,7 @@ $page_title = pun_htmlspecialchars($cur_forum['forum_name']).' | '.pun_htmlspeci
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT.'header.php';
 
-$sorter = array('last_post', 'posted', 'num_replies', 'num_views');
+$sorter = ['last_post', 'posted', 'num_replies', 'num_views'];
 
 if(isset($_GET['sort']))
 	$cur_forum['sort_by'] = (int)$_GET['sort'];
@@ -194,7 +194,7 @@ if ($db->num_rows($result))
 				$icon_text = $lang_common['Closed icon'];
 				$item_status = 'iclosed';
 			}
-			$f_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['id'];
+			$f_id = $cur_topic['announcement'] == '1' ? 'announcement' : $cur_topic['id'];
 
 			// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 			if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id, $cur_topic['last_post']) && $cur_topic['moved_to'] == null && $f_id != 'announcement')
@@ -229,7 +229,7 @@ if ($db->num_rows($result))
 			$icon_text = $lang_common['Closed icon'];
 			$item_status = 'iclosed';
 		}
-		$f_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['id'];
+		$f_id = $cur_topic['announcement'] == '1' ? 'announcement' : $cur_topic['id'];
 
 		// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 		if (!$pun_user['is_guest'] && topic_is_new($cur_topic['id'], $id, $cur_topic['last_post']) && $cur_topic['moved_to'] == null && $f_id != 'announcement')
@@ -297,8 +297,8 @@ if ($db->num_rows($result))
 							</div>
 						</div>
 					</td>
-					<td class="tc2"><?php echo ($cur_topic['moved_to'] == null) ? $cur_topic['num_replies'] : '&nbsp;' ?></td>
-					<td class="tc3"><?php echo ($cur_topic['moved_to'] == null) ? $cur_topic['num_views'] : '&nbsp;' ?></td>
+					<td class="tc2"><?php echo $cur_topic['moved_to'] == null ? $cur_topic['num_replies'] : '&nbsp;' ?></td>
+					<td class="tc3"><?php echo $cur_topic['moved_to'] == null ? $cur_topic['num_views'] : '&nbsp;' ?></td>
 					<td class="tcr"><?php echo $last_post ?></td>
 				</tr>
 <?php

@@ -68,8 +68,8 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 
 	$page_title = pun_htmlspecialchars('Admin | User groups | '.$pun_config['o_board_title']);
-	$required_fields = array('req_title' => 'Group title');
-	$focus_element = array('groups2', 'req_title');
+	$required_fields = ['req_title' => 'Group title'];
+	$focus_element = ['groups2', 'req_title'];
 	require PUN_ROOT.'header.php';
 
 	generate_admin_menu('groups');
@@ -224,17 +224,17 @@ else if (isset($_POST['add_edit_group']))
 	confirm_referrer('admin_groups.php');
 
 	// Is this the admin group? (special rules apply)
-	$is_admin_group = (isset($_POST['group_id']) && $_POST['group_id'] == PUN_ADMIN) ? true : false;
+	$is_admin_group = isset($_POST['group_id']) && $_POST['group_id'] == PUN_ADMIN ? true : false;
 
 	$title = trim($_POST['req_title']);
 	$user_title = trim($_POST['user_title']);
 	$read_board = isset($_POST['read_board']) ? intval($_POST['read_board']) : '1';
 	$post_replies = isset($_POST['post_replies']) ? intval($_POST['post_replies']) : '1';
 	$post_topics = isset($_POST['post_topics']) ? intval($_POST['post_topics']) : '1';
-	$edit_posts = isset($_POST['edit_posts']) ? intval($_POST['edit_posts']) : ($is_admin_group) ? '1' : '0';
-	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : ($is_admin_group) ? '1' : '0';
-	$delete_topics = isset($_POST['delete_topics']) ? intval($_POST['delete_topics']) : ($is_admin_group) ? '1' : '0';
-	$set_title = isset($_POST['set_title']) ? intval($_POST['set_title']) : ($is_admin_group) ? '1' : '0';
+	$edit_posts = isset($_POST['edit_posts']) ? intval($_POST['edit_posts']) : $is_admin_group ? '1' : '0';
+	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : $is_admin_group ? '1' : '0';
+	$delete_topics = isset($_POST['delete_topics']) ? intval($_POST['delete_topics']) : $is_admin_group ? '1' : '0';
+	$set_title = isset($_POST['set_title']) ? intval($_POST['set_title']) : $is_admin_group ? '1' : '0';
 	$search = isset($_POST['search']) ? intval($_POST['search']) : '1';
 	$search_users = isset($_POST['search_users']) ? intval($_POST['search_users']) : '1';
 	$edit_subjects_interval = isset($_POST['edit_subjects_interval']) ? intval($_POST['edit_subjects_interval']) : '0';
@@ -244,7 +244,7 @@ else if (isset($_POST['add_edit_group']))
 	if ($title == '')
 		message('You must enter a group title.');
 
-	$user_title = ($user_title != '') ? '\''.$db->escape($user_title).'\'' : 'NULL';
+	$user_title = $user_title != '' ? '\''.$db->escape($user_title).'\'' : 'NULL';
 
 	if ($_POST['mode'] == 'add')
 	{
@@ -273,7 +273,7 @@ else if (isset($_POST['add_edit_group']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
 
-	redirect('admin_groups.php', 'Group '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
+	redirect('admin_groups.php', 'Group '.($_POST['mode'] == 'edit' ? 'edited' : 'added').'. Redirecting &hellip;');
 }
 
 
@@ -494,7 +494,7 @@ while ($cur_group = $db->fetch_assoc($result))
 $result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups ORDER BY g_id') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 
 while ($cur_group = $db->fetch_assoc($result))
-	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="admin_groups.php?edit_group='.$cur_group['g_id'].'">Edit</a>'.(($cur_group['g_id'] > PUN_MEMBER) ? ' - <a href="admin_groups.php?del_group='.$cur_group['g_id'].'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
+	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="admin_groups.php?edit_group='.$cur_group['g_id'].'">Edit</a>'.($cur_group['g_id'] > PUN_MEMBER ? ' - <a href="admin_groups.php?del_group='.$cur_group['g_id'].'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
 
 ?>
 							</table>

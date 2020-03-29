@@ -53,10 +53,10 @@ define('GESHI_COMMENTS', 0);
 define('GESHI_ERROR_NO_INPUT', 1);
 define('GESHI_ERROR_NO_SUCH_LANG', 2);
 // Human error messages - added in 1.0.2
-$_GESHI_ERRORS = array(
+$_GESHI_ERRORS = [
 	GESHI_ERROR_NO_INPUT => 'No source code inputted',
 	GESHI_ERROR_NO_SUCH_LANG => 'GeSHi could not find the language {LANGUAGE} (using path {PATH})'
-);
+];
 
 // Line numbers - use with enable_line_numbers()
 define('GESHI_NO_LINE_NUMBERS', 0);
@@ -106,24 +106,24 @@ class GeSHi
 	// Basic fields
 	var $source = '';                     // The source code to highlight
 	var $language = '';                   // The language to use when highlighting
-	var $language_data = array();         // The data for the language used
+	var $language_data = [];         // The data for the language used
 	var $language_path = 'geshi/';        // The path to the language files
 	var $error = false;                   // The error message associated with an error
 	var $strict_mode = false;             // Whether highlighting is strict or not
 	var $use_classes = false;             // Whether to use classes
 	var $header_type = GESHI_HEADER_PRE;  // The type of header to use
-	var $lexic_permissions = array();     // Array of permissions for which lexics should be highlighted
+	var $lexic_permissions = [];     // Array of permissions for which lexics should be highlighted
 	// Added in 1.0.2 basic fields
 	var $time = 0;                        // The time it took to parse the code
 	var $header_content = '';             // The content of the header block
 	var $footer_content = '';             // The content of the footer block
 	var $header_content_style = '';       // The style of the header block
 	var $footer_content_style = '';       // The style of the footer block
-	var $link_styles = array();           // The styles for hyperlinks in the code
+	var $link_styles = [];           // The styles for hyperlinks in the code
 	var $enable_important_blocks = true;  // Whether important blocks should be recognised or not
 	var $important_styles = 'font-weight: bold; color: red;'; // Styles for important parts of the code
 	var $add_ids = false;                 // Whether css IDs should be added to the code
-	var $highlight_extra_lines = array(); // Lines that should be highlighted extra
+	var $highlight_extra_lines = []; // Lines that should be highlighted extra
 	var $highlight_extra_lines_style = 'color: #cc0; background-color: #ffc;';// Styles of extra-highlighted lines
 	var $line_numbers_start = 1;          // Number at which line numbers should start at
 
@@ -161,7 +161,7 @@ class GeSHi
 		// Security, just in case :)
 		$language = preg_replace('#[^a-zA-Z0-9\-\_]#', '', $language);
 		$this->language = strtolower($language);
-		$this->language_path = ( substr($path, strlen($path) - 1, 1) == '/' ) ? $path : $path . '/';
+		$this->language_path = substr($path, strlen($path) - 1, 1) == '/' ? $path : $path . '/';
 		$this->load_language();
 	}
 
@@ -182,10 +182,10 @@ class GeSHi
 		if ( $this->error != 0 )
 		{
 			$msg = $_GESHI_ERRORS[$this->error];
-			$debug_tpl_vars = array(
+			$debug_tpl_vars = [
 				'{LANGUAGE}' => $this->language,
 				'{PATH}' => $this->language_path
-			);
+			];
 			foreach ( $debug_tpl_vars as $tpl => $var )
 			{
 				$msg = str_replace($tpl, $var, $msg);
@@ -254,7 +254,7 @@ class GeSHi
 	 */
 	function set_language_path ( $path )
 	{
-		$this->language_path = ( substr($path, strlen($path) - 1, 1) == '/' ) ? $path : $path . '/';
+		$this->language_path = substr($path, strlen($path) - 1, 1) == '/' ? $path : $path . '/';
 	}
 
 
@@ -326,7 +326,7 @@ class GeSHi
 	 */
 	function enable_classes ( $flag = true )
 	{
-		$this->use_classes = ( $flag ) ? true : false;
+		$this->use_classes = $flag ? true : false;
 	}
 
 
@@ -425,7 +425,7 @@ class GeSHi
 	 */
 	function set_keyword_group_highlighting ( $key, $flag = true )
 	{
-		$this->lexic_permissions['KEYWORDS'][$key] = ( $flag ) ? true : false;
+		$this->lexic_permissions['KEYWORDS'][$key] = $flag ? true : false;
 	}
 
 
@@ -456,7 +456,7 @@ class GeSHi
 	 */
 	function set_comments_highlighting ( $key, $flag = true )
 	{
-		$this->lexic_permissions['COMMENTS'][$key] = ( $flag ) ? true : false;
+		$this->lexic_permissions['COMMENTS'][$key] = $flag ? true : false;
 	}
 
 
@@ -487,7 +487,7 @@ class GeSHi
 	 */
 	function set_escape_characters_highlighting ( $flag = true )
 	{
-		$this->lexic_permissions['ESCAPE_CHAR'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['ESCAPE_CHAR'] = $flag ? true : false;
 	}
 
 
@@ -524,7 +524,7 @@ class GeSHi
 	 */
 	function set_brackets_highlighting ( $flag )
 	{
-		$this->lexic_permissions['BRACKETS'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['BRACKETS'] = $flag ? true : false;
 	}
 
 
@@ -557,7 +557,7 @@ class GeSHi
 	 */
 	function set_symbols_highlighting ( $flag )
 	{
-		$this->lexic_permissions['SYMBOLS'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['SYMBOLS'] = $flag ? true : false;
 		// For backward compatibility
 		$this->set_brackets_highlighting ( $flag );
 	}
@@ -590,7 +590,7 @@ class GeSHi
 	 */
 	function set_strings_highlighting ( $flag )
 	{
-		$this->lexic_permissions['STRINGS'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['STRINGS'] = $flag ? true : false;
 	}
 
 
@@ -621,7 +621,7 @@ class GeSHi
 	 */
 	function set_numbers_highlighting ( $flag )
 	{
-		$this->lexic_permissions['NUMBERS'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['NUMBERS'] = $flag ? true : false;
 	}
 
 
@@ -654,7 +654,7 @@ class GeSHi
 	 */
 	function set_methods_highlighting ( $flag )
 	{
-		$this->lexic_permissions['METHODS'] = ( $flag ) ? true : false;
+		$this->lexic_permissions['METHODS'] = $flag ? true : false;
 	}
 
 
@@ -685,7 +685,7 @@ class GeSHi
 	 */
 	function set_regexps_highlighting ( $key, $flag )
 	{
-		$this->lexic_permissions['REGEXPS'][$key] = ( $flag ) ? true : false;
+		$this->lexic_permissions['REGEXPS'][$key] = $flag ? true : false;
 	}
 
 
@@ -696,7 +696,7 @@ class GeSHi
 	 */
 	function set_case_sensitivity ( $key, $case )
 	{
-		$this->language_data['CASE_SENSITIVE'][$key] = ( $case ) ? true : false;
+		$this->language_data['CASE_SENSITIVE'][$key] = $case ? true : false;
 	}
 
 
@@ -739,7 +739,7 @@ class GeSHi
 	 */
 	function enable_strict_mode ( $mode = true )
 	{
-		$this->strict_mode = ( $mode ) ? true : false;
+		$this->strict_mode = $mode ? true : false;
 		// Turn on strict mode no matter what if language should always
 		// be in strict mode
 		if ( $this->language_data['STRICT_MODE_APPLIES'] == GESHI_ALWAYS )
@@ -855,7 +855,7 @@ class GeSHi
 	 */
 	function remove_keyword ( $key, $word )
 	{
-		$this->language_data['KEYWORDS'][$key] = array_diff($this->language_data['KEYWORDS'][$key], array($word));
+		$this->language_data['KEYWORDS'][$key] = array_diff($this->language_data['KEYWORDS'][$key], [$word]);
 	}
 
 
@@ -864,11 +864,11 @@ class GeSHi
 	 * -------------------------
 	 * Creates a new keyword group
 	 */
-	function add_keyword_group ( $key, $styles, $case_sensitive = true, $words = array() )
+	function add_keyword_group ( $key, $styles, $case_sensitive = true, $words = [] )
 	{
 		if ( !is_array($words) )
 		{
-			$words = array($words);
+			$words = [$words];
 		}
 		$this->language_data['KEYWORDS'][$key] = $words;
 		$this->lexic_permissions['KEYWORDS'][$key] = true;
@@ -993,7 +993,7 @@ class GeSHi
 	 */
 	function enable_important_blocks ( $flag )
 	{
-		$this->enable_important_blocks = ( $flag ) ? true : false;
+		$this->enable_important_blocks = $flag ? true : false;
 	}
 
 
@@ -1004,7 +1004,7 @@ class GeSHi
 	 */
 	function enable_ids ( $flag = true )
 	{
-		$this->add_ids = ( $flag ) ? true : false;
+		$this->add_ids = $flag ? true : false;
 	}
 
 
@@ -1108,7 +1108,7 @@ class GeSHi
 		$ESCAPE_CHAR_OPEN = false;
 		$COMMENT_MATCHED = false;
 		// Turn highlighting on if strict mode doesn't apply to this language
-		$HIGHLIGHTING_ON = ( !$this->strict_mode ) ? true : '';
+		$HIGHLIGHTING_ON = !$this->strict_mode ? true : '';
 		// Whether to highlight inside a block of code
 		$HIGHLIGHT_INSIDE_STRICT = false;
 		$stuff_to_parse = '';
@@ -1125,7 +1125,7 @@ class GeSHi
 		{
 			// Break the source into bits. Each bit will be a portion of the code
 			// within script delimiters - for example, HTML between < and >
-			$parts = array(0 => array(0 => ''));
+			$parts = [0 => [0 => '']];
 			$k = 0;
 			for ( $i = 0; $i < $length; $i++ )
 			{
@@ -1150,7 +1150,7 @@ class GeSHi
 								$parts[$k][0] = $char;
 
 								// No point going around again...
-								break(2);
+								break 2;
 							}
 						}
 					}
@@ -1164,7 +1164,7 @@ class GeSHi
 							if ( $open == $HIGHLIGHTING_ON )
 							{
 								// Found the closing tag
-								break(2);
+								break 2;
 							}
 						}
 					}
@@ -1175,13 +1175,13 @@ class GeSHi
 					{
 						$HIGHLIGHTING_ON = '';
 						// Add the string to the rest of the string for this part
-						$parts[$k][1] = ( isset($parts[$k][1]) ) ? $parts[$k][1] . $char : $char;
+						$parts[$k][1] = isset($parts[$k][1]) ? $parts[$k][1] . $char : $char;
 						++$k;
 						$parts[$k][0] = '';
 						$char = '';
 					}
 				}
-				$parts[$k][1] = ( isset($parts[$k][1]) ) ? $parts[$k][1] . $char : $char;
+				$parts[$k][1] = isset($parts[$k][1]) ? $parts[$k][1] . $char : $char;
 			}
 			$HIGHLIGHTING_ON = '';
 		}
@@ -1189,12 +1189,12 @@ class GeSHi
 		{
 			// Not strict mode - simply dump the source into
 			// the array at index 1 (the first highlightable block)
-			$parts = array(
-				1 => array(
+			$parts = [
+				1 => [
 					0 => '',
 					1 => $code
-				)
-			);
+				]
+			];
 		}
 
 		// Now we go through each part. We know that even-indexed parts are
@@ -1215,7 +1215,7 @@ class GeSHi
 						{
 							if ( $data[0] == $open )
 							{
-								break(2);
+								break 2;
 							}
 						}
 					}
@@ -1586,12 +1586,12 @@ class GeSHi
 			if ( $start_or_end == 'BEGIN' )
 			{
 				// HTML workaround... not good form (tm) but should work for 1.0.X
-				$keyword = ( substr($keyword, 0, 4) == '&lt;' ) ? substr($keyword, 4) : $keyword;
-				$keyword = ( substr($keyword, -4) == '&gt;' ) ? substr($keyword, 0, strlen($keyword) - 4) : $keyword;
+				$keyword = substr($keyword, 0, 4) == '&lt;' ? substr($keyword, 4) : $keyword;
+				$keyword = substr($keyword, -4) == '&gt;' ? substr($keyword, 0, strlen($keyword) - 4) : $keyword;
 				if ( $keyword != '' )
 				{
-					$keyword = ( $this->language_data['CASE_SENSITIVE'][$group] ) ? $keyword : strtolower($keyword);
-					return '<|UR1|"' . str_replace(array('{FNAME}', '.'), array(htmlentities($keyword, ENT_COMPAT, $this->encoding), '<DOT>'), $this->language_data['URLS'][$group]) . '">';
+					$keyword = $this->language_data['CASE_SENSITIVE'][$group] ? $keyword : strtolower($keyword);
+					return '<|UR1|"' . str_replace(['{FNAME}', '.'], [htmlentities($keyword, ENT_COMPAT, $this->encoding), '<DOT>'], $this->language_data['URLS'][$group]) . '">';
 				}
 				return '';
 			}
@@ -1746,28 +1746,28 @@ class GeSHi
 		//
 		if ( $this->lexic_permissions['BRACKETS'] )
 		{
-			$code_entities_match = array('[', ']', '(', ')', '{', '}');
+			$code_entities_match = ['[', ']', '(', ')', '{', '}'];
 			if ( !$this->use_classes )
 			{
-				$code_entities_replace = array(
+				$code_entities_replace = [
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#91;|>',
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#93;|>',
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#40;|>',
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#41;|>',
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#123;|>',
 					'<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#125;|>',
-				);
+				];
 			}
 			else
 			{
-				$code_entities_replace = array(
+				$code_entities_replace = [
 					'<| class="br0">&#91;|>',
 					'<| class="br0">&#93;|>',
 					'<| class="br0">&#40;|>',
 					'<| class="br0">&#41;|>',
 					'<| class="br0">&#123;|>',
 					'<| class="br0">&#125;|>',
-				);
+				];
 			}
 			$stuff_to_parse = str_replace( $code_entities_match,  $code_entities_replace, $stuff_to_parse );
 		}
@@ -1923,7 +1923,7 @@ class GeSHi
 		{
 			// If we're using the <pre> header, we shouldn't add newlines because
 			// the <pre> will line-break them (and the <li>s already do this for us)
-			$ls = ( $this->header_type != GESHI_HEADER_PRE ) ? "\n" : '';
+			$ls = $this->header_type != GESHI_HEADER_PRE ? "\n" : '';
 			// Get code into lines
 			$code = explode("\n", $parsed_code);
 			// Set vars to defaults for following loop
@@ -1932,9 +1932,9 @@ class GeSHi
 			// Foreach line...
 			foreach ( $code as $line )
 			{
-				$line = ( $line ) ? $line : '&nbsp;';
+				$line = $line ?: '&nbsp;';
 				// If this is a "special line"...
-				if ( $this->line_numbers == GESHI_FANCY_LINE_NUMBERS && $i % $this->line_nth_row == ($this->line_nth_row - 1) )
+				if ( $this->line_numbers == GESHI_FANCY_LINE_NUMBERS && $i % $this->line_nth_row == $this->line_nth_row - 1 )
 				{
 					// Set the attributes to style the line
 					if ( $this->use_classes )
@@ -2000,7 +2000,7 @@ class GeSHi
 			foreach ( $code as $line )
 			{
 				// Make lines have at least one space in them if they're empty
-				$line = ( $line ) ? $line : '&nbsp;';
+				$line = $line ?: '&nbsp;';
 				if ( in_array(++$i, $this->highlight_extra_lines) )
 				{
 					if ( $this->use_classes )
@@ -2147,7 +2147,7 @@ class GeSHi
 		{
 			if ( $this->header_type == GESHI_HEADER_PRE )
 			{
-				$footer = str_replace("\n", '', $footer);;
+				$footer = str_replace("\n", '', $footer);
 			}
 			$footer = $this->replace_keywords($footer);
 
@@ -2172,7 +2172,7 @@ class GeSHi
 	 */
 	function replace_keywords ( $instr )
 	{
-		$keywords = $replacements = array();
+		$keywords = $replacements = [];
 
 		$keywords[] = '<TIME>';
 		$replacements[] = number_format($this->get_time(), 3);
@@ -2230,8 +2230,8 @@ class GeSHi
 		// First, work out what the selector should be. If there's an ID,
 		// that should be used, the same for a class. Otherwise, a selector
 		// of '' means that these styles will be applied anywhere
-		$selector = ( $this->overall_id != '' ) ? "#{$this->overall_id} " : '';
-		$selector = ( $selector == '' && $this->overall_class != '' ) ? ".{$this->overall_class} " : $selector;
+		$selector = $this->overall_id != '' ? "#{$this->overall_id} " : '';
+		$selector = $selector == '' && $this->overall_class != '' ? ".{$this->overall_class} " : $selector;
 
 		// Header of the stylesheet
 		if ( !$economy_mode )

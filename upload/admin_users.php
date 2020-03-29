@@ -171,7 +171,7 @@ if (isset($_GET['show_users']))
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
-					<td class="tc5"><?php echo ($user_data['admin_note'] != '') ? $user_data['admin_note'] : '&nbsp;' ?></td>
+					<td class="tc5"><?php echo $user_data['admin_note'] != '' ? $user_data['admin_note'] : '&nbsp;' ?></td>
 					<td class="tcr"><?php echo $actions ?></td>
 				</tr>
 <?php
@@ -300,10 +300,10 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	if ($registered_before != '')
 		$conditions[] = 'u.registered<'.$registered_before;
 
-	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+	$like_command = $db_type == 'pgsql' ? 'ILIKE' : 'LIKE';
 	while (list($key, $input) = @each($form))
 	{
-		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note')))
+		if ($input != '' && in_array($key, ['username', 'email', 'title', 'realname', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note']))
 			$conditions[] = 'u.'.$db->escape($key).' '.$like_command.' \''.$db->escape(str_replace('*', '%', $input)).'\'';
 	}
 
@@ -317,16 +317,16 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 
 	if (!isset($conditions) && ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0' && $email_validate=='0'))
 		message('You didn\'t enter any search terms.');
-	
+
 	// Fetch user count
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id>1'.(!empty($conditions) ? ' AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
 	$num_users = $db->result($result);
-	
+
 	$start_from = 0;
 	if (($search_limit == '0') || ($search_limit > $num_users))
 		$search_limit = $num_users;
 
-	$percent_shows = $num_users > 0 ? (($search_limit / $num_users) * 100) : 100;
+	$percent_shows = $num_users > 0 ? $search_limit / $num_users * 100 : 100;
 
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);
 	require PUN_ROOT.'header.php';
@@ -383,7 +383,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 				if ($spam_email_match == '1')
 				{
 					$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
-					if($listed_emails) 
+					if($listed_emails)
 					{
 						foreach ($listed_emails as $listed_email) {
 							if ($user_data['email'] == $listed_email)
@@ -397,7 +397,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 				if ($spam_ip_match == '1')
 				{
 					$listed_ips = file(PUN_ROOT.'cache/listed_ip_1.txt', FILE_IGNORE_NEW_LINES);
-					if($listed_ips) 
+					if($listed_ips)
 					{
 						foreach ($listed_ips as $listed_ip) {
 							if ($user_data['registration_ip'] == $listed_ip)
@@ -411,7 +411,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 				{
 					require_once(PUN_ROOT.'include/stopforumspam.php');
 					$sfs = new StopForumSpam();
-					$args = array('email' => $user_data['email'], 'ip' => $user_data['registration_ip'], 'username' => $user_data['username'], 'notorexit');
+					$args = ['email' => $user_data['email'], 'ip' => $user_data['registration_ip'], 'username' => $user_data['username'], 'notorexit'];
 					$spamcheck = $sfs->is_spammer( $args );
 					if ($spamcheck['spammer']=='1' && $spamcheck['known']=='1')
 						$spam_status[$user_data['id']]='Spam found online!';
@@ -434,7 +434,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 				</tr>
 <?php
 
-				} 
+				}
 				elseif ($spam_email_match=='0' && $spam_ip_match=='0' && $spam_online_match=='0' && $email_validate=='0')
 				{
 
@@ -447,7 +447,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
-					<td class="tc5"><?php echo ($user_data['admin_note'] != '') ? $user_data['admin_note'] : '&nbsp;' ?></td>
+					<td class="tc5"><?php echo $user_data['admin_note'] != '' ? $user_data['admin_note'] : '&nbsp;' ?></td>
 					<td class="tcr"><?php echo $actions ?></td>
 				</tr>
 <?php
@@ -488,7 +488,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 else
 {
 	$page_title = 'Admin | Users | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$focus_element = array('find_user', 'username');
+	$focus_element = ['find_user', 'username'];
 	require PUN_ROOT.'header.php';
 
 	generate_admin_menu('users');

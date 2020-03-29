@@ -44,7 +44,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 		$prune_from = $_POST['prune_from'];
 		$prune_days = intval($_POST['prune_days']);
-		$prune_date = ($prune_days) ? time() - ($prune_days*86400) : -1;
+		$prune_date = $prune_days ? time() - ($prune_days*86400) : -1;
 
 		@set_time_limit(0);
 
@@ -153,8 +153,8 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 else
 {
 	$page_title = 'Admin | Prune | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$required_fields = array('req_prune_days' => 'Days old');
-	$focus_element = array('prune', 'req_prune_days');
+	$required_fields = ['req_prune_days' => 'Days old'];
+	$focus_element = ['prune', 'req_prune_days'];
 	require PUN_ROOT.'header.php';
 
 	generate_admin_menu('prune');

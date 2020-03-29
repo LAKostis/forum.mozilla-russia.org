@@ -35,8 +35,7 @@ if (!defined('PUN'))
 function phpbb_preg_quote($str, $delimiter)
 {
 	$text = preg_quote($str);
-	$text = str_replace($delimiter, '\\' . $delimiter, $text);
-	return $text;
+	return str_replace($delimiter, '\\' . $delimiter, $text);
 }
 
 //
@@ -67,7 +66,7 @@ function encode($str)
 	if ($lang_common['lang_encoding'] == 'utf-8')
 		$str = base64_encode($str);
 	else 	$str = chunk_split(base64_encode($str), $length, $spacer);
-	
+
 	// remove trailing spacer and add start and end delimiters
 	$str = preg_replace('#' . phpbb_preg_quote($spacer, '#') . '$#', '', $str);
 
@@ -114,7 +113,7 @@ function is_banned_email($email)
 	}
 
 	$listed_emails = file(PUN_ROOT.'cache/listed_email_1.txt', FILE_IGNORE_NEW_LINES);
-	if($listed_emails) 
+	if($listed_emails)
 	{
 		foreach ($listed_emails as $cur_listed) {
 			if ($email == $cur_listed || (strpos($cur_listed, '@') === false && stristr($email, '@'.$cur_listed)))
@@ -148,7 +147,7 @@ function pun_mail($to, $subject, $message, $from = '')
 	$subject = encode($subject);
 
 	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
-	$message = str_replace(array("\n", "\0"), array("\r\n", ''), pun_linebreaks($message));
+	$message = str_replace(["\n", "\0"], ["\r\n", ''], pun_linebreaks($message));
 
 	if ($pun_config['o_smtp_host'] != '')
 		smtp_mail($to, $subject, $message, $headers);

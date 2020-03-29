@@ -1,6 +1,6 @@
 <?php
 
-$lang_topic = array(
+$lang_topic = [
 
 'Post reply'		=>	'Ответить',
 'Topic closed'		=>	'Тема закрыта',
@@ -28,4 +28,4 @@ $lang_topic = array(
 'Message blocked'	=>	'Сообщение временно заблокировано на основании жалоб пользователей и ожидает проверки администратором.',
 'Unblock message'	=>	'Разблокировать.'
 
-);
+];

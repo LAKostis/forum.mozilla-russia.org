@@ -1,6 +1,6 @@
 <?php
 
-$lang_forum = array(
+$lang_forum = [
 
 'Post topic'	=>	'Post new topic',
 'Views'			=>	'Views',
@@ -8,4 +8,4 @@ $lang_forum = array(
 'Sticky'		=>	'Sticky',
 'Empty forum'	=>	'Forum is empty.'
 
-);
+];

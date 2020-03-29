@@ -133,7 +133,7 @@ else
 	if (isset($_GET['action']) && $_GET['action'] == 'markall')
 	{
 		$db->query('UPDATE '.$db->prefix.'messages SET showed=1 WHERE owner='.$pun_user['id']) or error('Unable to update message status', __FILE__, __LINE__, $db->error());
-		$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1) ? 1 : intval($_GET['p']);
+		$p = !isset($_GET['p']) || intval($_GET['p']) <= 1 ? 1 : intval($_GET['p']);
 		redirect('message_list.php?box='.$box.'&p='.$p, $lang_pms['Read redirect']);
 	}
 }
@@ -146,7 +146,7 @@ list($num_messages) = $db->fetch_row($result);
 
 //What page are we on?
 $num_pages = ceil($num_messages / $pun_config['o_pms_mess_per_page']);
-$p = (!isset($_GET['p']) || intval($_GET['p']) <= 1 || intval($_GET['p']) > $num_pages) ? 1 : intval($_GET['p']);
+$p = !isset($_GET['p']) || intval($_GET['p']) <= 1 || intval($_GET['p']) > $num_pages ? 1 : intval($_GET['p']);
 $start_from = $pun_config['o_pms_mess_per_page'] * ($p - 1);
 $limit = $start_from.','.$pun_config['o_pms_mess_per_page'];
 
@@ -298,7 +298,7 @@ if(isset($_GET['id'])){
 			$user_title = censor_words($user_title);
 
 		// Format the online indicator
-		$is_online = ($cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
+		$is_online = $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
 
 		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0')
 		{
@@ -410,7 +410,7 @@ if(isset($_GET['id'])){
 			</div>
 			<div class="clearer"></div>
 			<div class="postfootleft"><?php if ($cur_post['id'] > 1) echo '<p>'.$is_online.'</p>'; ?></div>
-			<div class="postfootright"><?php echo (count($post_actions)) ? '<ul>'.implode($lang_topic['Link separator'].'</li>', $post_actions).'</li></ul></div>'."\n" : '<div>&nbsp;</div></div>'."\n" ?>
+			<div class="postfootright"><?php echo count($post_actions) ? '<ul>'.implode($lang_topic['Link separator'].'</li>', $post_actions).'</li></ul></div>'."\n" : '<div>&nbsp;</div></div>'."\n" ?>
 		</div>
 	</div>
 </div>
@@ -470,7 +470,7 @@ else
 				<input type="hidden" name="form_sent" value="1" />
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_GET['tid']) ? intval($_GET['tid']) : '' ?>" />
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_POST['from_profile']) ? $_POST['from_profile'] : '' ?>" />
-				<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
+				<input type="hidden" name="form_user" value="<?php echo !$pun_user['is_guest'] ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 				<label class="conl"><strong><?php echo $lang_pms['Send to'] ?></strong><br /><input type="text" name="req_username" size="25" maxlength="25" value="<?php echo $user_reply ?>" tabindex="2" /><br /></label>
 				<div class="clearer"></div>
 				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php echo $subject_reply ?>" size="80" maxlength="70" tabindex="3" /><br /></label>
@@ -479,14 +479,14 @@ else
 				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="4"></textarea><br /></label>
 				<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 				<ul class="bblinks">
-					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-					<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-					<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 				</ul>
 			</div>
 		</fieldset>
 <?php
-	$checkboxes = array();
+	$checkboxes = [];
 
 	if ($pun_config['o_smilies'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="5"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];

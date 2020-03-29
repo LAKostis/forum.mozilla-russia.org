@@ -104,13 +104,13 @@
 	}
 
 	//check which permission is needed
-	if(in_array($ACT,array('preview','wordblock','conflict','lockedby'))){
+	if(in_array($ACT,['preview','wordblock','conflict','lockedby'])){
 		if($INFO['exists']){
 			$permneed = AUTH_EDIT;
 		}else{
 			$permneed = AUTH_CREATE;
 		}
-	}elseif(in_array($ACT,array('login','register','search','recent'))){
+	}elseif(in_array($ACT,['login','register','search','recent'])){
 		$permneed = AUTH_NONE;
 	}else{
 		$permneed = AUTH_READ;

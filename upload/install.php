@@ -48,20 +48,20 @@ if (!isset($_POST['form_sent']))
 {
 	// Determine available database extensions
 	$dual_mysql = false;
-	$db_extensions = array();
+	$db_extensions = [];
 	if (function_exists('mysqli_connect'))
-		$db_extensions[] = array('mysqli', 'MySQL Improved');
+		$db_extensions[] = ['mysqli', 'MySQL Improved'];
 	if (function_exists('mysql_connect'))
 	{
-		$db_extensions[] = array('mysql', 'MySQL Standard');
+		$db_extensions[] = ['mysql', 'MySQL Standard'];
 
 		if (count($db_extensions) > 1)
 			$dual_mysql = true;
 	}
 	if (function_exists('sqlite_open'))
-		$db_extensions[] = array('sqlite', 'SQLite');
+		$db_extensions[] = ['sqlite', 'SQLite'];
 	if (function_exists('pg_connect'))
-		$db_extensions[] = array('pgsql', 'PostgreSQL');
+		$db_extensions[] = ['pgsql', 'PostgreSQL'];
 
 	if (empty($db_extensions))
 		exit('This PHP environment does not have support for any of the databases that PunBB supports. PHP needs to have support for either MySQL, PostgreSQL or SQLite in order for PunBB to be installed.');
@@ -253,7 +253,7 @@ else
 	//
 	function unescape($str)
 	{
-		return (get_magic_quotes_gpc() == 1) ? stripslashes($str) : $str;
+		return get_magic_quotes_gpc() == 1 ? stripslashes($str) : $str;
 	}
 
 
@@ -286,7 +286,7 @@ else
 		echo '<strong>PunBB reported:</strong> '.htmlspecialchars($message).'<br /><br />';
 
 		if ($db_error !== false)
-			echo '<strong>Database reported:</strong> '.htmlspecialchars($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '');
+			echo '<strong>Database reported:</strong> '.htmlspecialchars($db_error['error_msg']).($db_error['error_no'] ? ' (Errno: '.$db_error['error_no'].')' : '');
 
 		exit;
 	}
@@ -884,7 +884,7 @@ else
 			break;
 	}
 	$db->query($sql) or error('Unable to create table '.$db->prefix.'polls. Please check your settings and try again.', __FILE__, __LINE__, $db->error());
-	
+
 
 	switch ($db_type)
 	{
@@ -1309,7 +1309,7 @@ else
 					p_setop SMALLINT NOT NULL DEFAULT 0
 					)";
 			break;
-		
+
 		case 'sqlite':
 			$sql = 'CREATE TABLE '.$db_prefix."uploads_conf (
 					g_id INTEGER NOT NULL DEFAULT 0,
@@ -1551,7 +1551,7 @@ else
 	$db->query('INSERT INTO '.$db_prefix."uploads_conf (g_id, u_fsize, p_view, p_globalview, p_upload, p_delete, p_globaldelete, p_setop) VALUES(1, 0, 1, 1, 1, 1, 1, 1)") or error('Unable to add uploader config', __FILE__, __LINE__, $db->error());
 
 	// Insert config data
-	$config = array(
+	$config = [
 		'o_cur_version'				=> "'$punbb_version'",
 		'o_board_title'				=> "'My PunBB forum'",
 		'o_board_desc'				=> "'Unfortunately no one can be told what PunBB is - you have to see it for yourself.'",
@@ -1648,7 +1648,7 @@ else
 		'o_spamreport_blacklist'	=> "''",
 		'o_spamreport_forums'		=> "''",
 		'o_spamreport_count'		=> "'2'"
-	);
+	];
 
 	while (list($conf_name, $conf_value) = @each($config))
 	{

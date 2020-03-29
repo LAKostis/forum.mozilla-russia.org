@@ -39,8 +39,8 @@ $credits = 'forum.mozilla-russia.org'; # if empty, HTTP_HOST will be shown
 # CAPTCHA image colors (RGB, 0-255)
 //$foreground_color = array(0, 0, 0);
 //$background_color = array(220, 230, 255);
-$foreground_color = array(mt_rand(0,128), mt_rand(0,128), mt_rand(0,128));
-$background_color = array(234, 234, 234);
+$foreground_color = [mt_rand(0,128), mt_rand(0,128), mt_rand(0,128)];
+$background_color = [234, 234, 234];
 
 # JPEG quality of CAPTCHA image (bigger is better quality, but larger file size)
 $jpeg_quality = 90;

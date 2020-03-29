@@ -50,7 +50,7 @@ function format_link_build($link){
  * $link['class']  CSS class to set on link
  * $link['target'] which target to use (blank) for current window
  * $link['style']  Additonal style attribute set with style=""
- * $link['title']  Title to set with title="" 
+ * $link['title']  Title to set with title=""
  * $link['pre']    HTML to prepend to link
  * $link['suf']    HTML to append to link
  * $link['more']   Additonal HTML to include into the anchortag
@@ -74,7 +74,7 @@ function format_link_wiki($link){
   $link['more']   = 'onclick="return svchk()" onkeypress="return svchk()"';
 
   $ns = getNS($ID);
-  
+
   //if links starts with . add current namespace
   if(strpos($link['url'],'.')===0){
     $link['url'] = $ns.':'.substr($link['url'],1);
@@ -195,7 +195,7 @@ function format_link_email($link){
   $link['more']   = '';
 
   $link['name']   = htmlspecialchars($link['name']);
-  
+
   //shields up
   if($conf['mailguard']=='visible'){
     //the mail name gets some visible encoding
@@ -208,7 +208,7 @@ function format_link_email($link){
     }
     $link['url'] = $encode;
   }
-  
+
   $link['title'] = $link['url'];
   if(!$link['name']) $link['name'] = $link['url'];
   $link['url']   = 'mailto:'.$link['url'];
@@ -249,15 +249,15 @@ function format_link_interwiki($link){
   $iwlinks = file('wiki/conf/interwiki.conf');
 
   //add special case 'this'
-  $iwlinks[] = 'this '.getBaseURL(true).'{NAME}'; 
-  
+  $iwlinks[] = 'this '.getBaseURL(true).'{NAME}';
+
   //go through iwlinks and find URL for wiki
   foreach ($iwlinks as $line){
     $line = preg_replace('/#.*/','',$line); //skip comments
     $line = trim($line);
     list($iw,$iwurl) = preg_split('/\s+/',$line);
     if(!$iw or !$iwurl) continue; //skip broken or empty lines
-    //check for match 
+    //check for match
     if(strtolower($iw) == $wiki){
       $ico = $wiki;
       $url = $iwurl;
@@ -332,7 +332,7 @@ function format_link_media($link){
     $class = 'medialeft';
   }
   $link['name'] = trim($link['name']);
-  
+
   //split into src and parameters
   list($src,$param) = explode('?',$link['name'],2);
   //parse width and height
@@ -347,7 +347,7 @@ function format_link_media($link){
     //if src starts with . add current namespace
     if(strpos($src,'.') === 0){
       $src = $ns.':'.substr($src,1);
-    } 
+    }
     //if src contains no namespace add current namespace if any
     if($ns !== false && strpos($src,':') === false ){
       $src = $ns.':'.$src;
@@ -360,7 +360,7 @@ function format_link_media($link){
   $cache = $src;
   $isimg = img_cache($cache,$src,$w,$h,$nocache);
 
-  //set link to src if none given 
+  //set link to src if none given
   if(!$link['url']){
     $link['url'] = $src;
     $link['target'] = $conf['target']['media'];
@@ -406,7 +406,7 @@ function format_rss($url){
   $ret = '<ul class="rss">';
   if($rss){
     foreach ($rss->items as $item ) {
-      $link         = array();
+      $link         = [];
       $link['url']  = $item['link'];
       $link['name'] = $item['title'];
       $link         = format_link_externalurl($link);
@@ -431,7 +431,7 @@ function format_rss($url){
  */
 function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
   global $conf;
- 
+
   //container for various paths
   $f['full']['web'] = $src;
   $f['resz']['web'] = $src;
@@ -477,7 +477,7 @@ function img_cache(&$csrc,&$src,&$w,&$h,$nocache){
       $info = getImageSize($f['full']['fs']);
       //if $h not given calcualte it with correct aspect ratio
       if(!$h){
-        $h = round(($w * $info[1]) / $info[0]);
+        $h = round($w * $info[1] / $info[0]);
       }
       $cache = $conf['mediadir'].'/.cache/'.$md5.'.'.$w.'x'.$h.'.'.$ext;
       //delete outdated cachefile
@@ -546,7 +546,7 @@ function img_resize($ext,$from,$from_w,$from_h,$to,$to_w,$to_h){
   }else{
     imagecopyresized($newimg, $image, 0, 0, 0, 0, $to_w, $to_h, $from_w, $from_h);
   }
-  
+
   if ($ext == 'jpg' || $ext == 'jpeg'){
     if(!function_exists("imagejpeg")) return false;
     return imagejpeg($newimg, $to, 70);

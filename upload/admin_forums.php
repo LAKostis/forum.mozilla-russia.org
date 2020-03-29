@@ -207,8 +207,8 @@ else if (isset($_GET['edit_forum']))
 		if ($cat_id < 1)
 			message($lang_common['Bad request']);
 
-		$forum_desc = ($forum_desc != '') ? '\''.$db->escape($forum_desc).'\'' : 'NULL';
-		$redirect_url = ($redirect_url != '') ? '\''.$db->escape($redirect_url).'\'' : 'NULL';
+		$forum_desc = $forum_desc != '' ? '\''.$db->escape($forum_desc).'\'' : 'NULL';
+		$redirect_url = $redirect_url != '' ? '\''.$db->escape($redirect_url).'\'' : 'NULL';
 
 		$db->query('UPDATE '.$db->prefix.'forums SET forum_name=\''.$db->escape($forum_name).'\', forum_desc='.$forum_desc.', redirect_url='.$redirect_url.', sort_by='.$sort_by.', cat_id='.$cat_id.' WHERE id='.$forum_id) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 
@@ -218,7 +218,7 @@ else if (isset($_GET['edit_forum']))
 			$result = $db->query('SELECT g_id, g_read_board, g_post_replies, g_post_topics FROM '.$db->prefix.'groups WHERE g_id!='.PUN_ADMIN) or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 			while ($cur_group = $db->fetch_assoc($result))
 			{
-				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? '1' : '0' : intval($_POST['read_forum_old'][$cur_group['g_id']]);
+				$read_forum_new = $cur_group['g_read_board'] == '1' ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? '1' : '0' : intval($_POST['read_forum_old'][$cur_group['g_id']]);
 				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? '1' : '0';
 				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? '1' : '0';
 
@@ -316,7 +316,7 @@ else if (isset($_GET['edit_forum']))
 	{
 		while ($cur_cat = $db->fetch_assoc($result))
 		{
-			$selected = ($cur_cat['id'] == $cur_forum['cat_id']) ? ' selected="selected"' : '';
+			$selected = $cur_cat['id'] == $cur_forum['cat_id'] ? ' selected="selected"' : '';
 			echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value="'.$cur_cat['id'].'"'.$selected.'>'.pun_htmlspecialchars($cur_cat['cat_name']).'</option>'."\n";
 		}
 	}
@@ -340,7 +340,7 @@ else if (isset($_GET['edit_forum']))
 								</tr>
 								<tr>
 									<th scope="row">Redirect URL</th>
-									<td><?php echo ($cur_forum['num_topics']) ? 'Only available in empty forums' : '<input type="text" name="redirect_url" size="45" maxlength="100" value="'.pun_htmlspecialchars($cur_forum['redirect_url']).'" tabindex="5" />'; ?></td>
+									<td><?php echo $cur_forum['num_topics'] ? 'Only available in empty forums' : '<input type="text" name="redirect_url" size="45" maxlength="100" value="'.pun_htmlspecialchars($cur_forum['redirect_url']).'" tabindex="5" />'; ?></td>
 								</tr>
 							</table>
 						</div>
@@ -367,29 +367,29 @@ else if (isset($_GET['edit_forum']))
 
 	while ($cur_perm = $db->fetch_assoc($result))
 	{
-		$read_forum = ($cur_perm['read_forum'] != '0') ? true : false;
-		$post_replies = (($cur_perm['g_post_replies'] == '0' && $cur_perm['post_replies'] == '1') || ($cur_perm['g_post_replies'] == '1' && $cur_perm['post_replies'] != '0')) ? true : false;
-		$post_topics = (($cur_perm['g_post_topics'] == '0' && $cur_perm['post_topics'] == '1') || ($cur_perm['g_post_topics'] == '1' && $cur_perm['post_topics'] != '0')) ? true : false;
+		$read_forum = $cur_perm['read_forum'] != '0' ? true : false;
+		$post_replies = ($cur_perm['g_post_replies'] == '0' && $cur_perm['post_replies'] == '1') || ($cur_perm['g_post_replies'] == '1' && $cur_perm['post_replies'] != '0') ? true : false;
+		$post_topics = ($cur_perm['g_post_topics'] == '0' && $cur_perm['post_topics'] == '1') || ($cur_perm['g_post_topics'] == '1' && $cur_perm['post_topics'] != '0') ? true : false;
 
 		// Determine if the current sittings differ from the default or not
-		$read_forum_def = ($cur_perm['read_forum'] == '0') ? false : true;
-		$post_replies_def = (($post_replies && $cur_perm['g_post_replies'] == '0') || (!$post_replies && ($cur_perm['g_post_replies'] == '' || $cur_perm['g_post_replies'] == '1'))) ? false : true;
-		$post_topics_def = (($post_topics && $cur_perm['g_post_topics'] == '0') || (!$post_topics && ($cur_perm['g_post_topics'] == '' || $cur_perm['g_post_topics'] == '1'))) ? false : true;
+		$read_forum_def = $cur_perm['read_forum'] == '0' ? false : true;
+		$post_replies_def = ($post_replies && $cur_perm['g_post_replies'] == '0') || (!$post_replies && ($cur_perm['g_post_replies'] == '' || $cur_perm['g_post_replies'] == '1')) ? false : true;
+		$post_topics_def = ($post_topics && $cur_perm['g_post_topics'] == '0') || (!$post_topics && ($cur_perm['g_post_topics'] == '' || $cur_perm['g_post_topics'] == '1')) ? false : true;
 
 ?>
 								<tr>
 									<th class="atcl"><?php echo pun_htmlspecialchars($cur_perm['g_title']) ?></th>
 									<td<?php if (!$read_forum_def) echo ' class="nodefault"'; ?>>
-										<input type="hidden" name="read_forum_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($read_forum) ? '1' : '0'; ?>" />
-										<input type="checkbox" name="read_forum_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo ($read_forum) ? ' checked="checked"' : ''; ?><?php echo ($cur_perm['g_read_board'] == '0') ? ' disabled="disabled"' : ''; ?> />
+										<input type="hidden" name="read_forum_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo $read_forum ? '1' : '0'; ?>" />
+										<input type="checkbox" name="read_forum_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo $read_forum ? ' checked="checked"' : ''; ?><?php echo $cur_perm['g_read_board'] == '0' ? ' disabled="disabled"' : ''; ?> />
 									</td>
 									<td<?php if (!$post_replies_def && $cur_forum['redirect_url'] == '') echo ' class="nodefault"'; ?>>
-										<input type="hidden" name="post_replies_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($post_replies) ? '1' : '0'; ?>" />
-										<input type="checkbox" name="post_replies_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo ($post_replies) ? ' checked="checked"' : ''; ?><?php echo ($cur_forum['redirect_url'] != '') ? ' disabled="disabled"' : ''; ?> />
+										<input type="hidden" name="post_replies_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo $post_replies ? '1' : '0'; ?>" />
+										<input type="checkbox" name="post_replies_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo $post_replies ? ' checked="checked"' : ''; ?><?php echo $cur_forum['redirect_url'] != '' ? ' disabled="disabled"' : ''; ?> />
 									</td>
 									<td<?php if (!$post_topics_def && $cur_forum['redirect_url'] == '') echo ' class="nodefault"'; ?>>
-										<input type="hidden" name="post_topics_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo ($post_topics) ? '1' : '0'; ?>" />
-										<input type="checkbox" name="post_topics_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo ($post_topics) ? ' checked="checked"' : ''; ?><?php echo ($cur_forum['redirect_url'] != '') ? ' disabled="disabled"' : ''; ?> />
+										<input type="hidden" name="post_topics_old[<?php echo $cur_perm['g_id'] ?>]" value="<?php echo $post_topics ? '1' : '0'; ?>" />
+										<input type="checkbox" name="post_topics_new[<?php echo $cur_perm['g_id'] ?>]" value="1"<?php echo $post_topics ? ' checked="checked"' : ''; ?><?php echo $cur_forum['redirect_url'] != '' ? ' disabled="disabled"' : ''; ?> />
 									</td>
 								</tr>
 <?php

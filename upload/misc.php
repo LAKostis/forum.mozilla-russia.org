@@ -151,11 +151,11 @@ else if (isset($_GET['email']))
 
 
 	// Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to the users profile after the e-mail is sent)
-	$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
+	$redirect_url = isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
 
 	$page_title = pun_htmlspecialchars($lang_misc['Send e-mail to']).' '.pun_htmlspecialchars($recipient).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$required_fields = array('req_subject' => $lang_misc['E-mail subject'], 'req_message' => $lang_misc['E-mail message']);
-	$focus_element = array('email', 'req_subject');
+	$required_fields = ['req_subject' => $lang_misc['E-mail subject'], 'req_message' => $lang_misc['E-mail message']];
+	$focus_element = ['email', 'req_subject'];
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -230,12 +230,12 @@ else if (isset($_GET['report']))
 			$result = $db->query('SELECT DISTINCT forum_id, topic_id, post_id, reported_by FROM '.$db->prefix.'reports WHERE message = \'Spam\' AND zapped IS NULL') or error('Unable to select reports', __FILE__, __LINE__, $db->error());
 			if ($db->num_rows($result))
 			{
-				$whitelist = !empty($pun_config['o_spamreport_whitelist']) ? explode(',', $pun_config['o_spamreport_whitelist']) : array();
-				$blacklist = !empty($pun_config['o_spamreport_blacklist']) ? explode(',', $pun_config['o_spamreport_blacklist']) : array();
-				$forums = !empty($pun_config['o_spamreport_forums']) ? explode(',', $pun_config['o_spamreport_forums']) : array();
+				$whitelist = !empty($pun_config['o_spamreport_whitelist']) ? explode(',', $pun_config['o_spamreport_whitelist']) : [];
+				$blacklist = !empty($pun_config['o_spamreport_blacklist']) ? explode(',', $pun_config['o_spamreport_blacklist']) : [];
+				$forums = !empty($pun_config['o_spamreport_forums']) ? explode(',', $pun_config['o_spamreport_forums']) : [];
 				$count = (int)$pun_config['o_spamreport_count'] > 1 ? (int)$pun_config['o_spamreport_count'] : 2;
 
-				$blocked = array();
+				$blocked = [];
 				while ($cur_report = $db->fetch_assoc($result))
 				{
 					if (in_array($cur_report['forum_id'], $forums))
@@ -250,7 +250,7 @@ else if (isset($_GET['report']))
 						$blocked[$cur_report['post_id']] = 1;
 				}
 
-				$forums_blocked = array();
+				$forums_blocked = [];
 				foreach ($blocked as $forum_id => $reports)
 					if ($reports >= $count)
 						$forums_blocked[] = (int)$forum_id;
@@ -293,7 +293,7 @@ else if (isset($_GET['report']))
 
 
 	$page_title = pun_htmlspecialchars($lang_misc['Report post']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$focus_element = array('report', 'req_reason');
+	$focus_element = ['report', 'req_reason'];
 	require PUN_ROOT.'header.php';
 
 ?>

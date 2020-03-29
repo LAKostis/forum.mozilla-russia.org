@@ -22,8 +22,8 @@
 function parse($text){
   global $parser;
   global $conf;
-  $table   = array();
-  $hltable = array();
+  $table   = [];
+  $hltable = [];
 
   //preparse
   $text = preparse($text,$table,$hltable);
@@ -232,10 +232,10 @@ function tokenize_headline(&$hltable,$pre,$hline,$lno){
       break;
   }
   $token = mkToken();
-  $hltable[] = array( 'name'  => htmlspecialchars(trim($hline)),
+  $hltable[] = [ 'name'  => htmlspecialchars(trim($hline)),
                       'level' => $lvl,
                       'line'  => $lno,
-                      'token' => $token );
+                      'token' => $token ];
   return $token;
 }
 
@@ -253,7 +253,7 @@ function format_headlines(&$table,&$hltable,&$text){
   // walk the headline table prepared in preparsing
   $last  = 0;
   $cnt   = 0;
-  $hashs = array();
+  $hashs = [];
   foreach($hltable as $hl){
     $cnt++;
 
@@ -276,9 +276,9 @@ function format_headlines(&$table,&$hltable,&$text){
 
     //remember for autoTOC
     if($hl['level'] <= $conf['maxtoclevel']){
-      $content[]  = array('id'    => $hash,
+      $content[]  = ['id'    => $hash,
                           'name'  => $hl['name'],
-                          'level' => $hl['level']);
+                          'level' => $hl['level']];
     }
 
     //add link for section edit for HLs 1, and 3
@@ -327,7 +327,7 @@ function linkformat($match){
   $match = str_replace('\\"','"',$match);
 
   //prepare variables for the formaters
-	$link = array();
+	$link = [];
   list($link['url'],$link['name']) = explode('|',$match,2);
   $link['url']    = trim($link['url']);
   $link['name']   = trim($link['name']);
@@ -603,7 +603,7 @@ function tableformat($block) {
   $lines = explode("\n",$block);
   $ret = "";
   //build a row array
-  $rows = array();
+  $rows = [];
   for($r=0; $r < count($lines); $r++){
     $line = $lines[$r];
     //remove last seperator and trailing whitespace
@@ -691,7 +691,7 @@ function listformat($block){
 
   //build an item array
   $cnt=0;
-  $items = array();
+  $items = [];
   foreach ($lines as $line){
     //get intendion level
     $lvl  = 0;
@@ -700,7 +700,7 @@ function listformat($block){
     //remove indents
     $line = preg_replace('/^[ \t]+/','',$line);
     //get type of list
-    (substr($line,0,1) == '-') ? $type='ol' : $type='ul';
+    substr($line,0,1) == '-' ? $type='ol' : $type='ul';
     // remove bullet and following spaces
     $line = preg_replace('/^[*\-]\s*/','',$line);
     //add item to the list
@@ -712,7 +712,7 @@ function listformat($block){
   }
 
   $level = 0;
-  $opens = array();
+  $opens = [];
 
   foreach ($items as $item){
     if( $item['level'] > $level ){
@@ -722,7 +722,7 @@ function listformat($block){
     }elseif( $item['level'] < $level ){
       //close last item
       $ret .= "</li>\n";
-      for ($i=0; $i<($level - $item['level']); $i++){
+      for ($i=0; $i<$level - $item['level']; $i++){
         //close higher lists
         $ret .= '</'.array_pop($opens).">\n</li>\n";
       }
@@ -834,7 +834,7 @@ function mediaformat($text){
   }
 
   //handle normal media stuff
-  $link = array();
+  $link = [];
   $link['name'] = $text;
   $link         = format_link_media($link);
 	return format_link_build($link);

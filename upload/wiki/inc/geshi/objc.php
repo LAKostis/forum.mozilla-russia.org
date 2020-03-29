@@ -39,19 +39,19 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Objective C',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '//', 2 => '#'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'if', 'return', 'while', 'case', 'continue', 'default',
 			'do', 'else', 'for', 'switch', 'goto'
-			),
-		2 => array(
+			],
+		2 => [
 			'NULL', 'false', 'break', 'true', 'enum', 'nil', 'Nil', 'errno', 'EDOM',
 			'ERANGE', 'FLT_RADIX', 'FLT_ROUNDS', 'FLT_DIG', 'DBL_DIG', 'LDBL_DIG',
 			'FLT_EPSILON', 'DBL_EPSILON', 'LDBL_EPSILON', 'FLT_MANT_DIG', 'DBL_MANT_DIG',
@@ -64,8 +64,8 @@ $language_data = array (
 			'SIG_IGN', 'BUFSIZ', 'EOF', 'FILENAME_MAX', 'FOPEN_MAX', 'L_tmpnam', 'NULL',
 			'SEEK_CUR', 'SEEK_END', 'SEEK_SET', 'TMP_MAX', 'stdin', 'stdout', 'stderr',
 			'EXIT_FAILURE', 'EXIT_SUCCESS', 'RAND_MAX', 'CLOCKS_PER_SEC'
-			),
-		3 => array(
+			],
+		3 => [
 			'printf', 'fprintf', 'snprintf', 'sprintf', 'assert',
 			'isalnum', 'isalpha', 'isdigit', 'iscntrl', 'isgraph', 'islower', 'isprint',
 			'ispunct', 'isspace', 'ispunct', 'isupper', 'isxdigit', 'tolower', 'toupper',
@@ -85,8 +85,8 @@ $language_data = array (
 			'strpbrk', 'strstr', 'strlen', 'strerror', 'strtok', 'strxfrm', 'memcpy',
 			'memmove', 'memcmp', 'memchr', 'memset', 'clock', 'time', 'difftime', 'mktime',
 			'asctime', 'ctime', 'gmtime', 'localtime', 'strftime'
-			),
-		4 => array(   // Data types:
+			],
+		4 => [   // Data types:
 			'auto', 'char', 'const', 'double',  'float', 'int', 'long',
 			'register', 'short', 'signed', 'sizeof', 'static', 'string', 'struct',
 			'typedef', 'union', 'unsigned', 'void', 'volatile', 'extern', 'jmp_buf',
@@ -98,8 +98,8 @@ $language_data = array (
 			'@selector', '@class', '@protocol', '@interface', '@implementation', '@end',
 			'@private', '@protected', '@public', '@try', '@throw', '@catch', '@finally',
 			'@encode', '@defs', '@synchronized'
-			),
-        5 => array( // OpenStep/GNUstep/Cocoa Foundation
+			],
+        5 => [ // OpenStep/GNUstep/Cocoa Foundation
 			'NSAppleEventDescriptor', 'NSNetService', 'NSAppleEventManager',
 			'NSNetServiceBrowser', 'NSAppleScript', 'NSNotification', 'NSArchiver',
 			'NSNotificationCenter', 'NSArray', 'NSNotificationQueue', 'NSAssertionHandler',
@@ -136,8 +136,8 @@ $language_data = array (
 			'NSMutableDictionary', 'NSUserDefaults', 'NSMutableIndexSet', 'NSValue',
 			'NSMutableSet', 'NSValueTransformer', 'NSMutableString', 'NSWhoseSpecifier',
 			'NSMutableURLRequest', 'NSXMLParser', 'NSNameSpecifier'
-		),
-		6 => array( // OpenStep/GNUstep/Cocoa AppKit
+		],
+		6 => [ // OpenStep/GNUstep/Cocoa AppKit
 			'NSActionCell', 'NSOpenGLPixelFormat', 'NSAffineTransform', 'NSOpenGLView',
 			'NSAlert', 'NSOpenPanel', 'NSAppleScript Additions', 'NSOutlineView',
 			'NSApplication', 'NSPageLayout', 'NSArrayController', 'NSPanel',
@@ -168,12 +168,12 @@ $language_data = array (
 			'NSUserDefaultsController', 'NSNibControlConnector', 'NSView',
 			'NSNibOutletConnector', 'NSWindow', 'NSObjectController', 'NSWindowController',
 			'NSOpenGLContext', 'NSWorkspace', 'NSOpenGLPixelBuffer'
-		)
-	),
-	'SYMBOLS' => array(
+		]
+	],
+	'SYMBOLS' => [
 		'(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
@@ -181,61 +181,61 @@ $language_data = array (
 		4 => false,
 		5 => false,
 		6 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #0000ff;',
 			2 => 'color: #0000ff;',
 			3 => 'color: #0000dd;',
 			4 => 'color: #0000ff;',
 			5 => 'color: #0000ff;',
 			6 => 'color: #0000ff;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #ff0000;',
 			2 => 'color: #339900;',
 			'MULTI' => 'color: #ff0000; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #666666; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #002200;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #666666;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #0000dd;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #002200;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => 'http://www.opengroup.org/onlinepubs/009695399/functions/{FNAME}.html',
 		4 => '',
 		5 => 'http://developer.apple.com/documentation/Cocoa/Reference/Foundation/ObjC_classic/Classes/{FNAME}.html',
 		6 => 'http://developer.apple.com/documentation/Cocoa/Reference/ApplicationKit/ObjC_classic/Classes/{FNAME}.html'
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

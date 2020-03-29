@@ -12,7 +12,7 @@
 
 //--------------------------------------------------------------------
 /**
-* Used internally. Builds a PCRE pattern from the $UTF8_SPECIAL_CHARS 
+* Used internally. Builds a PCRE pattern from the $UTF8_SPECIAL_CHARS
 * array defined in this file
 * The $UTF8_SPECIAL_CHARS should contain all special characters (non-letter/non-digit)
 * defined in the various local charsets - it's not a complete list of
@@ -29,9 +29,9 @@
 */
 function utf8_specials_pattern() {
     static $pattern = NULL;
-    
+
     if ( !$pattern ) {
-        $UTF8_SPECIAL_CHARS = array(
+        $UTF8_SPECIAL_CHARS = [
     0x001a, 0x001b, 0x001c, 0x001d, 0x001e, 0x001f, 0x0020, 0x0021, 0x0022, 0x0023,
     0x0024, 0x0025, 0x0026, 0x0027, 0x0028, 0x0029, 0x002a, 0x002b, 0x002c,
     0x002f,         0x003b, 0x003c, 0x003d, 0x003e, 0x003f, 0x0040, 0x005b,
@@ -82,11 +82,11 @@ function utf8_specials_pattern() {
     0xf8e7, 0xf8e8, 0xf8e9, 0xf8ea, 0xf8eb, 0xf8ec, 0xf8ed, 0xf8ee, 0xf8ef, 0xf8f0,
     0xf8f1, 0xf8f2, 0xf8f3, 0xf8f4, 0xf8f5, 0xf8f6, 0xf8f7, 0xf8f8, 0xf8f9, 0xf8fa,
     0xf8fb, 0xf8fc, 0xf8fd, 0xf8fe, 0xfe7c, 0xfe7d,
-            );
+            ];
         $pattern = preg_quote(utf8_from_unicode($UTF8_SPECIAL_CHARS), '/');
         $pattern = '/[\x00-\x19'.$pattern.']/u';
     }
-    
+
     return $pattern;
 }
 
@@ -99,7 +99,7 @@ function utf8_specials_pattern() {
 * in the string, including ASCII device control characters.
 * @package utf8
 * @subpackage utils
-* @param string to check
+* @param to $str check
 * @return boolean TRUE if the string only contains word characters
 * @see utf8_specials_pattern
 */
@@ -110,7 +110,7 @@ function utf8_is_word_chars($str) {
 //--------------------------------------------------------------------
 /**
 * Removes special characters (nonalphanumeric) from a UTF-8 string
-* 
+*
 * This can be useful as a helper for sanitizing a string for use as
 * something like a file name or a unique identifier. Be warned though
 * it does not handle all possible non-alphanumeric characters and is
@@ -127,5 +127,3 @@ function utf8_is_word_chars($str) {
 function utf8_strip_specials($string, $repl=''){
     return preg_replace(utf8_specials_pattern(), $repl, $string);
 }
-
-

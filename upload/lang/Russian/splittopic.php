@@ -1,6 +1,6 @@
 <?php
 
-$lang_mod = array(
+$lang_mod = [
 
 'Create topic'			=>	'Создать новую тему',
 'First post'			=>	'Первое сообщение',
@@ -9,4 +9,4 @@ $lang_mod = array(
 'Move posts redirect'	=>	'Сообщения перемещены. Идет перенаправление ...',
 'Move post redirect'	=>	'Сообщение перемещено. Идет перенаправление ...',
 
-);
+];

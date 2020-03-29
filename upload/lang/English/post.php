@@ -1,6 +1,6 @@
 <?php
 
-$lang_post = array(
+$lang_post = [
 
 // Post validation stuff (many are similiar to those in edit.php)
 'No subject'		=>	'Topics must contain a subject.',
@@ -34,4 +34,4 @@ $lang_post = array(
 'Added'				=>	'Added',
 'Merge posts'		=>	'Merge with previous if it yours'
 
-);
+];

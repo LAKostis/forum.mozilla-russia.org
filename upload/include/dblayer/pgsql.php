@@ -34,10 +34,10 @@ class DBLayer
 	var $prefix;
 	var $link_id;
 	var $query_result;
-	var $last_query_text = array();
+	var $last_query_text = [];
 	var $in_transaction = 0;
 
-	var $saved_queries = array();
+	var $saved_queries = [];
 	var $num_queries = 0;
 
 	var $error_no = false;
@@ -87,7 +87,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return (@pg_query($this->link_id, 'BEGIN')) ? true : false;
+		return @pg_query($this->link_id, 'BEGIN') ? true : false;
 	}
 
 
@@ -119,7 +119,7 @@ class DBLayer
 		if (pg_result_status($this->query_result) != PGSQL_FATAL_ERROR)
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = [$sql, sprintf('%.5f', get_microtime() - $q_start)];
 
 			++$this->num_queries;
 
@@ -130,7 +130,7 @@ class DBLayer
 		else
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, 0);
+				$this->saved_queries[] = [$sql, 0];
 
 			$this->error_msg = @pg_result_error($this->query_result);
 
@@ -146,31 +146,31 @@ class DBLayer
 
 	function result($query_id = 0, $row = 0)
 	{
-		return ($query_id) ? @pg_fetch_result($query_id, $row, 0) : false;
+		return $query_id ? @pg_fetch_result($query_id, $row, 0) : false;
 	}
 
 
 	function fetch_assoc($query_id = 0)
 	{
-		return ($query_id) ? @pg_fetch_assoc($query_id) : false;
+		return $query_id ? @pg_fetch_assoc($query_id) : false;
 	}
 
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? @pg_fetch_row($query_id) : false;
+		return $query_id ? @pg_fetch_row($query_id) : false;
 	}
 
 
 	function num_rows($query_id = 0)
 	{
-		return ($query_id) ? @pg_num_rows($query_id) : false;
+		return $query_id ? @pg_num_rows($query_id) : false;
 	}
 
 
 	function affected_rows()
 	{
-		return ($this->query_result) ? @pg_affected_rows($this->query_result) : false;
+		return $this->query_result ? @pg_affected_rows($this->query_result) : false;
 	}
 
 
@@ -187,7 +187,7 @@ class DBLayer
 					$table_name[1] .= '_g';
 
 				$temp_q_id = @pg_query($this->link_id, 'SELECT currval(\''.$table_name[1].'_id_seq\')');
-				return ($temp_q_id) ? intval(@pg_fetch_result($temp_q_id, 0)) : false;
+				return $temp_q_id ? intval(@pg_fetch_result($temp_q_id, 0)) : false;
 			}
 		}
 
@@ -212,7 +212,7 @@ class DBLayer
 		if (!$query_id)
 			$query_id = $this->query_result;
 
-		return ($query_id) ? @pg_free_result($query_id) : false;
+		return $query_id ? @pg_free_result($query_id) : false;
 	}
 
 
@@ -249,7 +249,7 @@ class DBLayer
 			if ($this->in_transaction)
 			{
 				if (defined('PUN_SHOW_QUERIES'))
-					$this->saved_queries[] = array('COMMIT', 0);
+					$this->saved_queries[] = ['COMMIT', 0];
 
 				@pg_query($this->link_id, 'COMMIT');
 			}

@@ -3,22 +3,22 @@
  * XMPPHP: The PHP XMPP Library
  * Copyright (C) 2008  Nathanael C. Fritz
  * This file is part of SleekXMPP.
- * 
+ *
  * XMPPHP is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * XMPPHP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with XMPPHP; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @category   xmpphp 
+ * @category   xmpphp
  * @package	XMPPHP
  * @author	 Nathanael C. Fritz <JID: fritzy@netflint.net>
  * @author	 Stephan Wentz <JID: stephan@jabber.wentz.it>
@@ -37,8 +37,8 @@ require_once dirname(__FILE__) . '/Log.php';
 
 /**
  * XMPPHP XML Stream
- * 
- * @category   xmpphp 
+ *
+ * @category   xmpphp
  * @package	XMPPHP
  * @author	 Nathanael C. Fritz <JID: fritzy@netflint.net>
  * @author	 Stephan Wentz <JID: stephan@jabber.wentz.it>
@@ -90,11 +90,11 @@ class XMPPHP_XMLStream {
 	/**
 	 * @var array
 	 */
-	protected $ns_map = array();
+	protected $ns_map = [];
 	/**
 	 * @var array
 	 */
-	protected $current_ns = array();
+	protected $current_ns = [];
 	/**
 	 * @var array
 	 */
@@ -102,19 +102,19 @@ class XMPPHP_XMLStream {
 	/**
 	 * @var array
 	 */
-	protected $nshandlers = array();
+	protected $nshandlers = [];
 	/**
 	 * @var array
 	 */
-	protected $xpathhandlers = array();
+	protected $xpathhandlers = [];
 	/**
 	 * @var array
 	 */
-	protected $idhandlers = array();
+	protected $idhandlers = [];
 	/**
 	 * @var array
 	 */
-	protected $eventhandlers = array();
+	protected $eventhandlers = [];
 	/**
 	 * @var integer
 	 */
@@ -138,7 +138,7 @@ class XMPPHP_XMLStream {
 	/**
 	 * @var array
 	 */
-	protected $until_payload = array();
+	protected $until_payload = [];
 	/**
 	 * @var XMPPHP_Log
 	 */
@@ -195,7 +195,7 @@ class XMPPHP_XMLStream {
 			$this->disconnect();
 		}
 	}
-	
+
 	/**
 	 * Return the log instance
 	 *
@@ -204,7 +204,7 @@ class XMPPHP_XMLStream {
 	public function getLog() {
 		return $this->log;
 	}
-	
+
 	/**
 	 * Get next ID
 	 *
@@ -232,7 +232,7 @@ class XMPPHP_XMLStream {
 	 * @param string  $obj
 	 */
 	public function addIdHandler($id, $pointer, $obj = null) {
-		$this->idhandlers[$id] = array($pointer, $obj);
+		$this->idhandlers[$id] = [$pointer, $obj];
 	}
 
 	/**
@@ -246,7 +246,7 @@ class XMPPHP_XMLStream {
 	 */
 	public function addHandler($name, $ns, $pointer, $obj = null, $depth = 1) {
 		#TODO deprication warning
-		$this->nshandlers[] = array($name,$ns,$pointer,$obj, $depth);
+		$this->nshandlers[] = [$name,$ns,$pointer,$obj, $depth];
 	}
 
 	/**
@@ -260,29 +260,29 @@ class XMPPHP_XMLStream {
 		if (preg_match_all("/\(?{[^\}]+}\)?(\/?)[^\/]+/", $xpath, $regs)) {
 			$ns_tags = $regs[0];
 		} else {
-			$ns_tags = array($xpath);
+			$ns_tags = [$xpath];
 		}
 		foreach($ns_tags as $ns_tag) {
 			list($l, $r) = explode("}", $ns_tag);
 			if ($r != null) {
-				$xpart = array(substr($l, 1), $r);
+				$xpart = [substr($l, 1), $r];
 			} else {
-				$xpart = array(null, $l);
+				$xpart = [null, $l];
 			}
 			$xpath_array[] = $xpart;
 		}
-		$this->xpathhandlers[] = array($xpath_array, $pointer, $obj);
+		$this->xpathhandlers[] = [$xpath_array, $pointer, $obj];
 	}
 
 	/**
 	 * Add Event Handler
 	 *
-	 * @param integer $id
+	 * @param integer $name
 	 * @param string  $pointer
 	 * @param string  $obj
 	 */
 	public function addEventHandler($name, $pointer, $obj) {
-		$this->eventhandlers[] = array($name, $pointer, $obj);
+		$this->eventhandlers[] = [$name, $pointer, $obj];
 	}
 
 	/**
@@ -295,7 +295,7 @@ class XMPPHP_XMLStream {
 	public function connect($timeout = 30, $persistent = false, $sendinit = true) {
 		$this->sent_disconnect = false;
 		$starttime = time();
-		
+
 		do {
 			$this->disconnected = false;
 			$this->sent_disconnect = false;
@@ -319,7 +319,7 @@ class XMPPHP_XMLStream {
 				sleep(min($timeout, 5));
 			}
 		} while (!$this->socket && (time() - $starttime) < $timeout);
-		
+
 		if ($this->socket) {
 			stream_set_blocking($this->socket, 1);
 			if($sendinit) $this->send($this->stream_start);
@@ -343,7 +343,7 @@ class XMPPHP_XMLStream {
 	public function setReconnectTimeout($timeout) {
 		$this->reconnectTimeout = $timeout;
 	}
-	
+
 	/**
 	 * Disconnect from XMPP Host
 	 */
@@ -372,18 +372,18 @@ class XMPPHP_XMLStream {
 	 * Core reading tool
 	 * 0 -> only read if data is immediately ready
 	 * NULL -> wait forever and ever
-	 * integer -> process for this amount of time 
+	 * integer -> process for this amount of time
 	 */
-	
+
 	private function __process($maximum=5) {
-		
+
 		$remaining = $maximum;
-		
+
 		do {
-			$starttime = (microtime(true) * 1000000);
-			$read = array($this->socket);
-			$write = array();
-			$except = array();
+			$starttime = microtime(true) * 1000000;
+			$read = [$this->socket];
+			$write = [];
+			$except = [];
 			if (is_null($maximum)) {
 				$secs = NULL;
 				$usecs = NULL;
@@ -396,7 +396,7 @@ class XMPPHP_XMLStream {
 			}
 			$updated = @stream_select($read, $write, $except, $secs, $usecs);
 			if ($updated === false) {
-				$this->log->log("Error on stream_select()",  XMPPHP_Log::LEVEL_VERBOSE);				
+				$this->log->log("Error on stream_select()",  XMPPHP_Log::LEVEL_VERBOSE);
 				if ($this->reconnect) {
 					$this->doReconnect();
 				} else {
@@ -407,7 +407,7 @@ class XMPPHP_XMLStream {
 			} else if ($updated > 0) {
 				# XXX: Is this big enough?
 				$buff = @fread($this->socket, 4096);
-				if(!$buff) { 
+				if(!$buff) {
 					if($this->reconnect) {
 						$this->doReconnect();
 					} else {
@@ -421,13 +421,13 @@ class XMPPHP_XMLStream {
 			} else {
 				# $updated == 0 means no changes during timeout.
 			}
-			$endtime = (microtime(true)*1000000);
+			$endtime = microtime(true)*1000000;
 			$time_past = $endtime - $starttime;
-			$remaining = $remaining - $time_past;
+			$remaining -= $time_past;
 		} while (is_null($maximum) || $remaining > 0);
 		return true;
 	}
-	
+
 	/**
 	 * Process
 	 *
@@ -460,7 +460,7 @@ class XMPPHP_XMLStream {
 	 */
 	public function processUntil($event, $timeout=-1) {
 		$start = time();
-		if(!is_array($event)) $event = array($event);
+		if(!is_array($event)) $event = [$event];
 		$this->until[] = $event;
 		end($this->until);
 		$event_key = key($this->until);
@@ -476,7 +476,7 @@ class XMPPHP_XMLStream {
 			unset($this->until_count[$event_key]);
 			unset($this->until[$event_key]);
 		} else {
-			$payload = array();
+			$payload = [];
 		}
 		return $payload;
 	}
@@ -490,7 +490,7 @@ class XMPPHP_XMLStream {
 
 	/**
 	 * XML start callback
-	 * 
+	 *
 	 * @see xml_set_element_handler
 	 *
 	 * @param resource $parser
@@ -531,7 +531,7 @@ class XMPPHP_XMLStream {
 
 	/**
 	 * XML end callback
-	 * 
+	 *
 	 * @see xml_set_element_handler
 	 *
 	 * @param resource $parser
@@ -646,7 +646,7 @@ class XMPPHP_XMLStream {
 		foreach($this->until as $key => $until) {
 			if(is_array($until)) {
 				if(in_array($name, $until)) {
-					$this->until_payload[$key][] = array($name, $payload);
+					$this->until_payload[$key][] = [$name, $payload];
 					if(!isset($this->until_count[$key])) {
 						$this->until_count[$key] = 0;
 					}
@@ -662,7 +662,7 @@ class XMPPHP_XMLStream {
 	 */
 	public function read() {
 		$buff = @fread($this->socket, 1024);
-		if(!$buff) { 
+		if(!$buff) {
 			if($this->reconnect) {
 				$this->doReconnect();
 			} else {
@@ -692,13 +692,13 @@ class XMPPHP_XMLStream {
 			$usecs = $maximum % 1000000;
 			$secs = floor(($maximum - $usecs) / 1000000);
 		}
-		
-		$read = array();
-		$write = array($this->socket);
-		$except = array();
-		
+
+		$read = [];
+		$write = [$this->socket];
+		$except = [];
+
 		$select = @stream_select($read, $write, $except, $secs, $usecs);
-		
+
 		if($select === False) {
 			$this->log->log("ERROR sending message; reconnecting.");
 			$this->doReconnect();
@@ -710,7 +710,7 @@ class XMPPHP_XMLStream {
 			$this->log->log("Socket is not ready; break.", XMPPHP_Log::LEVEL_ERROR);
 			return false;
 		}
-		
+
 		$sentbytes = @fwrite($this->socket, $msg);
 		$this->log->log("SENT: " . mb_substr($msg, 0, $sentbytes, '8bit'), XMPPHP_Log::LEVEL_VERBOSE);
 		if($sentbytes === FALSE) {
@@ -733,7 +733,7 @@ class XMPPHP_XMLStream {
 	public function reset() {
 		$this->xml_depth = 0;
 		unset($this->xmlobj);
-		$this->xmlobj = array();
+		$this->xmlobj = [];
 		$this->setupParser();
 		if(!$this->is_server) {
 			$this->send($this->stream_start);
@@ -754,10 +754,10 @@ class XMPPHP_XMLStream {
 	}
 
 	public function readyToProcess() {
-		$read = array($this->socket);
-		$write = array();
-		$except = array();
+		$read = [$this->socket];
+		$write = [];
+		$except = [];
 		$updated = @stream_select($read, $write, $except, 0);
-		return (($updated !== false) && ($updated > 0));
+		return ($updated !== false) && ($updated > 0);
 	}
 }

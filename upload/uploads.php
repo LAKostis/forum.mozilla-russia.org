@@ -42,13 +42,13 @@ $page_title=$lang_uploads['Uploader'].' | '.pun_htmlspecialchars($pun_config['o_
 // FIXME
 $files_per_page = 30;
 
-$filename = (isset($_GET['filename'])) ? $_GET['filename'] : '';
-$sort_by = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'user' ) ? 'file' : $_GET['sort_by'];
-$sort_dir = (!isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_GET['sort_dir']);
+$filename = isset($_GET['filename']) ? $_GET['filename'] : '';
+$sort_by = !isset($_GET['sort_by']) || $_GET['sort_by'] != 'user' ? 'file' : $_GET['sort_by'];
+$sort_dir = !isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC' ? 'ASC' : strtoupper($_GET['sort_dir']);
 
 // Create any SQL for the WHERE clause
-$where_sql = array();
-$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+$where_sql = [];
+$like_command = $db_type == 'pgsql' ? 'ILIKE' : 'LIKE';
 
 if ($pun_user['g_search_users'] == '1' && $filename != '') {
 	$where_sql[] = 'file '.$like_command.' \''.$db->escape(str_replace('*', '%', $filename)).'\'';
@@ -61,7 +61,7 @@ list($num_files) = $db->fetch_row($result);
 
 //What page are we on?
 $num_pages = ceil($num_files / $files_per_page);
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = !isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 $start_from = $files_per_page * ($p - 1);
 $limit = $start_from.','.$files_per_page;
 
@@ -98,7 +98,7 @@ require PUN_ROOT.'header.php';
 </div>
 <div class="linkst">
 	<div class="inbox">
-		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<?php if (!$pun_user['is_guest'] || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
 		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>
@@ -129,8 +129,8 @@ require PUN_ROOT.'header.php';
 	}
 
 
-  $allowed = array(".txt",".gif",".jpg",".jpeg",".png", ".xpi", ".zip", ".src");
-  $pics = array(".gif",".jpg",".jpeg",".png");
+  $allowed = [".txt",".gif",".jpg",".jpeg",".png", ".xpi", ".zip", ".src"];
+  $pics = [".gif",".jpg",".jpeg",".png"];
 
  ?>
 
@@ -264,7 +264,7 @@ elseif(isset($_POST['act']) && pun_trim($_POST['act']) == 'Delete' && isset($_PO
 ?>
 <div class="linksb">
 	<div class="inbox">
-		<?php if ((!$pun_user['is_guest']) || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
+		<?php if (!$pun_user['is_guest'] || $pun_user['g_id'] <PUN_GUEST) echo '<p class="pagelink conl"><a href="upload.php" class="upload">'.$lang_uploads['New file upload'].'</a></p>' ?>
 		<p class="postlink conr"><?php echo $lang_common['Pages'].': '.paginate($num_pages, $p, 'uploads.php?filename='.urlencode($filename).'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)); ?></p>
 		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a>&nbsp;</li><li>&raquo;&nbsp;<a href="uploads.php"><?php echo $lang_uploads['Uploader'] ?></a></li></ul>
 		<div class="clearer"></div>

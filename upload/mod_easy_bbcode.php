@@ -90,14 +90,14 @@ if (!isset($bbcode_field))
 								</td>
 							</tr>
 						</table>
-						</div>							
+						</div>
 						<div style="padding-top: 4px; margin: 5px">
 							<span style="margin-right: 25px">
 <?php
 
 require_once PUN_ROOT.'include/parser.php';
 
-$smiley_index = array();
+$smiley_index = [];
 $smiley_count = 0;
 
 for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
@@ -110,7 +110,7 @@ for ($i = 0, $l = count($smiley_text); $i < $l; ++$i)
 		echo "\t\t\t\t\t\t\t\t".'<span id="smiley-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreSmiles();return false;">'.$lang_common['Show More'].'</a></span><span id="smileys" style="display:none">';
 		$smiley_limit = -1;
 	}
-	echo "\t\t\t\t\t\t\t\t".'<a href="#" onclick="insertText(\''.$smiley_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.$smiley_text[$i].'" style="vertical-align:middle"/>' : $smiley_text[$i]).'</a>'."\n";
+	echo "\t\t\t\t\t\t\t\t".'<a href="#" onclick="insertText(\''.$smiley_text[$i].'\',\'\');return false;">'.($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1' ? '<img src="img/smilies/'.$smiley_img[$i].'" alt="'.$smiley_text[$i].'" title="'.$smiley_text[$i].'" style="vertical-align:middle"/>' : $smiley_text[$i]).'</a>'."\n";
 
 	$smiley_index[] = $smiley_img[$i];
 	$smiley_count++;
@@ -125,7 +125,7 @@ if ($smiley_limit == -1)
 							<span>
 <?php
 
-$browser_index = array();
+$browser_index = [];
 $browser_count = 0;
 
 for ($i = 0, $l = count($browser_text); $i < $l; ++$i)
@@ -138,7 +138,7 @@ for ($i = 0, $l = count($browser_text); $i < $l; ++$i)
 		echo "\t\t\t\t\t\t\t\t".'<span id="browser-more" style="padding-left:5px;white-space:nowrap"><a href="#" onclick="moreBrowser();return false;">'.$lang_common['Show More'].'</a></span><span id="browsers" style="display:none">';
 		$browser_limit = -1;
 	}
-	echo "\t\t\t\t\t\t\t\t".'<a href="#" onclick="insertText(\''.$browser_text[$i].'\',\'\');return false;">'.(($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1') ? '<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.$browser_text[$i].'" style="vertical-align:middle"/>' : $browser_text[$i]).'</a>'."\n";
+	echo "\t\t\t\t\t\t\t\t".'<a href="#" onclick="insertText(\''.$browser_text[$i].'\',\'\');return false;">'.($pun_config['o_smilies'] == '1' && $pun_user['show_smilies'] == '1' ? '<img src="img/browsers/'.$browser_img[$i].'" alt="'.$browser_text[$i].'" title="'.$browser_text[$i].'" style="vertical-align:middle"/>' : $browser_text[$i]).'</a>'."\n";
 
 	$browser_index[] = $browser_img[$i];
 	$browser_count++;

@@ -22,7 +22,7 @@ class KCAPTCHA{
 	function KCAPTCHA(){
 
 		require(dirname(__FILE__).'/kcaptcha_config.php');
-		$fonts=array();
+		$fonts=[];
 		$fontsdir_absolute=dirname(__FILE__).'/'.$fontsdir;
 		if ($handle = opendir($fontsdir_absolute)) {
 			while (false !== ($file = readdir($handle))) {
@@ -52,7 +52,7 @@ class KCAPTCHA{
 			$fontfile_width=imagesx($font);
 			$fontfile_height=imagesy($font)-1;
 
-			$font_metrics=array();
+			$font_metrics=[];
 			$symbol=0;
 			$reading_symbol=false;
 
@@ -61,7 +61,7 @@ class KCAPTCHA{
 				$transparent = (imagecolorat($font, $i, 0) >> 24) == 127;
 
 				if(!$reading_symbol && !$transparent){
-					$font_metrics[$alphabet{$symbol}]=array('start'=>$i);
+					$font_metrics[$alphabet{$symbol}]=['start'=>$i];
 					$reading_symbol=true;
 					continue;
 				}
@@ -133,10 +133,10 @@ class KCAPTCHA{
 		//noise
 		$white=imagecolorallocate($font, 255, 255, 255);
 		$black=imagecolorallocate($font, 0, 0, 0);
-		for($i=0;$i<(($height-30)*$x)*$white_noise_density;$i++){
+		for($i=0;$i<($height-30)*$x*$white_noise_density;$i++){
 			imagesetpixel($img, mt_rand(0, $x-1), mt_rand(10, $height-15), $white);
 		}
-		for($i=0;$i<(($height-30)*$x)*$black_noise_density;$i++){
+		for($i=0;$i<($height-30)*$x*$black_noise_density;$i++){
 			imagesetpixel($img, mt_rand(0, $x-1), mt_rand(10, $height-15), $black);
 		}
 
@@ -194,14 +194,13 @@ class KCAPTCHA{
 					$frsx1=1-$frsx;
 					$frsy1=1-$frsy;
 
-					$newcolor=(
-						$color*$frsx1*$frsy1+
+					$newcolor=$color*$frsx1*$frsy1+
 						$color_x*$frsx*$frsy1+
 						$color_y*$frsx1*$frsy+
-						$color_xy*$frsx*$frsy);
+						$color_xy*$frsx*$frsy;
 
 					if($newcolor>255) $newcolor=255;
-					$newcolor=$newcolor/255;
+					$newcolor/=255;
 					$newcolor0=1-$newcolor;
 
 					$newred=$newcolor0*$foreground_color[0]+$newcolor*$background_color[0];

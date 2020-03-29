@@ -10,7 +10,7 @@
 * UTF-8 aware alternative to ucwords
 * Uppercase the first character of each word in a string
 * Note: requires utf8_substr_replace and utf8_strtoupper
-* @param string 
+* @param $str
 * @return string with first char of each word uppercase
 * @see http://www.php.net/ucwords
 * @package utf8
@@ -28,7 +28,7 @@ function utf8_ucwords($str) {
 /**
 * Callback function for preg_replace_callback call in utf8_ucwords
 * You don't need to call this yourself
-* @param array of matches corresponding to a single word
+* @param array $matches of matches corresponding to a single word
 * @return string with first char of the word in uppercase
 * @see utf8_ucwords
 * @see utf8_strtoupper

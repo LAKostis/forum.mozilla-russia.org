@@ -32,7 +32,7 @@ function builderrordivcontent(&$errors)
 function getpreview($postform)
 {
 	global $db, $pun_user, $pun_config, $lang_post;
-	$errors = array();
+	$errors = [];
 	$message = pun_linebreaks(trim($postform['req_message']));
 	if(get_magic_quotes_gpc())
 		$message = stripslashes($message);
@@ -49,7 +49,7 @@ function getpreview($postform)
 	{
 		$message = preparse_bbcode($message, $errors);
 	}
-    
+
     $objResponse = new xajaxResponse();
     if(!empty($errors))
     {

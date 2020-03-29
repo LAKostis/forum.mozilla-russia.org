@@ -187,7 +187,7 @@ function escape_cdata($str)
 //
 if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 {
-	$order_by = ($_GET['action'] == 'active') ? 't.last_post' : 't.posted';
+	$order_by = $_GET['action'] == 'active' ? 't.last_post' : 't.posted';
 	$forum_sql = '';
 
 	// Was any specific forum ID's supplied?
@@ -213,8 +213,8 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 	// Should we output this as RSS?
 	if (isset($_GET['type']) && strtoupper($_GET['type']) == 'RSS')
 	{
-		$rss_description = ($_GET['action'] == 'active') ? $lang_common['RSS Desc Active'] : $lang_common['RSS Desc New'];
-		$url_action = ($_GET['action'] == 'active') ? '&amp;action=new' : '';
+		$rss_description = $_GET['action'] == 'active' ? $lang_common['RSS Desc Active'] : $lang_common['RSS Desc New'];
+		$url_action = $_GET['action'] == 'active' ? '&amp;action=new' : '';
 
 		// Send XML/no cache headers
 		header('Content-Type: text/xml');
@@ -298,13 +298,13 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 
 			$message_truncated = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 			if (pun_strlen($cur_post['message']) > $max_message_length)
-				$message_truncated = trim(substr($message_truncated, 0, ($max_message_length-5))).' &hellip;';
+				$message_truncated = trim(substr($message_truncated, 0, $max_message_length-5)).' &hellip;';
 
-			$search = array('<news_subject>', '<news_author>', '<news_posted>', '<news_message>', '<news_comments>', '<news_link>');
+			$search = ['<news_subject>', '<news_author>', '<news_posted>', '<news_message>', '<news_comments>', '<news_link>'];
 			if ($cur_topic['question'] != '')
-				$replace = array('<strong>'.$lang_polls['Poll'].': '.pun_htmlspecialchars($cur_topic['subject']).'</strong>', $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
+				$replace = ['<strong>'.$lang_polls['Poll'].': '.pun_htmlspecialchars($cur_topic['subject']).'</strong>', $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']];
 			else
-				$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
+				$replace = [pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y', $cur_topic['posted']), $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']];
 
 //Change Ragnaar line 289 			$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('Y-m-d H:i'),  $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>');
 //Change Ragnaar line 289 (second change)   			$replace = array(pun_htmlspecialchars($cur_topic['subject']), $lang_common['Author'].': '.$cur_topic['poster'], date('d-m-Y'),  $message_truncated, '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">'.$lang_common['Comments'].':'.$cur_topic['num_replies'].'</a>', $pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id']);
@@ -331,7 +331,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 			if (pun_strlen($cur_topic['subject']) > $max_subject_length)
-				$subject_truncated = pun_htmlspecialchars(trim(substr($cur_topic['subject'], 0, ($max_subject_length-5)))).' &hellip;';
+				$subject_truncated = pun_htmlspecialchars(trim(substr($cur_topic['subject'], 0, $max_subject_length-5))).' &hellip;';
 			else
 				$subject_truncated = pun_htmlspecialchars($cur_topic['subject']);
 
@@ -353,7 +353,7 @@ else if ($_GET['action'] == 'online' || $_GET['action'] == 'online_full')
 
 	// Fetch users online info and generate strings for output
 	$num_guests = $num_hidden = $num_users = 0;
-	$users = array();
+	$users = [];
 	$result = $db->query('SELECT user_id, ident, show_online FROM '.$db->prefix.'online WHERE idle=0 ORDER BY ident', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 	while ($pun_user_online = $db->fetch_assoc($result))

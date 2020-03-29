@@ -35,7 +35,7 @@ class DBLayer
 	var $link_id;
 	var $query_result;
 
-	var $saved_queries = array();
+	var $saved_queries = [];
 	var $num_queries = 0;
 
 
@@ -80,11 +80,11 @@ class DBLayer
 		// FIXME
                 $mysql_ver = mysql_get_server_info();
 		if(version_compare($mysql_ver, '4.1.0', '>=')) {
-			if(defined('DB_INIT_CHARSET')) {                                                 
-			       $s_query = constant('DB_INIT_CHARSET');                                  
-			       @mysql_query($s_query, $this->link_id);                                  
-                        }                                                                                
-	        } 
+			if(defined('DB_INIT_CHARSET')) {
+			       $s_query = constant('DB_INIT_CHARSET');
+			       @mysql_query($s_query, $this->link_id);
+                        }
+	        }
 		if ($unbuffered)
 			$this->query_result = @mysql_unbuffered_query($sql, $this->link_id);
 		else
@@ -93,7 +93,7 @@ class DBLayer
 		if ($this->query_result)
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = [$sql, sprintf('%.5f', get_microtime() - $q_start)];
 
 			++$this->num_queries;
 
@@ -102,7 +102,7 @@ class DBLayer
 		else
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, 0);
+				$this->saved_queries[] = [$sql, 0];
 
 			return false;
 		}
@@ -111,37 +111,37 @@ class DBLayer
 
 	function result($query_id = 0, $row = 0)
 	{
-		return ($query_id) ? @mysql_result($query_id, $row) : false;
+		return $query_id ? @mysql_result($query_id, $row) : false;
 	}
 
 
 	function fetch_assoc($query_id = 0)
 	{
-		return ($query_id) ? @mysql_fetch_assoc($query_id) : false;
+		return $query_id ? @mysql_fetch_assoc($query_id) : false;
 	}
 
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? @mysql_fetch_row($query_id) : false;
+		return $query_id ? @mysql_fetch_row($query_id) : false;
 	}
 
 
 	function num_rows($query_id = 0)
 	{
-		return ($query_id) ? @mysql_num_rows($query_id) : false;
+		return $query_id ? @mysql_num_rows($query_id) : false;
 	}
 
 
 	function affected_rows()
 	{
-		return ($this->link_id) ? @mysql_affected_rows($this->link_id) : false;
+		return $this->link_id ? @mysql_affected_rows($this->link_id) : false;
 	}
 
 
 	function insert_id()
 	{
-		return ($this->link_id) ? @mysql_insert_id($this->link_id) : false;
+		return $this->link_id ? @mysql_insert_id($this->link_id) : false;
 	}
 
 
@@ -159,7 +159,7 @@ class DBLayer
 
 	function free_result($query_id = false)
 	{
-		return ($query_id) ? @mysql_free_result($query_id) : false;
+		return $query_id ? @mysql_free_result($query_id) : false;
 	}
 
 

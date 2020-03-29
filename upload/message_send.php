@@ -42,7 +42,7 @@ if (isset($_POST['form_sent']))
 	if($pun_user['g_id'] > PUN_GUEST){
 		$result = $db->query('SELECT posted FROM '.$db->prefix.'messages ORDER BY id DESC LIMIT 1') or error('Unable to fetch message time for flood protection', __FILE__, __LINE__, $db->error());
 		if(list($last) = $db->fetch_row($result)){
-			if((time() - $last) < $pun_user['g_post_flood'])
+			if(time() - $last < $pun_user['g_post_flood'])
 				message($lang_pms['Flood start'].' '.$pun_user['g_post_flood'].' '.$lang_pms['Flood end']);
 		}
 	}
@@ -94,7 +94,7 @@ if (isset($_POST['form_sent']))
 			list($count) = $db->fetch_row($result);
 			if($count >= $pun_config['o_pms_messages'])
 				message($lang_pms['Inbox full']);
-				
+
 			// Also check users own box
 			if(isset($_POST['savemessage']) && intval($_POST['savemessage']) == 1)
 			{
@@ -104,7 +104,7 @@ if (isset($_POST['form_sent']))
 					message($lang_pms['Sent full']);
 			}
 		}
-		
+
 		// "Send" message
 		$db->query('INSERT INTO '.$db->prefix.'messages (owner, subject, message, sender, sender_id, sender_ip, smileys, posted) VALUES(
 			\''.$id.'\',
@@ -141,15 +141,15 @@ if (isset($_POST['form_sent']))
 			$result = $db->query('SELECT email, language FROM '.$db->prefix.'users WHERE id!=1 AND id=\''.$id.'\'') or error('Unable to get user email', __FILE__, __LINE__, $db->error());
 
 			require_once PUN_ROOT.'include/email.php';
-		
-			$notification_emails = array();
+
+			$notification_emails = [];
 
 			// Loop through subscribed users and send e-mails
 			while ($cur_subscriber = $db->fetch_assoc($result)) {
 				// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
 				if (!isset($notification_emails[$cur_subscriber['language']]))
 				{
-			
+
 					if (file_exists(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_pms.tpl'))
 					{
 						// Load the "new reply" template
@@ -185,7 +185,7 @@ if (isset($_POST['form_sent']))
 	else{
 		message($lang_pms['No user']);
 	}
-	
+
 	$topic_redirect = intval($_POST['topic_redirect']);
 	$from_profile = isset($_POST['from_profile']) ? intval($_POST['from_profile']) : '';
 	if($from_profile != 0)
@@ -254,7 +254,7 @@ else
 				<input type="hidden" name="form_sent" value="1" />
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_GET['tid']) ? intval($_GET['tid']) : '' ?>" />
 				<input type="hidden" name="topic_redirect" value="<?php echo isset($_POST['from_profile']) ? $_POST['from_profile'] : '' ?>" />
-				<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
+				<input type="hidden" name="form_user" value="<?php echo !$pun_user['is_guest'] ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 				<label class="conl"><strong><?php echo $lang_pms['Send to'] ?></strong><br /><input type="text" name="req_username" size="25" maxlength="25" value="<?php echo pun_htmlspecialchars($username) ?>" tabindex="2" /><br /></label>
 				<div class="clearer"></div>
 				<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php echo $subject ?>" size="80" maxlength="70" tabindex="3" /><br /></label>
@@ -262,14 +262,14 @@ else
 				<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="4"><?php echo $quote ?></textarea><br /></label>
 				<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 				<ul class="bblinks">
-					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-					<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-					<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+					<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 				</ul>
 			</div>
 		</fieldset>
 <?php
-	$checkboxes = array();
+	$checkboxes = [];
 
 	if ($pun_config['o_smilies'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="5"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'];

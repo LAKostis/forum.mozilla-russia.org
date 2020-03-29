@@ -18,7 +18,7 @@ if ( !defined('UTF8_CORE') ) {
 * Assumes you have mb_internal_encoding to UTF-8 already
 * Note: this function does not count bad bytes in the string - these
 * are simply ignored
-* @param string UTF-8 string
+* @param UTF $str-8 string
 * @return int number of UTF-8 characters in string
 * @package utf8
 * @subpackage strings
@@ -33,9 +33,9 @@ function utf8_strlen($str){
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strpos
 * Find position of first occurrence of a string
-* @param string haystack
-* @param string needle (you should validate this with utf8_is_valid)
-* @param integer offset in characters (from left)
+* @param haystack $str
+* @param string $search needle (you should validate this with utf8_is_valid)
+* @param integer $offset in characters (from left)
 * @return mixed integer position or FALSE on failure
 * @package utf8
 * @subpackage strings
@@ -53,9 +53,9 @@ function utf8_strpos($str, $search, $offset = FALSE){
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strrpos
 * Find position of last occurrence of a char in a string
-* @param string haystack
-* @param string needle (you should validate this with utf8_is_valid)
-* @param integer (optional) offset (from left)
+* @param haystack $str
+* @param string $search needle (you should validate this with utf8_is_valid)
+* @param integer $offset (optional) offset (from left)
 * @return mixed integer position or FALSE on failure
 * @package utf8
 * @subpackage strings
@@ -88,9 +88,9 @@ function utf8_strrpos($str, $search, $offset = FALSE){
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_substr
 * Return part of a string given character offset (and optionally length)
-* @param string
-* @param integer number of UTF-8 characters offset (from left)
-* @param integer (optional) length in UTF-8 characters from offset
+* @param $str
+* @param integer $offset number of UTF-8 characters offset (from left)
+* @param integer $length (optional) length in UTF-8 characters from offset
 * @return mixed string or FALSE if failure
 * @package utf8
 * @subpackage strings
@@ -112,7 +112,7 @@ function utf8_substr($str, $offset, $length = FALSE){
 * such as Latin, Greek, Cyrillic, Armenian and archaic Georgian - it does
 * not exist in the Chinese alphabet, for example. See Unicode Standard
 * Annex #21: Case Mappings
-* @param string
+* @param $str
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @package utf8
 * @subpackage strings
@@ -130,7 +130,7 @@ function utf8_strtolower($str){
 * such as Latin, Greek, Cyrillic, Armenian and archaic Georgian - it does
 * not exist in the Chinese alphabet, for example. See Unicode Standard
 * Annex #21: Case Mappings
-* @param string
+* @param $str
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @package utf8
 * @subpackage strings

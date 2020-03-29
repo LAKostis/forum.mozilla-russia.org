@@ -96,13 +96,13 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		else
 			message($lang_common['Bad request']);
 
-		$ban_expire = ($ban_expire != '') ? date('Y-m-d', $ban_expire) : '';
+		$ban_expire = $ban_expire != '' ? date('Y-m-d', $ban_expire) : '';
 
 		$mode = 'edit';
 	}
 
 	$page_title = 'Admin | Bans | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$focus_element = array('bans2', 'ban_user');
+	$focus_element = ['bans2', 'ban_user'];
 	require PUN_ROOT.'header.php';
 
 	generate_admin_menu('bans');
@@ -215,7 +215,7 @@ else if (isset($_POST['add_edit_ban']))
 
 			for ($c = 0; $c < count($octets); ++$c)
 			{
-				$octets[$c] = (strlen($octets[$c]) > 1) ? ltrim($octets[$c], "0") : $octets[$c];
+				$octets[$c] = strlen($octets[$c]) > 1 ? ltrim($octets[$c], "0") : $octets[$c];
 
 				if ($c > 3 || preg_match('/[^0-9]/', $octets[$c]) || intval($octets[$c]) > 255)
 					message('You entered an invalid IP/IP-range.');
@@ -245,10 +245,10 @@ else if (isset($_POST['add_edit_ban']))
 	else
 		$ban_expire = 'NULL';
 
-	$ban_user = ($ban_user != '') ? '\''.$db->escape($ban_user).'\'' : 'NULL';
-	$ban_ip = ($ban_ip != '') ? '\''.$db->escape($ban_ip).'\'' : 'NULL';
-	$ban_email = ($ban_email != '') ? '\''.$db->escape($ban_email).'\'' : 'NULL';
-	$ban_message = ($ban_message != '') ? '\''.$db->escape($ban_message).'\'' : 'NULL';
+	$ban_user = $ban_user != '' ? '\''.$db->escape($ban_user).'\'' : 'NULL';
+	$ban_ip = $ban_ip != '' ? '\''.$db->escape($ban_ip).'\'' : 'NULL';
+	$ban_email = $ban_email != '' ? '\''.$db->escape($ban_email).'\'' : 'NULL';
+	$ban_message = $ban_message != '' ? '\''.$db->escape($ban_message).'\'' : 'NULL';
 
 	if ($_POST['mode'] == 'add')
 		$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire, initiator) VALUES('.$ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.$pun_user['id'].')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
@@ -259,7 +259,7 @@ else if (isset($_POST['add_edit_ban']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_bans_cache();
 
-	redirect('admin_bans.php', 'Ban '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
+	redirect('admin_bans.php', 'Ban '.($_POST['mode'] == 'edit' ? 'edited' : 'added').'. Redirecting &hellip;');
 }
 
 
@@ -296,8 +296,8 @@ else if (isset($_GET['report_spam']))
 	else
 		message($lang_common['Bad request']);
 
-	// Blind ban - get the ip from the last post or registration data 
-	if (empty($ban_ip)) 
+	// Blind ban - get the ip from the last post or registration data
+	if (empty($ban_ip))
 	{
 		$result = $db->query('SELECT id,registration_ip FROM '.$db->prefix.'users WHERE email=\''.$db->escape($ban_email).'\' AND id>1') or error('Unable to fetch ip address from registration data', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result))
@@ -306,7 +306,7 @@ else if (isset($_GET['report_spam']))
 			message($lang_common['Bad request']);
 
 		$result = $db->query('SELECT poster_ip FROM '.$db->prefix.'posts WHERE poster_id='.$user_id.' ORDER BY posted DESC LIMIT 1') or error('Unable to fetch ip info from last post', __FILE__, __LINE__, $db->error());
-		$ban_ip = ($db->num_rows($result)) ? $db->result($result) : $registration_ip;
+		$ban_ip = $db->num_rows($result) ? $db->result($result) : $registration_ip;
 	}
 
 	require_once PUN_ROOT.'include/stopforumspam.php';
@@ -314,7 +314,7 @@ else if (isset($_GET['report_spam']))
 
 	$sfs = new StopForumSpam( $api_key );
 	// $ban_user, $ban_ip, $ban_email, $ban_message
-	$args = array('email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message );
+	$args = ['email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message ];
 
 	$report = $sfs->add($args);
 
@@ -338,7 +338,7 @@ else if (isset($_POST['cleanup_bans']))
 
 	if ($db->num_rows($result))
 	{
-		$bans = array();
+		$bans = [];
 		while ($cur_ban = $db->fetch_assoc($result))
 		{
 			$bans[] = $cur_ban['id'];
@@ -353,7 +353,7 @@ else if (isset($_POST['cleanup_bans']))
 }
 
 $page_title = 'Admin | Bans | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$focus_element = array('bans', 'new_ban_user');
+$focus_element = ['bans', 'new_ban_user'];
 require PUN_ROOT.'header.php';
 
 generate_admin_menu('bans');

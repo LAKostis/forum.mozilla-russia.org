@@ -45,16 +45,16 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'assembler',
-	'COMMENT_SINGLE' => array(1 => ';'),
-	'COMMENT_MULTI' => array(),
+	'COMMENT_SINGLE' => [1 => ';'],
+	'COMMENT_MULTI' => [],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
+	'KEYWORDS' => [
 		/*CPU*/
-		1 => array(
+		1 => [
 		       'aaa','aad','aam','aas','adc','add','and','call','cbw','clc','cld','cli','cmc','cmp',
 			'cmps','cmpsb','cmpsw','cwd','daa','das','dec','div','esc','hlt','idiv','imul','in','inc',
 			'int','into','iret','ja','jae','jb','jbe','jc','jcxz','je','jg','jge','jl','jle','jmp',
@@ -73,9 +73,9 @@ $language_data = array (
 			'setnc','setne','setng','setnge','setnl','setnle','setno','setnp','setns','setnz','seto','setp',
 			'setpe','setpo','sets','setz','shld','shrd','stosd','bswap','cmpxchg','invd','invlpg','wbinvd','xadd','lock',
 			'rep','repe','repne','repnz','repz'
-		  ),
+		  ],
 		/*FPU*/
-		2 => array(
+		2 => [
 			  'f2xm1','fabs','fadd','faddp','fbld','fbstp','fchs','fclex','fcom','fcomp','fcompp','fdecstp',
 			 'fdisi','fdiv','fdivp','fdivr','fdivrp','feni','ffree','fiadd','ficom','ficomp','fidiv',
    			 'fidivr','fild','fimul','fincstp','finit','fist','fistp','fisub','fisubr','fld','fld1',
@@ -86,15 +86,15 @@ $language_data = array (
 			 'fsubr','fsubrp','ftst','fwait','fxam','fxch','fxtract','fyl2x','fyl2xp1',
 			 'fsetpm','fcos','fldenvd','fnsaved','fnstenvd','fprem1','frstord','fsaved','fsin','fsincos',
 			 'fstenvd','fucom','fucomp','fucompp'
-		    ),
+		    ],
 		/*registers*/
-		3 => array(
+		3 => [
 			'ah','al','ax','bh','bl','bp','bx','ch','cl','cr0','cr2','cr3','cs','cx','dh','di','dl',
 			'dr0','dr1','dr2','dr3','dr6','dr7','ds','dx','eax','ebp','ebx','ecx','edi','edx',
 			 'es','esi','esp','fs','gs','si','sp','ss','st','tr3','tr4','tr5','tr6','tr7'
-			),
+			],
 		/*Directive*/
-		4 => array(
+		4 => [
 			  '186','286','286c','286p','287','386','386c','386p','387','486','486p',
 			 '8086','8087','alpha','break','code','const','continue','cref','data','data?',
 			'dosseg','else','elseif','endif','endw','err','err1','err2','errb',
@@ -116,10 +116,10 @@ $language_data = array (
 			  'substr','subtitle','subttl','textequ','this','title','type','typedef','union','while','width',
 			  '.model', '.stack', '.code', '.data'
 
-		    ),
+		    ],
 
 		/*Operands*/
-		5 => array(
+		5 => [
 			 '@b','@f','addr','basic','byte','c','carry?','dword',
 			 'far','far16','fortran','fword','near','near16','overflow?','parity?','pascal','qword',
 			 'real4',' real8','real10','sbyte','sdword','sign?','stdcall','sword','syscall','tbyte',
@@ -131,70 +131,70 @@ $language_data = array (
 			 'nooldmacros','nooldstructs','noreadonly','noscoped','nosignextend','nothing',
 			 'notpublic','oldmacros','oldstructs','os_dos','para','private','prologue','radix',
 			 'readonly','req','scoped','setif2','smallstack','tiny','use16','use32','uses'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'[', ']', '(', ')'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		4 => false,
 		5 => false
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #00007f;',
 			2 => 'color: #0000ff;',
 			3 => 'color: #46aa03; font-weight:bold;',
 			4 => 'color: #0000ff;',
 			5 => 'color: #0000ff;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #adadad; font-style: italic;',
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #7f007f;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #ff0000;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
+			],
+		'REGEXPS' => [
 			0 => 'color: #ff0000;',
 			1 => 'color: #ff0000;'
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
 		0 => '[0-9a-fA-F][0-9a-fA-F]*[hH]',
 		1 => '[01][01]*[bB]'
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

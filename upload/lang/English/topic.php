@@ -1,6 +1,6 @@
 <?php
 
-$lang_topic = array(
+$lang_topic = [
 
 'Post reply'		=>	'Post reply',
 'Topic closed'		=>	'Topic closed',
@@ -28,4 +28,4 @@ $lang_topic = array(
 'Message blocked'	=>	'The message is temporarily blocked on the basis of complaints of users and awaiting verification of administrator.',
 'Unblock message'	=>	'Unblock it.'
 
-);
+];

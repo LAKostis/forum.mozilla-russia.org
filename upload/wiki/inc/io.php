@@ -31,7 +31,7 @@ function io_cacheParse($file){
      && @file_exists($file)                           // and does the source exist
      && !isset($_REQUEST['purge'])                    // no purge param was set
      && filesize($cache)                              // and contains the cachefile any data
-     && ((time() - $cachetime) < $conf['cachetime'])  // and is cachefile young enough
+     && (time() - $cachetime < $conf['cachetime'])  // and is cachefile young enough
      && ($cachetime > filemtime($file))               // and newer than the source
      && ($cachetime > @filemtime($purge))             // and newer than the purgefile
      && ($cachetime > filemtime('wiki/conf/dokuwiki.php')) // and newer than the config file
@@ -117,7 +117,7 @@ function io_makeFileDir($file){
   if(!is_dir($dir)){
     io_mkdir_p($dir) || msg("Creating directory $dir failed",-1);
   }
-  umask($conf['umask']); 
+  umask($conf['umask']);
 }
 
 /**

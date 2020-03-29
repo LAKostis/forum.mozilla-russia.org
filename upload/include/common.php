@@ -52,7 +52,7 @@ if (!defined('PUN'))
 
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
-$pun_start = ((float)$usec + (float)$sec);
+$pun_start = (float)$usec + (float)$sec;
 
 // Turn off magic_quotes_runtime
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
@@ -130,7 +130,7 @@ if (!defined('PUN_DISABLE_BUFFERING'))
 
 
 // Check/update/set cookie and fetch user info
-$pun_user = array();
+$pun_user = [];
 check_cookie($pun_user);
 
 // Attempt to load the common language file

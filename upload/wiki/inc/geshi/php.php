@@ -50,20 +50,20 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'PHP',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '//', 2 => '#'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'include', 'require', 'include_once', 'require_once',
 			'for', 'foreach', 'as', 'if', 'elseif', 'else', 'while', 'do', 'endwhile', 'endif', 'switch', 'case', 'endswitch',
 			'return', 'break'
-			),
-		2 => array(
+			],
+		2 => [
 			'null', '__LINE__', '__FILE__',
 			'false', '&lt;?php', '?&gt;', '&lt;?',
 			'&lt;script language', '&lt;/script&gt;',
@@ -76,8 +76,8 @@ $language_data = array (
 			'PHP_OUTPUT_HANDLER_END', 'E_ERROR', 'E_WARNING', 'E_PARSE', 'E_NOTICE',
 			'E_CORE_ERROR', 'E_CORE_WARNING', 'E_COMPILE_ERROR', 'E_COMPILE_WARNING', 'E_USER_ERROR',
 			'E_USER_WARNING', 'E_USER_NOTICE', 'E_ALL'
-			),
-		3 => array(
+			],
+		3 => [
 			'zlib_get_coding_type','zend_version','zend_logo_guid','yp_order','yp_next',
 			'yp_match','yp_master','yp_get_default_domain','yp_first','yp_errno','yp_err_string',
 			'yp_cat','yp_all','xml_set_unparsed_entity_decl_handler','xml_set_start_namespace_decl_handler','xml_set_processing_instruction_handler','xml_set_object',
@@ -255,92 +255,92 @@ $language_data = array (
 			'apache_child_terminate','aggregation_info','aggregate_properties_by_regexp','aggregate_properties_by_list','aggregate_properties','aggregate_methods_by_regexp',
 			'aggregate_methods_by_list','aggregate_methods','aggregate','addslashes','addcslashes','acosh',
 			'acos','abs','_','echo', 'print', 'global', 'static', 'exit', 'array', 'empty', 'eval', 'isset', 'unset', 'die'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
 			2 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;',
 			2 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
+			],
+		'REGEXPS' => [
 			0 => 'color: #0000ff;'
-			),
-		'SCRIPT' => array(
+			],
+		'SCRIPT' => [
 			0 => '',
 			1 => '',
 			2 => '',
 			3 => ''
-			)
-		),
-	'URLS' => array(
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => 'http://www.php.net/{FNAME}',
 		4 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '-&gt;',
 		2 => '::'
-		),
-	'REGEXPS' => array(
+		],
+	'REGEXPS' => [
 		0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*",
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_MAYBE,
-	'SCRIPT_DELIMITERS' => array(
-		0 => array(
+	'SCRIPT_DELIMITERS' => [
+		0 => [
 			'<?php' => '?>'
-			),
-		1 => array(
+			],
+		1 => [
 			'<?' => '?>'
-			),
-		2 => array(
+			],
+		2 => [
 			'<%' => '%>'
-			),
-		3 => array(
+			],
+		3 => [
 			'<script language="php">' => '</script>'
-			)
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
+			]
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
 		0 => true,
 		1 => true,
 		2 => true,
 		3 => true
-		)
-);
+		]
+];
 
 ?>

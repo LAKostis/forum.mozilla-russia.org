@@ -1,6 +1,6 @@
 <?php
 
-$lang_forum = array(
+$lang_forum = [
 
 'Post topic'	=>	'Начать новую тему',
 'Views'			=>	'Просмотров',
@@ -8,4 +8,4 @@ $lang_forum = array(
 'Sticky'		=>	'Прикреплена',
 'Empty forum'	=>	'Форум пуст.'
 
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-$lang_error = array(
+$lang_error = [
 
 'Encountered'		=>	'An error was encountered',
 'Error'				=>	'Error',
@@ -9,4 +9,4 @@ $lang_error = array(
 'File'				=>	'File',
 'Login timeout'		=>	'Please wait some minutes to login again'
 
-);
+];

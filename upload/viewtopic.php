@@ -132,14 +132,14 @@ if (!$db->num_rows($result))
 
 $cur_topic = $db->fetch_assoc($result);
 
-$forum_id = ($cur_topic['announcement'] == '1') ? 'announcement' : $cur_topic['forum_id'];
+$forum_id = $cur_topic['announcement'] == '1' ? 'announcement' : $cur_topic['forum_id'];
 
 // MOD: MARK TOPICS AS READ - 1 LINE NEW CODE FOLLOWS
 if (!$pun_user['is_guest']) mark_topic_read($id, $cur_topic['forum_id'], $cur_topic['last_post']);
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
-$mods_array = ($cur_topic['moderators'] != '') ? unserialize($cur_topic['moderators']) : array();
-$is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
+$mods_array = $cur_topic['moderators'] != '' ? unserialize($cur_topic['moderators']) : [];
+$is_admmod = $pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array)) ? true : false;
 
 // Can we or can we not post replies?
 if ($cur_topic['closed'] == '0')
@@ -163,7 +163,7 @@ else
 // Determine the post offset (based on $_GET['p'])
 $num_pages = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
-$p = isset($_GET['p']) ? ($_GET['p'] == 'last' ? $num_pages : ((!is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'])) : 1;
+$p = isset($_GET['p']) ? ($_GET['p'] == 'last' ? $num_pages : (!is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'])) : 1;
 
 $start_from = $pun_user['disp_posts'] * ($p - 1);
 
@@ -180,7 +180,7 @@ if ($pun_config['o_quickpost'] == '1' &&
 	$cur_topic['post_replies'] == '1' || ($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') &&
 	($cur_topic['closed'] == '0' || $is_admmod))
 {
-	$required_fields = array('req_message' => $lang_common['Message']);
+	$required_fields = ['req_message' => $lang_common['Message']];
 	$quickpost = true;
 }
 
@@ -221,9 +221,9 @@ while ($cur_post = $db->fetch_assoc($result))
 {
 	$post_count++;
 	$user_avatar = '';
-	$user_info = array();
-	$user_contacts = array();
-	$post_actions = array();
+	$user_info = [];
+	$user_contacts = [];
+	$post_actions = [];
 	$is_online = '';
 	$signature = '';
 	$user_image_award = '';
@@ -258,7 +258,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			$user_title = censor_words($user_title);
 
 		// Format the online indicator
-		$is_online = ($cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD) ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
+		$is_online = $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == '1' || $cur_post['is_online'] == $cur_post['poster_id'] && $cur_post['show_online'] == 0 && $pun_user['group_id'] < PUN_MOD ? '<strong class="online">'.$lang_topic['Online'].'</strong>' : '<span class="offline">' . $lang_topic['Offline'] . '</span>';
 
 		if ($pun_config['o_avatars'] == '1' && !$user_banned && $cur_post['use_avatar'] == '1' && $pun_user['show_avatars'] != '0' && $pun_user['is_guest'] != '1')
 		{
@@ -340,7 +340,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		{
 			if ($cur_post['poster_id'] == $pun_user['id'])
 			{
-				if ((($start_from + $post_count) == 1 && $pun_user['g_delete_topics'] == '1') || (($start_from + $post_count) > 1 && $pun_user['g_delete_posts'] == '1'))
+				if (($start_from + $post_count == 1 && $pun_user['g_delete_topics'] == '1') || ($start_from + $post_count > 1 && $pun_user['g_delete_posts'] == '1'))
 					$post_actions[] = '<li class="postdelete"><a href="delete.php?id='.$cur_post['id'].'" class="delete">'.$lang_topic['Delete'].'</a>';
 				if ($pun_user['g_edit_posts'] == '1')
 					$post_actions[] = '<li class="postedit"><a href="edit.php?id='.$cur_post['id'].'" class="edit">'.$lang_topic['Edit'].'</a>';
@@ -361,8 +361,8 @@ while ($cur_post = $db->fetch_assoc($result))
 	}
 
 	// Switch the background color for every message.
-	$bg_switch = ($bg_switch) ? $bg_switch = false : $bg_switch = true;
-	$vtbg = ($bg_switch) ? ' roweven' : ' rowodd';
+	$bg_switch = $bg_switch ? $bg_switch = false : $bg_switch = true;
+	$vtbg = $bg_switch ? ' roweven' : ' rowodd';
 
 
 	// Perform the main parsing of the message (BBCode, smilies, censor words etc)
@@ -381,7 +381,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	}
 
 ?>
-<div id="p<?php echo $cur_post['id'] ?>" class="blockpost<?php echo $vtbg ?><?php if (($post_count + $start_from) == 1) echo ' firstpost'; ?>">
+<div id="p<?php echo $cur_post['id'] ?>" class="blockpost<?php echo $vtbg ?><?php if ($post_count + $start_from == 1) echo ' firstpost'; ?>">
 	<h2><span><span class="conr"><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>">№<?php
 	if ($cur_topic['post_sticky']) {
 		$cur_topic['post_sticky'] = 0;
@@ -409,11 +409,9 @@ while ($cur_post = $db->fetch_assoc($result))
 				</dl>
 			</div>
 			<div class="postright">
-				<h3><?php if (($post_count + $start_from) > 1) echo ' Re: '; ?><?php echo pun_htmlspecialchars($cur_topic['subject']) ?></h3>
+				<h3><?php if ($post_count + $start_from > 1) echo ' Re: '; ?><?php echo pun_htmlspecialchars($cur_topic['subject']) ?></h3>
 				<div class="postmsg" id="message<?php echo $cur_post['id'] ?>">
-					<?php echo $cur_post['blocked'] ? (
-						parse_message('[i]' . $lang_topic['Message blocked'] . '[/i]' . ($pun_user['g_id'] > PUN_MOD ? '' : ' [url='.$pun_config['o_base_url'].'/moderate.php?fid='.$forum_id.'&unblock='.$cur_post['id'].']' . $lang_topic['Unblock message'] . '[/url]' . "\n\n"), 1) . ($pun_user['g_id'] > PUN_MOD ? '' : $cur_post['message'] )
-					) : $cur_post['message']."\n" ?>
+					<?php echo $cur_post['blocked'] ? parse_message('[i]' . $lang_topic['Message blocked'] . '[/i]' . ($pun_user['g_id'] > PUN_MOD ? '' : ' [url='.$pun_config['o_base_url'].'/moderate.php?fid='.$forum_id.'&unblock='.$cur_post['id'].']' . $lang_topic['Unblock message'] . '[/url]' . "\n\n"), 1) . ($pun_user['g_id'] > PUN_MOD ? '' : $cur_post['message'] ) : $cur_post['message']."\n" ?>
 <?php if ($cur_post['edited'] != '') echo "\t\t\t\t\t".'<p class="postedit"><em>'.$lang_topic['Last edit'].' '.pun_htmlspecialchars($cur_post['edited_by']).' ('.format_time($cur_post['edited']).')</em></p>'."\n"; ?>
 <?php if ($cur_topic['post_sticky'] == 1) echo "\t\t\t\t\t".'<p class="sticky"><em>'.$lang_topic['Sticky'].'</em></p>'."\n"; ?>
 				</div>
@@ -421,7 +419,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			</div>
 			<div class="clearer"></div>
 			<div class="postfootleft"><?php if ($cur_post['poster_id'] > 1) echo '<p>'.$is_online.'</p>'; ?></div>
-			<div class="postfootright"><?php echo (count($post_actions)) ? '<ul>'.implode($lang_topic['Link separator'].'</li>', $post_actions).'</li></ul></div>'."\n" : '<div>&nbsp;</div></div>'."\n" ?>
+			<div class="postfootright"><?php echo count($post_actions) ? '<ul>'.implode($lang_topic['Link separator'].'</li>', $post_actions).'</li></ul></div>'."\n" : '<div>&nbsp;</div></div>'."\n" ?>
 		</div>
 	</div>
 </div>
@@ -463,14 +461,14 @@ $maxmodified = $lastmodified['posted'] < $lastmodified['edited'] ? $lastmodified
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
-						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
+						<input type="hidden" name="form_user" value="<?php echo !$pun_user['is_guest'] ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 						<?php require PUN_ROOT.'mod_easy_bbcode.php'; ?>
 						<label><textarea name="req_message" rows="7" cols="75" tabindex="1" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()"></textarea></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 						<ul class="bblinks">
-							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
@@ -484,7 +482,7 @@ $maxmodified = $lastmodified['posted'] < $lastmodified['edited'] ? $lastmodified
 }
 
 // Increment "num_views" for topic
-$low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
+$low_prio = $db_type == 'mysql' ? 'LOW_PRIORITY ' : '';
 $db->query('UPDATE '.$low_prio.$db->prefix.'topics SET num_views=num_views+1 WHERE id='.$id) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
 $footer_style = 'viewtopic';

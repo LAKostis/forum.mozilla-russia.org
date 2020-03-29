@@ -47,26 +47,26 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'PHP',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '//', 2 => '#'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'include', 'require', 'include_once', 'require_once',
 			'for', 'as', 'foreach', 'if', 'elseif', 'else', 'while', 'do', 'endwhile', 'endif', 'switch', 'case', 'endswitch',
 			'return', 'break'
-			),
-		2 => array(
+			],
+		2 => [
 			'null', '__LINE__', '__FILE__',
 			'false', '&lt;?php', '?&gt;',
 			'true', 'var', 'default',
 			'function', 'class', 'new', '&amp;new'
-			),
-		3 => array(
+			],
+		3 => [
 			'func_num_args', 'func_get_arg', 'func_get_args', 'strlen', 'strcmp', 'strncmp', 'strcasecmp', 'strncasecmp', 'each', 'error_reporting', 'define', 'defined',
 			'trigger_error', 'user_error', 'set_error_handler', 'restore_error_handler', 'get_declared_classes', 'get_loaded_extensions',
 			'extension_loaded', 'get_extension_funcs', 'debug_backtrace',
@@ -80,83 +80,83 @@ $language_data = array (
 			'mysql_thread_id', 'mysql_client_encoding', 'mysql_get_client_info', 'mysql_get_host_info', 'mysql_get_proto_info', 'mysql_get_server_info', 'mysql_info', 'mysql', 'mysql_fieldname', 'mysql_fieldtable', 'mysql_fieldlen', 'mysql_fieldtype', 'mysql_fieldflags', 'mysql_selectdb', 'mysql_createdb', 'mysql_dropdb', 'mysql_freeresult', 'mysql_numfields', 'mysql_numrows', 'mysql_listdbs', 'mysql_listtables', 'mysql_listfields', 'mysql_db_name', 'mysql_dbname', 'mysql_tablename', 'mysql_table_name', 'pg_connect', 'pg_pconnect', 'pg_close', 'pg_connection_status', 'pg_connection_busy', 'pg_connection_reset', 'pg_host', 'pg_dbname', 'pg_port', 'pg_tty', 'pg_options', 'pg_ping', 'pg_query', 'pg_send_query', 'pg_cancel_query', 'pg_fetch_result', 'pg_fetch_row', 'pg_fetch_assoc', 'pg_fetch_array', 'pg_fetch_object', 'pg_fetch_all', 'pg_affected_rows', 'pg_get_result', 'pg_result_seek', 'pg_result_status', 'pg_free_result', 'pg_last_oid', 'pg_num_rows', 'pg_num_fields', 'pg_field_name', 'pg_field_num', 'pg_field_size', 'pg_field_type', 'pg_field_prtlen', 'pg_field_is_null', 'pg_get_notify', 'pg_get_pid', 'pg_result_error', 'pg_last_error', 'pg_last_notice', 'pg_put_line', 'pg_end_copy', 'pg_copy_to', 'pg_copy_from',
 			'pg_trace', 'pg_untrace', 'pg_lo_create', 'pg_lo_unlink', 'pg_lo_open', 'pg_lo_close', 'pg_lo_read', 'pg_lo_write', 'pg_lo_read_all', 'pg_lo_import', 'pg_lo_export', 'pg_lo_seek', 'pg_lo_tell', 'pg_escape_string', 'pg_escape_bytea', 'pg_unescape_bytea', 'pg_client_encoding', 'pg_set_client_encoding', 'pg_meta_data', 'pg_convert', 'pg_insert', 'pg_update', 'pg_delete', 'pg_select', 'pg_exec', 'pg_getlastoid', 'pg_cmdtuples', 'pg_errormessage', 'pg_numrows', 'pg_numfields', 'pg_fieldname', 'pg_fieldsize', 'pg_fieldtype', 'pg_fieldnum', 'pg_fieldprtlen', 'pg_fieldisnull', 'pg_freeresult', 'pg_result', 'pg_loreadall', 'pg_locreate', 'pg_lounlink', 'pg_loopen', 'pg_loclose', 'pg_loread', 'pg_lowrite', 'pg_loimport', 'pg_loexport',
 			'echo', 'print', 'global', 'static', 'exit', 'array', 'empty', 'eval', 'isset', 'unset', 'die'
-			)
-		),
-	'SYMBOLS' => array(
-		),
-	'CASE_SENSITIVE' => array(
+			]
+		],
+	'SYMBOLS' => [
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
 			2 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;',
 			2 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
+			],
+		'REGEXPS' => [
 			0 => 'color: #0000ff;'
-			),
-		'SCRIPT' => array(
+			],
+		'SCRIPT' => [
 			0 => '',
 			1 => '',
 			2 => '',
 			3 => ''
-			)
-		),
-	'URLS' => array(
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => 'http://www.php.net/{FNAME}',
 		4 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '-&gt;',
 		2 => '::'
-		),
-	'REGEXPS' => array(
+		],
+	'REGEXPS' => [
 		0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_MAYBE,
-	'SCRIPT_DELIMITERS' => array(
+	'SCRIPT_DELIMITERS' => [
 		'<?php' => '?>',
 		'<?' => '?>',
 		'<%' => '%>',
 		'<script language="php">' => '</script>'
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
 		0 => true,
 		1 => true,
 		2 => true,
 		3 => true
-		)
-);
+		]
+];
 
 ?>

@@ -23,9 +23,9 @@ if (!defined('PUN'))
 			<tr>
 				<td class="puncon1right" style="width: 140px; white-space: nowrap">
 					<b><?php echo $lang_common['Message'] ?></b>&nbsp;&nbsp;<br><br>
-					<a href="help.php#bbcode" target="_blank"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;<br>
-					<a href="help.php#img" target="_blank"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;<br>
-					<a href="help.php#smilies" target="_blank"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;
+					<a href="help.php#bbcode" target="_blank"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;<br>
+					<a href="help.php#img" target="_blank"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;<br>
+					<a href="help.php#smilies" target="_blank"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?>&nbsp;&nbsp;
 				</td>
 				<td class="puncon2">&nbsp;<textarea name="req_message" rows="7" style="width: 420px"></textarea></td>
 			</tr>
@@ -43,7 +43,7 @@ if (!defined('PUN'))
 
 	if (isset($checkboxes))
 		$checkboxes = implode('<br>'."\n\t\t\t\t", $checkboxes)."\n";
-?>	
+?>
 			<tr>
 				<td class="puncon1right" style="width: 140px; white-space: nowrap"><?php echo $lang_common['Options'] ?>&nbsp;&nbsp;</td>
 				<td class="puncon2">

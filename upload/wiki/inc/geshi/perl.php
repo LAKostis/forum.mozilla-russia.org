@@ -43,24 +43,24 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Perl',
-	'COMMENT_SINGLE' => array(1 => '#'),
-	'COMMENT_MULTI' => array( '=pod' => '=cut'),
+	'COMMENT_SINGLE' => [1 => '#'],
+	'COMMENT_MULTI' => [ '=pod' => '=cut'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'case', 'do', 'else', 'elsif', 'for', 'if', 'then', 'until', 'while', 'foreach', 'my',
 			'or', 'and', 'unless', 'next', 'last', 'redo', 'not', 'our',
 			'reset', 'continue','and', 'cmp', 'ne'
-			),
-		2 => array(
+			],
+		2 => [
 			'use', 'sub', 'new', '__END__', '__DATA__', '__DIE__', '__WARN__', 'BEGIN',
 			'STDIN', 'STDOUT', 'STDERR'
-			),
-		3 => array(
+			],
+		3 => [
 			'abs', 'accept', 'alarm', 'atan2', 'bind', 'binmode', 'bless',
 			'caller', 'chdir', 'chmod', 'chomp', 'chop', 'chown', 'chr',
 			'chroot', 'close', 'closedir', 'connect', 'continue', 'cos',
@@ -93,70 +93,70 @@ $language_data = array (
 			'time', 'times', 'tr', 'truncate', 'uc', 'ucfirst', 'umask', 'undef',
 			'unlink', 'unpack', 'unshift', 'untie', 'utime', 'values',
 			'vec', 'wait', 'waitpid', 'wantarray', 'warn', 'write', 'y'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => true,
 		2 => true,
 		3 => true,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;',
 			2 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
+			],
+		'REGEXPS' => [
 			0 => 'color: #0000ff;',
 			4 => 'color: #009999;',
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		3 => 'http://www.perldoc.com/perl5.6/pod/func/{FNAME}.html'
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '-&gt;',
 		2 => '::'
-		),
-	'REGEXPS' => array(
+		],
+	'REGEXPS' => [
 		0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
 		4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

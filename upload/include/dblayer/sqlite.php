@@ -36,7 +36,7 @@ class DBLayer
 	var $query_result;
 	var $in_transaction = 0;
 
-	var $saved_queries = array();
+	var $saved_queries = [];
 	var $num_queries = 0;
 
 	var $error_no = false;
@@ -80,7 +80,7 @@ class DBLayer
 	{
 		++$this->in_transaction;
 
-		return (@sqlite_query($this->link_id, 'BEGIN')) ? true : false;
+		return @sqlite_query($this->link_id, 'BEGIN') ? true : false;
 	}
 
 
@@ -111,7 +111,7 @@ class DBLayer
 		if ($this->query_result)
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = [$sql, sprintf('%.5f', get_microtime() - $q_start)];
 
 			++$this->num_queries;
 
@@ -120,7 +120,7 @@ class DBLayer
 		else
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, 0);
+				$this->saved_queries[] = [$sql, 0];
 
 			$this->error_no = @sqlite_last_error($this->link_id);
 			$this->error_msg = @sqlite_error_string($this->error_no);
@@ -178,25 +178,25 @@ class DBLayer
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? @sqlite_fetch_array($query_id, SQLITE_NUM) : false;
+		return $query_id ? @sqlite_fetch_array($query_id, SQLITE_NUM) : false;
 	}
 
 
 	function num_rows($query_id = 0)
 	{
-		return ($query_id) ? @sqlite_num_rows($query_id) : false;
+		return $query_id ? @sqlite_num_rows($query_id) : false;
 	}
 
 
 	function affected_rows()
 	{
-		return ($this->query_result) ? @sqlite_changes($this->query_result) : false;
+		return $this->query_result ? @sqlite_changes($this->query_result) : false;
 	}
 
 
 	function insert_id()
 	{
-		return ($this->link_id) ? @sqlite_last_insert_rowid($this->link_id) : false;
+		return $this->link_id ? @sqlite_last_insert_rowid($this->link_id) : false;
 	}
 
 
@@ -241,7 +241,7 @@ class DBLayer
 			if ($this->in_transaction)
 			{
 				if (defined('PUN_SHOW_QUERIES'))
-					$this->saved_queries[] = array('COMMIT', 0);
+					$this->saved_queries[] = ['COMMIT', 0];
 
 				@sqlite_query($this->link_id, 'COMMIT');
 			}

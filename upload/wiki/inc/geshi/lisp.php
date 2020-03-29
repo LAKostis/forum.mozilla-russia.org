@@ -41,15 +41,15 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'LISP',
-	'COMMENT_SINGLE' => array(1 => ';'),
-	'COMMENT_MULTI' => array(';|' => '|;'),
+	'COMMENT_SINGLE' => [1 => ';'],
+	'COMMENT_MULTI' => [';|' => '|;'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"'),
+	'QUOTEMARKS' => ['"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 		  'not','defun','princ',
 		  'eval','apply','funcall','quote','identity','function',
 		  'complement','backquote','lambda','set','setq','setf',
@@ -74,58 +74,58 @@ $language_data = array (
 		  'random','logand','logior','logxor','lognot','bignums','logeqv',
 		  'lognand','lognor','logorc2','logtest','logbitp','logcount',
 		  'integer','length','nil'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '{', '}', '[', ']', '!', '%', '^', '&', '/','+','-','*','=','<','>',';','|'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			0 => 'color: #202020;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
-		),
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

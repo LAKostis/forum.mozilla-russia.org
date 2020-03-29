@@ -41,15 +41,15 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'VFP',
-	'COMMENT_SINGLE' => array(1 => "//", 2 => "\n*"),
-	'COMMENT_MULTI' => array(),
+	'COMMENT_SINGLE' => [1 => "//", 2 => "\n*"],
+	'COMMENT_MULTI' => [],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"'),
+	'QUOTEMARKS' => ['"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array('Case', 'Else', '#Else', 'Then',
+	'KEYWORDS' => [
+		1 => ['Case', 'Else', '#Else', 'Then',
 			'Endcase', 'Enddefine', 'Enddo', 'Endfor', 'Endfunc', 'Endif', 'Endprintjob',
 			'Endproc', 'Endscan', 'Endtext', 'Endwith', '#Endif',
 			'#Elif','#Else','#Endif','#Define','#If','#Include',
@@ -119,8 +119,8 @@ $language_data = array (
 			'Isexclusive','Isflocked','Ishosted','Islower','Isreadonly','Isrlocked',
 			'Isupper','Italian','Japan','Join','Justdrive','Justext',
 			'Justfname','Justpath','Juststem','KeyField','KeyFieldList','Keyboard'
-			),
-		2 => array('Keymatch','LastProject','Lastkey','Lcase','Leftc','Len',
+			],
+		2 => ['Keymatch','LastProject','Lastkey','Lcase','Leftc','Len',
 			'Lenc','Length','Likec','Lineno','LoadPicture','Loadpicture',
 			'Locate','Locfile','Log','Log10','Logout','Lookup',
 			'Loop','Lower','Ltrim','Lupdate','Mail','MaxRecords',
@@ -255,8 +255,8 @@ $language_data = array (
 			'Nodebug','Nodelete','Nodup','Noedit','Noeject','Noenvironment',
 			'Nofloat','Nofollow','Nogrow','Noinit','Nolgrid','Nolink',
 			'Nolock','Nomargin','Nomdi','Nomenu','Nominimize','Nomodify'
-			),
-		3 => array('Nomouse','None','Nooptimize','Nooverwrite','Noprojecthook','Noprompt',
+			],
+		3 => ['Nomouse','None','Nooptimize','Nooverwrite','Noprojecthook','Noprompt',
 			'Noread','Norefresh','Norequery','Norgrid','Norm','Normal',
 			'Nosave','Noshadow','Noshow','Nospace','Not','Notab',
 			'Notify','Noupdate','Novalidate','Noverify','Nowait','Nowindow',
@@ -338,8 +338,8 @@ $language_data = array (
 			'FontSize','FontStrikethru','FontUnderline','ForceFocus','ForeColor','FormCount',
 			'FormIndex','FormPageCount','FormPageIndex','Format','Forms','FoxFont',
 			'FullName','GoFirst','GoLast','GridLineColor','GridLineWidth','GridLines'
-			),
-		4 => array('HPROJ','HWnd','HalfHeightCaption','HasClip','HeaderGap','HeaderHeight',
+			],
+		4 => ['HPROJ','HWnd','HalfHeightCaption','HasClip','HeaderGap','HeaderHeight',
 			'Height','HelpContextID','HideSelection','Highlight','HomeDir','HostName',
 			'HotKey','HscrollSmallChange','IMEMode','Icon','IgnoreInsert','InResize',
 			'Increment','IncrementalSearch','InitialSelectedAlias','InputMask','Instancing','IntegralHeight',
@@ -383,62 +383,62 @@ $language_data = array (
 			'ListBox','Memo','OleBaseControl','OleBoundControl','OleClassIDispOut','OleControl',
 			'OptionButton','OptionGroup','Page','PageFrame','ProjectHook','RectClass',
 			'Relation','Session','Shape','Spinner','TextBox' ,'Toolbar'
-			),
-		),
-	'SYMBOLS' => array("!", "@", "$", "%", "(", ")", "-", "+", "=", "/", "{", "}", "[", "]", ":", ";", ",", "	", ".", "*", "&"),
-	'CASE_SENSITIVE' => array(
+			],
+		],
+	'SYMBOLS' => ["!", "@", "$", "%", "(", ")", "-", "+", "=", "/", "{", "}", "[", "]", ":", ";", ",", "	", ".", "*", "&"],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: blue;',
 			2 => 'color: blue;',
 			3 => 'color: blue;',
 			4 => 'color: blue;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: green; font-style: italic;',
 			2 => 'color: green font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: blue;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: blue;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

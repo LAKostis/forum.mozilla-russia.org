@@ -49,25 +49,25 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Java',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => 'import'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '//', 2 => 'import'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'for', 'foreach', 'if', 'elseif', 'else', 'while', 'do',
 			'switch', 'case'
-			),
-		2 => array(
+			],
+		2 => [
 			'null', 'return', 'false', 'final', 'true', 'public',
 			'private', 'protected', 'extends', 'break', 'class',
 			'new', 'try', 'catch', 'throws', 'finally', 'implements',
 			'interface', 'throw', 'native', 'synchronized', 'this'
-			),
-		3 => array(
+			],
+		3 => [
 			'AbstractAction', 'AbstractBorder', 'AbstractButton', 'AbstractCellEditor',
 			'AbstractCollection', 'AbstractColorChooserPanel', 'AbstractDocument',
 			'AbstractDocument.AttributeContext', 'AbstractDocument.Content',
@@ -1328,75 +1328,75 @@ $language_data = array (
 			'_NamingContextStub',
 			'_PolicyStub',
 			'_Remote_Stub '
-			),
-		4 => array(
+			],
+		4 => [
 			'static', 'void', 'double', 'int', 'real', 'boolean', 'byte'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => true,
 		4 => true
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #aaaadd; font-weight: bold;',
 			4 => 'color: #993333;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1=> 'color: #808080; font-style: italic;',
 			2=> 'color: #a1a100;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;',
 			2 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
-			),
-		'REGEXPS' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			],
+		'REGEXPS' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => 'http://www.google.com/search?q=allinurl%3A{FNAME}+java.sun.com&amp;bntl=1',
 		4 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.',
 		2 => '::'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

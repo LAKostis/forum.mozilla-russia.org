@@ -40,7 +40,7 @@ function generate_admin_menu($page = '')
 ?>
 <div id="adminconsole" class="block2col">
 	<div id="adminmenu" class="blockmenu">
-		<h2><span><?php echo ($is_admin) ? 'Admin' : 'Moderator' ?> menu</span></h2>
+		<h2><span><?php echo $is_admin ? 'Admin' : 'Moderator' ?> menu</span></h2>
 		<div class="box">
 			<div class="inbox">
 				<ul>
@@ -63,7 +63,7 @@ function generate_admin_menu($page = '')
 <?php
 
 	// See if there are any plugins
-	$plugins = array();
+	$plugins = [];
 	$d = dir(PUN_ROOT.'plugins');
 	while (($entry = $d->read()) !== false)
 	{
@@ -71,7 +71,7 @@ function generate_admin_menu($page = '')
 		$suffix = substr($entry, strlen($entry) - 4);
 
 		if ($suffix == '.php' && ((!$is_admin && $prefix == 'AMP') || ($is_admin && ($prefix == 'AP' || $prefix == 'AMP'))))
-			$plugins[] = array(substr(substr($entry, strpos($entry, '_') + 1), 0, -4), $entry);
+			$plugins[] = [substr(substr($entry, strpos($entry, '_') + 1), 0, -4), $entry];
 	}
 	$d->close();
 
@@ -87,7 +87,7 @@ function generate_admin_menu($page = '')
 <?php
 
 		while (list(, $cur_plugin) = @each($plugins))
-			echo "\t\t\t\t\t".'<li'.(($page == $cur_plugin[1]) ? ' class="isactive"' : '').'><a href="admin_loader.php?plugin='.$cur_plugin[1].'">'.str_replace('_', ' ', $cur_plugin[0]).'</a></li>'."\n";
+			echo "\t\t\t\t\t".'<li'.($page == $cur_plugin[1] ? ' class="isactive"' : '').'><a href="admin_loader.php?plugin='.$cur_plugin[1].'">'.str_replace('_', ' ', $cur_plugin[0]).'</a></li>'."\n";
 
 ?>
 				</ul>
@@ -112,7 +112,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 {
 	global $db;
 
-	$extra_sql = ($prune_date != -1) ? ' AND last_post<'.$prune_date : '';
+	$extra_sql = $prune_date != -1 ? ' AND last_post<'.$prune_date : '';
 
 	if (!$prune_sticky)
 		$extra_sql .= ' AND sticky=\'0\'';
@@ -122,7 +122,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 
 	$topic_ids = '';
 	while ($row = $db->fetch_row($result))
-		$topic_ids .= (($topic_ids != '') ? ',' : '').$row[0];
+		$topic_ids .= ($topic_ids != '' ? ',' : '').$row[0];
 
 	if ($topic_ids != '')
 	{
@@ -131,7 +131,7 @@ function prune($forum_id, $prune_sticky, $prune_date)
 
 		$post_ids = '';
 		while ($row = $db->fetch_row($result))
-			$post_ids .= (($post_ids != '') ? ',' : '').$row[0];
+			$post_ids .= ($post_ids != '' ? ',' : '').$row[0];
 
 		if ($post_ids != '')
 		{

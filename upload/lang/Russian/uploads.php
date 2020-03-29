@@ -1,6 +1,6 @@
 <?php
 
-$lang_uploads = array(
+$lang_uploads = [
 
 'Uploader'				=>	'Загрузки',
 'Upload'				=>	'Загрузить',
@@ -14,4 +14,4 @@ $lang_uploads = array(
 'Topic del redirect'	=>	'Тема удалена. Перенаправление &hellip;',
 'Uploader search'		=>	'Поиск файлов'
 
-);
+];

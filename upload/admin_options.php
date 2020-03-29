@@ -280,7 +280,7 @@ generate_admin_menu('options');
 										<select name="form[default_lang]">
 <?php
 
-		$languages = array();
+		$languages = [];
 		$d = dir(PUN_ROOT.'lang');
 		while (($entry = $d->read()) !== false)
 		{
@@ -310,7 +310,7 @@ generate_admin_menu('options');
 										<select name="form[default_style]">
 <?php
 
-		$styles = array();
+		$styles = [];
 		$d = dir(PUN_ROOT.'style');
 		while (($entry = $d->read()) !== false)
 		{

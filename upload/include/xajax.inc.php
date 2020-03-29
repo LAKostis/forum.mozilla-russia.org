@@ -22,7 +22,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -48,7 +48,7 @@ class xajaxResponse
 		$this->xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		$this->xml .= "<xajax>";
 	}
-	
+
 	// addAssign() adds an assign command message to your xml response
 	// $sTarget is a string containing the id of an HTML element
 	// $sAttribute is the part of the element you wish to modify ("innerHTML", "value", etc.)
@@ -61,7 +61,7 @@ class xajaxResponse
 		$this->xml .= "<data><![CDATA[$sData]]></data>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// addAppend() adds an append command message to your xml response
 	// $sTarget is a string containing the id of an HTML element
 	// $sAttribute is the part of the element you wish to modify ("innerHTML", "value", etc.)
@@ -74,7 +74,7 @@ class xajaxResponse
 		$this->xml .= "<data><![CDATA[$sData]]></data>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// addPrepend() adds an prepend command message to your xml response
 	// $sTarget is a string containing the id of an HTML element
 	// $sAttribute is the part of the element you wish to modify ("innerHTML", "value", etc.)
@@ -87,7 +87,7 @@ class xajaxResponse
 		$this->xml .= "<data><![CDATA[$sData]]></data>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// addReplace() adds an replace command message to your xml response
 	// $sTarget is a string containing the id of an HTML element
 	// $sAttribute is the part of the element you wish to modify ("innerHTML", "value", etc.)
@@ -102,7 +102,7 @@ class xajaxResponse
 		$this->xml .= "<data><![CDATA[$sData]]></data>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// addClear() adds an clear command message to your xml response
 	// $sTarget is a string containing the id of an HTML element
 	// $sAttribute is the part of the element you wish to clear ("innerHTML", "value", etc.)
@@ -113,7 +113,7 @@ class xajaxResponse
 		$this->xml .= "<target attribute=\"$sAttribute\">$sTarget</target>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// addAlert() adds an alert command message to your xml response
 	// $sMsg is a text to be displayed in the alert box
 	// usage: $objResponse->addAlert("This is some text");
@@ -129,7 +129,7 @@ class xajaxResponse
 	{
 		$this->xml .= "<jscript><![CDATA[$sJS]]></jscript>";
 	}
-	
+
 	// addRemove() adds a Remove Element command message to your xml response
 	// $sTarget is a string containing the id of an HTML element to be removed
 	// from your page
@@ -140,7 +140,7 @@ class xajaxResponse
 		$this->xml .= "<target>$sTarget</target>";
 		$this->xml .= "</update>";
 	}
-	
+
 	function addCreate($sParent, $sTag, $sId, $sType="")
 	{
 		$this->xml .= "<update action=\"create\">";
@@ -150,7 +150,7 @@ class xajaxResponse
 			$this->xml .= "<type><![CDATA[$sType]]></type>";
 		$this->xml .= "</update>";
 	}
-	
+
 	// getXML() returns the xml to be returned from your function to the xajax
 	// processor on your page
 	// usage: $objResponse->getXML();
@@ -158,8 +158,8 @@ class xajaxResponse
 	{
 		if (strstr($this->xml,"</xajax>") == false)
 			$this->xml .= "</xajax>";
-		
-		return $this->xml; 
+
+		return $this->xml;
 	}
 }// end class xajaxResponse
 
@@ -173,7 +173,7 @@ if (!defined ('POST'))
 	define ('POST', 1);
 }
 
-// the xajax class generates the xajax javascript for your page including the 
+// the xajax class generates the xajax javascript for your page including the
 // javascript wrappers for the PHP functions that you want to call from your page.
 // It also handles processing and executing the command messages in the xml responses
 // sent back to your page from your PHP functions.
@@ -187,7 +187,7 @@ class xajax
 	var $bStatusMessages;		// Show debug messages true/false
 	var $aObjArray;				// Array for parsing complex objects
 	var $iPos;					// Position in $aObjArray
-	
+
 	// Contructor
 	// $sRequestURI - defaults to the current page
 	// $bDebug Mode - defaults to false
@@ -195,25 +195,25 @@ class xajax
 	// usage: $xajax = new xajax();
 	function xajax($sRequestURI="",$sWrapperPrefix="xajax_",$bDebug=false)
 	{
-		$this->aFunctions = array();
+		$this->aFunctions = [];
 		$this->sRequestURI = $sRequestURI;
 		if ($this->sRequestURI == "")
 			$this->sRequestURI = $this->detectURI();
 		$this->sWrapperPrefix = $sWrapperPrefix;
 		$this->bDebug = $bDebug;
 	}
-	
+
 	// detectURL() returns the current URL based upon the SERVER vars
 	// used internally
 	function detectURI()
 	{
-		$aUri = array();
+		$aUri = [];
 
         if (!empty($_SERVER['REQUEST_URI']))
 		{
             $aUri = parse_url($_SERVER['REQUEST_URI']);
         }
-        
+
         if (empty($aUri['scheme']))
 		{
 			if (!empty($_SERVER['HTTP_SCHEME']))
@@ -222,7 +222,7 @@ class xajax
             }
 			else
 			{
-                $aUri['scheme'] = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off') ? 'https' : 'http';
+                $aUri['scheme'] = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off' ? 'https' : 'http';
             }
 
             if (!empty($_SERVER['HTTP_HOST']))
@@ -277,9 +277,9 @@ class xajax
             }
             $sUri .= '@';
         }
-        
+
         $sUri .= $aUri['host'];
-        
+
         if (!empty($aUri['port']) && (($aUri['scheme'] == 'http' && $aUri['port'] != 80) || ($aUri['scheme'] == 'https' && $aUri['port'] != 443)))
 		{
             $sUri .= ':'.$aUri['port'];
@@ -291,59 +291,59 @@ class xajax
 
         return $sUri.basename($_SERVER['SCRIPT_NAME']);
 	}
-	
+
 	// setRequestURI() sets the URI to which requests will be made
 	// usage: $xajax->setRequestURI("http://xajax.sourceforge.net");
 	function setRequestURI($sRequestURI)
 	{
 		$this->sRequestURI = $sRequestURI;
 	}
-	
+
 	// debugOn() enables debug messages for xajax
 	// usage: $xajax->debugOn();
 	function debugOn()
 	{
 		$this->bDebug = true;
 	}
-	
+
 	// debugOff() disables debug messages for xajax
 	// usage: $xajax->debugOff();
 	function debugOff()
 	{
 		$this->bDebug = false;
 	}
-	
+
 	// statusMessagesOn() enables messages in the statusbar for xajax
 	// usage: $xajax->statusMessagesOn();
 	function statusMessagesOn()
 	{
 		$this->bStatusMessages = true;
 	}
-	
+
 	// statusMessagesOff() disables messages in the statusbar for xajax
 	// usage: $xajax->statusMessagesOff();
 	function statusMessagesOff()
 	{
 		$this->bStatusMessages = false;
 	}
-	
+
 	// setWrapperPrefix() sets the prefix that will be appended to the javascript
 	// wraper functions.
 	function setWrapperPrefix($sPrefix)
 	{
 		$this->sWrapperPrefix = $sPrefix;
 	}
-	
+
 	//Dpericated.  Use registerFunction();
 	function addFunction($sFunction,$sRequestType=POST)
 	{
 		trigger_error("xajax: the <b>addFunction()</b> method has been renamed <b>registerFunction()</b>. <br />Please use ->registerFunction('$sFunction'".($sRequestType==GET?",GET":"")."); instead.",E_USER_WARNING);
 		$this->registerFunction($sFunction,$sRequestType);
 	}
-	
+
 	// registerFunction() registers a PHP function to be callable through xajax
 	// $sFunction is a string containing the function name
-	// $sRequestType is the RequestType (GET/POST) that should be used 
+	// $sRequestType is the RequestType (GET/POST) that should be used
 	//		for this function.  Defaults to POST.
 	// usage: $xajax->registerFunction("myfunction",POST);
 	function registerFunction($sFunction,$sRequestType=POST)
@@ -351,15 +351,14 @@ class xajax
 		$this->aFunctions[] = $sFunction;
 		$this->aFunctionRequestTypes[$sFunction] = $sRequestType;
 	}
-	
+
 	// generates the javascript wrapper for the specified PHP function
 	// used internally
 	function wrap($sFunction,$sRequestType=POST)
 	{
-		$js = "function ".$this->sWrapperPrefix."$sFunction(){xajax.call(\"$sFunction\", arguments, ".$sRequestType.");}\n";		
-		return $js;
+		return "function ".$this->sWrapperPrefix."$sFunction(){xajax.call(\"$sFunction\", arguments, ".$sRequestType.");}\n";
 	}
-	
+
 	// processRequests() is the main communications engine of xajax
 	// The engine handles all incoming xajax requests, calls the apporiate PHP functions
 	// and passes the xml responses back to the javascript response handler
@@ -367,7 +366,7 @@ class xajax
 	// be called before any headers or html has been sent.
 	// usage: $xajax->processRequests()
 	function processRequests()
-	{	
+	{
 		if (!empty($_GET['xajaxjs']))
 		{
 			header("Content-type: text/javascript");
@@ -375,42 +374,42 @@ class xajax
 			exit();
 			return;
 		}
-		
+
 		$requestMode = -1;
 		$sFunctionName = "";
-		$aArgs = array();
+		$aArgs = [];
 		$sResponse = "";
-		
+
 		if (!empty($_GET["xajax"]))
 			$requestMode = GET;
-		
+
 		if (!empty($_POST["xajax"]))
 			$requestMode = POST;
-			
-		if ($requestMode == -1) 
+
+		if ($requestMode == -1)
 			return;
-	
+
 		if ($requestMode == POST)
 		{
 			$sFunctionName = $_POST["xajax"];
-			
-			if (!empty($_POST["xajaxargs"])) 
+
+			if (!empty($_POST["xajaxargs"]))
 				$aArgs = $_POST["xajaxargs"];
 		}
 		else
-		{	
+		{
 			header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 			header ("Cache-Control: no-cache, must-revalidate");
 			header ("Pragma: no-cache");
 			header("Content-type: text/xml");
-			
+
 			$sFunctionName = $_GET["xajax"];
-			
-			if (!empty($_GET["xajaxargs"])) 
+
+			if (!empty($_GET["xajaxargs"]))
 				$aArgs = $_GET["xajaxargs"];
 		}
-		
+
 		if (!in_array($sFunctionName, $this->aFunctions))
 		{
 			$objResponse = new xajaxResponse();
@@ -429,29 +428,29 @@ class xajax
 			{
 				if (stristr($aArgs[$i],"<xjxobj>") != false)
 				{
-					$aArgs[$i] = $this->xmlToArray("xjxobj",$aArgs[$i]);	
+					$aArgs[$i] = $this->xmlToArray("xjxobj",$aArgs[$i]);
 				}
 				else if (stristr($aArgs[$i],"<xjxquery>") != false)
 				{
-					$aArgs[$i] = $this->xmlToArray("xjxquery",$aArgs[$i]);	
+					$aArgs[$i] = $this->xmlToArray("xjxquery",$aArgs[$i]);
 				}
 			}
 			$sResponse = call_user_func_array($sFunctionName, $aArgs);
 		}
-		
+
 		header("Content-type: text/xml; charset=utf-8");
 		print $sResponse;
-		
+
 		exit();
 	}
-	
+
 	// xmlToArray() takes a string containing xajax xjxobj xml or xjxquery xml
 	// and builds an array representation of it to pass as an argument to
 	// the php function being called. Returns an array.
 	// used internally
 	function xmlToArray($rootTag, $sXml)
 	{
-		$aArray = array();
+		$aArray = [];
 		$sXml = str_replace("<$rootTag>","<$rootTag>|~|",$sXml);
 		$sXml = str_replace("</$rootTag>","</$rootTag>|~|",$sXml);
 		$sXml = str_replace("<e>","<e>|~|",$sXml);
@@ -462,22 +461,20 @@ class xajax
 		$sXml = str_replace("</v>","|~|</v>|~|",$sXml);
 		$sXml = str_replace("<q>","<q>|~|",$sXml);
 		$sXml = str_replace("</q>","|~|</q>|~|",$sXml);
-		
+
 		$this->aObjArray = explode("|~|",$sXml);
-		
+
 		$this->iPos = 0;
-		$aArray = $this->parseObjXml($rootTag);
-		
-		return $aArray;
+		return $this->parseObjXml($rootTag);
 	}
-	
+
 	// parseObjXml() is a recursive function that generates an array from the
 	// contents of $this->aObjArray. Returns an array.
 	// used internally
 	function parseObjXml($rootTag)
 	{
-		$aArray = array();
-		
+		$aArray = [];
+
 		if ($rootTag == "xjxobj")
 		{
 			while(!stristr($this->aObjArray[$this->iPos],"</xjxobj>"))
@@ -487,7 +484,7 @@ class xajax
 				{
 					$key = "";
 					$value = null;
-						
+
 					$this->iPos++;
 					while(!stristr($this->aObjArray[$this->iPos],"</e>"))
 					{
@@ -523,7 +520,7 @@ class xajax
 				}
 			}
 		}
-		
+
 		if ($rootTag == "xjxquery")
 		{
 			$sQuery = "";
@@ -540,55 +537,55 @@ class xajax
 			}
 			parse_str($sQuery, $aArray);
 		}
-		
+
 		return $aArray;
 	}
-	
+
 	// Depricated.  Use printJavascript();
 	function javascript($sJsURI="")
 	{
 		trigger_error("xajax: the <b>javascript()</b> method has been renamed <b>printJavascript()</b>. <br />Please use ->printJavascript(".($sJsURI==""?"":"'$sJsURI'")."); instead.",E_USER_WARNING);
 		$this->printJavascript($sJsURI);
 	}
-	
+
 	// printJavascript() prints the xajax javascript code into your page
 	// it should only be called between the <head> </head> tags
 	// usage:
 	//	<head>
 	//		...
-	//		<?php $xajax->printJavascript(); 
+	//		<?php $xajax->printJavascript();
 	function printJavascript($sJsURI="")
 	{
 		print $this->getJavascript($sJsURI);
 	}
-	
+
 	// getJavascript() returns the xajax javascript code that should be added to
 	// your page between the <head> </head> tags
 	// usage:
 	//	<head>
 	//		...
-	//		<?php $xajax->getJavascript(); 
+	//		<?php $xajax->getJavascript();
 	function getJavascript($sJsURI="")
-	{	
+	{
 		if ($sJsURI == "")
 			$sJsURI = $this->sRequestURI;
-			
+
 		$separator=strpos($sJsURI,'?')==false?'?':'&';
 
 		return '<script type="text/javascript">var xajaxRequestUri="'.$this->sRequestURI.'";</script>'."\n".'<script type="text/javascript" src="'.$sJsURI.$separator.'xajaxjs=xajaxjs"></script>'."\n";
 	}
-	
+
 	// compressJavascript() compresses the javascript code for more efficient delivery
-	// used internally 
+	// used internally
 	// $sJS is a string containing the javascript code to compress
 	function compressJavascript($sJS)
 	{
 		//remove windows cariage returns
 		$sJS = str_replace("\r","",$sJS);
-		
+
 		//array to store replaced literal strings
-		$literal_strings = array();
-		
+		$literal_strings = [];
+
 		//explode the string into lines
 		$lines = explode("\n",$sJS);
 		//loop through all the lines, building a new string at the same time as removing literal strings
@@ -598,18 +595,18 @@ class xajax
 		$inQuote = false;
 		$escaped = false;
 		$quoteChar = "";
-		
+
 		for($i=0;$i<count($lines);$i++)
 		{
 			$line = $lines[$i];
 			$inNormalComment = false;
-		
+
 			//loop through line's characters and take out any literal strings, replace them with ___i___ where i is the index of this string
 			for($j=0;$j<strlen($line);$j++)
 			{
 				$c = substr($line,$j,1);
 				$d = substr($line,$j,2);
-		
+
 				//look for start of quote
 				if(!$inQuote && !$inComment)
 				{
@@ -628,8 +625,8 @@ class xajax
 						$inComment = true;
 						$escaped = false;
 						$quoteChar = $d;
-						$literal = $d;	
-						$j++;	
+						$literal = $d;
+						$j++;
 					}
 					else if($d=="//") //ignore string markers that are found inside comments
 					{
@@ -647,32 +644,32 @@ class xajax
 					{
 						$inQuote = false;
 						$literal .= $c;
-		
+
 						//subsitute in a marker for the string
 						$clean .= "___" . count($literal_strings) . "___";
-		
+
 						//push the string onto our array
 						array_push($literal_strings,$literal);
-		
+
 					}
 					else if($inComment && $d=="*/")
 					{
 						$inComment = false;
 						$literal .= $d;
-		
+
 						//subsitute in a marker for the string
 						$clean .= "___" . count($literal_strings) . "___";
-		
+
 						//push the string onto our array
 						array_push($literal_strings,$literal);
-		
+
 						$j++;
 					}
 					else if($c == "\\" && !$escaped)
 						$escaped = true;
 					else
 						$escaped = false;
-		
+
 					$literal .= $c;
 				}
 			}
@@ -681,43 +678,43 @@ class xajax
 		}
 		//explode the clean string into lines again
 		$lines = explode("\n",$clean);
-		
+
 		//now process each line at a time
 		for($i=0;$i<count($lines);$i++)
 		{
 			$line = $lines[$i];
-		
+
 			//remove comments
 			$line = preg_replace("/\/\/(.*)/","",$line);
-		
+
 			//strip leading and trailing whitespace
 			$line = trim($line);
-		
+
 			//remove all whitespace with a single space
 			$line = preg_replace("/\s+/"," ",$line);
-		
+
 			//remove any whitespace that occurs after/before an operator
 			$line = preg_replace("/\s*([!\}\{;,&=\|\-\+\*\/\)\(:])\s*/","\\1",$line);
-		
+
 			$lines[$i] = $line;
 		}
-		
+
 		//implode the lines
 		$sJS = implode("\n",$lines);
-		
+
 		//make sure there is a max of 1 \n after each line
 		$sJS = preg_replace("/[\n]+/","\n",$sJS);
-		
+
 		//strip out line breaks that immediately follow a semi-colon
 		$sJS = preg_replace("/;\n/",";",$sJS);
-		
+
 		//curly brackets aren't on their own
 		$sJS = preg_replace("/[\n]*\{[\n]*/","{",$sJS);
-		
+
 		//finally loop through and replace all the literal strings:
 		for($i=0;$i<count($literal_strings);$i++)
 			$sJS = str_replace("___".$i."___",$literal_strings[$i],$sJS);
-		
+
 		return $sJS;
 	}
 
@@ -729,16 +726,16 @@ class xajax
 	{
 		$js  = "";
 		if ($this->bDebug){ $js .= "var xajaxDebug=".($this->bDebug?"true":"false").";\n"; }
-		
+
 		ob_start();
 		?>
 		function Xajax()
 		{
 			<?php if ($this->bDebug){ ?>this.DebugMessage = function(text){if (xajaxDebug) alert("Xajax Debug:\n " + text)}<?php	} ?>
-			
+
 			this.workId = 'xajaxWork'+ new Date().getTime();
 			this.depth = 0;
-			
+
 			//Get the XMLHttpRequest Object
 			this.getRequestObject = function()
 			{
@@ -761,9 +758,9 @@ class xajax
 				}
 				if(!req && typeof XMLHttpRequest != "undefined")
 					req = new XMLHttpRequest();
-				
+
 					<?php if ($this->bDebug){ ?>if (!req) this.DebugMessage("Request Object Instantiation failed.");<?php } ?>
-					
+
 				return req;
 			}
 
@@ -772,7 +769,7 @@ class xajax
 			{
 				return document.getElementById(sId);
 			}
-			
+
 			// xajax.getFormValues() builds a query string XML message from the elements of a form object
 			this.getFormValues = function(frm)
 			{
@@ -795,15 +792,15 @@ class xajax
 							if (sXml != '<xjxquery><q>')
 								sXml += '&';
 							sXml += name+"="+encodeURIComponent(formElements[i].value);
-						} 
+						}
 					}
 				}
-				
+
 				sXml +="</q></xjxquery>";
-				
+
 				return sXml;
 			}
-			
+
 			// Generates an XML message that xajax can understand from a javascript object
 			this.objectToXML = function(obj)
 			{
@@ -816,10 +813,10 @@ class xajax
 							continue;
 						if (obj[i] && typeof(obj[i]) == 'function')
 							continue;
-							
+
 						var key = i;
 						var value = obj[i];
-						if (value && typeof(value)=="object" && 
+						if (value && typeof(value)=="object" &&
 							(value.constructor == Array
 							 ) && this.depth <= 50)
 						{
@@ -827,9 +824,9 @@ class xajax
 							value = this.objectToXML(value);
 							this.depth--;
 						}
-						
+
 						sXml += "<e><k>"+key+"</k><v>"+value+"</v></e>";
-						
+
 					}
 					catch(e)
 					{
@@ -837,7 +834,7 @@ class xajax
 					}
 				}
 				sXml += "</xjxobj>";
-			
+
 				return sXml;
 			}
 
@@ -900,7 +897,7 @@ class xajax
 				{
 					if (r.readyState != 4)
 						return;
-					
+
 					if (r.status==200)
 					{
 						<?php if ($this->bDebug){ ?>xajax.DebugMessage("Received:\n" + r.responseText);<?php } ?>
@@ -916,7 +913,7 @@ class xajax
 				delete r;
 				return true;
 			}
-			
+
 			// Tests if the new Data is the same as the extant data
 			this.willChange = function(element, attribute, newData)
 			{
@@ -938,10 +935,10 @@ class xajax
 				eval("oldData=document.getElementById('"+element+"')."+attribute);
 				if (newData != oldData)
 					return true;
-					
+
 				return false;
 			}
-			
+
 			//Process XML xajaxResponses returned from the request
 			this.processResponse = function(xml)
 			{
@@ -969,7 +966,7 @@ class xajax
 						var data;
 						var type;
 						var objElement;
-						
+
 						for (j=0; j<xml.childNodes[i].attributes.length; j++)
 						{
 							if (xml.childNodes[i].attributes[j].name == "action")
@@ -977,7 +974,7 @@ class xajax
 								action = xml.childNodes[i].attributes[j].value;
 							}
 						}
-						
+
 						var node = xml.childNodes[i];
 						for (j=0;j<node.childNodes.length;j++)
 						{
@@ -1006,7 +1003,7 @@ class xajax
 								else
 									data = "";
 							}
-							
+
 							if (node.childNodes[j].nodeName == "type")
 							{
 								if (node.childNodes[j].firstChild)
@@ -1062,24 +1059,24 @@ class xajax
 
 							}
 						}
-					}	
+					}
 				}
 				document.body.style.cursor = 'default';
 				<?php if ($this->bStatusMessages == true){?> window.status = 'Done'; <?php } ?>
 			}
 		}
-		
+
 		var xajax = new Xajax();
 		<?php
 		$js .= ob_get_contents()."\n";
 		ob_end_clean();
 		foreach($this->aFunctions as $sFunction)
 			$js .= $this->wrap($sFunction,$this->aFunctionRequestTypes[$sFunction]);
-	
+
 		if ($this->bDebug == false)
 			$js = $this->compressJavascript($js);
-		
+
 		print $js;
 	}
-}// end class xajax 
+}// end class xajax
 ?>

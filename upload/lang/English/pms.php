@@ -1,6 +1,6 @@
 <?php
 
-$lang_pms = array(
+$lang_pms = [
 
 // Common
 'Messages'					=>	'Messages',
@@ -55,4 +55,4 @@ $lang_pms = array(
 'Flood start'				=>	'At least',
 'Flood end'					=>	'seconds have to pass between sends. Please wait a little while and try send the message again.'
 
-);
+];

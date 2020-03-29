@@ -97,7 +97,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 		if ($is_admmod && $cur_topic['announcement'] != '1')
 		{
 			echo "\t\t\t".'<dd>';
-		
+
 			if ($cur_topic['closed'] == '1')
 				echo '<a href="moderate.php?fid='.$forum_id.'&amp;open='.$id.'" class="open">'.$lang_common['Open topic'].'</a> | ';
 			else
@@ -147,7 +147,7 @@ if (defined('PUN_DEBUG'))
 {
 	// Calculate script generation time
 	list($usec, $sec) = explode(' ', microtime());
-	$time_diff = sprintf('%.3f', ((float)$usec + (float)$sec) - $pun_start);
+	$time_diff = sprintf('%.3f', (float)$usec + (float)$sec - $pun_start);
 	echo "\t\t\t".'<p class="conr">[ Generated in '.$time_diff.' seconds, '.$db->get_num_queries().' queries executed ]</p>'."\n";
 }
 

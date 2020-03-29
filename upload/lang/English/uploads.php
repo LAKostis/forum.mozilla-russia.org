@@ -1,6 +1,6 @@
 <?php
 
-$lang_uploads = array(
+$lang_uploads = [
 
 'Uploader'				=>	'Uploader',
 'Upload'				=>	'Upload',
@@ -14,4 +14,4 @@ $lang_uploads = array(
 'Topic del redirect'	=>	'Topic deleted. Redirecting &hellip;',
 'Uploader search'		=>	'Uploader Search'
 
-);
+];

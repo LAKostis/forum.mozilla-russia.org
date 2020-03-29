@@ -41,24 +41,24 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Delphi',
-	'COMMENT_SINGLE' => array(1 => '//'),
-	'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
+	'COMMENT_SINGLE' => [1 => '//'],
+	'COMMENT_MULTI' => ['(*' => '*)', '{' => '}'],
 	'CASE_KEYWORDS' => 0,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'And', 'Array', 'As', 'Begin', 'Case', 'Class', 'Constructor', 'Destructor', 'Div', 'Do', 'DownTo', 'Else',
 			'End', 'Except', 'File', 'Finally', 'For', 'Function', 'Goto', 'If', 'Implementation', 'In', 'Inherited', 'Interface',
 			'Is', 'Mod', 'Not', 'Object', 'Of', 'On', 'Or', 'Packed', 'Procedure', 'Program', 'Property', 'Raise', 'Record',
 			'Repeat', 'Set', 'Shl', 'Shr', 'Then', 'ThreadVar', 'To', 'Try', 'Unit', 'Until', 'Uses', 'While', 'With', 'Xor'
-			),
-		2 => array(
+			],
+		2 => [
 			'nil', 'false', 'true', 'var', 'type', 'const'
-			),
-		3 => array(
+			],
+		3 => [
 			'Abs', 'Addr', 'AnsiCompareStr', 'AnsiCompareText', 'AnsiContainsStr', 'AnsiEndsStr', 'AnsiIndexStr', 'AnsiLeftStr',
 			'AnsiLowerCase', 'AnsiMatchStr', 'AnsiMidStr', 'AnsiPos', 'AnsiReplaceStr', 'AnsiReverseString', 'AnsiRightStr',
 			'AnsiStartsStr', 'AnsiUpperCase', 'ArcCos', 'ArcSin', 'ArcTan', 'Assigned', 'BeginThread', 'Bounds', 'CelsiusToFahrenheit',
@@ -86,8 +86,8 @@ $language_data = array (
 			'ProcessPath', 'Randomize', 'Read', 'ReadLn', 'ReallocMem', 'Rename', 'ReplaceDate', 'ReplaceTime',
 			'Reset', 'ReWrite', 'RmDir', 'RunError', 'Seek', 'SetLength', 'SetString', 'ShowMessage', 'ShowMessageFmt',
 			'ShowMessagePos', 'Str', 'Truncate', 'Val', 'Write', 'WriteLn'
-			),
-		4 => array(
+			],
+		4 => [
 			'AnsiChar', 'AnsiString', 'Boolean', 'Byte', 'Cardinal', 'Char', 'Comp', 'Currency', 'Double', 'Extended',
 			'Int64', 'Integer', 'LongInt', 'LongWord', 'PAnsiChar', 'PAnsiString', 'PChar', 'PCurrency', 'PDateTime',
 			'PExtended', 'PInt64', 'Pointer', 'PShortString', 'PString', 'PVariant', 'PWideChar', 'PWideString',
@@ -95,65 +95,65 @@ $language_data = array (
 			'Text', 'TextFile', 'TFloatFormat', 'TFormatSettings', 'TList', 'TObject', 'TOpenDialog', 'TPoint',
 			'TPrintDialog', 'TRect', 'TReplaceFlags', 'TSaveDialog', 'TSearchRec', 'TStringList', 'TSysCharSet',
 			'TThreadFunc', 'Variant', 'WideChar', 'WideString', 'Word'
-			),
-		),
-	'CASE_SENSITIVE' => array(
+			],
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #000000; font-weight: bold;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #000066;',
 			4 => 'color: #993333;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
-			),
-		'BRACKETS' => array(
+			],
+		'ESCAPE_CHAR' => [
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;'
-			),
-		'REGEXPS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => '',
 		4 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

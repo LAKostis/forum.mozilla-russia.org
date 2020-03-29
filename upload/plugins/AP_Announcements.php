@@ -29,7 +29,7 @@ if (isset($_POST['form_sent']))
 
 	$username = $pun_user['username'];
 	$email = $pun_user['email'];
-	
+
 	// Clean up message from POST
 	$message = pun_linebreaks(pun_trim($_POST['req_message']));
 
@@ -73,7 +73,7 @@ if (isset($_POST['form_sent']))
 
 	}
 
-	$low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
+	$low_prio = $db_type == 'mysql' ? 'LOW_PRIORITY ' : '';
 	$db->query('UPDATE '.$low_prio.$db->prefix.'users SET num_posts=num_posts+1, last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 
 	redirect('viewtopic.php?pid='.$new_pid.'#p'.$new_pid, "Announcement Created");
@@ -110,15 +110,15 @@ $cur_index = 1;
 						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"></textarea><br /></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 						<ul class="bblinks">
-							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;">BBCode</a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#img" onclick="window.open(this.href); return false;">Img tag</a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;">Smilies</a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;">BBCode</a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;">Img tag</a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;">Smilies</a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
 <?php
 
-$checkboxes = array();
+$checkboxes = [];
 	if ($pun_config['o_smilies'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />Hide Smilies';
 

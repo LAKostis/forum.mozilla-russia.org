@@ -41,7 +41,7 @@ if (isset($_POST['zap_id']))
 {
 	confirm_referrer('admin_reports.php');
 
-	$zap_id = is_array ($_POST['zap_id']) ? $_POST['zap_id'] : array();
+	$zap_id = is_array ($_POST['zap_id']) ? $_POST['zap_id'] : [];
 
 	foreach ($zap_id as $group)
 		foreach ($group as $report)
@@ -56,7 +56,7 @@ if (isset($_POST['zap_id']))
 
 		if ($db->num_rows($result))
 		{
-			$blocked = array();
+			$blocked = [];
 			while ($cur_report = $db->fetch_assoc($result))
 				$blocked[] = (int)$cur_report['post_id'];
 			if (sizeof($blocked))
@@ -98,11 +98,11 @@ if ($db->num_rows($result))
 	$group_id = $last_group_id = 0;
 	while ($cur_report = $db->fetch_assoc($result))
 	{
-		$reporter = ($cur_report['reporter'] != '') ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
-		$forum = ($cur_report['forum_name'] != '') ? '<a href="viewforum.php?id='.$cur_report['forum_id'].'">'.pun_htmlspecialchars($cur_report['forum_name']).'</a>' : 'Deleted';
-		$topic = ($cur_report['subject'] != '') ? '<a href="viewtopic.php?id='.$cur_report['topic_id'].'">'.pun_htmlspecialchars($cur_report['subject']).'</a>' : 'Deleted';
-		$post = ($cur_report['post_id'] != '') ? str_replace("\n", '<br />', pun_htmlspecialchars($cur_report['message'])) : 'Deleted';
-		$postid = ($cur_report['post_exists'] != '') ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
+		$reporter = $cur_report['reporter'] != '' ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
+		$forum = $cur_report['forum_name'] != '' ? '<a href="viewforum.php?id='.$cur_report['forum_id'].'">'.pun_htmlspecialchars($cur_report['forum_name']).'</a>' : 'Deleted';
+		$topic = $cur_report['subject'] != '' ? '<a href="viewtopic.php?id='.$cur_report['topic_id'].'">'.pun_htmlspecialchars($cur_report['subject']).'</a>' : 'Deleted';
+		$post = $cur_report['post_id'] != '' ? str_replace("\n", '<br />', pun_htmlspecialchars($cur_report['message'])) : 'Deleted';
+		$postid = $cur_report['post_exists'] != '' ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
 
 		$last_group_id = $cur_report['post_id'];
 
@@ -185,12 +185,12 @@ if ($db->num_rows($result))
 	$group_id = $last_group_id = 0;
 	while ($cur_report = $db->fetch_assoc($result))
 	{
-		$reporter = ($cur_report['reporter'] != '') ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
-		$forum = ($cur_report['forum_name'] != '') ? '<a href="viewforum.php?id='.$cur_report['forum_id'].'">'.pun_htmlspecialchars($cur_report['forum_name']).'</a>' : 'Deleted';
-		$topic = ($cur_report['subject'] != '') ? '<a href="viewtopic.php?id='.$cur_report['topic_id'].'">'.pun_htmlspecialchars($cur_report['subject']).'</a>' : 'Deleted';
-		$post = ($cur_report['post_id'] != '') ? str_replace("\n", '<br />', pun_htmlspecialchars($cur_report['message'])) : 'Post deleted';
-		$post_id = ($cur_report['post_exists'] != '') ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
-		$zapped_by = ($cur_report['zapped_by'] != '') ? '<a href="profile.php?id='.$cur_report['zapped_by_id'].'">'.pun_htmlspecialchars($cur_report['zapped_by']).'</a>' : 'N/A';
+		$reporter = $cur_report['reporter'] != '' ? '<a href="profile.php?id='.$cur_report['reported_by'].'">'.pun_htmlspecialchars($cur_report['reporter']).'</a>' : 'Deleted user';
+		$forum = $cur_report['forum_name'] != '' ? '<a href="viewforum.php?id='.$cur_report['forum_id'].'">'.pun_htmlspecialchars($cur_report['forum_name']).'</a>' : 'Deleted';
+		$topic = $cur_report['subject'] != '' ? '<a href="viewtopic.php?id='.$cur_report['topic_id'].'">'.pun_htmlspecialchars($cur_report['subject']).'</a>' : 'Deleted';
+		$post = $cur_report['post_id'] != '' ? str_replace("\n", '<br />', pun_htmlspecialchars($cur_report['message'])) : 'Post deleted';
+		$post_id = $cur_report['post_exists'] != '' ? '<a href="viewtopic.php?pid='.$cur_report['post_id'].'#p'.$cur_report['post_id'].'">Post #'.$cur_report['post_id'].'</a>' : 'Deleted';
+		$zapped_by = $cur_report['zapped_by'] != '' ? '<a href="profile.php?id='.$cur_report['zapped_by_id'].'">'.pun_htmlspecialchars($cur_report['zapped_by']).'</a>' : 'N/A';
 
 		$last_group_id = $cur_report['post_id'];
 

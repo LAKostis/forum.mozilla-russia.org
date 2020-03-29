@@ -49,7 +49,7 @@ if ($tid)
 	$result = $db->query('SELECT t.subject, t.closed FROM '.$db->prefix.'topics AS t WHERE t.announcement=\'1\' AND t.id='.$tid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 	if (!$db->num_rows($result))
 		$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics, t.subject, t.closed, p.id AS post_id, p.poster_id, p.message, p.posted FROM '.$db->prefix.'topics AS t INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'posts AS p ON (t.last_post_id=p.id AND p.poster_id='.$pun_user['id'].') '.$mgrp_extra.' AND t.id='.$tid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
-}	
+}
 else
 	$result = $db->query('SELECT f.id, f.forum_name, f.moderators, f.redirect_url, fp.post_replies, fp.post_topics FROM '.$db->prefix.'forums AS f '.$mgrp_extra.' AND f.id='.$fid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 
@@ -63,8 +63,8 @@ if ($cur_posting['redirect_url'] != '')
 	message($lang_common['Bad request']);
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
-$mods_array = ($cur_posting['moderators'] != '') ? unserialize($cur_posting['moderators']) : array();
-$is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
+$mods_array = $cur_posting['moderators'] != '' ? unserialize($cur_posting['moderators']) : [];
+$is_admmod = $pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array)) ? true : false;
 
 // Do we have permission to post?
 if ((($tid && (($cur_posting['post_replies'] == '' && $pun_user['g_post_replies'] == '0') || $cur_posting['post_replies'] == '0')) ||
@@ -80,7 +80,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
 // MOD END
 
 // Start with a clean slate
-$errors = array();
+$errors = [];
 
 
 // Did someone just hit "Submit" or "Preview"?
@@ -117,7 +117,7 @@ if (isset($_POST['form_sent']))
 	else
 	{
 		$username = trim($_POST['req_username']);
-		$email = strtolower(trim(($pun_config['p_force_guest_email'] == '1') ? $_POST['req_email'] : $_POST['email']));
+		$email = strtolower(trim($pun_config['p_force_guest_email'] == '1' ? $_POST['req_email'] : $_POST['email']));
 
 		// Load the register.php/profile.php language files
 		require PUN_ROOT.'lang/'.$pun_user['language'].'/prof_reg.php';
@@ -252,7 +252,7 @@ if (isset($_POST['form_sent']))
 			else
 			{
 				// It's a guest. Insert the new post
-				$email_sql = ($pun_config['p_force_guest_email'] == '1' || $email != '') ? '\''.$email.'\'' : 'NULL';
+				$email_sql = $pun_config['p_force_guest_email'] == '1' || $email != '' ? '\''.$email.'\'' : 'NULL';
 				$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_ip, poster_email, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', \''.get_remote_address().'\', '.$email_sql.', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
 				$new_pid = $db->insert_id();
 			}
@@ -289,7 +289,7 @@ if (isset($_POST['form_sent']))
 				{
 					require_once PUN_ROOT.'include/email.php';
 
-					$notification_emails = array();
+					$notification_emails = [];
 
 					// Loop through subscribed users and send e-mails
 					while ($cur_subscriber = $db->fetch_assoc($result))
@@ -379,7 +379,7 @@ if (isset($_POST['form_sent']))
 			else
 			{
 				// Create the post ("topic post")
-				$email_sql = ($pun_config['p_force_guest_email'] == '1' || $email != '') ? '\''.$email.'\'' : 'NULL';
+				$email_sql = $pun_config['p_force_guest_email'] == '1' || $email != '' ? '\''.$email.'\'' : 'NULL';
 				$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_ip, poster_email, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($username).'\', \''.get_remote_address().'\', '.$email_sql.', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.$now.', '.$new_tid.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
 			}
 			$new_pid = $db->insert_id();
@@ -396,7 +396,7 @@ if (isset($_POST['form_sent']))
 		// hcs merge update
 		if (!$pun_user['is_guest'])
 		{
-			$low_prio = ($db_type == 'mysql') ? 'LOW_PRIORITY ' : '';
+			$low_prio = $db_type == 'mysql' ? 'LOW_PRIORITY ' : '';
 			if ($merged)
 				$db->query('UPDATE '.$low_prio.$db->prefix.'users SET last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 			else if(empty($pun_config['o_message_counter_exceptions']) || !in_array($cur_posting['id'], explode(',', $pun_config['o_message_counter_exceptions'])))
@@ -490,11 +490,11 @@ if ($fid && (isset($_GET['action']) && $_GET['action'] == 'newpoll') || $ptype >
 	require PUN_ROOT.'include/polls/poll.php';
 else {
 	require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
-	$required_fields = array('req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message'], 'req_image' => $lang_register['Image text']);
-	$focus_element = array('post');
+	$required_fields = ['req_email' => $lang_common['E-mail'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message'], 'req_image' => $lang_register['Image text']];
+	$focus_element = ['post'];
 
 	if (!$pun_user['is_guest'])
-	$focus_element[] = ($fid) ? 'req_subject' : 'req_message';
+	$focus_element[] = $fid ? 'req_subject' : 'req_message';
 	else
 	{
 		$required_fields['req_username'] = $lang_post['Guest name'];
@@ -565,7 +565,7 @@ else if (isset($_POST['preview']))
 
 if (!isset($_GET['action']) || $ptype != 0)
 {
-$cur_index = 1; 
+$cur_index = 1;
 
 ?>
 <!-- MOD AJAX post preview -->
@@ -585,15 +585,15 @@ $cur_index = 1;
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
 					<div class="infldset txtarea">
-						<?php if (($fid) && $ptype != 0): ?><input type="hidden" name="create_poll" value="1" /> <?php echo "\n"; endif; ?>
+						<?php if ($fid && $ptype != 0): ?><input type="hidden" name="create_poll" value="1" /> <?php echo "\n"; endif; ?>
 						<input type="hidden" name="form_sent" value="1" />
-						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
+						<input type="hidden" name="form_user" value="<?php echo !$pun_user['is_guest'] ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 <?php
 
 if ($pun_user['is_guest'])
 {
-	$email_label = ($pun_config['p_force_guest_email'] == '1') ? '<strong>'.$lang_common['E-mail'].'</strong>' : $lang_common['E-mail'];
-	$email_form_name = ($pun_config['p_force_guest_email'] == '1') ? 'req_email' : 'email';
+	$email_label = $pun_config['p_force_guest_email'] == '1' ? '<strong>'.$lang_common['E-mail'].'</strong>' : $lang_common['E-mail'];
+	$email_form_name = $pun_config['p_force_guest_email'] == '1' ? 'req_email' : 'email';
 
 ?>						<label class="conl"><strong><?php echo $lang_post['Guest name'] ?></strong><br /><input type="text" name="req_username" value="<?php if (isset($_POST['req_username'])) echo pun_htmlspecialchars($username); ?>" size="25" maxlength="25" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 						<label class="conl"><?php echo $email_label ?><br /><input type="text" name="<?php echo $email_form_name ?>" value="<?php if (isset($_POST[$email_form_name])) echo pun_htmlspecialchars($email); ?>" size="50" maxlength="50" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
@@ -608,15 +608,15 @@ if ($fid): ?>
 						<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 						<ul class="bblinks">
-							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
 <?php
 
-$checkboxes = array();
+$checkboxes = [];
 if (!$pun_user['is_guest'])
 {
 	if ($pun_config['o_smilies'] == '1')
@@ -664,7 +664,7 @@ require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php'; ?>
 			</div>
 		<?php if ($ptype == 0) { ?>
 		<!-- MOD AJAX post preview -->
-		<p><input type="submit" id="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="<?php echo	 $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p> 
+		<p><input type="submit" id="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" onclick="xajax_getpreview(xajax.getFormValues('post')); document.location.href='#ajaxpostpreview'; return false;" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="<?php echo	 $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p>
 		<!--// MOD AJAX post preview -->
 	<?php } else { ?>
 	<p><input type="submit" id="submit" name="submit" value="<?php echo $lang_common['Submit'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="s" /><input type="submit" name="preview" value="<?php echo $lang_common['Preview'] ?>" tabindex="<?php echo $cur_index++ ?>" accesskey="p" /><a href="javascript:history.go(-1)"><?php echo $lang_common['Go back'] ?></a></p> <?php } ?>
@@ -674,7 +674,7 @@ require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php'; ?>
 
 <?php
 }
-	
+
 // Check to see if the topic review is to be displayed.
 if ($tid && $pun_config['o_topic_review'] != '0')
 {
@@ -695,8 +695,8 @@ if ($tid && $pun_config['o_topic_review'] != '0')
 	while ($cur_post = $db->fetch_assoc($result))
 	{
 		// Switch the background color for every message.
-		$bg_switch = ($bg_switch) ? $bg_switch = false : $bg_switch = true;
-		$vtbg = ($bg_switch) ? ' roweven' : ' rowodd';
+		$bg_switch = $bg_switch ? $bg_switch = false : $bg_switch = true;
+		$vtbg = $bg_switch ? ' roweven' : ' rowodd';
 		$post_count++;
 
 		$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
@@ -729,4 +729,3 @@ if ($tid && $pun_config['o_topic_review'] != '0')
 }
 
 require PUN_ROOT.'footer.php';
-

@@ -1,6 +1,6 @@
 <?php
 
-$lang_error = array(
+$lang_error = [
 
 'Encountered'		=>	'Ошибки случаются',
 'Error'				=>	'Сообщение',
@@ -9,4 +9,4 @@ $lang_error = array(
 'File'				=>	'Файл',
 'Login timeout'		=>	'Пожалуйста, подождите некоторое время перед тем, как пытаться зайти снова'
 
-);
+];

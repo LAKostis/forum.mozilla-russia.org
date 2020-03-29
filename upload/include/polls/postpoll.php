@@ -3,7 +3,7 @@
 if (!defined('PUN'))
 	exit;
 
-if (!empty($_POST['create_poll'])) 
+if (!empty($_POST['create_poll']))
 {
 	// Get the question
 	$question = pun_trim($_POST['req_question']);
@@ -12,7 +12,7 @@ if (!empty($_POST['create_poll']))
 	else if (pun_strlen($question) > 70)
 		$errors[] = $lang_polls['Too long question'];
 	else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($question) == $question && ($pun_user['g_id'] > PUN_MOD && !$pun_user['g_global_moderation']))
-		$question = pun_ucwords(pun_strtolower($question)); 
+		$question = pun_ucwords(pun_strtolower($question));
 	// If its a multislect yes/no poll then we need to make sure they have the right values
 	if ($ptype == 3) {
 		$yesval = pun_trim($_POST['poll_yes']);
@@ -32,9 +32,9 @@ if (!empty($_POST['create_poll']))
 			$errors[] = $lang_polls['Too long no'];
 		else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($noval) == $noval && ($pun_user['g_id'] > PUN_MOD && !$pun_user['g_global_moderation']))
 			$noval = pun_ucwords(pun_strtolower($noval));
-	} 
+	}
 	// This isn't exactly a good way todo it, but it works. I may rethink this code later
-	$option = array();
+	$option = [];
 	$lastoption = "null";
 	while (list($key, $value) = each($_POST['poll_option'])) {
 		$value = pun_trim($value);
@@ -49,10 +49,10 @@ if (!empty($_POST['create_poll']))
 					message($lang_common['Bad request']);
 				else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($option[$key]) == $option[$key] && ($pun_user['g_id'] > PUN_MOD && !$pun_user['g_global_moderation']))
 					$option[$key] = pun_ucwords(pun_strtolower($option[$key]));
-			} 
-		} 
+			}
+		}
 		$lastoption = pun_trim($value);
-	} 
+	}
 
 	// People are naughty
 	if (empty($option))
@@ -63,4 +63,3 @@ if (!empty($_POST['create_poll']))
 }
 
 ?>
-

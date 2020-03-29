@@ -56,7 +56,7 @@ if($target_user["id"] == $pun_user['id'])
 	message($lang_reputation['Silly user']);
 
 //Check last reputation point given timestamp
-if($pun_config['o_reputation_timeout'] > (time()-$pun_user['last_reputation_voice']))
+if($pun_config['o_reputation_timeout'] > time()-$pun_user['last_reputation_voice'])
 	message($lang_reputation['Timeout 1'].$pun_config['o_reputation_timeout'].$lang_reputation['Timeout 2']);
 
 //Plus or minus voice?

@@ -94,7 +94,7 @@ function rssRecentChanges(&$rss,$num){
       $item->author = 'anonymous@';
     }
     $item->author  .= $recents[$id]['ip'];
-    
+
     $rss->addItem($item);
   }
 }
@@ -111,7 +111,7 @@ function rssListNamespace(&$rss,$ns){
   $ns=':'.cleanID($ns);
   $ns=str_replace(':','/',$ns);
 
-  $data = array();
+  $data = [];
   sort($data);
   search($data,$conf['datadir'],'search_list','',$ns);
   foreach($data as $row){
@@ -124,7 +124,7 @@ function rssListNamespace(&$rss,$ns){
     $item->description = $desc;
     $item->date        = date('r',$date);
     $rss->addItem($item);
-  }  
+  }
 }
 
 /**
@@ -141,7 +141,7 @@ function cleanDesc($desc){
   $desc = preg_replace('/[\n\r\t]/',' ',$desc);
   $desc = preg_replace('/  /',' ',$desc);
   $desc = substr($desc,0,250);
-  $desc = $desc.'...';
+  $desc .='...';
   return $desc;
 }
 

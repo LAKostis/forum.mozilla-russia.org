@@ -45,19 +45,19 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Bash',
-	'COMMENT_SINGLE' => array(1 => '#'),
-	'COMMENT_MULTI' => array(),
+	'COMMENT_SINGLE' => [1 => '#'],
+	'COMMENT_MULTI' => [],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
 			'if', 'in', 'select', 'then', 'until', 'while', 'time'
-			),
-		3 => array(
+			],
+		3 => [
 			'source', 'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
 			'compgen', 'complete', 'continue', 'declare', 'typeset', 'dirs',
 			'disown', 'echo', 'enable', 'eval', 'exec', 'exit', 'export', 'fc',
@@ -65,66 +65,66 @@ $language_data = array (
 			'local', 'logout', 'popd', 'printf', 'pushd', 'pwd', 'read', 'readonly',
 			'return', 'set', 'shift', 'shopt', 'suspend', 'test', 'times', 'trap',
 			'type', 'ulimit', 'umask', 'unalias', 'unset', 'wait'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => true,
 		3 => true,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #808080; font-style: italic;',
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
+			],
+		'REGEXPS' => [
 			0 => 'color: #0000ff;',
 			1 => 'color: #0000ff;',
 			2 => 'color: #0000ff;'
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		3 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
 		0 => "\\$\\{[a-zA-Z_][a-zA-Z0-9_]*?\\}",
 		1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
 		2 => "([a-zA-Z_][a-zA-Z0-9_]*)="
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

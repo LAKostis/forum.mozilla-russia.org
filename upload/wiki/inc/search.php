@@ -17,8 +17,8 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
-  $dirs   = array();
-  $files  = array();
+  $dirs   = [];
+  $files  = [];
 
   //read in directories and files
   $dh = @opendir($base.'/'.$dir);
@@ -79,7 +79,7 @@ function search(&$data,$base,$func,$opts,$dir='',$lvl=1){
 function search_index(&$data,$base,$file,$type,$lvl,$opts){
   $return = true;
 
-  $item = array();
+  $item = [];
 
   if($type == 'd' && !preg_match('#^'.$file.'(/|$)#','/'.$opts['ns'])){
     //add but don't recurse
@@ -95,10 +95,10 @@ function search_index(&$data,$base,$file,$type,$lvl,$opts){
     return false;
   }
 
-  $data[]=array( 'id'    => $id,
+  $data[]=[ 'id'    => $id,
                  'type'  => $type,
                  'level' => $lvl,
-                 'open'  => $return );
+                 'open'  => $return ];
   return $return;
 }
 
@@ -111,9 +111,9 @@ function search_namespaces(&$data,$base,$file,$type,$lvl,$opts){
   if($type == 'f') return true; //nothing to do on files
 
   $id = pathID($file);
-  $data[]=array( 'id'    => $id,
+  $data[]=[ 'id'    => $id,
                  'type'  => $type,
-                 'level' => $lvl );
+                 'level' => $lvl ];
   return true;
 }
 
@@ -126,7 +126,7 @@ function search_media(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
   if($type == 'd') return false;
 
-  $info         = array();
+  $info         = [];
   $info['id']   = pathID($file);
 
   //check ACL for namespace (we have no ACL for mediafiles)
@@ -161,7 +161,7 @@ function search_list(&$data,$base,$file,$type,$lvl,$opts){
     if(auth_quickaclcheck($id) < AUTH_READ){
       return false;
     }
-    $data[]['id'] = $id;;
+    $data[]['id'] = $id;
   }
   return false;
 }
@@ -179,13 +179,13 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
   //only search txt files
   if(!preg_match('#\.txt$#',$file)) return true;
 
-  //simple stringmatching 
+  //simple stringmatching
   if(strpos($file,$opts['query']) !== false){
     //check ACL
     $id = pathID($file);
     if(auth_quickaclcheck($id) < AUTH_READ){
       return false;
-    } 
+    }
     $data[]['id'] = $id;
   }
 
@@ -202,9 +202,9 @@ function search_pagename(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
-  if($type == 'd') return true;;
+  if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;;
+  if(!preg_match('#\.txt$#',$file)) return true;
 
   //get text
   $text = io_readfile($base.'/'.$file);
@@ -257,9 +257,9 @@ function search_backlinks(&$data,$base,$file,$type,$lvl,$opts){
  */
 function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   //we do nothing with directories
-  if($type == 'd') return true;;
+  if($type == 'd') return true;
   //only search txt files
-  if(!preg_match('#\.txt$#',$file)) return true;;
+  if(!preg_match('#\.txt$#',$file)) return true;
 
   //check ACL
   $id = pathID($file);
@@ -272,12 +272,12 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
   //lowercase text (u modifier does not help with case)
   $lctext = utf8_strtolower($text);
 
-  //create regexp from queries  
+  //create regexp from queries
   $qpreg = preg_split('/\s+/',preg_quote($opts['query'],'#'));
   $qpreg = '('.join('|',$qpreg).')';
 
   //do the fulltext search
-  $matches = array();
+  $matches = [];
   if($cnt = preg_match_all('#'.$qpreg.'#usi',$lctext,$matches)){
     //this is not the best way for snippet generation but the fastest I could find
     //split query and only use the first token
@@ -292,11 +292,11 @@ function search_fulltext(&$data,$base,$file,$type,$lvl,$opts){
                '<span class="search_sep"> ... </span>';
     $snippet = preg_replace('#'.$qpreg.'#si','<span class="search_hit">\\1</span>',$snippet);
 
-    $data[] = array(
+    $data[] = [
       'id'      => $id,
       'count'   => $cnt,
       'snippet' => $snippet,
-    );
+    ];
   }
 
   return true;
@@ -330,8 +330,7 @@ function pathID($path){
   $id = str_replace('/',':',$id);
   $id = preg_replace('#\.txt$#','',$id);
   $id = preg_replace('#^:+#','',$id);
-  $id = preg_replace('#:+$#','',$id);
-  return $id;
+  return preg_replace('#:+$#','',$id);
 }
 
 ?>

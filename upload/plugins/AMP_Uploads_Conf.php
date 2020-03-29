@@ -8,12 +8,12 @@ if (!defined('PUN'))
 // Tell admin_loader.php that this is indeed a plugin and that it is loaded
 define('PUN_PLUGIN_LOADED', 1);
 
-$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$pun_user['g_id']); 
+$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$pun_user['g_id']);
 $upl_conf= $db->fetch_assoc($result);
 if (!$upl_conf) {
-	$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');    	
+	$result = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');
 	$upl_conf= $db->fetch_assoc($result);
-}	
+}
 
 
 // If the "Show text" button was clicked
@@ -21,7 +21,7 @@ if (isset($_POST['save_options']))
 {
 	// Display the admin navigation menu
 	generate_admin_menu($plugin);
-	
+
 
 
 ?>
@@ -50,9 +50,9 @@ if (isset($_POST['save_options']))
 					</tr>
 				</thead>
 				<tbody>
-				
-				
-<?php 	$k=1; while ($k <= $_POST['k']) {  
+
+
+<?php 	$k=1; while ($k <= $_POST['k']) {
 			if (isset($_POST['p_view_'.$k])) { $p_view[$k] = $_POST['p_view_'.$k]; } else $p_view[$k]=0;
 			if (isset($_POST['p_upload_'.$k])) { $p_upload[$k] = $_POST['p_upload_'.$k]; } else $p_upload[$k]=0;
 			if (isset($_POST['p_globalview_'.$k])) { $p_globalview[$k] = $_POST['p_globalview_'.$k]; } else $p_globalview[$k]=0;
@@ -63,42 +63,42 @@ if (isset($_POST['save_options']))
 
 
 ?>
-				
+
 					<tr>
 						<th class="atcl"><?php 	echo 'UPDATE '.$_POST['g_title_'.$k]; ?></th>
 						<td>
-							<?php 	if ($p_view[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 
+							<?php 	if ($p_view[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	if ($p_upload[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 
+							<?php 	if ($p_upload[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	if ($p_globalview[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 
+							<?php 	if ($p_globalview[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	if ($p_delete[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 
+							<?php 	if ($p_delete[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	if ($p_globaldelete[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 
+							<?php 	if ($p_globaldelete[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	if ($p_setop[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?> 						
+							<?php 	if ($p_setop[$k]==1)  echo '<b>Y</b>'; else echo '<b>N</b>' ?>
 						</td>
 						<td>
-							<?php 	echo $u_fsize[$k]; ?> 
+							<?php 	echo $u_fsize[$k]; ?>
 						</td>
-					</tr>					
+					</tr>
 
-<?php 	
-		$result2 = $db->query('SELECT g_id FROM '.$db->prefix.'uploads_conf WHERE g_id='.$k); 
+<?php
+		$result2 = $db->query('SELECT g_id FROM '.$db->prefix.'uploads_conf WHERE g_id='.$k);
 		if ($db->fetch_assoc($result2)) {
-			$query=('UPDATE '.$db->prefix.'uploads_conf SET p_view = '.$p_view[$k].', p_upload ='.$p_upload[$k].', p_globalview = '.$p_globalview[$k].', p_delete = '.$p_delete[$k].', p_globaldelete = '.$p_globaldelete[$k].', p_setop = '.$p_setop[$k].', u_fsize = '.$u_fsize[$k].'  WHERE g_id='.$k.';');
+			$query='UPDATE '.$db->prefix.'uploads_conf SET p_view = '.$p_view[$k].', p_upload ='.$p_upload[$k].', p_globalview = '.$p_globalview[$k].', p_delete = '.$p_delete[$k].', p_globaldelete = '.$p_globaldelete[$k].', p_setop = '.$p_setop[$k].', u_fsize = '.$u_fsize[$k].'  WHERE g_id='.$k.';';
 		} else {
-			$query=('INSERT INTO '.$db->prefix.'uploads_conf VALUES ('.$k.', '.$u_fsize[$k].',  '.$p_view[$k].', '.$p_globalview[$k].', '.$p_upload[$k].', '.$p_delete[$k].', '.$p_globaldelete[$k].', '.$p_setop[$k].')');
-		}		
+			$query='INSERT INTO '.$db->prefix.'uploads_conf VALUES ('.$k.', '.$u_fsize[$k].',  '.$p_view[$k].', '.$p_globalview[$k].', '.$p_upload[$k].', '.$p_delete[$k].', '.$p_globaldelete[$k].', '.$p_setop[$k].')';
+		}
 		$result = $db->query($query);
 		$k++; } //while ?>
-													
+
 				</tbody>
 		</table>
 			</div>
@@ -125,17 +125,17 @@ else	// If no data
 			<div class="inbox">
 <?php 	if (!$upl_conf['p_setop'])
 		 	{ echo '<p>You do not have permissions to set configuration of this module. Please contact Administration.</p>';}
-		else { 
+		else {
 
 
 ?>
 
 				<p>This plugin edits settings for Upload module.</p>
 
-		
-		
+
+
 <?php
- 	$result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups') or error('Unable to get useergroups', __FILE__, __LINE__, $db->error()); 
+ 	$result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups') or error('Unable to get useergroups', __FILE__, __LINE__, $db->error());
  	$i=0;
 	while ($i < $db->num_rows($result)) {
 
@@ -143,10 +143,10 @@ else	// If no data
 		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id='.$groups[$i]['g_id']) or error('Unable to read upload persmissions', __FILE__, __LINE__, $db->error());
 		$perms[$i]= $db->fetch_assoc($result2);
     	if (!$perms[$i]) {
-    		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');    	
+    		$result2 = $db->query('SELECT * FROM '.$db->prefix.'uploads_conf WHERE g_id=0');
     		$perms[$i]= $db->fetch_assoc($result2);
    		}
-	 	$i++;   			
+	 	$i++;
 	}
 
 ?>
@@ -170,9 +170,9 @@ else	// If no data
 					</tr>
 				</thead>
 				<tbody>
-				
+
 <?php 	$k=0; foreach ($groups as $group) { ?>
-				
+
 					<tr>
 						<th class="atcl">
 							<?php 	echo $group['g_title'] ?>
@@ -198,15 +198,15 @@ else	// If no data
 						<td>
 							<?php 	if (($group['g_id']==1)||($group['g_id']==2)) { ?>
 							<input type="checkbox" name="p_setop_<?php 	echo $group['g_id'] ?>" value="1" <?php 	if ($perms[$k]['p_setop']==1) echo 'checked="checked"'; ?> />
-							<?php 	} else { echo '<b>N/A</b>'; ?><input type="hidden" name="p_setop_<?php 	echo $group['g_id']; ?> value="0" /><?php } ?>							
+							<?php 	} else { echo '<b>N/A</b>'; ?><input type="hidden" name="p_setop_<?php 	echo $group['g_id']; ?> value="0" /><?php } ?>
 						</td>
 						<td>
 							<input type="text" size="7" name="u_fsize_<?php 	echo $group['g_id'] ?>" value="<?php 	echo $perms[$k]['u_fsize'] ?>" />
 						</td>
-					</tr>					
+					</tr>
 
 <?php 	$k++; } //foreach ?>
-													
+
 				</tbody>
 		</table>
 				<div class="fsetsubmit"><input type="submit" name="save_options" value="Save options" /></div>
@@ -215,8 +215,8 @@ else	// If no data
 			<input type="hidden" name="k" value="<?php 	echo $k; ?>" />
 		</form>
 	</div>
-	
-	
+
+
 	</div>
 </div>
 <?php

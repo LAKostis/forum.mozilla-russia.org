@@ -1,6 +1,6 @@
 <?php
 
-$lang_search = array(
+$lang_search = [
 
 // The search form
 'User search'				=>	'Поиск пользователей',
@@ -53,4 +53,4 @@ $lang_search = array(
 'Delete'					=>	'Удалить сообщение',
 'Edit'						=>	'Редактировать сообщение'
 
-);
+];

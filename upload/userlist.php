@@ -40,17 +40,17 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 
 
 // Determine if we are allowed to view post counts
-$show_post_count = ($pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST) ? true : false;
+$show_post_count = $pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST ? true : false;
 
-$username = (isset($_GET['username']) && $pun_user['g_search_users'] == '1') ? pun_trim($_GET['username']) : '';
-$show_group = (!isset($_GET['show_group']) || intval($_GET['show_group']) < -1 && intval($_GET['show_group']) > 2) ? -1 : intval($_GET['show_group']);
-$sort_by = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'username' && $_GET['sort_by'] != 'registered' && ($_GET['sort_by'] != 'num_posts' || !$show_post_count)) ? 'username' : $_GET['sort_by'];
-$sort_dir = (!isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_GET['sort_dir']);
+$username = isset($_GET['username']) && $pun_user['g_search_users'] == '1' ? pun_trim($_GET['username']) : '';
+$show_group = !isset($_GET['show_group']) || intval($_GET['show_group']) < -1 && intval($_GET['show_group']) > 2 ? -1 : intval($_GET['show_group']);
+$sort_by = !isset($_GET['sort_by']) || $_GET['sort_by'] != 'username' && $_GET['sort_by'] != 'registered' && ($_GET['sort_by'] != 'num_posts' || !$show_post_count) ? 'username' : $_GET['sort_by'];
+$sort_dir = !isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC' ? 'ASC' : strtoupper($_GET['sort_dir']);
 
 
 $page_title = pun_htmlspecialchars($lang_common['User list']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
 if ($pun_user['g_search_users'] == '1')
-	$focus_element = array('userlist', 'username');
+	$focus_element = ['userlist', 'username'];
 
 define('PUN_ALLOW_INDEX', 1);
 require PUN_ROOT.'header.php';
@@ -108,8 +108,8 @@ while ($cur_group = $db->fetch_assoc($result))
 
 
 // Create any SQL for the WHERE clause
-$where_sql = array();
-$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+$where_sql = [];
+$like_command = $db_type == 'pgsql' ? 'ILIKE' : 'LIKE';
 
 if ($pun_user['g_search_users'] == '1' && $username != '')
 	$where_sql[] = 'u.username '.$like_command.' \'%'.$db->escape(str_replace('*', '%', $username)).'%\'';
@@ -124,7 +124,7 @@ $num_users = $db->result($result);
 // Determine the user offset (based on $_GET['p'])
 $num_pages = ceil($num_users / 50);
 
-$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = !isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 $start_from = 50 * ($p - 1);
 
 // Generate paging links
@@ -176,7 +176,7 @@ if ($db->num_rows($result))
 	}
 }
 else
-	echo "\t\t\t".'<tr>'."\n\t\t\t\t\t".'<td class="tcl" colspan="'.(($show_post_count) ? 4 : 3).'">'.$lang_search['No hits'].'</td></tr>'."\n";
+	echo "\t\t\t".'<tr>'."\n\t\t\t\t\t".'<td class="tcl" colspan="'.($show_post_count ? 4 : 3).'">'.$lang_search['No hits'].'</td></tr>'."\n";
 
 ?>
 			</tbody>

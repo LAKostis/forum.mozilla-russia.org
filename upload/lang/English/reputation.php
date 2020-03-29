@@ -1,6 +1,6 @@
 <?php
 
-$lang_reputation = array(
+$lang_reputation = [
 
 'Reputation'			=>	'Reputation',
 'Disabled'				=>	'Reputation system is currently disabled',
@@ -11,4 +11,4 @@ $lang_reputation = array(
 'Timeout 2'				=>	' seconds before you can give new voice.',
 'Vote success'			=>	'Your vote has been submitted ;)'
 
-);
+];

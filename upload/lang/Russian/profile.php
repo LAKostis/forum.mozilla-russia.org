@@ -1,6 +1,6 @@
 <?php
 
-$lang_profile = array(
+$lang_profile = [
 
 // Navigation and sections
 'Profile menu'					=>	'Раздел',
@@ -150,4 +150,4 @@ $lang_profile = array(
 'Update forums redirect'		=>	'Права модерирования форума обновлены. Переадресация...',
 'Ban redirect'					=>	'Переадресация...'
 
-);
+];

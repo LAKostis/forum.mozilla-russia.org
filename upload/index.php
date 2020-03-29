@@ -125,7 +125,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 	if ($cur_forum['moderators'] != '')
 	{
 		$mods_array = unserialize($cur_forum['moderators']);
-		$moderators = array();
+		$moderators = [];
 
 		while (list($mod_username, $mod_id) = @each($mods_array))
 			$moderators[] = '<a href="profile.php?id='.$mod_id.'">'.pun_htmlspecialchars($mod_username).'</a>';
@@ -182,7 +182,7 @@ if ($pun_config['o_users_online'] == '1')
 {
 	// Fetch users online info and generate strings for output
 	$num_users = $num_hidden = $num_guests = 0;
-	$users = $hidden = array();
+	$users = $hidden = [];
 	$result = $db->query('SELECT o.user_id, o.ident, o.show_online, u.group_id FROM '.$db->prefix.'online AS o LEFT JOIN '.$db->prefix.'users AS u ON o.user_id=u.id WHERE idle=0 ORDER BY u.username, logged', true) or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 	while ($pun_user_online = $db->fetch_assoc($result))

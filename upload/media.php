@@ -113,8 +113,8 @@ function media_html_media($ns){
   print '<b>'.$lang['mediafiles'].'</b>';
   print ' <code>'.$ns.':</code>';
 
-  $data = array();
-  search($data,$conf['mediadir'],'search_media',array(),$dir);
+  $data = [];
+  search($data,$conf['mediadir'],'search_media',[],$dir);
 
   if(!count($data)){
     print '<div style="text-align:center; margin:2em;">';
@@ -134,7 +134,7 @@ function media_html_media($ns){
       print ' '.filesize_h($item['size']).')<br />';
 
       # build thumbnail
-      $link=array();
+      $link=[];
       $link['name']=$item['id'];
       if($item['info'][0]>120) $link['name'] .= '?120';
       $link = format_link_media($link);
@@ -152,10 +152,10 @@ function media_html_namespaces(){
   global $conf;
   global $lang;
 
-  $data = array();
+  $data = [];
   #add default namespace
   print '<b><a href="'.getBaseURL().'media.php?ns=">'.$lang['namespaces'].'</a></b>';
-  search($data,$conf['mediadir'],'search_namespaces',array());
+  search($data,$conf['mediadir'],'search_namespaces',[]);
   print html_buildlist($data,'idx',media_html_list_namespaces);
 }
 

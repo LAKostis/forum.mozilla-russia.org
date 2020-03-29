@@ -1,6 +1,6 @@
 <?php
 /***********************************************************************
-  
+
   Copyright (C) 2005  Connor Dunn (Connorhd@mypunbb.com)
 
   This software is free software; you can redistribute it and/or modify it
@@ -92,7 +92,7 @@ else	// If not, we show the form
 								<th scope="row">Language</th>
 								<td>
 <?php
-		$languages = array();
+		$languages = [];
 		$d = dir(PUN_ROOT.'lang');
 		while (($entry = $d->read()) !== false)
 		{
@@ -149,7 +149,7 @@ else	// If not, we show the form
 								<th scope="row">Style</th>
 								<td>
 <?php
-		$styles = array();
+		$styles = [];
 		$d = dir(PUN_ROOT.'style');
 		while (($entry = $d->read()) !== false)
 		{

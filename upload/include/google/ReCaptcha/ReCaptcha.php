@@ -133,7 +133,7 @@ class ReCaptcha
         }
 
         $this->secret = $secret;
-        $this->requestMethod = (is_null($requestMethod)) ? new RequestMethod\Post() : $requestMethod;
+        $this->requestMethod = is_null($requestMethod) ? new RequestMethod\Post() : $requestMethod;
     }
 
     /**
@@ -148,14 +148,13 @@ class ReCaptcha
     {
         // Discard empty solution submissions
         if (empty($response)) {
-            $recaptchaResponse = new Response(false, array(self::E_MISSING_INPUT_RESPONSE));
-            return $recaptchaResponse;
+            return new Response(false, [self::E_MISSING_INPUT_RESPONSE]);
         }
 
         $params = new RequestParameters($this->secret, $response, $remoteIp, self::VERSION);
         $rawResponse = $this->requestMethod->submit($params);
         $initialResponse = Response::fromJson($rawResponse);
-        $validationErrors = array();
+        $validationErrors = [];
 
         if (isset($this->hostname) && strcasecmp($this->hostname, $initialResponse->getHostname()) !== 0) {
             $validationErrors[] = self::E_HOSTNAME_MISMATCH;

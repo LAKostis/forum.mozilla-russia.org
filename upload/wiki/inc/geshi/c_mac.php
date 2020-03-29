@@ -39,19 +39,19 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'C',
-	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '//', 2 => '#'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'if', 'return', 'while', 'case', 'continue', 'default',
 			'do', 'else', 'for', 'switch', 'goto'
-			),
-		2 => array(
+			],
+		2 => [
 			'NULL', 'false', 'break', 'true', 'enum', 'errno', 'EDOM',
 			'ERANGE', 'FLT_RADIX', 'FLT_ROUNDS', 'FLT_DIG', 'DBL_DIG', 'LDBL_DIG',
 			'FLT_EPSILON', 'DBL_EPSILON', 'LDBL_EPSILON', 'FLT_MANT_DIG', 'DBL_MANT_DIG',
@@ -66,8 +66,8 @@ $language_data = array (
 			'EXIT_FAILURE', 'EXIT_SUCCESS', 'RAND_MAX', 'CLOCKS_PER_SEC',
 			// Mac-specific constants:
 			'kCFAllocatorDefault'
-			),
-		3 => array(
+			],
+		3 => [
 			'printf', 'fprintf', 'snprintf', 'sprintf', 'assert',
 			'isalnum', 'isalpha', 'isdigit', 'iscntrl', 'isgraph', 'islower', 'isprint',
 			'ispunct', 'isspace', 'ispunct', 'isupper', 'isxdigit', 'tolower', 'toupper',
@@ -87,8 +87,8 @@ $language_data = array (
 			'strpbrk', 'strstr', 'strlen', 'strerror', 'strtok', 'strxfrm', 'memcpy',
 			'memmove', 'memcmp', 'memchr', 'memset', 'clock', 'time', 'difftime', 'mktime',
 			'asctime', 'ctime', 'gmtime', 'localtime', 'strftime'
-			),
-		4 => array(
+			],
+		4 => [
 			'auto', 'char', 'const', 'double',  'float', 'int', 'long',
 			'register', 'short', 'signed', 'sizeof', 'static', 'string', 'struct',
 			'typedef', 'union', 'unsigned', 'void', 'volatile', 'extern', 'jmp_buf',
@@ -105,72 +105,72 @@ $language_data = array (
 			'CFRunLoopRef', 'CFRunLoopObserverRef', 'CFRunLoopSourceRef', 'CFRunLoopTimerRef', 'CFSocketRef',
 			'CFTimeZoneRef', 'CFTypeRef', 'CFUserNotificationRef', 'CFUUIDRef', 'CFXMLNodeRef', 'CFXMLParserRef',
 			'CFXMLTreeRef'
-			),
-		),
-	'SYMBOLS' => array(
+			],
+		],
+	'SYMBOLS' => [
 		'(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #0000ff;',
 			2 => 'color: #0000ff;',
 			3 => 'color: #0000dd;',
 			4 => 'color: #0000ff;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #ff0000;',
 			2 => 'color: #339900;',
 			'MULTI' => 'color: #ff0000; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #666666; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #000000;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #666666;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #0000dd;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #00eeff;',
 			2 => 'color: #00eeff;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #000000;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => 'http://www.opengroup.org/onlinepubs/009695399/functions/{FNAME}.html',
 		4 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.',
 		2 => '::'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

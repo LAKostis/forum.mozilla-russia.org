@@ -1,6 +1,6 @@
 <?php
 
-$lang_delete = array(
+$lang_delete = [
 
 'Delete post'			=>	'Delete post',
 'Warning'				=>	'Warning! If this is the first post in the topic, the whole topic will be deleted.',
@@ -8,4 +8,4 @@ $lang_delete = array(
 'Post del redirect'		=>	'Post deleted. Redirecting &hellip;',
 'Topic del redirect'	=>	'Topic deleted. Redirecting &hellip;'
 
-);
+];

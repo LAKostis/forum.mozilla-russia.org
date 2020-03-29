@@ -49,14 +49,14 @@ if (!$db->num_rows($result))
 $cur_post = $db->fetch_assoc($result);
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
-$mods_array = ($cur_post['moderators'] != '') ? unserialize($cur_post['moderators']) : array();
-$is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
+$mods_array = $cur_post['moderators'] != '' ? unserialize($cur_post['moderators']) : [];
+$is_admmod = $pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array)) ? true : false;
 
 // Determine whether this post is the "topic post" or not
 $result = $db->query('SELECT id FROM '.$db->prefix.'posts WHERE topic_id='.$cur_post['tid'].' ORDER BY posted LIMIT 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 $topic_post_id = $db->result($result);
 
-$can_edit_subject = ($id == $topic_post_id && (($pun_user['g_edit_subjects_interval'] == '0' || (time() - $cur_post['posted']) < $pun_user['g_edit_subjects_interval']) || $is_admmod)) ? true : false;
+$can_edit_subject = $id == $topic_post_id && (($pun_user['g_edit_subjects_interval'] == '0' || (time() - $cur_post['posted']) < $pun_user['g_edit_subjects_interval']) || $is_admmod) ? true : false;
 
 // Do we have permission to edit this post?
 if (($pun_user['g_edit_posts'] == '0' ||
@@ -72,7 +72,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
 // MOD END
 
 // Start with a clean slate
-$errors = array();
+$errors = [];
 
 if (isset($_POST['form_sent']))
 {
@@ -91,7 +91,7 @@ if (isset($_POST['form_sent']))
 			else if (pun_strlen($question) > 70)
 				$errors[] = $lang_polls['Too long question'];
 			else if ($pun_config['p_subject_all_caps'] == '0' && pun_strtoupper($question) == $question && ($pun_user['g_id'] > PUN_MOD && !$pun_user['g_global_moderation']))
-			$question = pun_ucwords(pun_strtolower($question)); 
+			$question = pun_ucwords(pun_strtolower($question));
 		}
 		else $question = '';
 
@@ -129,7 +129,7 @@ if (isset($_POST['form_sent']))
 	// Did everything go according to plan?
 	if (empty($errors) && !isset($_POST['preview']))
 	{
-		$edited_sql = (!isset($_POST['silent']) || !$is_admmod) ? $edited_sql = ', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\'' : '';
+		$edited_sql = !isset($_POST['silent']) || !$is_admmod ? $edited_sql = ', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\'' : '';
 
 		require PUN_ROOT.'include/search_idx.php';
 
@@ -137,7 +137,7 @@ if (isset($_POST['form_sent']))
 		{
 			// Update the topic and any redirect topics
 			// MOD Poll addon
-			$sql_question = ($question != '') ? ', question=\''.$db->escape($question).'\'' : '';
+			$sql_question = $question != '' ? ', question=\''.$db->escape($question).'\'' : '';
 			$db->query('UPDATE '.$db->prefix.'topics SET subject=\''.$db->escape($subject).'\''.$sql_question.' WHERE id='.$cur_post['tid'].' OR moved_to='.$cur_post['tid']) or error('Unable to update topic', __FILE__, __LINE__, $db->error());
 
 			// We changed the subject, so we need to take that into account when we update the search words
@@ -156,10 +156,10 @@ if (isset($_POST['form_sent']))
 
 
 $page_title = pun_htmlspecialchars($lang_post['Edit post']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$required_fields = array('req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
+$required_fields = ['req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']];
 // MOD Poll
 if ($cur_post['question'] != '') $required_fields['req_question'] = $lang_polls['Question'];
-$focus_element = array('edit', 'req_message');
+$focus_element = ['edit', 'req_message'];
 // MOD Poll
 if ($cur_post['question'] != '') $focus_element[] = 'req_question';
 require PUN_ROOT.'header.php';
@@ -246,15 +246,15 @@ else if (isset($_POST['preview']))
 						<textarea name="req_message" rows="20" cols="95" onkeyup="setCaret(this);" onclick="setCaret(this);" onselect="setCaret(this);" onkeypress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13))document.getElementById('submit').click()" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea><br /></label>
 						<div class="bbincrement"><a href="#" onclick="incrementForm();return false;" style="text-decoration:none">[ + ]</a> <a href="#" onclick="decrementForm();return false;" style="text-decoration:none">[ − ]</a></div>
 						<ul class="bblinks">
-							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo $pun_config['p_message_bbcode'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo $pun_config['p_message_img_tag'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo $pun_config['o_smilies'] == '1' ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
 <?php
 
-$checkboxes = array();
+$checkboxes = [];
 if ($pun_config['o_smilies'] == '1')
 {
 	if (isset($_POST['hide_smilies']) || $cur_post['hide_smilies'] == '1')

@@ -123,7 +123,7 @@ else if (isset($_POST['remove']))
 
 
 $page_title = 'Admin | Ranks | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$focus_element = array('ranks', 'new_rank');
+$focus_element = ['ranks', 'new_rank'];
 require PUN_ROOT.'header.php';
 
 generate_admin_menu('ranks');

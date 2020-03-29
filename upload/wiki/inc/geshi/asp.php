@@ -44,30 +44,30 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'ASP',
-	'COMMENT_SINGLE' => array(1 => "'", 2 => '//'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => "'", 2 => '//'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => 0,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'include', 'file', 'Dim', 'Option', 'Explicit', 'Implicit', 'Set', 'Select', 'ReDim', 'Preserve',
 			'ByVal', 'ByRef', 'End', 'Private', 'Public', 'If', 'Then', 'Else', 'ElseIf', 'Case', 'With', 'NOT',
 			'While', 'Wend', 'For', 'Loop', 'Do', 'Request', 'Response', 'Server', 'ADODB', 'Session', 'Application',
 			'Each', 'In', 'Get', 'Next', 'INT', 'CINT', 'CBOOL', 'CDATE', 'CBYTE', 'CCUR', 'CDBL', 'CLNG', 'CSNG',
 			'CSTR', 'Fix', 'Is', 'Sgn', 'String', 'Boolean', 'Currency', 'Me', 'Single', 'Long', 'Integer', 'Byte',
 			'Variant', 'Double', 'To', 'Let', 'Xor', 'Resume', 'On', 'Error', 'Imp', 'GoTo', 'Call', 'Global'
-			),
-		2 => array(
+			],
+		2 => [
 			'Null', 'Nothing', 'And',
 			'False', '&lt;%', '%&gt;',
 			'&lt;script language=', '&lt;/script&gt;',
 			'True', 'var', 'Or', 'BOF', 'EOF',
 			'Function', 'Class', 'New', 'Sub'
-			),
-		3 => array(
+			],
+		3 => [
 			'CreateObject', 'Write', 'Redirect', 'Cookies', 'BinaryRead', 'ClientCertificate', 'Form', 'QueryString',
 			'ServerVariables', 'TotalBytes', 'AddHeader', 'AppendToLog', 'BinaryWrite', 'Buffer', 'CacheControl',
 			'Charset', 'Clear', 'ContentType', 'End()', 'Expires', 'ExpiresAbsolute', 'Flush()', 'IsClientConnected',
@@ -75,79 +75,79 @@ $language_data = array (
 			'Properties', 'Property', 'Send', 'Replace', 'InStr', 'TRIM', 'NOW', 'Day', 'Month', 'Hour', 'Minute', 'Second',
 			'Year', 'MonthName', 'LCase', 'UCase', 'Abs', 'Array', 'As', 'LEN', 'MoveFirst', 'MoveLast', 'MovePrevious',
 			'MoveNext', 'LBound', 'UBound', 'Transfer', 'Open', 'Close', 'MapPath', 'FileExists', 'OpenTextFile', 'ReadAll'
-			)
-		),
-	'CASE_SENSITIVE' => array(
+			]
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #990099; font-weight: bold;',
 			2 => 'color: #0000ff; font-weight: bold;',
 			3 => 'color: #330066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #008000;',
 			2 => 'color: #ff6600;',
 			'MULTI' => 'color: #008000;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #006600; font-weight:bold'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #cc0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #800000;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #9900cc;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #006600; font-weight: bold'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
 			0 => '',
 			1 => '',
 			2 => '',
-			)
-		),
-	'URLS' => array(
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => ''
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_MAYBE,
-	'SCRIPT_DELIMITERS' => array(
-		0 => array(
+	'SCRIPT_DELIMITERS' => [
+		0 => [
 			'<%' => '%>'
-			),
-		1 => array(
+			],
+		1 => [
 			'<script language="vbscript" runat="server">' => '</script>'
-			),
-		2 => array(
+			],
+		2 => [
 			'<script language="javascript" runat="server">' => '</script>'
-			)
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
+			]
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
 		0 => true,
 		1 => true,
 		2 => true,
-		)
-);
+		]
+];
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-$lang_register = array(
+$lang_register = [
 
 // Miscellaneous
 'No new regs'			=>	'В данный момент форум не регистрирует новых пользователей.',
@@ -38,4 +38,4 @@ $lang_register = array(
 'E-mail info'			=>	'Вы должны указать правильный e-mail адрес, так как туда будет выслан случайно сгенерированный пароль.',
 'Confirm e-mail'		=>	'Подтвердите e-mail адрес',
 
-);
+];

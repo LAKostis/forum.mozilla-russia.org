@@ -35,15 +35,15 @@ if ($fid)
 
                 require PUN_ROOT.'include/polls/postpoll.php';
 
-		$required_fields = array('req_email' => $lang_common['E-mail'], 'req_question' => $lang_polls['Question'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
-		$focus_element = array('post');
+		$required_fields = ['req_email' => $lang_common['E-mail'], 'req_question' => $lang_polls['Question'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']];
+		$focus_element = ['post'];
 
 		if (!$pun_user['is_guest'])
 		$focus_element[] = 'req_question';
 		else {
 			$required_fields['req_username'] = $lang_post['Guest name'];
 			$focus_element[] = 'req_question';
-		} 
+		}
 
 		require PUN_ROOT . 'header.php';
 
@@ -55,7 +55,7 @@ if ($fid)
 	</div>
 	</div>
 
-	<?php 
+	<?php
 		// If there are errors, we display them
 		if (!empty($errors)) {
 
@@ -108,8 +108,8 @@ if ($fid)
 
 					?> <br />
 					<?php
-					} 
-				} 
+					}
+				}
 
 			?>
 			</form>
@@ -131,8 +131,8 @@ if ($fid)
 
 					?> <br />
 					<?php
-					} 
-				} 
+					}
+				}
 
 			?>
 			</form>
@@ -159,13 +159,13 @@ if ($fid)
 
 					?><br />
 					<?php
-					} 
-				} 
+					}
+				}
 
 			?>
 			</form>
 			<?php
-			} 
+			}
 
 		?>
 		</div>
@@ -188,7 +188,7 @@ if ($fid)
 
 		<?php
 
-		} 
+		}
 
 		// Regular Poll Type
 		if ($ptype == 1) {
@@ -216,9 +216,9 @@ if ($fid)
 
 		?>" size="60" maxlength="55" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 			<?php
-			} 
+			}
 
-		?> </div> </fieldset> </div></div></div> <?php 
+		?> </div> </fieldset> </div></div></div> <?php
 			// Multiselect poll type
 		} elseif ($ptype == 2) {
 
@@ -248,9 +248,9 @@ if ($fid)
 
 		?>" size="60" maxlength="55" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 			<?php
-			} 
+			}
 
-		?> </div> </fieldset> </div></div></div> <?php 
+		?> </div> </fieldset> </div></div></div> <?php
 			// Multiselect Yes/No poll type
 		} elseif ($ptype == 3) {
 
@@ -285,7 +285,7 @@ if ($fid)
 
 		?>" size="60" maxlength="55" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
 			<?php
-			} 
+			}
 
 		?> </div> </fieldset> </div></div></div> <?php
 		} else
@@ -295,10 +295,10 @@ if ($fid)
 	message($lang_common['Bad request']);
 } else {
 	$page_title = pun_htmlspecialchars($action).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$required_fields = array('req_email' => $lang_common['E-mail'], 'req_question' => $lang_polls['Question'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']);
-	$focus_element = array('post');
+	$required_fields = ['req_email' => $lang_common['E-mail'], 'req_question' => $lang_polls['Question'], 'req_subject' => $lang_common['Subject'], 'req_message' => $lang_common['Message']];
+	$focus_element = ['post'];
 	if (!$pun_user['is_guest'])
-	$focus_element[] = ($fid) ? 'req_subject' : 'req_message';
+	$focus_element[] = $fid ? 'req_subject' : 'req_message';
 	else
 	{
 		$required_fields['req_username'] = $lang_post['Guest name'];
@@ -358,7 +358,7 @@ if ($fid)
 				</div>
 				</div>
 				</div>
-				<?php } 
+				<?php }
 
 
 }

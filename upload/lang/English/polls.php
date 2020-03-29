@@ -1,6 +1,6 @@
 <?php
 
-$lang_polls = array(
+$lang_polls = [
 
 'Poll'							=>	'Poll',
 'New poll'						=>	'Create new poll',
@@ -36,4 +36,4 @@ $lang_polls = array(
 'No message'					=>	'You must enter a message.',
 'Too long message'				=>	'Posts cannot be longer that 65535 characters (64 KB).'
 
-);
+];

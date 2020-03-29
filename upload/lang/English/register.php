@@ -1,6 +1,6 @@
 <?php
 
-$lang_register = array(
+$lang_register = [
 
 // Miscellaneous
 'No new regs'			=>	'This forum is not accepting new registrations.',
@@ -38,4 +38,4 @@ $lang_register = array(
 'E-mail info'			=>	'You must enter a valid e-mail address as your randomly generated password will be sent to that address.',
 'Confirm e-mail'		=>	'Confirm e-mail address',
 
-);
+];

@@ -1,6 +1,6 @@
 <?php
 
-$lang_upload = array(
+$lang_upload = [
 
 'Not allowed'	=>	'Not allowed',
 'Rules Header'	=>	'Uploading Rules',
@@ -9,4 +9,4 @@ $lang_upload = array(
 'Rule three'	=>	'The file must contain only latin characters like alphanumeric and &quot;+&quot; &quot;-&quot; &quot;_&quot; &quot;.&quot;',
 'Rule four'		=>	'Please use a sensible file name or i will remove the file, if anyone abuses this uploader, it will be removed.'
 
-);
+];

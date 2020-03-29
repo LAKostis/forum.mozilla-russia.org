@@ -49,16 +49,16 @@ else if ($pun_user['g_search'] == '0')
 
 
 // Detect two byte character sets
-$multibyte = (isset($lang_common['lang_multibyte']) && $lang_common['lang_multibyte']) ? true : false;
+$multibyte = isset($lang_common['lang_multibyte']) && $lang_common['lang_multibyte'] ? true : false;
 
 
 // Figure out what to do :-)
 if (isset($_GET['action']) || isset($_GET['search_id']))
 {
-	$action = (isset($_GET['action'])) ? $_GET['action'] : null;
-	$forum = (isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum'])) ? $_GET['forum'] : -1;
-	$topic = (isset($_GET['topic']) && preg_match('#^[\d,]+$#', $_GET['topic'])) ? $_GET['topic'] : -1;
-	$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
+	$action = isset($_GET['action']) ? $_GET['action'] : null;
+	$forum = isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum']) ? $_GET['forum'] : -1;
+	$topic = isset($_GET['topic']) && preg_match('#^[\d,]+$#', $_GET['topic']) ? $_GET['topic'] : -1;
+	$sort_dir = isset($_GET['sort_dir']) ? ($_GET['sort_dir'] == 'DESC' ? 'DESC' : 'ASC') : 'DESC';
 	$search_in = 0;
 	if (isset($search_id)) unset($search_id);
 
@@ -72,13 +72,13 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	// If it's a regular search (keywords and/or author)
 	else if ($action == 'search')
 	{
-		$keywords = (isset($_GET['keywords'])) ? pun_strtolower(trim($_GET['keywords'])) : null;
-		$author = (isset($_GET['author'])) ? pun_strtolower(trim($_GET['author'])) : null;
+		$keywords = isset($_GET['keywords']) ? pun_strtolower(trim($_GET['keywords'])) : null;
+		$author = isset($_GET['author']) ? pun_strtolower(trim($_GET['author'])) : null;
 
-		if (preg_match('#^[\*%]+$#', $keywords) || strlen(str_replace(array('*', '%'), '', $keywords)) < 3)
+		if (preg_match('#^[\*%]+$#', $keywords) || strlen(str_replace(['*', '%'], '', $keywords)) < 3)
 			$keywords = '';
 
-		if (preg_match('#^[\*%]+$#', $author) || strlen(str_replace(array('*', '%'), '', $author)) < 3)
+		if (preg_match('#^[\*%]+$#', $author) || strlen(str_replace(['*', '%'], '', $author)) < 3)
 			$author = '';
 
 		if (!$keywords && !$author)
@@ -87,12 +87,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		if ($author)
 			$author = str_replace('*', '%', $author);
 
-		$after = (isset($_GET['after']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['after'])) ? strtotime($_GET['after']) : null;
-		$before = (isset($_GET['before']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['before'])) ? strtotime($_GET['before']) : null;
+		$after = isset($_GET['after']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['after']) ? strtotime($_GET['after']) : null;
+		$before = isset($_GET['before']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['before']) ? strtotime($_GET['before']) : null;
 
-		$show_as = (isset($_GET['show_as'])) ? $_GET['show_as'] : 'posts';
-		$sort_by = (isset($_GET['sort_by'])) ? intval($_GET['sort_by']) : null;
-		$search_in = (!isset($_GET['search_in']) || $_GET['search_in'] == 'all') ? 0 : (($_GET['search_in'] == 'message') ? 1 : -1);
+		$show_as = isset($_GET['show_as']) ? $_GET['show_as'] : 'posts';
+		$sort_by = isset($_GET['sort_by']) ? intval($_GET['sort_by']) : null;
+		$search_in = !isset($_GET['search_in']) || $_GET['search_in'] == 'all' ? 0 : ($_GET['search_in'] == 'message' ? 1 : -1);
 	}
 	// If it's a user search (by id)
 	else if ($action == 'show_user')
@@ -111,7 +111,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	// If a valid search_id was supplied we attempt to fetch the search results from the db
 	if (isset($search_id))
 	{
-		$ident = ($pun_user['is_guest']) ? get_remote_address() : $pun_user['username'];
+		$ident = $pun_user['is_guest'] ? get_remote_address() : $pun_user['username'];
 
 		$result = $db->query('SELECT search_data FROM '.$db->prefix.'search_cache WHERE id='.$search_id.' AND ident=\''.$db->escape($ident).'\'') or error('Unable to fetch search results', __FILE__, __LINE__, $db->error());
 		if ($row = $db->fetch_assoc($result))
@@ -133,10 +133,10 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	}
 	else
 	{
-		$keyword_results = $author_results = $keywords_array = array();
+		$keyword_results = $author_results = $keywords_array = [];
 
 		// Search a specific forum?
-		$forum_sql = ($forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST)) ? ' AND t.forum_id IN('.$forum.')' : '';
+		$forum_sql = $forum != -1 || ($forum == -1 && $pun_config['o_search_all_forums'] == '0' && $pun_user['g_id'] >= PUN_GUEST) ? ' AND t.forum_id IN('.$forum.')' : '';
 		$topic_sql = ($topic != -1 ? ' AND t.id='.$topic : '');
 
 		if (!empty($author) || !empty($keywords))
@@ -158,8 +158,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				else
 				{
 					// Filter out non-alphabetical chars
-					$noise_match = array('^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', '€');
-					$noise_replace = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ',  ' ', ' ', ' ');
+					$noise_match = ['^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', '€'];
+					$noise_replace = [' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ',  ' ', ' ', ' '];
 					$keywords = str_replace($noise_match, $noise_replace, $keywords);
 
 					// Strip out excessive whitespace
@@ -180,12 +180,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					}
 
 					// Should we search in message body or topic subject specifically?
-					$search_in_cond = ($search_in) ? (($search_in > 0) ? ' AND m.subject_match = 0' : ' AND m.subject_match = 1') : '';
+					$search_in_cond = $search_in ? ($search_in > 0 ? ' AND m.subject_match = 0' : ' AND m.subject_match = 1') : '';
 				}
 
 				$word_count = 0;
 				$match_type = 'and';
-				$result_list = array();
+				$result_list = [];
 				@reset($keywords_array);
 				while (list(, $cur_word) = @each($keywords_array))
 				{
@@ -198,12 +198,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 							break;
 
 						default:
-						{
+
 							// Are we searching for multibyte charset text?
 							if ($multibyte)
 							{
 								$cur_word = $db->escape('%'.str_replace('*', '', $cur_word).'%');
-								$cur_word_like = ($db_type == 'pgsql') ? 'ILIKE \''.$cur_word.'\'' : 'LIKE \''.$cur_word.'\'';
+								$cur_word_like = $db_type == 'pgsql' ? 'ILIKE \''.$cur_word.'\'' : 'LIKE \''.$cur_word.'\'';
 
 								if ($search_in > 0)
 									$sql = 'SELECT id FROM '.$db->prefix.'posts WHERE message '.$cur_word_like;
@@ -220,7 +220,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 							$result = $db->query($sql, true) or error('Unable to search for posts', __FILE__, __LINE__, $db->error());
 
-							$row = array();
+							$row = [];
 							while ($temp = $db->fetch_row($result))
 							{
 								$row[$temp[0]] = 1;
@@ -247,7 +247,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 							$db->free_result($result);
 
 							break;
-						}
+
 					}
 				}
 
@@ -279,11 +279,11 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				{
 					$user_ids = '';
 					while ($row = $db->fetch_row($result))
-						$user_ids .= (($user_ids != '') ? ',' : '').$row[0];
+						$user_ids .= ($user_ids != '' ? ',' : '').$row[0];
 
 					$result = $db->query('SELECT id FROM '.$db->prefix.'posts WHERE poster_id IN('.$user_ids.')') or error('Unable to fetch matched posts list', __FILE__, __LINE__, $db->error());
 
-					$search_ids = array();
+					$search_ids = [];
 					while ($row = $db->fetch_row($result))
 						$author_results[] = $row[0];
 
@@ -313,7 +313,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$result = $db->query('SELECT t.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.
 				($after ? ' AND t.posted > ' . $after : '') . ($before ? ' AND t.posted < ' . $before : '') .
 				' GROUP BY t.id', true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
-				$search_ids = array();
+				$search_ids = [];
 				while ($row = $db->fetch_row($result))
 					$search_ids[] = $row[0];
 
@@ -326,7 +326,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$result = $db->query('SELECT p.id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id '.$mgrp_extra.' AND p.id IN('.implode(',', $search_ids).')'.$forum_sql.$topic_sql.
 				($after ? ' AND p.posted > ' . $after : '') . ($before ? ' AND p.posted < ' . $before : '')
 				, true) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
-				$search_ids = array();
+				$search_ids = [];
 				while ($row = $db->fetch_row($result))
 					$search_ids[] = $row[0];
 
@@ -409,7 +409,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			if(empty($sort_by))
 				$sort_by = 4;
 
-			$search_ids = array();
+			$search_ids = [];
 			while ($row = $db->fetch_row($result))
 				$search_ids[] = $row[0];
 
@@ -423,7 +423,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 
 		// Prune "old" search results
-		$old_searches = array();
+		$old_searches = [];
 		$result = $db->query('SELECT ident FROM '.$db->prefix.'online') or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 		if ($db->num_rows($result))
@@ -448,7 +448,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$temp = serialize($temp);
 		$search_id = mt_rand(1, 2147483647);
 
-		$ident = ($pun_user['is_guest']) ? get_remote_address() : $pun_user['username'];
+		$ident = $pun_user['is_guest'] ? get_remote_address() : $pun_user['username'];
 
 		$db->query('INSERT INTO '.$db->prefix.'search_cache (id, ident, search_data) VALUES('.$search_id.', \''.$db->escape($ident).'\', \''.$db->escape($temp).'\')') or error('Unable to insert search results', __FILE__, __LINE__, $db->error());
 
@@ -470,7 +470,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		switch ($sort_by)
 		{
 			case 1:
-				$sort_by_sql = ($show_as == 'topics') ? 't.poster' : 'p.poster';
+				$sort_by_sql = $show_as == 'topics' ? 't.poster' : 'p.poster';
 				break;
 
 			case 2:
@@ -486,13 +486,13 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				break;
 
 			default:
-				$sort_by_sql = ($show_as == 'topics') ? 't.posted' : 'p.posted';
+				$sort_by_sql = $show_as == 'topics' ? 't.posted' : 'p.posted';
 				break;
 		}
 
 		if ($show_as == 'posts')
 		{
-			$substr_sql = ($db_type != 'sqlite') ? 'SUBSTRING' : 'SUBSTR';
+			$substr_sql = $db_type != 'sqlite' ? 'SUBSTRING' : 'SUBSTR';
 			$sql = 'SELECT p.id AS pid, p.poster AS pposter, p.posted AS pposted, p.poster_id, '.$substr_sql.'(p.message, 1, 1000) AS message, t.id AS tid, t.poster, t.subject, t.question, t.last_post, t.last_post_id, t.last_poster, t.num_replies, t.forum_id FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id WHERE p.id IN('.$search_results.') ORDER BY '.$sort_by_sql;
 		}
 		else
@@ -500,10 +500,10 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 
 		// Determine the topic or post offset (based on $_GET['p'])
-		$per_page = ($show_as == 'posts') ? $pun_user['disp_posts'] : $pun_user['disp_topics'];
+		$per_page = $show_as == 'posts' ? $pun_user['disp_posts'] : $pun_user['disp_topics'];
 		$num_pages = ceil($num_hits / $per_page);
 
-		$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+		$p = !isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 		$start_from = $per_page * ($p - 1);
 
 		// Generate paging links
@@ -514,7 +514,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 		$result = $db->query($sql) or error('Unable to fetch search results', __FILE__, __LINE__, $db->error());
 
-		$search_set = array();
+		$search_set = [];
 		while ($row = $db->fetch_assoc($result))
 			$search_set[] = $row;
 
@@ -610,11 +610,11 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				if (pun_strlen($message) >= 1000)
 					$message .= ' &hellip;';
 
-				$vtpost1 = ($i == 0) ? ' vtp1' : '';
+				$vtpost1 = $i == 0 ? ' vtp1' : '';
 
 				// Switch the background color for every message.
-				$bg_switch = ($bg_switch) ? $bg_switch = false : $bg_switch = true;
-				$vtbg = ($bg_switch) ? ' rowodd' : ' roweven';
+				$bg_switch = $bg_switch ? $bg_switch = false : $bg_switch = true;
+				$vtbg = $bg_switch ? ' rowodd' : ' roweven';
 
 
 ?>
@@ -736,7 +736,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			echo "\t\t\t".'</tbody>'."\n\t\t\t".'</table>'."\n\t\t".'</div>'."\n\t".'</div>'."\n".'</div>'."\n\n";
 
 ?>
-<div class="<?php echo ($show_as == 'topics') ? 'linksb' : 'postlinksb'; ?>">
+<div class="<?php echo $show_as == 'topics' ? 'linksb' : 'postlinksb'; ?>">
 	<div class="inbox">
 		<p class="postlink conr"><?php echo $paging_links ?></p>
 		<div class="clearer"></div>
@@ -753,7 +753,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 
 $page_title = pun_htmlspecialchars($lang_search['Search']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$focus_element = array('search', 'keywords');
+$focus_element = ['search', 'keywords'];
 require PUN_ROOT.'header.php';
 
 ?>
@@ -764,7 +764,7 @@ require PUN_ROOT.'header.php';
 		<div id="cse"><div style="padding:10px"><?php echo $lang_common['Google loading'] ?></div></div>
 		<script src="https://www.google.com/jsapi" type="text/javascript"></script>
 		<script type="text/javascript">
-			google.load('search', '1', {language : '<?php echo ($pun_user['language'] == 'Russian' ? 'ru' : 'en') ?>'});
+			google.load('search', '1', {language : '<?php echo $pun_user['language'] == 'Russian' ? 'ru' : 'en' ?>'});
 			google.setOnLoadCallback(function() {
 				var customSearchControl = new google.search.CustomSearchControl('002000707098631292328:agyedqlqcg0');
 				customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
@@ -815,7 +815,7 @@ if ($pun_config['o_search_all_forums'] == '1' || $pun_user['g_id'] < PUN_GUEST)
 
 	$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id '.$mgrp_extra.' AND f.redirect_url IS NULL ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 $cur_category = 0;
-$categories = array ('', '', '');
+$categories =  ['', '', ''];
 while ($cur_forum = $db->fetch_assoc($result))
 {
 	if ($cur_forum['cid'] != $cur_category)	// A new category since last iteration?
@@ -823,7 +823,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 		if ($cur_category)
 		{
 			echo "\t\t\t\t\t\t\t".'<option value="'.$categories[0].'">'.$categories[1].'</option>'."\n".$categories[2];
-			$categories = array ('', '', '');
+			$categories =  ['', '', ''];
 	}
 
 		$categories[1] = pun_htmlspecialchars($cur_forum['cat_name']);

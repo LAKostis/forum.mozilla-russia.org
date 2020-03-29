@@ -75,5 +75,5 @@ $conf['target']['windows']   = '';
 @include("conf/local.php");
 
 //a small bugfix for some browsers/proxies just don't touch this either
-$lang = array();
+$lang = [];
 ?>

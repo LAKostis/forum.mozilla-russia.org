@@ -25,7 +25,7 @@ if ( !defined('UTF8_CORE') ) {
 * @author <chernyshevsky at hotmail dot com>
 * @link   http://www.php.net/manual/en/function.strlen.php
 * @link   http://www.php.net/manual/en/function.utf8-decode.php
-* @param string UTF-8 string
+* @param UTF $str-8 string
 * @return int number of UTF-8 characters in string
 * @package utf8
 * @subpackage strings
@@ -41,9 +41,9 @@ function utf8_strlen($str){
 * Find position of first occurrence of a string
 * Note: This will get alot slower if offset is used
 * Note: requires utf8_strlen amd utf8_substr to be loaded
-* @param string haystack
-* @param string needle (you should validate this with utf8_is_valid)
-* @param integer offset in characters (from left)
+* @param haystack $str
+* @param string $needle (you should validate this with utf8_is_valid)
+* @param integer $offset in characters (from left)
 * @return mixed integer position or FALSE on failure
 * @see http://www.php.net/strpos
 * @see utf8_strlen
@@ -52,31 +52,31 @@ function utf8_strlen($str){
 * @subpackage strings
 */
 function utf8_strpos($str, $needle, $offset = NULL) {
-    
+
     if ( is_null($offset) ) {
-    
+
         $ar = explode($needle, $str);
         if ( count($ar) > 1 ) {
             return utf8_strlen($ar[0]);
         }
         return FALSE;
-        
+
     } else {
-        
+
         if ( !is_int($offset) ) {
             trigger_error('utf8_strpos: Offset must be an integer',E_USER_ERROR);
             return FALSE;
         }
-        
+
         $str = utf8_substr($str, $offset);
-        
+
         if ( FALSE !== ( $pos = utf8_strpos($str, $needle) ) ) {
             return $pos + $offset;
         }
-        
+
         return FALSE;
     }
-    
+
 }
 
 //--------------------------------------------------------------------
@@ -85,9 +85,9 @@ function utf8_strpos($str, $needle, $offset = NULL) {
 * Find position of last occurrence of a char in a string
 * Note: This will get alot slower if offset is used
 * Note: requires utf8_substr and utf8_strlen to be loaded
-* @param string haystack
-* @param string needle (you should validate this with utf8_is_valid)
-* @param integer (optional) offset (from left)
+* @param haystack $str
+* @param string $needle (you should validate this with utf8_is_valid)
+* @param integer $offset (optional) offset (from left)
 * @return mixed integer position or FALSE on failure
 * @see http://www.php.net/strrpos
 * @see utf8_substr
@@ -96,11 +96,11 @@ function utf8_strpos($str, $needle, $offset = NULL) {
 * @subpackage strings
 */
 function utf8_strrpos($str, $needle, $offset = NULL) {
-    
+
     if ( is_null($offset) ) {
-    
+
         $ar = explode($needle, $str);
-        
+
         if ( count($ar) > 1 ) {
             // Pop off the end of the string where the last match was made
             array_pop($ar);
@@ -108,23 +108,23 @@ function utf8_strrpos($str, $needle, $offset = NULL) {
             return utf8_strlen($str);
         }
         return FALSE;
-        
+
     } else {
-        
+
         if ( !is_int($offset) ) {
             trigger_error('utf8_strrpos expects parameter 3 to be long',E_USER_WARNING);
             return FALSE;
         }
-        
+
         $str = utf8_substr($str, $offset);
-        
+
         if ( FALSE !== ( $pos = utf8_strrpos($str, $needle) ) ) {
             return $pos + $offset;
         }
-        
+
         return FALSE;
     }
-    
+
 }
 
 //--------------------------------------------------------------------
@@ -150,115 +150,115 @@ function utf8_strrpos($str, $needle, $offset = NULL) {
 * necessary. It isn't necessary for +ve offsets and no specified length
 *
 * @author Chris Smith<chris@jalakai.co.uk>
-* @param string
-* @param integer number of UTF-8 characters offset (from left)
-* @param integer (optional) length in UTF-8 characters from offset
+* @param $str
+* @param integer $offset number of UTF-8 characters offset (from left)
+* @param integer $length (optional) length in UTF-8 characters from offset
 * @return mixed string or FALSE if failure
 * @package utf8
 * @subpackage strings
 */
 function utf8_substr($str, $offset, $length = NULL) {
-    
+
     // generates E_NOTICE
     // for PHP4 objects, but not PHP5 objects
     $str = (string)$str;
     $offset = (int)$offset;
     if (!is_null($length)) $length = (int)$length;
-    
+
     // handle trivial cases
     if ($length === 0) return '';
     if ($offset < 0 && $length < 0 && $length < $offset)
         return '';
-    
+
     // normalise negative offsets (we could use a tail
     // anchored pattern, but they are horribly slow!)
     if ($offset < 0) {
-        
+
         // see notes
         $strlen = strlen(utf8_decode($str));
         $offset = $strlen + $offset;
         if ($offset < 0) $offset = 0;
-        
+
     }
-    
+
     $Op = '';
     $Lp = '';
-    
+
     // establish a pattern for offset, a
     // non-captured group equal in length to offset
     if ($offset > 0) {
-        
+
         $Ox = (int)($offset/65535);
         $Oy = $offset%65535;
-        
+
         if ($Ox) {
             $Op = '(?:.{65535}){'.$Ox.'}';
         }
-        
+
         $Op = '^(?:'.$Op.'.{'.$Oy.'})';
-        
+
     } else {
-        
+
         // offset == 0; just anchor the pattern
         $Op = '^';
-        
+
     }
-    
+
     // establish a pattern for length
     if (is_null($length)) {
-        
+
         // the rest of the string
         $Lp = '(.*)$';
-        
+
     } else {
-        
+
         if (!isset($strlen)) {
             // see notes
             $strlen = strlen(utf8_decode($str));
         }
-        
+
         // another trivial case
         if ($offset > $strlen) return '';
-        
+
         if ($length > 0) {
-            
+
             // reduce any length that would
             // go passed the end of the string
             $length = min($strlen-$offset, $length);
-            
+
             $Lx = (int)( $length / 65535 );
             $Ly = $length % 65535;
-            
+
             // negative length requires a captured group
             // of length characters
             if ($Lx) $Lp = '(?:.{65535}){'.$Lx.'}';
             $Lp = '('.$Lp.'.{'.$Ly.'})';
-            
+
         } else if ($length < 0) {
-            
-            if ( $length < ($offset - $strlen) ) {
+
+            if ( $length < $offset - $strlen ) {
                 return '';
             }
-            
+
             $Lx = (int)((-$length)/65535);
             $Ly = (-$length)%65535;
-            
+
             // negative length requires ... capture everything
             // except a group of  -length characters
             // anchored at the tail-end of the string
             if ($Lx) $Lp = '(?:.{65535}){'.$Lx.'}';
             $Lp = '(.*)(?:'.$Lp.'.{'.$Ly.'})$';
-            
+
         }
-        
+
     }
-    
+
     if (!preg_match( '#'.$Op.$Lp.'#us',$str, $match )) {
         return '';
     }
-    
+
     return $match[1];
-    
+
 }
 
 //---------------------------------------------------------------
@@ -271,7 +271,7 @@ function utf8_substr($str, $offset, $length = NULL) {
 * Annex #21: Case Mappings
 * Note: requires utf8_to_unicode and utf8_from_unicode
 * @author Andreas Gohr <andi@splitbrain.org>
-* @param string
+* @param $string
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @see http://www.php.net/strtolower
 * @see utf8_to_unicode
@@ -282,11 +282,11 @@ function utf8_substr($str, $offset, $length = NULL) {
 * @subpackage strings
 */
 function utf8_strtolower($string){
-    
+
     static $UTF8_UPPER_TO_LOWER = NULL;
-    
+
     if ( is_null($UTF8_UPPER_TO_LOWER) ) {
-        $UTF8_UPPER_TO_LOWER = array(
+        $UTF8_UPPER_TO_LOWER = [
     0x0041=>0x0061, 0x03A6=>0x03C6, 0x0162=>0x0163, 0x00C5=>0x00E5, 0x0042=>0x0062,
     0x0139=>0x013A, 0x00C1=>0x00E1, 0x0141=>0x0142, 0x038E=>0x03CD, 0x0100=>0x0101,
     0x0490=>0x0491, 0x0394=>0x03B4, 0x015A=>0x015B, 0x0044=>0x0064, 0x0393=>0x03B3,
@@ -330,22 +330,22 @@ function utf8_strtolower($string){
     0x0054=>0x0074, 0x004A=>0x006A, 0x040B=>0x045B, 0x0406=>0x0456, 0x0102=>0x0103,
     0x039B=>0x03BB, 0x00D1=>0x00F1, 0x041D=>0x043D, 0x038C=>0x03CC, 0x00C9=>0x00E9,
     0x00D0=>0x00F0, 0x0407=>0x0457, 0x0122=>0x0123,
-            );
+            ];
     }
-    
+
     $uni = utf8_to_unicode($string);
-    
+
     if ( !$uni ) {
         return FALSE;
     }
-    
+
     $cnt = count($uni);
     for ($i=0; $i < $cnt; $i++){
         if ( isset($UTF8_UPPER_TO_LOWER[$uni[$i]]) ) {
             $uni[$i] = $UTF8_UPPER_TO_LOWER[$uni[$i]];
         }
     }
-    
+
     return utf8_from_unicode($uni);
 }
 
@@ -359,7 +359,7 @@ function utf8_strtolower($string){
 * Annex #21: Case Mappings
 * Note: requires utf8_to_unicode and utf8_from_unicode
 * @author Andreas Gohr <andi@splitbrain.org>
-* @param string
+* @param $string
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @see http://www.php.net/strtoupper
 * @see utf8_to_unicode
@@ -370,11 +370,11 @@ function utf8_strtolower($string){
 * @subpackage strings
 */
 function utf8_strtoupper($string){
-    
+
     static $UTF8_LOWER_TO_UPPER = NULL;
-    
+
     if ( is_null($UTF8_LOWER_TO_UPPER) ) {
-        $UTF8_LOWER_TO_UPPER = array(
+        $UTF8_LOWER_TO_UPPER = [
     0x0061=>0x0041, 0x03C6=>0x03A6, 0x0163=>0x0162, 0x00E5=>0x00C5, 0x0062=>0x0042,
     0x013A=>0x0139, 0x00E1=>0x00C1, 0x0142=>0x0141, 0x03CD=>0x038E, 0x0101=>0x0100,
     0x0491=>0x0490, 0x03B4=>0x0394, 0x015B=>0x015A, 0x0064=>0x0044, 0x03B3=>0x0393,
@@ -418,21 +418,21 @@ function utf8_strtoupper($string){
     0x0074=>0x0054, 0x006A=>0x004A, 0x045B=>0x040B, 0x0456=>0x0406, 0x0103=>0x0102,
     0x03BB=>0x039B, 0x00F1=>0x00D1, 0x043D=>0x041D, 0x03CC=>0x038C, 0x00E9=>0x00C9,
     0x00F0=>0x00D0, 0x0457=>0x0407, 0x0123=>0x0122,
-            );
+            ];
     }
-    
+
     $uni = utf8_to_unicode($string);
-    
+
     if ( !$uni ) {
         return FALSE;
     }
-    
+
     $cnt = count($uni);
     for ($i=0; $i < $cnt; $i++){
         if( isset($UTF8_LOWER_TO_UPPER[$uni[$i]]) ) {
             $uni[$i] = $UTF8_LOWER_TO_UPPER[$uni[$i]];
         }
     }
-    
+
     return utf8_from_unicode($uni);
 }

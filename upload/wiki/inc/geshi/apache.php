@@ -44,16 +44,16 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Apache',
-	'COMMENT_SINGLE' => array(1 => '#'),
-	'COMMENT_MULTI' => array(),
+	'COMMENT_SINGLE' => [1 => '#'],
+	'COMMENT_MULTI' => [],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
+	'KEYWORDS' => [
 		/*keywords*/
-	        1 => array(
+	        1 => [
 			'accessconfig','accessfilename','action','addalt',
 			'addaltbyencoding','addaltbytype','addcharset',
 			'adddefaultcharset','adddescription',
@@ -107,68 +107,67 @@ $language_data = array (
 			'user','userdir','virtualhost','virtualdocumentroot',
 			'virtualdocumentrootip','virtualscriptalias','virtualscriptaliasip',
 			'xbithack','from','all'
-		  ),
+		  ],
 		/*keyords 2*/
-		2 => array(
+		2 => [
 			'on','off','standalone','inetd',
 			'force-response-1.0','downgrade-1.0','nokeepalive',
 			'ndexes','includes','followsymlinks','none',
 			'x-compress','x-gzip'
-		)
-	),
-	'SYMBOLS' => array(
+		]
+	],
+	'SYMBOLS' => [
 		'(', ')'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #00007f;',
 			2 => 'color: #0000ff;',
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #adadad; font-style: italic;',
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #7f007f;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #ff0000;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>
-

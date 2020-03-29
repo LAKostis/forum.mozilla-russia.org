@@ -44,15 +44,15 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'nsis',
-	'COMMENT_SINGLE' => array(1 => ';'),
-	'COMMENT_MULTI' => array(),
+	'COMMENT_SINGLE' => [1 => ';'],
+	'COMMENT_MULTI' => [],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'",'"'),
+	'QUOTEMARKS' => ["'",'"'],
 	'ESCAPE_CHAR' => '',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'What','Abort','AddSize','AllowRootDirInstall','AutoCloseWindow',
 			'BGGradient','BrandingText','BringToFront','CRCCheck','Call','CallInstDLL','Caption','ClearErrors',
 			'CompletedText','ComponentText','CopyFiles','CreateDirectory','CreateShortCut','Delete',
@@ -77,14 +77,14 @@ $language_data = array (
 			'SubSectionEnd','SubSection','CheckBitmap','ChangeUI','SetFont','AddBrandingImage','XPStyle','Var',
 			'LangString','!define','!undef','!ifdef','!ifndef','!endif','!else','!macro','!echo','!warning','!error','!verbose',
 			'!macroend','!insertmacro','!system','!include','!cd','!packhdr','!addplugindir'
-		  ),
-		2 => array(
+		  ],
+		2 => [
 			'$0','$1','$2','$3','$4','$5','$6','$7','$8','$9',
 			'$R0','$R1','$R2','$R3','$R4','$R5','$R6','$R7','$R8','$R9','$CMDLINE','$DESKTOP',
 			'$EXEDIR','$HWNDPARENT','$INSTDIR','$OUTDIR','$PROGRAMFILES','${NSISDIR}',
 			'$QUICKLAUNCH','$SMPROGRAMS','$SMSTARTUP','$STARTMENU','$SYSDIR','$TEMP','$WINDIR'
-		    ),
-		3 => array(
+		    ],
+		3 => [
 			'ARCHIVE','FILE_ATTRIBUTE_ARCHIVE','FILE_ATTRIBUTE_HIDDEN',
 			'FILE_ATTRIBUTE_NORMAL','FILE_ATTRIBUTE_OFFLINE','FILE_ATTRIBUTE_READONLY',
 			'FILE_ATTRIBUTE_SYSTEM','FILE_ATTRIBUTE_TEMPORARY','HIDDEN','HKCC','HKCR','HKCU',
@@ -97,68 +97,68 @@ $language_data = array (
 			'NORMAL','OFFLINE','READONLY','SW_SHOWMAXIMIZED','SW_SHOWMINIMIZED','SW_SHOWNORMAL',
 			'SYSTEM','TEMPORARY','auto','colored','false','force','hide','ifnewer','nevershow','normal',
 			'off','on','show','silent','silentlog','smooth','true','try'
-		   ),
-		4 => array(
+		   ],
+		4 => [
 			'MyFunction','MySomethingElse'
-		)
-	),
-	'SYMBOLS' => array(
-		),
-	'CASE_SENSITIVE' => array(
+		]
+	],
+	'SYMBOLS' => [
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => true,
 		1 => false,
 		2 => false,
 		3 => false,
 		4 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #00007f;',
 			2 => 'color: #0000ff;',
 			3 => 'color: #46aa03; font-weight:bold;',
 			4 => 'color: #0000ff;',
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #adadad; font-style: italic;',
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #7f007f;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #ff0000;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'REGEXPS' => array(
-			),
-		'SCRIPT' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'REGEXPS' => [
+			],
+		'SCRIPT' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => '',
 		3 => '',
 		4 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-$lang_help = array(
+$lang_help = [
 
 'Help'					=>	'Help',
 'produces'				=>	'produces',
@@ -38,4 +38,4 @@ $lang_help = array(
 
 'Smilies info'			=>	'If you like (and if it is enabled), the forum can convert a series of smilies to images representations of that smiley. This forum recognizes the following smilies and replaces them with images:'
 
-);
+];

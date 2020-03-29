@@ -49,17 +49,17 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'HTML',
-	'COMMENT_SINGLE' => array(),
-	'COMMENT_MULTI' => array('<!--' => '-->'),
+	'COMMENT_SINGLE' => [],
+	'COMMENT_MULTI' => ['<!--' => '-->'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
-			),
-		2 => array(
+	'KEYWORDS' => [
+		1 => [
+			],
+		2 => [
 			'&lt;a&gt;', '&lt;abbr&gt;', '&lt;acronym&gt;', '&lt;address&gt;', '&lt;applet&gt;',
 			'&lt;a', '&lt;abbr', '&lt;acronym', '&lt;address', '&lt;applet',
 			'&lt;/a&gt;', '&lt;/abbr&gt;', '&lt;/acronym&gt;', '&lt;/address&gt;', '&lt;/applet&gt;',
@@ -156,8 +156,8 @@ $language_data = array (
 			'&lt;/var',
 
 			'&gt;', '&lt;'
-			),
-		3 => array(
+			],
+		3 => [
 			'abbr', 'accept-charset', 'accept', 'accesskey', 'action', 'align', 'alink', 'alt', 'archive', 'axis',
 			'background', 'bgcolor', 'border',
 			'cellpadding', 'cellspacing', 'char', 'char', 'charoff', 'charset', 'checked', 'cite', 'class', 'classid', 'clear', 'code', 'codebase', 'codetype', 'color', 'cols', 'colspan', 'compact', 'content', 'coords',
@@ -177,78 +177,78 @@ $language_data = array (
 			'usemap',
 			'valign', 'value', 'valuetype', 'version', 'vlink', 'vspace',
 			'width'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'/', '='
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
 		3 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #b1b100;',
 			2 => 'color: #000000; font-weight: bold;',
 			3 => 'color: #000066;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
+			],
+		'SCRIPT' => [
 			0 => 'color: #00bbdd;',
 			1 => 'color: #ddbb00;',
 			2 => 'color: #009900;'
-			),
-		'REGEXPS' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'REGEXPS' => [
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => 'http://december.com/html/4/element/{FNAME}.html',
 		3 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
-		),
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
-	'SCRIPT_DELIMITERS' => array(
-		0 => array(
+	'SCRIPT_DELIMITERS' => [
+		0 => [
 			'<!DOCTYPE' => '>'
-			),
-		1 => array(
+			],
+		1 => [
 			'&' => ';'
-			),
-		2 => array(
+			],
+		2 => [
 			'<' => '>'
-			)
-	),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
+			]
+	],
+	'HIGHLIGHT_STRICT_BLOCK' => [
 		0 => false,
 		1 => false,
 		2 => true
-		)
-);
+		]
+];
 
 ?>

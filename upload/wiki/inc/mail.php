@@ -22,7 +22,7 @@ define('MAILHEADER_EOL',"\n"); //end of line for mail headers
  * @param string $to      Receiver of the mail (multiple seperated by commas)
  * @param string $subject Mailsubject
  * @param string $body    Messagebody
- * @param string $from    Sender address 
+ * @param string $from    Sender address
  * @param string $cc      CarbonCopy receiver (multiple seperated by commas)
  * @param string $bcc     BlindCarbonCopy receiver (multiple seperated by commas)
  * @param string $headers Additional Headers (seperated by MAILHEADER_EOL
@@ -101,7 +101,7 @@ function mail_encode_address($string,$header='To'){
     if(!utf8_isASCII($text)){
       $text = '=?UTF-8?Q?'.mail_quotedprintable_encode($text).'?=';
     }
-    
+
     //construct header
     $headers .= $header.': '.$text.' <'.$addr.'>'.MAILHEADER_EOL;
   }
@@ -113,7 +113,7 @@ function mail_encode_address($string,$header='To'){
  * Uses a regular expresion to check if a given mail address is valid
  *
  * May not be completly RFC conform!
- * 
+ *
  * @link    http://www.webmasterworld.com/forum88/135.htm
  *
  * @param   string $email the address to check
@@ -131,7 +131,7 @@ function mail_isvalid($email){
  * @link   http://www.php.net/manual/en/function.quoted-printable-decode.php
  */
 function mail_quotedprintable_encode($input='',$line_max=74,$space_conv=false){
-  $hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
+  $hex = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
   $lines = preg_split("/(?:\r\n|\r|\n)/", $input);
   $eol = "\n";
   $escape = "=";
@@ -147,7 +147,7 @@ function mail_quotedprintable_encode($input='',$line_max=74,$space_conv=false){
         $c = "=2E";
       }
       if ( $dec == 32 ) {
-        if ( $i == ( $linlen - 1 ) ) { // convert space at eol only
+        if ( $i == $linlen - 1 ) { // convert space at eol only
           $c = "=20";
         } else if ( $space_conv ) {
           $c = "=20";
@@ -157,7 +157,7 @@ function mail_quotedprintable_encode($input='',$line_max=74,$space_conv=false){
         $h1 = floor($dec%16);
         $c = $escape.$hex["$h2"].$hex["$h1"];
       }
-      if ( (strlen($newline) + strlen($c)) >= $line_max ) { // CRLF is not counted
+      if ( strlen($newline) + strlen($c) >= $line_max ) { // CRLF is not counted
          $output .= $newline.$escape.$eol; // soft line break; " =\r\n" is okay
          $newline = "";
          // check if newline first character will be point or not

@@ -50,15 +50,15 @@
  ************************************************************************************/
 
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'CSS',
-	'COMMENT_SINGLE' => array(1 => '@'),
-	'COMMENT_MULTI' => array('/*' => '*/'),
+	'COMMENT_SINGLE' => [1 => '@'],
+	'COMMENT_MULTI' => ['/*' => '*/'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array('"', "'"),
+	'QUOTEMARKS' => ['"', "'"],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'aqua', 'azimuth', 'background-attachment', 'background-color',
 			'background-image', 'background-position', 'background-repeat',
 			'background', 'black', 'blue', 'border-bottom-color', 'border-bottom-style',
@@ -86,8 +86,8 @@ $language_data = array (
 			'text-indent', 'text-shadow', 'text-transform', 'top', 'unicode-bidi',
 			'vertical-align', 'visibility', 'voice-family', 'volume', 'white-space', 'widows',
 			'width', 'word-spacing', 'z-index'
-			),
-		2 => array(
+			],
+		2 => [
 			'above', 'absolute', 'always', 'armenian', 'aural', 'auto', 'avoid',
 			'baseline', 'behind', 'below', 'bidi-override', 'blink', 'block', 'bold', 'bolder', 'both',
 			'capitalize', 'center-left', 'center-right', 'center', 'circle', 'cjk-ideographic', 'close-quote', 'collapse', 'condensed', 'continuous', 'crop', 'crosshair', 'cross', 'cursive',
@@ -111,67 +111,67 @@ $language_data = array (
 			'w-resize', 'wait', 'white', 'wider',
 			'x-fast', 'x-high', 'x-large', 'x-loud', 'x-low', 'x-small', 'x-soft', 'xx-large', 'xx-small',
 			'yellow', 'yes'
-			)
-		),
-	'SYMBOLS' => array(
+			]
+		],
+	'SYMBOLS' => [
 		'(', ')', '{', '}', ':', ';'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => true,
 		2 => true
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #000000; font-weight: bold;',
 			2 => 'color: #993333;'
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			1 => 'color: #a1a100;',
 			'MULTI' => 'color: #808080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #66cc66;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
-			),
-		'SYMBOLS' => array(
+			],
+		'METHODS' => [
+			],
+		'SYMBOLS' => [
 			0 => 'color: #66cc66;'
-			),
-		'SCRIPT' => array(
-			),
-		'REGEXPS' => array(
+			],
+		'SCRIPT' => [
+			],
+		'REGEXPS' => [
 			0 => 'color: #cc00cc;',
 			1 => 'color: #6666ff;',
 			2 => 'color: #3333ff;',
-			)
-		),
-	'URLS' => array(
+			]
+		],
+	'URLS' => [
 		1 => '',
 		2 => ''
-		),
+		],
 	'OOLANG' => false,
-	'OBJECT_SPLITTERS' => array(
-		),
-	'REGEXPS' => array(
+	'OBJECT_SPLITTERS' => [
+		],
+	'REGEXPS' => [
 		0 => '\#[a-zA-Z0-9\-]+\s+\{',
 		1 => '\.[a-zA-Z0-9\-]+\s',
 		2 => ':[a-zA-Z0-9\-]+\s'
-		),
+		],
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
-	'SCRIPT_DELIMITERS' => array(
-		),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
-		)
-);
+	'SCRIPT_DELIMITERS' => [
+		],
+	'HIGHLIGHT_STRICT_BLOCK' => [
+		]
+];
 
 ?>

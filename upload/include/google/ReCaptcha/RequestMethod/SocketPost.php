@@ -51,8 +51,8 @@ class SocketPost implements RequestMethod
      */
     public function __construct(Socket $socket = null, $siteVerifyUrl = null)
     {
-        $this->socket = (is_null($socket)) ? new Socket() : $socket;
-        $this->siteVerifyUrl = (is_null($siteVerifyUrl)) ? ReCaptcha::SITE_VERIFY_URL : $siteVerifyUrl;
+        $this->socket = is_null($socket) ? new Socket() : $socket;
+        $this->siteVerifyUrl = is_null($siteVerifyUrl) ? ReCaptcha::SITE_VERIFY_URL : $siteVerifyUrl;
     }
 
     /**

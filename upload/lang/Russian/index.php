@@ -1,6 +1,6 @@
 <?php
 
-$lang_index = array(
+$lang_index = [
 
 'Topics'			=>	'Тем',
 'Moderators'		=>	'Модераторы',
@@ -22,4 +22,4 @@ $lang_index = array(
 'User info'			=>	'Информация о пользователе',
 'Most users online'	=>	'Больше всего посетителей онлайн'
 
-);
+];

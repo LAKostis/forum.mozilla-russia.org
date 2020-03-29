@@ -15,13 +15,13 @@
  */
 function html_wikilink($url,$name='',$search=''){
 	global $conf;
-	$link				 = array();
+	$link				 = [];
 	$link['url']	= $url;
 	$link['name'] = $name;
 	$link				 = format_link_wiki($link);
 
 	if($search){
-		($conf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
+		$conf['userewrite'] ? $link['url'].='?s=' : $link['url'].='&amp;s=';
 		$link['url'] .= urlencode($search);
 	}
 
@@ -90,15 +90,15 @@ function html_editbutton(){
 	if($ACT == 'show' || $ACT == 'search'){
 		if($INFO['writable']){
 			if($INFO['exists']){
-				$r = html_btn('edit',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+				$r = html_btn('edit',$ID,'e',['do' => 'edit','rev' => $REV],'post');
 			}else{
-				$r = html_btn('create',$ID,'e',array('do' => 'edit','rev' => $REV),'post');
+				$r = html_btn('create',$ID,'e',['do' => 'edit','rev' => $REV],'post');
 			}
 		}else{
-			$r = html_btn('source',$ID,'v',array('do' => 'edit','rev' => $REV),'post');
+			$r = html_btn('source',$ID,'v',['do' => 'edit','rev' => $REV],'post');
 		}
 	}else{
-		$r = html_btn('show',$ID,'v',array('do' => 'show'));
+		$r = html_btn('show',$ID,'v',['do' => 'show']);
 	}
 	return $r;
 }
@@ -115,8 +115,8 @@ function html_secedit_button($section,$p){
 	if($p) $secedit .= "</p>\n";
 	$secedit .= '<div class="secedit">';
 	$secedit .= html_btn('secedit',$ID,'',
-												array('do'			=> 'edit',
-															'lines'	 => "$section"),
+												['do'			=> 'edit',
+															'lines'	 => "$section"],
 															'post');
 	$secedit .= '</div>';
 	if($p) $secedit .= "\n<p>";
@@ -367,11 +367,11 @@ function html_header(){
 		<div class="bar" id="bar_top">
 			<div class="bar-left" id="bar_topleft">
 				<?php echo html_editbutton()?>
-				<?php echo html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
+				<?php echo html_btn(revs,$ID,'o',['do' => 'revisions'])?>
 			</div>
 
 			<div class="bar-right" id="bar_topright">
-				<?php echo html_btn(recent,'','r',array('do' => 'recent'))?>
+				<?php echo html_btn(recent,'','r',['do' => 'recent'])?>
 				<form action="<?php echo wl()?>" accept-charset="<?php echo $lang['encoding']?>">
 				<div class="inlineform">
 					<input type="hidden" name="do" value="search" />
@@ -467,11 +467,11 @@ function html_footer(){
 		<div class="bar" id="bar_bottom">
 			<div class="bar-left" id="bar_bottomleft">
 				<?php echo html_editbutton()?>
-				<?php echo html_btn(revs,$ID,'o',array('do' => 'revisions'))?>
+				<?php echo html_btn(revs,$ID,'o',['do' => 'revisions'])?>
 			</div>
 
 			<div class="bar-right" id="bar_bottomright">
-				<?php echo html_btn(index,$ID,'x',array('do' => 'index'))?>
+				<?php echo html_btn(index,$ID,'x',['do' => 'index'])?>
 				<a href="#top"><input type="button" class="button" value="<?php echo $lang['btn_top']?>" /></a>&nbsp;
 			</div>
 		</div>
@@ -585,8 +585,8 @@ function html_search(){
 	print '<br /></div>';
 
 	//do quick pagesearch
-	$data = array();
-	search($data,$conf['datadir'],'search_pagename',array(query => cleanID($QUERY)));
+	$data = [];
+	search($data,$conf['datadir'],'search_pagename',[query => cleanID($QUERY)]);
 	if(count($data)){
 		sort($data);
 		print '<div class="search_quickresult">';
@@ -603,8 +603,8 @@ function html_search(){
 	flush();
 
 	//do fulltext search
-	$data = array();
-	search($data,$conf['datadir'],'search_fulltext',array(query => utf8_strtolower($QUERY)));
+	$data = [];
+	search($data,$conf['datadir'],'search_fulltext',[query => utf8_strtolower($QUERY)]);
 	if(count($data)){
 		usort($data,'sort_search_fulltext');
 		foreach($data as $row){
@@ -745,8 +745,8 @@ function html_index($ns){
 
 	print parsedLocale('index');
 
-	$data = array();
-	search($data,$conf['datadir'],'search_index',array('ns' => $ns));
+	$data = [];
+	search($data,$conf['datadir'],'search_index',['ns' => $ns]);
 	print html_buildlist($data,'idx','html_list_index','html_li_index');
 }
 
@@ -820,14 +820,14 @@ function html_buildlist($data,$class,$func,$lifunc='html_li_default'){
 
 		if( $item['level'] > $level ){
 			//open new list
-			for($i=0; $i<($item['level'] - $level); $i++){
+			for($i=0; $i<$item['level'] - $level; $i++){
 				if ($i) $ret .= "<li class=\"clear\">\n";
 				$ret .= "\n<ul class=\"$class\">\n";
 			}
 		}elseif( $item['level'] < $level ){
 			//close last item
 			$ret .= "</li>\n";
-			for ($i=0; $i<($level - $item['level']); $i++){
+			for ($i=0; $i<$level - $item['level']; $i++){
 				//close higher lists
 				$ret .= "</ul>\n</li>\n";
 			}
@@ -874,7 +874,7 @@ function html_backlinks(){
 
 	print parsedLocale('backlinks');
 
-	$data = array();
+	$data = [];
 	search($data,$conf['datadir'],'search_backlinks',$opts);
 	sort($data);
 
@@ -1072,7 +1072,7 @@ function html_edit($text=null,$include='edit'){ //FIXME: include needed?
 				<?php if($wr){?>
 				<script language="JavaScript" type="text/javascript">
 					<?php /* sets changed to true when previewed */?>
-					textChanged = <?php  ($pr) ? print 'true' : print 'false' ?>;
+					textChanged = <?php  $pr ? print 'true' : print 'false' ?>;
 
 					formatButton('wiki/images/bold.png','<?php echo $lang['qb_bold']?>','**','**','<?php echo $lang['qb_bold']?>','b');
 					formatButton('wiki/images/italic.png','<?php echo $lang['qb_italic']?>',"\/\/","\/\/",'<?php echo $lang['qb_italic']?>','i');

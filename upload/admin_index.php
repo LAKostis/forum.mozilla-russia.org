@@ -51,11 +51,11 @@ if ($action == 'check_upgrade')
 	if ($latest_version == '')
 		message('Check for upgrade failed for unknown reasons.');
 
-	$cur_version = str_replace(array('.', 'dev', 'beta', ' '), '', strtolower($pun_config['o_cur_version']));
-	$cur_version = (strlen($cur_version) == 2) ? intval($cur_version) * 10 : intval($cur_version);
+	$cur_version = str_replace(['.', 'dev', 'beta', ' '], '', strtolower($pun_config['o_cur_version']));
+	$cur_version = strlen($cur_version) == 2 ? intval($cur_version) * 10 : intval($cur_version);
 
 	$latest_version = str_replace('.', '', strtolower($latest_version));
-	$latest_version = (strlen($latest_version) == 2) ? intval($latest_version) * 10 : intval($latest_version);
+	$latest_version = strlen($latest_version) == 2 ? intval($latest_version) * 10 : intval($latest_version);
 
 	if ($cur_version >= $latest_version)
 		message('You are running the latest version of PunBB.');
@@ -127,7 +127,7 @@ if ($db_type == 'mysql' || $db_type == 'mysqli')
 		$total_size += $status['Data_length'] + $status['Index_length'];
 	}
 
-	$total_size = $total_size / 1024;
+	$total_size /= 1024;
 
 	if ($total_size > 1024)
 		$total_size = round($total_size / 1024, 2).' MB';

@@ -24,7 +24,7 @@ setlocale(LC_CTYPE, $locale);
 // hcs merge posts update
 setlocale(LC_TIME, $locale);
 
-$lang_common = array(
+$lang_common = [
 
 // Text orientation and encoding
 'lang_direction'		=>	'ltr', // ltr (Left-To-Right) or rtl (Right-To-Left)
@@ -181,4 +181,4 @@ $lang_common = array(
 
 'Spoiler'				=>	'скрытый текст'
 
-);
+];

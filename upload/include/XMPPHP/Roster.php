@@ -3,22 +3,22 @@
  * XMPPHP: The PHP XMPP Library
  * Copyright (C) 2008  Nathanael C. Fritz
  * This file is part of SleekXMPP.
- * 
+ *
  * XMPPHP is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * XMPPHP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with XMPPHP; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @category   xmpphp 
+ * @category   xmpphp
  * @package	XMPPHP
  * @author	 Nathanael C. Fritz <JID: fritzy@netflint.net>
  * @author	 Stephan Wentz <JID: stephan@jabber.wentz.it>
@@ -28,8 +28,8 @@
 
 /**
  * XMPPHP Roster Object
- * 
- * @category   xmpphp 
+ *
+ * @category   xmpphp
  * @package	XMPPHP
  * @author	 Nathanael C. Fritz <JID: fritzy@netflint.net>
  * @author	 Stephan Wentz <JID: stephan@jabber.wentz.it>
@@ -44,16 +44,16 @@ class Roster {
 	 * Contains array with potentially two indexes 'contact' and 'presence'
 	 * @var array
 	 */
-	protected $roster_array = array();
+	protected $roster_array = [];
 	/**
 	 * Constructor
-	 * 
+	 *
 	 */
-	public function __construct($roster_array = array()) {
+	public function __construct($roster_array = []) {
 		if ($this->verifyRoster($roster_array)) {
 			$this->roster_array = $roster_array; //Allow for prepopulation with existing roster
 		} else {
-			$this->roster_array = array();
+			$this->roster_array = [];
 		}
 	}
 
@@ -77,17 +77,17 @@ class Roster {
 	 * @param string $name
 	 * @param array $groups
 	 */
-	public function addContact($jid, $subscription, $name='', $groups=array()) {
-		$contact = array('jid' => $jid, 'subscription' => $subscription, 'name' => $name, 'groups' => $groups);
+	public function addContact($jid, $subscription, $name='', $groups=[]) {
+		$contact = ['jid' => $jid, 'subscription' => $subscription, 'name' => $name, 'groups' => $groups];
 		if ($this->isContact($jid)) {
 			$this->roster_array[$jid]['contact'] = $contact;
 		} else {
-			$this->roster_array[$jid] = array('contact' => $contact);
+			$this->roster_array[$jid] = ['contact' => $contact];
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * Retrieve contact via jid
 	 *
 	 * @param string $jid
@@ -105,7 +105,7 @@ class Roster {
 	 * @param string $jid
 	 */
 	public function isContact($jid) {
-		return (array_key_exists($jid, $this->roster_array));
+		return array_key_exists($jid, $this->roster_array);
 	}
 
 	/**
@@ -123,8 +123,8 @@ class Roster {
 			if (!$this->isContact($jid)) {
 				$this->addContact($jid, 'not-in-roster');
 			}
-			$resource = $resource ? $resource : '';
-			$this->roster_array[$jid]['presence'][$resource] = array('priority' => $priority, 'show' => $show, 'status' => $status);
+			$resource = $resource ?: '';
+			$this->roster_array[$jid]['presence'][$resource] = ['priority' => $priority, 'show' => $show, 'status' => $status];
 		} else { //Nuke unavailable resources to save memory
 			unset($this->roster_array[$jid]['resource'][$resource]);
 		}
@@ -140,7 +140,7 @@ class Roster {
 		$split = explode("/", $jid);
 		$jid = $split[0];
 		if($this->isContact($jid)) {
-			$current = array('resource' => '', 'active' => '', 'priority' => -129, 'show' => '', 'status' => ''); //Priorities can only be -128 = 127
+			$current = ['resource' => '', 'active' => '', 'priority' => -129, 'show' => '', 'status' => '']; //Priorities can only be -128 = 127
 			foreach($this->roster_array[$jid]['presence'] as $resource => $presence) {
 				//Highest available priority or just highest priority
 				if ($presence['priority'] > $current['priority'] and (($presence['show'] == "chat" or $presence['show'] == "available") or ($current['show'] != "chat" or $current['show'] != "available"))) {

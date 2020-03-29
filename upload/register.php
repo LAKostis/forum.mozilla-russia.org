@@ -172,7 +172,7 @@ else if (isset($_POST['form_sent']))
 		$banned_email = false;
 
 	// Check if someone else already has registered with that e-mail address
-	$dupe_list = array();
+	$dupe_list = [];
 
 	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE email=\''.$email1.'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))
@@ -195,7 +195,7 @@ else if (isset($_POST['form_sent']))
 		$language = $pun_config['o_default_lang'];
 
 	$timezone = round($_POST['timezone'], 1);
-	$save_pass = (!isset($_POST['save_pass']) || $_POST['save_pass'] != '1') ? '0' : '1';
+	$save_pass = !isset($_POST['save_pass']) || $_POST['save_pass'] != '1' ? '0' : '1';
 
 	$email_setting = intval($_POST['email_setting']);
 	if ($email_setting < 0 || $email_setting > 2) $email_setting = 1;
@@ -203,7 +203,7 @@ else if (isset($_POST['form_sent']))
 	// Insert the new user into the database. We do this now to get the last inserted id for later use.
 	$now = time();
 
-	$intial_group_id = ($pun_config['o_regs_verify'] == '0') ? $pun_config['o_default_user_group'] : PUN_UNVERIFIED;
+	$intial_group_id = $pun_config['o_regs_verify'] == '0' ? $pun_config['o_default_user_group'] : PUN_UNVERIFIED;
 	$password_hash = pun_hash($password1);
 
 	// NeoSecurityTeam PunBB 1.2.10 DoS Patch by K4P0
@@ -223,8 +223,8 @@ else if (isset($_POST['form_sent']))
 	// final clearance check
 	require_once(PUN_ROOT.'include/stopforumspam.php');
 	$sfs = new StopForumSpam();
-	$args = array('email' => $email1, 'ip' => get_remote_address(), 'username' => $username);
-	
+	$args = ['email' => $email1, 'ip' => get_remote_address(), 'username' => $username];
+
 	$spamcheck = $sfs->is_spammer( $args );
 	if ($spamcheck['spammer']=='1' && $spamcheck['known']=='1')
 		error('Unable to create user', 'register.php','', '');
@@ -321,15 +321,15 @@ else if (isset($_POST['form_sent']))
 		message($lang_register['Reg e-mail'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
 	}
 
-	pun_setcookie($new_uid, $password_hash, ($save_pass != '0') ? $now + 31536000 : 0);
+	pun_setcookie($new_uid, $password_hash, $save_pass != '0' ? $now + 31536000 : 0);
 
 	redirect('index.php', $lang_register['Reg complete']);
 }
 
 
 $page_title = pun_htmlspecialchars($lang_register['Register']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$required_fields = array('req_username' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['E-mail'], 'req_email2' => $lang_common['E-mail'].' 2', 'req_image' => $lang_register['Image text']);
-$focus_element = array('register', 'req_username');
+$required_fields = ['req_username' => $lang_common['Username'], 'req_password1' => $lang_common['Password'], 'req_password2' => $lang_prof_reg['Confirm pass'], 'req_email1' => $lang_common['E-mail'], 'req_email2' => $lang_common['E-mail'].' 2', 'req_image' => $lang_register['Image text']];
+$focus_element = ['register', 'req_username'];
 require PUN_ROOT.'header.php';
 
 ?>
@@ -373,7 +373,7 @@ require PUN_ROOT.'header.php';
 			</div>
 <?php endif; ?>			<div class="inform">
 				<fieldset>
-					<legend><?php echo ($pun_config['o_regs_verify'] == '1') ? $lang_prof_reg['E-mail legend 2'] : $lang_prof_reg['E-mail legend'] ?></legend>
+					<legend><?php echo $pun_config['o_regs_verify'] == '1' ? $lang_prof_reg['E-mail legend 2'] : $lang_prof_reg['E-mail legend'] ?></legend>
 					<div class="infldset">
 <?php if ($pun_config['o_regs_verify'] == '1'): ?>			<p><?php echo $lang_register['E-mail info'] ?></p>
 <?php endif; ?>					<label><strong><?php echo $lang_common['E-mail'] ?></strong><br />
@@ -430,7 +430,7 @@ require PUN_ROOT.'header.php';
 						<br /></label>
 <?php
 
-		$languages = array();
+		$languages = [];
 		$d = dir(PUN_ROOT.'lang');
 		while (($entry = $d->read()) !== false)
 		{

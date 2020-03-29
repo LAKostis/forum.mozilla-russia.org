@@ -42,7 +42,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	$form_username = trim($_POST['req_username']);
 	$form_password = trim($_POST['req_password']);
 
-	$username_sql = ($db_type == 'mysql' || $db_type == 'mysqli') ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
+	$username_sql = $db_type == 'mysql' || $db_type == 'mysqli' ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
 
 	// NeoSecurityTeam PunBB 1.2.10 Bruteforce login Patch by K4P0 (Part 1/3)
 	$logintime = time() - $pun_config['o_timeout_login']; // 10 seconds delay by default.
@@ -65,8 +65,8 @@ if (isset($_POST['form_sent']) && $action == 'in')
 
 	if (!empty($db_password_hash))
 	{
-		$sha1_in_db = (strlen($db_password_hash) == 40) ? true : false;
-		$sha1_available = (function_exists('sha1') || function_exists('mhash')) ? true : false;
+		$sha1_in_db = strlen($db_password_hash) == 40 ? true : false;
+		$sha1_available = function_exists('sha1') || function_exists('mhash') ? true : false;
 
 		$form_password_hash = pun_hash($form_password);	// This could result in either an SHA-1 or an MD5 hash (depends on $sha1_available)
 
@@ -102,7 +102,7 @@ if (isset($_POST['form_sent']) && $action == 'in')
 	// Remove this users guest entry from the online list
 	$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape(get_remote_address()).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 
-	$expire = ($save_pass == '1') ? time() + 31536000 : 0;
+	$expire = $save_pass == '1' ? time() + 31536000 : 0;
 	pun_setcookie($user_id, $form_password_hash, $expire);
 
 	redirect(htmlspecialchars($_POST['redirect_url']), $lang_login['Login redirect']);
@@ -188,8 +188,8 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 
 	$page_title = pun_htmlspecialchars($lang_login['Request pass']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-	$required_fields = array('req_email' => $lang_common['E-mail']);
-	$focus_element = array('request_pass', 'req_email');
+	$required_fields = ['req_email' => $lang_common['E-mail']];
+	$focus_element = ['request_pass', 'req_email'];
 	require PUN_ROOT.'header.php';
 
 ?>
@@ -221,11 +221,11 @@ if (!$pun_user['is_guest'])
 	hidden_redirect('index.php');
 
 // Try to determine if the data in HTTP_REFERER is valid (if not, we redirect to index.php after login)
-$redirect_url = (isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
+$redirect_url = isset($_SERVER['HTTP_REFERER']) && preg_match('#^'.preg_quote($pun_config['o_base_url']).'/(.*?)\.php#i', $_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php';
 
 $page_title = pun_htmlspecialchars($lang_common['Login']).' | '.pun_htmlspecialchars($pun_config['o_board_title']);
-$required_fields = array('req_username' => $lang_common['Username'], 'req_password' => $lang_common['Password']);
-$focus_element = array('login', 'req_username');
+$required_fields = ['req_username' => $lang_common['Username'], 'req_password' => $lang_common['Password']];
+$focus_element = ['login', 'req_username'];
 require PUN_ROOT.'header.php';
 
 ?>

@@ -34,7 +34,7 @@ function check_cookie(&$pun_user)
 	$expire = $now + 31536000;	// The cookie expires after a year
 
 	// We assume it's a guest
-	$cookie = array('user_id' => 1, 'password_hash' => 'Guest');
+	$cookie = ['user_id' => 1, 'password_hash' => 'Guest'];
 
 	// If a cookie is set, we get the user_id and password hash from it
 	if (isset($_COOKIE[$cookie_name]))
@@ -71,7 +71,7 @@ function check_cookie(&$pun_user)
 			if ($pun_user['read_topics'])
 			$pun_user['read_topics'] = unserialize($pun_user['read_topics']);
 		else
-			$pun_user['read_topics'] = array();
+			$pun_user['read_topics'] = [];
 
 		// Define this if you want this visit to affect the online list and the users last visit data
 		if (!defined('PUN_QUIET_VISIT'))
@@ -79,7 +79,7 @@ function check_cookie(&$pun_user)
 			// Update the online list
 			if (!$pun_user['logged'])
 			{
-				$show_online = ($pun_user['show_online']);
+				$show_online = $pun_user['show_online'];
 				$pun_user['logged'] = $now;
 
 				// With MySQL/MySQLi, REPLACE INTO avoids a user having two rows in the online table
@@ -98,14 +98,14 @@ function check_cookie(&$pun_user)
 			else
 			{
 				// Special case: We've timed out, but no other user has browsed the forums since we timed out
-				if ($pun_user['logged'] < ($now-$pun_config['o_timeout_visit']))
+				if ($pun_user['logged'] < $now-$pun_config['o_timeout_visit'])
 				{
 					// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 					$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].', read_topics=NULL WHERE id='.$pun_user['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
 					$pun_user['last_visit'] = $pun_user['logged'];
 				}
 
-				$idle_sql = ($pun_user['idle'] == '1') ? ', idle=0' : '';
+				$idle_sql = $pun_user['idle'] == '1' ? ', idle=0' : '';
 				$db->query('UPDATE '.$db->prefix.'online SET logged='.$now.$idle_sql.' WHERE user_id='.$pun_user['id']) or error('Unable to update online list', __FILE__, __LINE__, $db->error());
 			}
 		}
@@ -197,9 +197,9 @@ function pun_setcookie($user_id, $password_hash, $expire)
 	@header('P3P: CP="CUR ADM"');
 
 	if (version_compare(PHP_VERSION, '5.2.0', '>='))
-		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path, $cookie_domain, (bool)$cookie_secure, true);
+		setcookie($cookie_name, serialize([$user_id, md5($cookie_seed.$password_hash)]), $expire, $cookie_path, $cookie_domain, (bool)$cookie_secure, true);
 	else
-		setcookie($cookie_name, serialize(array($user_id, md5($cookie_seed.$password_hash))), $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
+		setcookie($cookie_name, serialize([$user_id, md5($cookie_seed.$password_hash)]), $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
 }
 
 
@@ -231,7 +231,7 @@ function check_bans()
 		if ($cur_ban['username'] != '' && !pun_strcasecmp($pun_user['username'], $cur_ban['username']))
 		{
 			$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
-			message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+			message($lang_common['Ban message'].' '.($cur_ban['expire'] != '' ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').($cur_ban['message'] != '' ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
 		}
 
 		if ($cur_ban['ip'] != '')
@@ -240,12 +240,12 @@ function check_bans()
 
 			for ($i = 0; $i < count($cur_ban_ips); ++$i)
 			{
-				$cur_ban_ips[$i] = $cur_ban_ips[$i].'.';
+				$cur_ban_ips[$i] .='.';
 
 				if (substr($user_ip, 0, strlen($cur_ban_ips[$i])) == $cur_ban_ips[$i])
 				{
 					$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
-					message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+					message($lang_common['Ban message'].' '.($cur_ban['expire'] != '' ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').($cur_ban['message'] != '' ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
 				}
 			}
 		}
@@ -279,7 +279,7 @@ function update_users_online()
 		else
 		{
 			// If the entry is older than "o_timeout_visit", update last_visit for the user in question, then delete him/her from the online list
-			if ($cur_user['logged'] < ($now-$pun_config['o_timeout_visit']))
+			if ($cur_user['logged'] < $now-$pun_config['o_timeout_visit'])
 			{
 				// MOD: MARK TOPICS AS READ - 1 LINE MODIFIED CODE FOLLOWS
 				$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$cur_user['logged'].', read_topics=NULL WHERE id='.$cur_user['user_id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
@@ -344,7 +344,7 @@ function generate_navlinks()
 		{
 			// Insert any additional links into the $links array (at the correct index)
 			for ($i = 0; $i < count($extra_links[1]); ++$i)
-				array_splice($links, (int)$extra_links[1][$i], 0, array('<li id="navextra'.($i + 1).'">'.$extra_links[2][$i]));
+				array_splice($links, (int)$extra_links[1][$i], 0, ['<li id="navextra'.($i + 1).'">'.$extra_links[2][$i]]);
 		}
 	}
 
@@ -393,7 +393,7 @@ function update_forum($forum_id)
 	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
 	list($num_topics, $num_posts) = $db->fetch_row($result);
 
-	$num_posts = $num_posts + $num_topics;		// $num_posts is only the sum of all replies (we have to add the topic posts)
+	$num_posts += $num_topics;		// $num_posts is only the sum of all replies (we have to add the topic posts)
 
 	$result = $db->query('SELECT last_post, last_post_id, last_poster FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id.' AND moved_to IS NULL ORDER BY last_post DESC LIMIT 1') or error('Unable to fetch last_post/last_post_id/last_poster', __FILE__, __LINE__, $db->error());
 	if ($db->num_rows($result))		// There are topics in the forum
@@ -421,7 +421,7 @@ function delete_topic($topic_id)
 	$post_ids = '';
 	$result = $db->query('SELECT id FROM '.$db->prefix.'posts WHERE topic_id='.$topic_id) or error('Unable to fetch posts', __FILE__, __LINE__, $db->error());
 	while ($row = $db->fetch_row($result))
-		$post_ids .= ($post_ids != '') ? ','.$row[0] : $row[0];
+		$post_ids .= $post_ids != '' ? ','.$row[0] : $row[0];
 
 	// Make sure we have a list of post ID's
 	if ($post_ids != '')
@@ -498,12 +498,12 @@ function delete_user($user_id,$delete_posts)
 
 		while ($cur_forum = $db->fetch_assoc($result))
 		{
-			$cur_moderators = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
+			$cur_moderators = $cur_forum['moderators'] != '' ? unserialize($cur_forum['moderators']) : [];
 
 			if (in_array($user_id, $cur_moderators))
 			{
 				unset($cur_moderators[$username]);
-				$cur_moderators = (!empty($cur_moderators)) ? '\''.$db->escape(serialize($cur_moderators)).'\'' : 'NULL';
+				$cur_moderators = !empty($cur_moderators) ? '\''.$db->escape(serialize($cur_moderators)).'\'' : 'NULL';
 
 				$db->query('UPDATE '.$db->prefix.'forums SET moderators='.$cur_moderators.' WHERE id='.$cur_forum['id']) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 			}
@@ -582,7 +582,7 @@ function censor_words($text)
 		$result = $db->query('SELECT search_for, replace_with FROM '.$db->prefix.'censoring') or error('Unable to fetch censor word list', __FILE__, __LINE__, $db->error());
 		$num_words = $db->num_rows($result);
 
-		$search_for = array();
+		$search_for = [];
 		for ($i = 0; $i < $num_words; ++$i)
 		{
 			list($search_for[$i], $replace_with[$i]) = $db->fetch_row($result);
@@ -610,10 +610,10 @@ function get_title($user)
 	// If not already built in a previous call, build an array of lowercase banned usernames
 	if (empty($ban_list))
 	{
-		$ban_list = array();
+		$ban_list = [];
 
 		foreach ($pun_bans as $cur_ban)
-			$ban_list[] = ((function_exists('utf8_strtolower')) ? utf8_strtolower($cur_ban['username']) : strtolower($cur_ban['username']));
+			$ban_list[] = (function_exists('utf8_strtolower') ? utf8_strtolower($cur_ban['username']) : strtolower($cur_ban['username']));
 	}
 
 	// If not already loaded in a previous call, load the cached ranks
@@ -669,7 +669,7 @@ function paginate($num_pages, $cur_page, $link_to)
 {
 	global $lang_common;
 
-	$pages = array();
+	$pages = [];
 	$link_to_all = false;
 	$nav_links = true;
 
@@ -682,7 +682,7 @@ function paginate($num_pages, $cur_page, $link_to)
 	}
 
 	if ($num_pages <= 1)
-		$pages = array('<strong>1</strong>');
+		$pages = ['<strong>1</strong>'];
 	else
 	{
 		if ($cur_page > 3)
@@ -707,9 +707,9 @@ function paginate($num_pages, $cur_page, $link_to)
 				$pages[] = '<strong>'.$current.'</strong>';
 		}
 
-		if ($cur_page <= ($num_pages-3))
+		if ($cur_page <= $num_pages-3)
 		{
-			if ($cur_page != ($num_pages-3))
+			if ($cur_page != $num_pages-3)
 			{
 				$pages[] = '&hellip;';
 				$manual = true;
@@ -874,7 +874,7 @@ function random_pass($len)
 
 	$password = '';
 	for ($i = 0; $i < $len; ++$i)
-		$password .= substr($chars, (mt_rand() % strlen($chars)), 1);
+		$password .= substr($chars, mt_rand() % strlen($chars), 1);
 
 	return $password;
 }
@@ -928,7 +928,7 @@ function get_remote_address()
 	// and each successive proxy that passed the request adding the IP address where it received the request from.
 	if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) || isset($_SERVER['HTTP_X_REAL_IP']))
 	{
-		$via_proxy = $via_proxy = explode(",",((isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['HTTP_X_REAL_IP']));
+		$via_proxy = $via_proxy = explode(",",(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['HTTP_X_REAL_IP']));
 		$via_proxy = trim($via_proxy[0]);
 		// filter out private/reserved ranges
 		$via_proxy = filter_var($via_proxy, FILTER_VALIDATE_IP,FILTER_FLAG_NO_PRIV_RANGE);
@@ -982,7 +982,7 @@ function get_base_url($support_https = false)
 	if (!isset($base_url))
 	{
 		// Make sure we are using the correct protocol
-		$base_url = str_replace(array('http://', 'https://'), get_current_protocol().'://', $pun_config['o_base_url']);
+		$base_url = str_replace(['http://', 'https://'], get_current_protocol().'://', $pun_config['o_base_url']);
 	}
 
 	return $base_url;
@@ -1046,7 +1046,7 @@ function pun_trim($str)
 
 	if (strpos($lang_common['lang_encoding'], '8859') !== false)
 	{
-		$fishy_chars = array(chr(0x81), chr(0x8D), chr(0x8F), chr(0x90), chr(0x9D), chr(0xA0));
+		$fishy_chars = [chr(0x81), chr(0x8D), chr(0x8F), chr(0x90), chr(0x9D), chr(0xA0)];
 		return trim(str_replace($fishy_chars, ' ', $str));
 	}
 	else
@@ -1070,8 +1070,8 @@ function maintenance_message()
 	global $db, $pun_config, $lang_common, $pun_user;
 
 	// Deal with newlines, tabs and multiple spaces
-	$pattern = array("\t", '  ', '  ');
-	$replace = array('&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;');
+	$pattern = ["\t", '  ', '  '];
+	$replace = ['&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;'];
 	$message = str_replace($pattern, $replace, $pun_config['o_maintenance_message']);
 
 
@@ -1195,7 +1195,7 @@ function redirect($destination_url, $message)
 	if (!defined('PUN_DEBUG')):
 
 ?>
-<meta http-equiv="refresh" content="<?php echo $pun_config['o_redirect_delay'] ?>;URL=<?php echo str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url) ?>" />
+<meta http-equiv="refresh" content="<?php echo $pun_config['o_redirect_delay'] ?>;URL=<?php echo str_replace(['<', '>', '"'], ['&lt;', '&gt;', '&quot;'], $destination_url) ?>" />
 <?php endif; ?>
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Redirecting'] ?></title>
 <link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
@@ -1291,7 +1291,7 @@ H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADD
 
 		if ($db_error)
 		{
-			echo "\t\t".'<br /><br /><strong>'.$lang_error['Database reported'].':</strong> '.pun_htmlspecialchars($db_error['error_msg']).(($db_error['error_no']) ? ' (Errno: '.$db_error['error_no'].')' : '')."\n";
+			echo "\t\t".'<br /><br /><strong>'.$lang_error['Database reported'].':</strong> '.pun_htmlspecialchars($db_error['error_msg']).($db_error['error_no'] ? ' (Errno: '.$db_error['error_no'].')' : '')."\n";
 
 			if ($db_error['error_sql'] != '')
 				echo "\t\t".'<br /><br /><strong>'.$lang_error['Failed query'].':</strong> '.pun_htmlspecialchars($db_error['error_sql'])."\n";
@@ -1350,7 +1350,7 @@ function display_saved_queries()
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo ($cur_query[1] != 0) ? $cur_query[1] : '&nbsp;' ?></td>
+					<td class="tcl"><?php echo $cur_query[1] != 0 ? $cur_query[1] : '&nbsp;' ?></td>
 					<td class="tcr"><?php echo pun_htmlspecialchars($cur_query[0]) ?></td>
 				</tr>
 <?php
@@ -1385,10 +1385,10 @@ function unregister_globals()
 		exit('I\'ll have a steak sandwich and... a steak sandwich.');
 
 	// Variables that shouldn't be unset
-	$no_unset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+	$no_unset = ['GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES'];
 
 	// Remove elements in $GLOBALS that are present in any of the superglobals
-	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset($_SESSION) && is_array($_SESSION) ? $_SESSION : []);
 	foreach ($input as $k => $v)
 	{
 		if (!in_array($k, $no_unset) && isset($GLOBALS[$k]))
@@ -1425,7 +1425,7 @@ function get_all_new_topics() {
 
 	global $db, $pun_user;
 	$result = $db->query('SELECT forum_id, id, last_post FROM '.$db->prefix.'topics WHERE last_post>'. $pun_user['last_visit'] .' AND moved_to IS NULL ORDER BY last_post DESC') or error('Unable to fetch new topics from forum', __FILE__, __LINE__, $db->error());
-	$new_topics = array();
+	$new_topics = [];
 	while($new_topics_row = $db->fetch_assoc($result))
 		$new_topics[$new_topics_row['forum_id']][$new_topics_row['id']] = $new_topics_row['last_post'];
 	return $new_topics;
@@ -1572,7 +1572,7 @@ function pun_strcasecmp($string1, $string2) {
 // For show User Agent in users info
 //
 function pun_get_browser($uagent) {
-	$known_bw = array(
+	$known_bw = [
 		'firefox',
 		'opera',
 		'ie',
@@ -1652,7 +1652,7 @@ function pun_get_browser($uagent) {
 		'w3m',
 		'wyzo',
 		'yandex'
-	);
+	];
 	$ua = get_browser($uagent,true);
 	$ua_browser = pun_strtolower($ua['browser']);
 	$ua_version = $ua['version'];
@@ -1671,7 +1671,7 @@ function pun_get_browser($uagent) {
 		if($ua_browser == "ie")
 			$ua_browser_alt = "IE";
 	}
-	return array($ua_browser,$ua_version,$ua_browser_alt);
+	return [$ua_browser,$ua_version,$ua_browser_alt];
 }
 
 //
@@ -1704,11 +1704,11 @@ function extract_blocks($text, $start, $end, $retab = true)
 {
 	global $pun_config;
 
-	$code = array();
+	$code = [];
 	$start_len = strlen($start);
 	$end_len = strlen($end);
 	$regex = '%(?:'.preg_quote($start, '%').'|'.preg_quote($end, '%').')%';
-	$matches = array();
+	$matches = [];
 
 	if (preg_match_all($regex, $text, $matches))
 	{
@@ -1749,7 +1749,7 @@ function extract_blocks($text, $start, $end, $retab = true)
 		$text = str_replace("\t", $spaces, $text);
 	}
 
-	return array($code, $text);
+	return [$code, $text];
 }
 
 

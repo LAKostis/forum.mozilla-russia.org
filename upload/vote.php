@@ -52,8 +52,8 @@ if (!$db->num_rows($result))
 $cur_poll = $db->fetch_assoc($result);
 
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
-$mods_array = ($cur_poll['moderators'] != '') ? unserialize($cur_poll['moderators']) : array();
-$is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
+$mods_array = $cur_poll['moderators'] != '' ? unserialize($cur_poll['moderators']) : [];
+$is_admmod = $pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && array_key_exists($pun_user['username'], $mods_array)) ? true : false;
 
 // Do we have permission to vote?
 if ((((($cur_poll['post_replies'] == '' && $pun_user['g_post_replies'] == '0') || $cur_poll['post_replies'] == '0')) ||
@@ -71,7 +71,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
 
 if (isset($_POST['form_sent']))
 {
-	
+
 	// Make sure form_user is correct
 	if ($pun_user['is_guest'] || $_POST['form_user'] != $pun_user['username'])
 		message($lang_common['Bad request']);
@@ -79,17 +79,17 @@ if (isset($_POST['form_sent']))
 
     // Grab the options for the poll
     $options = pun_unserialize($cur_poll['options']);
-    
+
     // If there have already been voters grab them and their respective voters
     if (!empty($cur_poll['voters']))
         $voters = unserialize($cur_poll['voters']);
     else
-        $voters = array();
+        $voters = [];
 
     if (!empty($cur_poll['votes']))
         $votes = unserialize($cur_poll['votes']);
     else
-        $votes = array();
+        $votes = [];
 
 
     // Get the poll type
@@ -103,12 +103,12 @@ if (isset($_POST['form_sent']))
     if (empty($_POST['null']))
     {
 
-       
+
         // Based on the poll type increate the value
     	if ($ptype == 1)
 	{
 		$myvote = intval(trim($_POST['vote']));
-		if ((empty($myvote)) || (!array_key_exists($myvote, $options)))			
+		if (empty($myvote) || (!array_key_exists($myvote, $options)))
 			message($lang_common['Bad request']);
 
 		// Don't ask blame phps silly error checking ;)
@@ -117,24 +117,24 @@ if (isset($_POST['form_sent']))
 		else
 			$votes[$myvote] = 1;
 	}
-	else if ($ptype == 2) 
+	else if ($ptype == 2)
 	{
-		while (list($key, $value) = each($_POST['options'])) 
+		while (list($key, $value) = each($_POST['options']))
 		{
-            		if (!empty($value) && array_key_exists($key, $options)) 
+            		if (!empty($value) && array_key_exists($key, $options))
 			{
 				if (isset($votes[$key]))
 					$votes[$key]++;
 				else
 					$votes[$key] = 1;
-            		} 
+            		}
         	}
 	}
-	else if ($ptype == 3) 
+	else if ($ptype == 3)
 	{
-		while (list($key, $value) = each($_POST['options'])) 
+		while (list($key, $value) = each($_POST['options']))
 		{
-           		if (!empty($value) && array_key_exists($key, $options)) 
+           		if (!empty($value) && array_key_exists($key, $options))
 			{
 				if ($value == "yes")
 				{
@@ -150,11 +150,11 @@ if (isset($_POST['form_sent']))
 					else
 						$votes[$key]['no'] = 1;
             			}
-			} 	
+			}
         	}
 	} else
 		message($lang_common['Bad request']);
-		
+
    }
 	// Add the voter to the voters array
 	$voters[] = $pun_user['id'];
@@ -162,7 +162,7 @@ if (isset($_POST['form_sent']))
 	$voters_serialized = serialize($voters);
 	// Same with the votes
 	$votes_serialized = serialize($votes);
-	
+
 	// Update the database.
 	$db->query('UPDATE '.$db->prefix.'polls SET votes=\''.$votes_serialized.'\', voters=\''.$voters_serialized.'\' WHERE pollid='.$pollid) or error('Unable to update poll', __FILE__, __LINE__, $db->error());
 

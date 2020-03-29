@@ -1,6 +1,6 @@
 <?php
 
-$lang_reputation = array(
+$lang_reputation = [
 
 'Reputation'			=>	'Репутация',
 'Disabled'				=>	'Модуль репутации в данное время отключен',
@@ -11,4 +11,4 @@ $lang_reputation = array(
 'Timeout 2'				=>	' секунд перед тем, как отдать новый голос.',
 'Vote success'			=>	'Ваш голос был учтён ;)'
 
-);
+];

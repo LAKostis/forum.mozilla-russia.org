@@ -37,7 +37,7 @@ if (!function_exists('var_export'))
 	function var_export()
 	{
 		$args = func_get_args();
-		$indent = (isset($args[2])) ? $args[2] : '';
+		$indent = isset($args[2]) ? $args[2] : '';
 
 		if (is_array($args[0]))
 		{
@@ -61,7 +61,7 @@ if (!function_exists('var_export'))
 				}
 			}
 
-			$output .= ($indent != '') ? $indent.'),'."\n" : ')';
+			$output .= $indent != '' ? $indent.'),'."\n" : ')';
 		}
 		else
 			$output = $args[0];
@@ -107,7 +107,7 @@ function generate_bans_cache()
 	// Get the ban list from the DB
 	$result = $db->query('SELECT * FROM '.$db->prefix.'bans', true) or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
 
-	$output = array();
+	$output = [];
 	while ($cur_ban = $db->fetch_assoc($result))
 		$output[] = $cur_ban;
 
@@ -132,7 +132,7 @@ function generate_ranks_cache()
 	// Get the rank list from the DB
 	$result = $db->query('SELECT * FROM '.$db->prefix.'ranks ORDER BY min_posts', true) or error('Unable to fetch rank list', __FILE__, __LINE__, $db->error());
 
-	$output = array();
+	$output = [];
 	while ($cur_rank = $db->fetch_assoc($result))
 		$output[] = $cur_rank;
 
@@ -193,7 +193,7 @@ function generate_quickjump_cache($group_id = false)
 				$cur_category = $cur_forum['cid'];
 			}
 
-			$redirect_tag = ($cur_forum['redirect_url'] != '') ? ' &gt;&gt;&gt;' : '';
+			$redirect_tag = $cur_forum['redirect_url'] != '' ? ' &gt;&gt;&gt;' : '';
 			$output .= "\t\t\t\t\t\t\t".'<option value="'.$cur_forum['fid'].'"<?php echo ($forum_id == '.$cur_forum['fid'].') ? \' selected="selected"\' : \'\' ?>>'.pun_htmlspecialchars($cur_forum['forum_name']).$redirect_tag.'</option>'."\n";
 		}
 
@@ -262,7 +262,7 @@ function generate_forums_cache()
 	// Collect some statistics from the database
 	$result = $db->query('SELECT id, forum_name FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
 
-	$output = array();
+	$output = [];
 	while ($output[] = $db->fetch_row($result))
 		;
 

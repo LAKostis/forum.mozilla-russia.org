@@ -1,6 +1,6 @@
 <?php
 
-$lang_post = array(
+$lang_post = [
 
 // Post validation stuff (many are similiar to those in edit.php)
 'No subject'		=>	'Тема должна содержать заголовок.',
@@ -34,4 +34,4 @@ $lang_post = array(
 'Added'				=>	'Добавлено',
 'Merge posts'		=>	'Объединить с своим предыдущим сообщением'
 
-);
+];

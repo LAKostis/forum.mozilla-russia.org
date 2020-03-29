@@ -66,7 +66,7 @@ if ($_GET['fid'] == 'announcement')
 	if ($pun_user['g_id'] != PUN_ADMIN)
 		message($lang_common['No permission']);
 }
-else 
+else
 {
 	$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
 	if ($fid < 1)
@@ -75,16 +75,16 @@ else
 	$result = $db->query('SELECT moderators FROM '.$db->prefix.'forums WHERE id='.$fid) or error('Unable to fetch forum info', __FILE__, __LINE__, $db->error());
 
 	$moderators = $db->result($result);
-	$mods_array = ($moderators != '') ? unserialize($moderators) : array();
+	$mods_array = $moderators != '' ? unserialize($moderators) : [];
 
 	// Open or close one or more topics (for users)
 	if ($pun_user['g_id'] > PUN_MOD && isset($_REQUEST['close']))
 	{
-		$action = (isset($_REQUEST['open'])) ? 0 : 1;
+		$action = isset($_REQUEST['open']) ? 0 : 1;
 
 		confirm_referrer('viewtopic.php');
 
-		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
+		$topic_id = $action ? intval($_GET['close']) : intval($_GET['open']);
 		if ($topic_id < 1)
 			message($lang_common['Bad request']);
 
@@ -96,7 +96,7 @@ else
 		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id='.$topic_id.' AND forum_id='.$fid) or error('Unable to close topic', __FILE__, __LINE__, $db->error());
 
 		require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
-		$redirect_msg = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+		$redirect_msg = $action ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
 		redirect('viewtopic.php?id='.$topic_id, $redirect_msg);
 	}
 
@@ -196,20 +196,20 @@ if (isset($_GET['tid']))
 	}
 	else if (isset($_POST['create_topic']) || isset($_POST['create_topic_comply']))
 		require PUN_ROOT.'include/splittopic/mod_moderate.php';
-	
+
 	// Show the delete multiple posts view
 
 	// Load the viewtopic.php language file
 	require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 
 	// Used to disable the Move and Delete buttons if there are no replies to this topic
-	$button_status = ($cur_topic['num_replies'] == 0) ? ' disabled' : '';
+	$button_status = $cur_topic['num_replies'] == 0 ? ' disabled' : '';
 
 
 	// Determine the post offset (based on $_GET['p'])
 	$num_pages = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
-	$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+	$p = !isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 	$start_from = $pun_user['disp_posts'] * ($p - 1);
 
 	// Generate paging links
@@ -267,8 +267,8 @@ if (isset($_GET['tid']))
 		}
 
 		// Switch the background color for every message.
-		$bg_switch = ($bg_switch) ? $bg_switch = false : $bg_switch = true;
-		$vtbg = ($bg_switch) ? ' roweven' : ' rowodd';
+		$bg_switch = $bg_switch ? $bg_switch = false : $bg_switch = true;
+		$vtbg = $bg_switch ? ' roweven' : ' rowodd';
 
 		// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 		$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
@@ -277,7 +277,7 @@ if (isset($_GET['tid']))
 
 <div class="blockpost<?php echo $vtbg ?>">
 	<a name="<?php echo $cur_post['id'] ?>"></a>
-	<h2><span><span class="conr">#<?php echo ($start_from + $post_count) ?>&nbsp;</span><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
+	<h2><span><span class="conr">#<?php echo $start_from + $post_count ?>&nbsp;</span><a href="viewtopic.php?pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -386,13 +386,13 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		update_forum($fid);				// Update the forum FROM which the topic was moved
 		update_forum($move_to_forum);	// Update the forum TO which the topic was moved
 
-		$redirect_msg = (count($topics) > 1) ? $lang_misc['Move topics redirect'] : $lang_misc['Move topic redirect'];
+		$redirect_msg = count($topics) > 1 ? $lang_misc['Move topics redirect'] : $lang_misc['Move topic redirect'];
 		redirect('viewforum.php?id='.$move_to_forum, $redirect_msg);
 	}
 
 	if (isset($_POST['move_topics']))
 	{
-		$topics = isset($_POST['topics']) ? $_POST['topics'] : array();
+		$topics = isset($_POST['topics']) ? $_POST['topics'] : [];
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
@@ -413,7 +413,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 ?>
 <div class="blockform">
-	<h2><span><?php echo ($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'] ?></span></h2>
+	<h2><span><?php echo $action == 'single' ? $lang_misc['Move topic'] : $lang_misc['Move topics'] ?></span></h2>
 	<div class="box">
 		<form method="post" action="moderate.php?fid=<?php echo $fid ?>">
 			<div class="inform">
@@ -470,7 +470,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 // Delete one or more topics
 if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 {
-	$topics = isset($_POST['topics']) ? $_POST['topics'] : array();
+	$topics = isset($_POST['topics']) ? $_POST['topics'] : [];
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
 
@@ -500,7 +500,7 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 
 		$post_ids = '';
 		while ($row = $db->fetch_row($result))
-			$post_ids .= ($post_ids != '') ? ','.$row[0] : $row[0];
+			$post_ids .= $post_ids != '' ? ','.$row[0] : $row[0];
 
 		// We have to check that we actually have a list of post ID's since we could be deleting just a redirect topic
 		if ($post_ids != '')
@@ -545,20 +545,20 @@ if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply']))
 // Open or close one or more topics
 else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 {
-	$action = (isset($_REQUEST['open'])) ? 0 : 1;
+	$action = isset($_REQUEST['open']) ? 0 : 1;
 
 	// There could be an array of topic ID's in $_POST
 	if (isset($_POST['open']) || isset($_POST['close']))
 	{
 		confirm_referrer('moderate.php');
 
-		$topics = isset($_POST['topics']) ? @array_map('intval', @array_keys($_POST['topics'])) : array();
+		$topics = isset($_POST['topics']) ? @array_map('intval', @array_keys($_POST['topics'])) : [];
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
 		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id IN('.implode(',', $topics).') AND forum_id='.$fid) or error('Unable to close topics', __FILE__, __LINE__, $db->error());
 
-		$redirect_msg = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
+		$redirect_msg = $action ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
 		redirect('moderate.php?fid='.$fid, $redirect_msg);
 	}
 	// Or just one in $_GET
@@ -566,13 +566,13 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 	{
 		confirm_referrer('viewtopic.php');
 
-		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
+		$topic_id = $action ? intval($_GET['close']) : intval($_GET['open']);
 		if ($topic_id < 1)
 			message($lang_common['Bad request']);
 
 		$db->query('UPDATE '.$db->prefix.'topics SET closed='.$action.' WHERE id='.$topic_id.' AND forum_id='.$fid) or error('Unable to close topic', __FILE__, __LINE__, $db->error());
 
-		$redirect_msg = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
+		$redirect_msg = $action ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
 		redirect('viewtopic.php?id='.$topic_id, $redirect_msg);
 	}
 }
@@ -735,7 +735,7 @@ require PUN_ROOT.'header.php';
 // Determine the topic offset (based on $_GET['p'])
 $num_pages = ceil($cur_forum['num_topics'] / $pun_user['disp_topics']);
 
-$p = (!isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_GET['p'];
+$p = !isset($_GET['p']) || !is_numeric($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages ? 1 : $_GET['p'];
 $start_from = $pun_user['disp_topics'] * ($p - 1);
 
 // Generate paging links
@@ -853,8 +853,8 @@ if ($db->num_rows($result))
 							<?php echo $subject."\n" ?>
 						</div>
 					</td>
-					<td class="tc2"><?php echo (!$ghost_topic) ? $cur_topic['num_replies'] : '&nbsp;' ?></td>
-					<td class="tc3"><?php echo (!$ghost_topic) ? $cur_topic['num_views'] : '&nbsp;' ?></td>
+					<td class="tc2"><?php echo !$ghost_topic ? $cur_topic['num_replies'] : '&nbsp;' ?></td>
+					<td class="tc3"><?php echo !$ghost_topic ? $cur_topic['num_views'] : '&nbsp;' ?></td>
 					<td class="tcr"><?php echo $last_post ?></td>
 					<td class="tcmod"><input type="checkbox" name="topics[<?php echo $cur_topic['id'] ?>]" value="1" /></td>
 				</tr>

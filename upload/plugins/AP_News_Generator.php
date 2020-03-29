@@ -69,15 +69,15 @@ if (isset($_POST['gen_news']))
 		$result2 = $db->query('SELECT posted, poster, message, hide_smilies FROM '.$db->prefix.'posts WHERE topic_id='.$cur_topic['id'].' ORDER BY posted ASC LIMIT 1') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 		$cur_post = $db->fetch_assoc($result2);
 
-		$search = array('<news_subject>', '<news_posted>', '<news_poster>', '<news_message>', '<news_comments>');
-        $replace = array(pun_htmlspecialchars($cur_topic['subject']), date('Y-m-d H:i', $cur_post['posted']), pun_htmlspecialchars($cur_post['poster']), parse_message($cur_post['message'], $cur_post['hide_smilies']), '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">Comments</a>');
+		$search = ['<news_subject>', '<news_posted>', '<news_poster>', '<news_message>', '<news_comments>'];
+        $replace = [pun_htmlspecialchars($cur_topic['subject']), date('Y-m-d H:i', $cur_post['posted']), pun_htmlspecialchars($cur_post['poster']), parse_message($cur_post['message'], $cur_post['hide_smilies']), '<a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'">Comments</a>'];
 
 		fwrite($fh, str_replace($search, $replace, $news_tpl));
 	}
 
 	$archive_link = '<a href="archive/">News Archive</a>';
 	fwrite($fh,$archive_link);
-	
+
 	fclose($fh);
 
 
@@ -85,8 +85,8 @@ if (isset($_POST['gen_news']))
 	$year_end = intval(date('Y'));
 	$month_end = intval(date('n'));
 
-	$year_start = ($month_end != 1) ? $year_end : $year_end-1;
-	$month_start = ($month_end != 1) ? $month_end-1 : 12;
+	$year_start = $month_end != 1 ? $year_end : $year_end-1;
+	$month_start = $month_end != 1 ? $month_end-1 : 12;
 
 	// How far back should we go?
 	$result = $db->query('SELECT MIN(posted) FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id.'') or error('Unable to fetch earliest topic', __FILE__, __LINE__, $db->error());
@@ -111,8 +111,8 @@ if (isset($_POST['gen_news']))
 				$result2 = $db->query('SELECT posted, poster, message, hide_smilies FROM '.$db->prefix.'posts WHERE topic_id='.$cur_topic['id'].' ORDER BY posted ASC LIMIT 1') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 				$cur_post = $db->fetch_assoc($result2);
 
-				$search = array('<news_subject>', '<news_posted>', '<news_poster>', '<news_message>', '<news_comments>');
-				$replace = array(pun_htmlspecialchars($cur_topic['subject']), date('Y-m-d H:i', $cur_post['posted']), pun_htmlspecialchars($cur_post['poster']), parse_message($cur_post['message'], $cur_post['hide_smilies']), '<a href="">Comments</a>');
+				$search = ['<news_subject>', '<news_posted>', '<news_poster>', '<news_message>', '<news_comments>'];
+				$replace = [pun_htmlspecialchars($cur_topic['subject']), date('Y-m-d H:i', $cur_post['posted']), pun_htmlspecialchars($cur_post['poster']), parse_message($cur_post['message'], $cur_post['hide_smilies']), '<a href="">Comments</a>'];
 
 				fwrite($fh, str_replace($search, $replace, $news_tpl));
 			}
@@ -122,8 +122,8 @@ if (isset($_POST['gen_news']))
 
 		$year_end = $year_start;
 		$month_end = $month_start;
-		$year_start = ($month_end != 1) ? $year_end : $year_end-1;
-		$month_start = ($month_end != 1) ? $month_end-1 : 12;
+		$year_start = $month_end != 1 ? $year_end : $year_end-1;
+		$month_start = $month_end != 1 ? $month_end-1 : 12;
 	}
 
 	generate_admin_menu($plugin);

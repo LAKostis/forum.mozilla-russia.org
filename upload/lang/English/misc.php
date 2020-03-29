@@ -1,6 +1,6 @@
 <?php
 
-$lang_misc = array(
+$lang_misc = [
 
 'Mark read redirect'		=>	'All topics and forums have been marked as read. Redirecting &hellip;',
 'Mark forum read redirect'	=>	'All topics in this forum have been marked as read. Redirecting &hellip;', // MOD: MARK TOPICS AS READ
@@ -75,4 +75,4 @@ $lang_misc = array(
 'Delete posts redirect'		=>	'Posts deleted. Redirecting &hellip;',
 'No posts selected'			=>	'You must select at least one post to be deleted.'
 
-);
+];

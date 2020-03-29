@@ -39,30 +39,30 @@
  *
  ************************************************************************************/
 
-$language_data = array (
+$language_data =  [
 	'LANG_NAME' => 'Smarty',
-	'COMMENT_SINGLE' => array(),
-	'COMMENT_MULTI' => array('{*' => '*}'),
+	'COMMENT_SINGLE' => [],
+	'COMMENT_MULTI' => ['{*' => '*}'],
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-	'QUOTEMARKS' => array("'", '"'),
+	'QUOTEMARKS' => ["'", '"'],
 	'ESCAPE_CHAR' => '\\',
-	'KEYWORDS' => array(
-		1 => array(
+	'KEYWORDS' => [
+		1 => [
 			'$smarty', 'now', 'const', 'capture', 'config', 'section', 'foreach', 'template', 'version', 'ldelim', 'rdelim',
 			'config_load', 'foreach', 'foreachelse', 'include', 'include_php', 'insert', 'if', 'elseif', 'else', 'php',
 			'sectionelse', 'clear_all_cache', 'clear_cache', 'is_cached', 'from', 'item'
-			),
-		2 => array(
+			],
+		2 => [
 			'capitalize', 'count_characters', 'cat', 'count_paragraphs', 'count_sentences', 'count_words', 'date_format',
 			'default', 'escape', 'indent', 'lower', 'nl2br', 'regex_replace', 'replace', 'spacify', 'string_format',
 			'strip', 'strip_tags', 'truncate', 'upper', 'wordwrap'
-			),
-		3 => array(
+			],
+		3 => [
 			'assign', 'counter', 'cycle', 'debug', 'eval', 'fetch', 'html_checkboxes', 'html_image', 'html_options',
 			'html_radios', 'html_select_date', 'html_select_time', 'html_table', 'math', 'mailto', 'popup_init',
 			'popup', 'textformat'
-			),
-		4 => array(
+			],
+		4 => [
 			'$template_dir', '$compile_dir', '$config_dir', '$plugins_dir', '$debugging', '$debug_tpl',
 			'$debugging_ctrl', '$autoload_filters', '$compile_check', '$force_compile', '$caching', '$cache_dir',
 			'$cache_lifetime', '$cache_handler_func', '$cache_modified_check', '$config_overwrite',
@@ -70,8 +70,8 @@ $language_data = array (
 			'$php_handling', '$security', '$secure_dir', '$security_settings', '$trusted_dir', '$left_delimiter',
 			'$right_delimiter', '$compiler_class', '$request_vars_order', '$request_use_auto_globals',
 			'$error_reporting', '$compile_id', '$use_sub_dirs', '$default_modifiers', '$default_resource_type'
-			),
-		5 => array(
+			],
+		5 => [
 			'append', 'append_by_ref', 'assign', 'assign_by_ref', 'clear_all_assign', 'clear_all_cache',
 			'clear_assign', 'clear_cache', 'clear_compiled_tpl', 'clear_config', 'config_load', 'display',
 			'fetch', 'get_config_vars', 'get_registered_object', 'get_template_vars', 'is_cached',
@@ -80,19 +80,19 @@ $language_data = array (
 			'register_prefilter', 'register_resource', 'trigger_error', 'template_exists', 'unregister_block',
 			'unregister_compiler_function', 'unregister_function', 'unregister_modifier', 'unregister_object',
 			'unregister_outputfilter', 'unregister_postfilter', 'unregister_prefilter', 'unregister_resource'
-			),
-		6 => array(
+			],
+		6 => [
 			'name', 'assign', 'file', 'scope', 'global', 'key', 'once', 'script',
 			'loop', 'start', 'step', 'max', 'show', 'values', 'value'
-			),
-		7 => array(
+			],
+		7 => [
 			'eq', 'neq', 'ne', 'lte', 'gte', 'ge', 'le', 'not', 'mod'
-			),
-		),
-	'SYMBOLS' => array(
+			],
+		],
+	'SYMBOLS' => [
 		'/', '=', '==', '!=', '>', '<', '>=', '<=', '!', '%'
-		),
-	'CASE_SENSITIVE' => array(
+		],
+	'CASE_SENSITIVE' => [
 		GESHI_COMMENTS => false,
 		1 => false,
 		2 => false,
@@ -101,9 +101,9 @@ $language_data = array (
 		5 => false,
 		6 => false,
 		7 => false,
-		),
-	'STYLES' => array(
-		'KEYWORDS' => array(
+		],
+	'STYLES' => [
+		'KEYWORDS' => [
 			1 => 'color: #0600FF;',		//Functions
 			2 => 'color: #008000;',		//Modifiers
 			3 => 'color: #0600FF;',		//Custom Functions
@@ -111,34 +111,34 @@ $language_data = array (
 			5 => 'color: #008000;',		//Methods
 			6 => 'color: #6A0A0A;',		//Attributes
 			7 => 'color: #D36900;'		//Text-based symbols
-			),
-		'COMMENTS' => array(
+			],
+		'COMMENTS' => [
 			'MULTI' => 'color: #008080; font-style: italic;'
-			),
-		'ESCAPE_CHAR' => array(
+			],
+		'ESCAPE_CHAR' => [
 			0 => 'color: #000099; font-weight: bold;'
-			),
-		'BRACKETS' => array(
+			],
+		'BRACKETS' => [
 			0 => 'color: #D36900;'
-			),
-		'STRINGS' => array(
+			],
+		'STRINGS' => [
 			0 => 'color: #ff0000;'
-			),
-		'NUMBERS' => array(
+			],
+		'NUMBERS' => [
 			0 => 'color: #cc66cc;'
-			),
-		'METHODS' => array(
+			],
+		'METHODS' => [
 			1 => 'color: #006600;'
-			),
-		'SYMBOLS' => array(
+			],
+		'SYMBOLS' => [
 			0 => 'color: #D36900;'
-			),
-		'SCRIPT' => array(
-			),
-		'REGEXPS' => array(
-			)
-		),
-	'URLS' => array(
+			],
+		'SCRIPT' => [
+			],
+		'REGEXPS' => [
+			]
+		],
+	'URLS' => [
 		1 => 'http://smarty.php.net/{FNAME}',
 		2 => 'http://smarty.php.net/{FNAME}',
 		3 => 'http://smarty.php.net/{FNAME}',
@@ -146,22 +146,22 @@ $language_data = array (
 		5 => 'http://smarty.php.net/{FNAME}',
 		6 => '',
 		7 => 'http://smarty.php.net/{FNAME}'
-		),
+		],
 	'OOLANG' => true,
-	'OBJECT_SPLITTERS' => array(
+	'OBJECT_SPLITTERS' => [
 		1 => '.'
-		),
-	'REGEXPS' => array(
-		),
+		],
+	'REGEXPS' => [
+		],
 	'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
-	'SCRIPT_DELIMITERS' => array(
-		0 => array(
+	'SCRIPT_DELIMITERS' => [
+		0 => [
 			'{' => '}'
-			)
-	),
-	'HIGHLIGHT_STRICT_BLOCK' => array(
+			]
+	],
+	'HIGHLIGHT_STRICT_BLOCK' => [
 		0 => true
-		)
-);
+		]
+];
 
 ?>

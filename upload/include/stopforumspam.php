@@ -67,7 +67,7 @@ class StopForumSpam
         // execute
         $response = file_get_contents($url);
 
-        return (false == $response ? false : true);
+        return false == $response ? false : true;
     }
 
     /**
@@ -133,10 +133,10 @@ class StopForumSpam
             $known = false;
         }
 
-        return array(
+        return [
             'spammer' => $spammer,
             'known' => $known
-        );
+        ];
     }
 
     /**
@@ -149,9 +149,7 @@ class StopForumSpam
     protected static function poll_json( $url )
     {
         $json = file_get_contents( $url );
-        $object = json_decode($json);
-
-        return $object;
+        return json_decode($json);
     }
 }
 ?>

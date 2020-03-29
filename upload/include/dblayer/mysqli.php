@@ -35,7 +35,7 @@ class DBLayer
 	var $link_id;
 	var $query_result;
 
-	var $saved_queries = array();
+	var $saved_queries = [];
 	var $num_queries = 0;
 
 
@@ -84,7 +84,7 @@ class DBLayer
 		if ($this->query_result)
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', get_microtime() - $q_start));
+				$this->saved_queries[] = [$sql, sprintf('%.5f', get_microtime() - $q_start)];
 
 			++$this->num_queries;
 
@@ -93,7 +93,7 @@ class DBLayer
 		else
 		{
 			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, 0);
+				$this->saved_queries[] = [$sql, 0];
 
 			return false;
 		}
@@ -117,31 +117,31 @@ class DBLayer
 
 	function fetch_assoc($query_id = 0)
 	{
-		return ($query_id) ? @mysqli_fetch_assoc($query_id) : false;
+		return $query_id ? @mysqli_fetch_assoc($query_id) : false;
 	}
 
 
 	function fetch_row($query_id = 0)
 	{
-		return ($query_id) ? @mysqli_fetch_row($query_id) : false;
+		return $query_id ? @mysqli_fetch_row($query_id) : false;
 	}
 
 
 	function num_rows($query_id = 0)
 	{
-		return ($query_id) ? @mysqli_num_rows($query_id) : false;
+		return $query_id ? @mysqli_num_rows($query_id) : false;
 	}
 
 
 	function affected_rows()
 	{
-		return ($this->link_id) ? @mysqli_affected_rows($this->link_id) : false;
+		return $this->link_id ? @mysqli_affected_rows($this->link_id) : false;
 	}
 
 
 	function insert_id()
 	{
-		return ($this->link_id) ? @mysqli_insert_id($this->link_id) : false;
+		return $this->link_id ? @mysqli_insert_id($this->link_id) : false;
 	}
 
 
@@ -159,7 +159,7 @@ class DBLayer
 
 	function free_result($query_id = false)
 	{
-		return ($query_id) ? @mysqli_free_result($query_id) : false;
+		return $query_id ? @mysqli_free_result($query_id) : false;
 	}
 
 

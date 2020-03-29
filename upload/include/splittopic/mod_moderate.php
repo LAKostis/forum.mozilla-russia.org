@@ -71,11 +71,11 @@
 
 	$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, p.id, p.poster, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id WHERE p.topic_id='.$tid.' AND p.id IN ('.implode(',', array_keys($posts)).') ORDER BY p.id') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 	$cur_post = $db->fetch_assoc($result);
-	
+
 	echo parse_message($cur_post['message'],$cur_post['hide_smilies']);
 
 ?>
-				<br><br>			
+				<br><br>
 			</td>
 		</tr>
 		<tr>
@@ -90,9 +90,9 @@
 <table class="punspacer" cellspacing="1" cellpadding="4"><tr><td>&nbsp;</td></tr></table>
 
 <?php
-	
+
 	}
-	
+
 	else if(isset($_POST['create_topic_comply']))
 	{
 		// Check topic length
@@ -134,18 +134,18 @@
 		update_forum($id, PUN_TRANS_END);	// end transaction
 
 		// Redirect to the old topic
-		$redirect_msg = ($num_posts > 1) ? $lang_mod['Move posts redirect'] : $lang_mod['Move post redirect'];
+		$redirect_msg = $num_posts > 1 ? $lang_mod['Move posts redirect'] : $lang_mod['Move post redirect'];
 		redirect('viewtopic.php?id='.$tid, $redirect_msg);
 
 	}
 
 	else
 	{
-	
+
 		message($lang_common['Bad request']);
-		
+
 	}
-	
+
 	require PUN_ROOT.'footer.php';
 
 ?>

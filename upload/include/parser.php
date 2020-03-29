@@ -56,7 +56,7 @@ if (!defined('PUN'))
 $re_list = '%\[list(?:=([1a*]))?+\]((?:[^\[]*+(?:(?!\[list(?:=[1a*])?+\]|\[/list\])\[[^\[]*+)*+|(?R))*)\[/list\]%i';
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-$smiley_text = array(
+$smiley_text = [
 	':)',
 	'=)',
 	':|',
@@ -97,8 +97,8 @@ $smiley_text = array(
 	':couple:',
 	':whiteflag:',
 	':offtopic:'
-);
-$smiley_img = array(
+];
+$smiley_img = [
 	'smile.png',
 	'smile.png',
 	'neutral.png',
@@ -139,13 +139,13 @@ $smiley_img = array(
 	'couple.gif',
 	'whiteflag.gif',
 	'offtopic.gif'
-);
+];
 $smiley_limit = 17;
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
 //$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
-$browser_text = array(
+$browser_text = [
 	'[firefox]',
 	'[fx]',
 	'[thunderbird]',
@@ -183,8 +183,8 @@ $browser_text = array(
 	'[linux]',
 	'[macos]',
 	'[android]'
-);
-$browser_img = array(
+];
+$browser_img = [
 	'firefox.png',
 	'firefox.png',
 	'thunderbird.png',
@@ -222,7 +222,7 @@ $browser_img = array(
 	'linux.png',
 	'macos.png',
 	'android.png'
-);
+];
 $browser_limit = 3;
 
 //
@@ -241,28 +241,28 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	}
 
 	// Change all simple BBCodes to lower case
-	$a = array('[B]', '[I]', '[U]', '[/B]', '[/I]', '[/U]');
-	$b = array('[b]', '[i]', '[u]', '[/b]', '[/i]', '[/u]');
+	$a = ['[B]', '[I]', '[U]', '[/B]', '[/I]', '[/U]'];
+	$b = ['[b]', '[i]', '[u]', '[/b]', '[/i]', '[/u]'];
 	$text = str_replace($a, $b, $text);
 
 	// Do the more complex BBCodes (also strip excessive whitespace and useless quotes)
-	$a = array(	'#\[url=("|\'|)(.*?)\\1\]\s*#i',
+	$a = [	'#\[url=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[url\]\s*#i',
 				'#\s*\[/url\]#i',
 				'#\[email=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[email\]\s*#i',
 				'#\s*\[/email\]#i',
 				'#\[img\]\s*(.*?)\s*\[/img\]#is',
-				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is');
+				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is'];
 
-	$b = array(	'[url=$2]',
+	$b = [	'[url=$2]',
 				'[url]',
 				'[/url]',
 				'[email=$2]',
 				'[email]',
 				'[/email]',
 				'[img]$1[/img]',
-				'[color=$2]$3[/color]');
+				'[color=$2]$3[/color]'];
 
 	if (!$is_signature)
 	{
@@ -300,7 +300,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 			$errors[] = $error;
 		else if ($overflow)
 			// The quote depth level was too high, so we strip out the inner most quote(s)
-			$text = substr($text, 0, $overflow[0]).substr($text, $overflow[1], (strlen($text) - $overflow[0]));
+			$text = substr($text, 0, $overflow[0]).substr($text, $overflow[1], strlen($text) - $overflow[0]);
 	}
 	else
 	{
@@ -323,8 +323,8 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 			$text .= $outside[$i];
 			if (isset($inside[$i]))
 			{
-				$num_lines = ((substr_count($inside[$i], "\n")) + 3) * 1.5;
-				$height_str = ($num_lines > 35) ? '35em' : $num_lines.'em';
+				$num_lines = (substr_count($inside[$i], "\n") + 3) * 1.5;
+				$height_str = $num_lines > 35 ? '35em' : $num_lines.'em';
 				$text .= '[code]'.$inside[$i].'[/code]';
 			}
 		}
@@ -388,15 +388,15 @@ function check_tag_order($text, &$error)
 			break;
 
 		// We are interested in the first quote (regardless of the type of quote)
-		$q3_start = ($q_start < $q2_start) ? $q_start : $q2_start;
+		$q3_start = $q_start < $q2_start ? $q_start : $q2_start;
 
 		// We are interested in the first spoiler (regardless of the type of spoiler)
-		$s3_start = ($s_start < $s2_start) ? $s_start : $s2_start;
+		$s3_start = $s_start < $s2_start ? $s_start : $s2_start;
 
 		// We found a [quote] or a [quote=username]
 		if ($q3_start < min($c_start, $c_end, $q_end, $s3_start, $s_end, $n_start, $n_end))
 		{
-			$step = ($q_start < $q2_start) ? 7 : strlen($matches[0]);
+			$step = $q_start < $q2_start ? 7 : strlen($matches[0]);
 
 			$cur_index += $q3_start + $step;
 
@@ -457,7 +457,7 @@ function check_tag_order($text, &$error)
 		// We found a [spoiler]
 		else if ($s3_start < min($c_start, $c_end, $q3_start, $q_end, $s_end, $n_start, $n_end))
 		{
-			$step = ($s_start < $s2_start) ? 9 : strlen($matches2[0]);
+			$step = $s_start < $s2_start ? 9 : strlen($matches2[0]);
 
 			$cur_index += $s3_start + $step;
 
@@ -532,7 +532,7 @@ function check_tag_order($text, &$error)
 	// If the quote depth level was higher than $max_depth we return the index for the
 	// beginning and end of the part we should strip out
 	if (isset($overflow_begin))
-		return array($overflow_begin, $overflow_end);
+		return [$overflow_begin, $overflow_end];
 	else
 		return null;
 }
@@ -563,7 +563,7 @@ function split_text($text, $start, $end)
 		$inside = str_replace("\t", $spaces, $inside);
 	}
 
-	return array($inside, $outside);
+	return [$inside, $outside];
 }
 
 
@@ -606,7 +606,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	if (preg_match('%<img src=\"(.*?)\"%', $url, $matches))
 		return handle_url_tag($matches[1], $url, $bbcode);
 
-	$full_url = str_replace(array(' ', '\'', '`', '"'), array('%20', '', '', ''), $url);
+	$full_url = str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
 	if (strpos($url, 'www.') === 0) // If it starts with www, we add http://
 		$full_url = 'http://'.$full_url;
 	else if (strpos($url, 'ftp.') === 0) // Else if it starts with ftp, we add ftp://
@@ -885,7 +885,7 @@ function iconize_topic($text, $fid)
 	static $iconize_forums;
 
 	if (!isset($iconize_forums))
-		$iconize_forums = !empty($pun_config['o_iconize_subforums']) ? explode(',', $pun_config['o_iconize_subforums']) : array();
+		$iconize_forums = !empty($pun_config['o_iconize_subforums']) ? explode(',', $pun_config['o_iconize_subforums']) : [];
 
 	if ($fid && in_array($fid, $iconize_forums))
 		return do_browsers($text);
@@ -925,8 +925,8 @@ function parse_message($text, $hide_smilies)
 	}
 
 	// Deal with newlines, tabs and multiple spaces
-	$pattern = array("\n", "\t", '  ', '  ');
-	$replace = array('<br />', '&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;');
+	$pattern = ["\n", "\t", '  ', '  '];
+	$replace = ['<br />', '&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;'];
 	$text = str_replace($pattern, $replace, $text);
 
 	// If we split up the message before we have to concatenate it together again (code tags)
@@ -942,8 +942,8 @@ function parse_message($text, $hide_smilies)
 			$text .= $outside[$i];
 			if (isset($inside[$i]))
 			{
-				$num_lines = ((substr_count($inside[$i], "\n")) + 3) * 1.5;
-				$height_str = ($num_lines > 35) ? '35em' : $num_lines.'em';
+				$num_lines = (substr_count($inside[$i], "\n") + 3) * 1.5;
+				$height_str = $num_lines > 35 ? '35em' : $num_lines.'em';
 				$text .= '</p><div class="codebox"><div class="incqbox"><a href="#" style="float:right" onclick="return codeSelect(this)">'.$lang_common['Code select'].'</a><h4>'.$lang_common['Code'].':</h4><div class="scrollbox" style="height: '.$height_str.'"><pre>'.$inside[$i].'</pre></div></div></div><p>';
 			}
 		}
@@ -972,9 +972,7 @@ function clean_paragraphs($text)
 
 	$text = str_replace('<p><br />', '<br /><p>', $text);
 	$text = str_replace('<br /></p>', '</p><br />', $text);
-	$text = str_replace('<p></p>', '<br /><br />', $text);
-
-	return $text;
+	return str_replace('<p></p>', '<br /><br />', $text);
 }
 
 
@@ -1005,8 +1003,8 @@ function parse_signature($text)
 	}
 
 	// Deal with newlines, tabs and multiple spaces
-	$pattern = array("\n", "\t", '  ', '  ');
-	$replace = array('<br />', '&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;');
+	$pattern = ["\n", "\t", '  ', '  '];
+	$replace = ['<br />', '&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;'];
 	$text = str_replace($pattern, $replace, $text);
 
 	return clean_paragraphs($text);

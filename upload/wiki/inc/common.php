@@ -160,7 +160,7 @@ function pageinfo(){
   $info['ip']     = $revinfo['ip'];
   $info['user']   = $revinfo['user'];
   $info['sum']    = $revinfo['sum'];
-  $info['editor'] = (($pun_user['g_id'] == PUN_ADMIN) || ($pun_user['g_id'] == PUN_MOD)) ? $revinfo['ip'] : '';
+  $info['editor'] = ($pun_user['g_id'] == PUN_ADMIN) || ($pun_user['g_id'] == PUN_MOD) ? $revinfo['ip'] : '';
   if($revinfo['user'] && !$pun_user['is_guest']) $info['editor'].= ' ('.$revinfo['user'].')';
 
   return $info;
@@ -190,11 +190,11 @@ function msg($message,$lvl=0){
   $errors[1]  = 'success';
 
   if(!headers_sent()){
-    if(!isset($MSG)) $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    if(!isset($MSG)) $MSG = [];
+    $MSG[]=['lvl' => $errors[$lvl], 'msg' => $message];
   }else{
-    $MSG = array();
-    $MSG[]=array('lvl' => $errors[$lvl], 'msg' => $message);
+    $MSG = [];
+    $MSG[]=['lvl' => $errors[$lvl], 'msg' => $message];
     html_msgarea();
   }
 }
@@ -212,7 +212,7 @@ function breadcrumbs(){
 
   //first visit?
   if (!is_array($crumbs)){
-    $crumbs = array();
+    $crumbs = [];
   }
   //we only save on show and existing wiki documents
   if($ACT != 'show' || !@file_exists(wikiFN($ID))){
@@ -346,7 +346,7 @@ function checkwordblock(){
     $chunksize = 600;
   }
   while($blocks = array_splice($blockfile,0,$chunksize)){
-    $re = array();
+    $re = [];
     #build regexp from blocks
     foreach($blocks as $block){
       $block = preg_replace('/#.*$/','',$block);
@@ -390,7 +390,7 @@ function checklock($id){
   if(!@file_exists($lock)) return false;
 
   //lockfile expired
-  if((time() - filemtime($lock)) > $conf['locktime']){
+  if(time() - filemtime($lock) > $conf['locktime']){
     unlink($lock);
     return false;
   }
@@ -470,7 +470,7 @@ function cleanID($id){
   $id = trim($id,':._-');
   $id = preg_replace('#:[:\._\-]+#',':',$id);
 
-  return($id);
+  return$id;
 }
 
 /**
@@ -521,8 +521,7 @@ function localeFN($id){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function cleanText($text){
-  $text = preg_replace("/(\015\012)|(\015)/","\012",$text);
-  return $text;
+  return preg_replace("/(\015\012)|(\015)/","\012",$text);
 }
 
 /**
@@ -658,9 +657,9 @@ function con($pre,$text,$suf,$pretty=false){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function dbg($msg,$hidden=false){
-  (!$hidden) ? print '<pre class="dbg">' : print "<!--\n";
+  !$hidden ? print '<pre class="dbg">' : print "<!--\n";
   print_r($msg);
-  (!$hidden) ? print '</pre>' : print "\n-->";
+  !$hidden ? print '</pre>' : print "\n-->";
 }
 
 /**
@@ -681,7 +680,7 @@ function addLogEntry($date,$id,$summary=""){
   $remote = get_remote_address();
   $user = $pun_user['username'];
 
-  $logline = join("\t",array($date,$remote,$id,$user,$summary))."\n";
+  $logline = join("\t",[$date,$remote,$id,$user,$summary])."\n";
 
   //FIXME: use adjusted io_saveFile instead
   $fh = fopen($conf['changelog'],'a');
@@ -699,7 +698,7 @@ function addLogEntry($date,$id,$summary=""){
  */
 function getRecents($num=0,$incdel=false){
   global $conf;
-  $recent = array();
+  $recent = [];
   if(!$num) $num = $conf['recent'];
 
   if(!@is_readable($conf['changelog'])){
@@ -740,7 +739,7 @@ function getRecents($num=0,$incdel=false){
  */
 function getRevisionInfo($id,$rev){
   global $conf;
-  $info = array();
+  $info = [];
   if(!@is_readable($conf['changelog'])){
     msg($conf['changelog'].' is not readable',-1);
     return $recent;
@@ -863,7 +862,7 @@ function notify($id,$rev="",$summary=""){
  */
 function getRevisions($id){
   $revd = dirname(wikiFN($id,'foo'));
-  $revs = array();
+  $revs = [];
   $clid = cleanID($id);
   if(strrpos($clid,':')) $clid = substr($clid,strrpos($clid,':')+1); //remove path
 
@@ -910,7 +909,7 @@ function getGoogleQuery(){
   $url = parse_url((string)$_SERVER['HTTP_REFERER']);
 
   if(!preg_match("#google\.#i",(string)$url['host'])) return '';
-  $query = array();
+  $query = [];
   parse_str($url['query'],$query);
 
   return $query['q'];
@@ -947,7 +946,7 @@ function setCorrectLocale(){
  * @version     1.0.0
  */
 function filesize_h($size, $dec = 1){
-  $sizes = array('B', 'KB', 'MB', 'GB');
+  $sizes = ['B', 'KB', 'MB', 'GB'];
   $count = count($sizes);
   $i = 0;
 

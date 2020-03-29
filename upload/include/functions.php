@@ -941,6 +941,53 @@ function get_remote_address()
 	return $remote_address;
 }
 
+//
+// Fetch the current protocol in use - http or https
+//
+function get_current_protocol()
+{
+	$protocol = 'http';
+
+	// Check if the server is claiming to using HTTPS
+	if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')
+		$protocol = 'https';
+
+	// If we are behind a reverse proxy try to decide which protocol it is using
+	if (defined('FORUM_BEHIND_REVERSE_PROXY'))
+	{
+		// Check if we are behind a Microsoft based reverse proxy
+		if (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) != 'off')
+			$protocol = 'https';
+
+		// Check if we're behind a "proper" reverse proxy, and what protocol it's using
+		if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']))
+			$protocol = strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']);
+	}
+
+	return $protocol;
+}
+
+
+//
+// Fetch the base_url, optionally support HTTPS and HTTP
+//
+function get_base_url($support_https = false)
+{
+	global $pun_config;
+	static $base_url;
+
+	if (!$support_https)
+		return $pun_config['o_base_url'];
+
+	if (!isset($base_url))
+	{
+		// Make sure we are using the correct protocol
+		$base_url = str_replace(array('http://', 'https://'), get_current_protocol().'://', $pun_config['o_base_url']);
+	}
+
+	return $base_url;
+}
+
 
 //
 // Calls htmlspecialchars with a few options already set
@@ -969,6 +1016,7 @@ function pun_htmlspecialchars_decode($str)
 
 	return strtr($str, $translations);
 }
+
 
 //
 // Equivalent to strlen(), but counts &#[0-9]+ as one character (for unicode)

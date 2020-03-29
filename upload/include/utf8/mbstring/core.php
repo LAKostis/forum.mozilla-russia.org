@@ -1,109 +1,112 @@
 <?php
+
 /**
-* @version $Id: core.php,v 1.1 2006/11/12 22:13:43 cvs_lakostis Exp $
+* @version $Id: core.php,v 1.5 2006/02/28 22:12:25 harryf Exp $
 * @package utf8
 * @subpackage strings
 */
 
-/**
-* Define UTF8_CORE as required
-*/
-if ( !defined('UTF8_CORE') ) {
-    define('UTF8_CORE',TRUE);
-}
+// Define UTF8_CORE as required
+if (!defined('UTF8_CORE'))
+	define('UTF8_CORE', true);
 
-//--------------------------------------------------------------------
 /**
 * Wrapper round mb_strlen
 * Assumes you have mb_internal_encoding to UTF-8 already
 * Note: this function does not count bad bytes in the string - these
 * are simply ignored
-* @param UTF $str-8 string
+* @param string UTF-8 string
 * @return int number of UTF-8 characters in string
 * @package utf8
 * @subpackage strings
 */
-function utf8_strlen($str){
-    return mb_strlen($str);
+function utf8_strlen($str)
+{
+	return mb_strlen($str);
 }
 
-
-//--------------------------------------------------------------------
 /**
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strpos
 * Find position of first occurrence of a string
-* @param haystack $str
-* @param string $search needle (you should validate this with utf8_is_valid)
-* @param integer $offset in characters (from left)
+* @param string haystack
+* @param string needle (you should validate this with utf8_is_valid)
+* @param integer offset in characters (from left)
 * @return mixed integer position or FALSE on failure
 * @package utf8
 * @subpackage strings
 */
-function utf8_strpos($str, $search, $offset = FALSE){
-    if ( $offset === FALSE ) {
-        return mb_strpos($str, $search);
-    } else {
-        return mb_strpos($str, $search, $offset);
-    }
+function utf8_strpos($str, $search, $offset = false)
+{
+	// Strip unvalid characters
+	$str = utf8_bad_strip($str);
+
+	if ($offset === false)
+		return mb_strpos($str, $search);
+	else
+		return mb_strpos($str, $search, $offset);
 }
 
-//--------------------------------------------------------------------
 /**
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strrpos
 * Find position of last occurrence of a char in a string
-* @param haystack $str
-* @param string $search needle (you should validate this with utf8_is_valid)
-* @param integer $offset (optional) offset (from left)
+* @param string haystack
+* @param string needle (you should validate this with utf8_is_valid)
+* @param integer (optional) offset (from left)
 * @return mixed integer position or FALSE on failure
 * @package utf8
 * @subpackage strings
 */
-function utf8_strrpos($str, $search, $offset = FALSE){
-    if ( $offset === FALSE ) {
-        # Emulate behaviour of strrpos rather than raising warning
-        if ( empty($str) ) {
-            return FALSE;
-        }
-        return mb_strrpos($str, $search);
-    } else {
-        if ( !is_int($offset) ) {
-            trigger_error('utf8_strrpos expects parameter 3 to be long',E_USER_WARNING);
-            return FALSE;
-        }
+function utf8_strrpos($str, $search, $offset = false)
+{
+	// Strip unvalid characters
+	$str = utf8_bad_strip($str);
 
-        $str = mb_substr($str, $offset);
+	if (!$offset)
+	{
+		// Emulate behaviour of strrpos rather than raising warning
+		if (empty($str))
+			return false;
 
-        if ( FALSE !== ( $pos = mb_strrpos($str, $search) ) ) {
-            return $pos + $offset;
-        }
+		return mb_strrpos($str, $search);
+	}
+	else
+	{
+		if (!is_int($offset))
+		{
+			trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
+			return false;
+		}
 
-        return FALSE;
-    }
+		$str = mb_substr($str, $offset);
+
+		if (($pos = mb_strrpos($str, $search)) !== false)
+			return $pos + $offset;
+
+		return false;
+	}
 }
 
-//--------------------------------------------------------------------
 /**
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_substr
 * Return part of a string given character offset (and optionally length)
-* @param $str
-* @param integer $offset number of UTF-8 characters offset (from left)
-* @param integer $length (optional) length in UTF-8 characters from offset
+* @param string
+* @param integer number of UTF-8 characters offset (from left)
+* @param integer (optional) length in UTF-8 characters from offset
 * @return mixed string or FALSE if failure
 * @package utf8
 * @subpackage strings
 */
-function utf8_substr($str, $offset, $length = FALSE){
-    if ( $length === FALSE ) {
-        return mb_substr($str, $offset);
-    } else {
-        return mb_substr($str, $offset, $length);
-    }
+function utf8_substr($str, $offset, $length = false)
+{
+	if ($length === false)
+		return mb_substr($str, $offset);
+	else
+		return mb_substr($str, $offset, $length);
 }
 
-//--------------------------------------------------------------------
 /**
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strtolower
@@ -112,16 +115,16 @@ function utf8_substr($str, $offset, $length = FALSE){
 * such as Latin, Greek, Cyrillic, Armenian and archaic Georgian - it does
 * not exist in the Chinese alphabet, for example. See Unicode Standard
 * Annex #21: Case Mappings
-* @param $str
+* @param string
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @package utf8
 * @subpackage strings
 */
-function utf8_strtolower($str){
-    return mb_strtolower((string)$str);
+function utf8_strtolower($str)
+{
+	return mb_strtolower($str);
 }
 
-//--------------------------------------------------------------------
 /**
 * Assumes mbstring internal encoding is set to UTF-8
 * Wrapper around mb_strtoupper
@@ -130,11 +133,12 @@ function utf8_strtolower($str){
 * such as Latin, Greek, Cyrillic, Armenian and archaic Georgian - it does
 * not exist in the Chinese alphabet, for example. See Unicode Standard
 * Annex #21: Case Mappings
-* @param $str
+* @param string
 * @return mixed either string in lowercase or FALSE is UTF-8 invalid
 * @package utf8
 * @subpackage strings
 */
-function utf8_strtoupper($str){
-    return mb_strtoupper($str);
+function utf8_strtoupper($str)
+{
+	return mb_strtoupper($str);
 }

@@ -143,12 +143,10 @@ if ($pun_config['o_maintenance'] && $pun_user['g_id'] > PUN_ADMIN && !defined('P
 	maintenance_message();
 
 // Load unicode support
-if (strpos($lang_common['lang_encoding'], 'utf-8') !== false)
-{
-	require_once PUN_ROOT.'include/utf8/utf8.php';
-	require_once PUN_ROOT.'include/utf8/strcasecmp.php';
-	require_once PUN_ROOT.'include/utf8/ucwords.php';
-}
+require_once PUN_ROOT.'include/utf8/utf8.php';
+
+// Strip out "bad" UTF-8 characters
+forum_remove_bad_characters();
 
 // Load cached bans
 @include PUN_ROOT.'cache/cache_bans.php';

@@ -1011,7 +1011,6 @@ function pun_trim($str)
 //
 function pun_unserialize($str)
 {
-	$str = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $str);
 	return unserialize((string)$str);
 }
 
@@ -1698,7 +1697,7 @@ function extract_blocks($text, $start, $end, $retab = true)
 
 	if ($pun_config['o_indent_num_spaces'] != 8 && $retab)
 	{
-		$spaces = str_repeat(' ', $pun_config['o_indent_num_spaces']);
+		$spaces = str_repeat(' ', (int)$pun_config['o_indent_num_spaces']);
 		$text = str_replace("\t", $spaces, $text);
 	}
 

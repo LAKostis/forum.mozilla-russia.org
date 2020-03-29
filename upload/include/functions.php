@@ -941,17 +941,34 @@ function get_remote_address()
 	return $remote_address;
 }
 
+
 //
-// Equivalent to htmlspecialchars(), but allows &#[0-9]+ (for unicode)
+// Calls htmlspecialchars with a few options already set
 //
 function pun_htmlspecialchars($str)
 {
-	$str = preg_replace('/&(?!#[0-9]+;)/s', '&amp;', $str);
-	$str = str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $str);
-
-	return $str;
+	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
+
+//
+// Calls htmlspecialchars_decode with a few options already set
+//
+function pun_htmlspecialchars_decode($str)
+{
+	if (function_exists('htmlspecialchars_decode'))
+		return htmlspecialchars_decode($str, ENT_QUOTES);
+
+	static $translations;
+	if (!isset($translations))
+	{
+		$translations = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES);
+		$translations['&#039;'] = '\''; // get_html_translation_table doesn't include &#039; which is what htmlspecialchars translates ' to, but apparently that is okay?! http://bugs.php.net/bug.php?id=25927
+		$translations = array_flip($translations);
+	}
+
+	return strtr($str, $translations);
+}
 
 //
 // Equivalent to strlen(), but counts &#[0-9]+ as one character (for unicode)

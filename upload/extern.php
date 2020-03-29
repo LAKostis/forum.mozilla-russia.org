@@ -196,7 +196,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 
 		// It's time for some syndication!
 		echo '<?xml version="1.0" encoding="'.$lang_common['lang_encoding'].'"?>'."\r\n";
-		echo '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">'."\r\n";
+		echo '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://www.rssboard.org/rss-0.91.dtd">'."\r\n";
 		echo '<rss version="0.91">'."\r\n";
 		echo '<channel>'."\r\n";
 		echo "\t".'<title>'.pun_htmlspecialchars($pun_config['o_board_title']).'</title>'."\r\n";

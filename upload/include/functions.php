@@ -994,7 +994,8 @@ function get_base_url($support_https = false)
 //
 function pun_htmlspecialchars($str)
 {
-	if (!is_null($str) {
+	if (!is_null($str))
+	{
 		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 	}
 	return $str;

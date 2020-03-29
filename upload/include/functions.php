@@ -997,7 +997,7 @@ function pun_htmlspecialchars($str)
 	if (!is_null($str) {
 		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 	}
-	return $str
+	return $str;
 }
 
 

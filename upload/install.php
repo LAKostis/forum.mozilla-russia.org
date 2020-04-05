@@ -396,7 +396,7 @@ else
 					expire INT(10) UNSIGNED,
 					initiator INT(10) UNSIGNED,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -443,7 +443,7 @@ else
 					cat_name VARCHAR(80) NOT NULL DEFAULT 'New Category',
 					disp_position INT(10) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -478,7 +478,7 @@ else
 					search_for VARCHAR(60) NOT NULL DEFAULT '',
 					replace_with VARCHAR(60) NOT NULL DEFAULT '',
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -512,7 +512,7 @@ else
 					conf_name VARCHAR(255) NOT NULL DEFAULT '',
 					conf_value TEXT,
 					PRIMARY KEY (conf_name)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -547,7 +547,7 @@ else
 					post_replies TINYINT(1) NOT NULL DEFAULT 1,
 					post_topics TINYINT(1) NOT NULL DEFAULT 1,
 					PRIMARY KEY (group_id, forum_id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -597,7 +597,7 @@ else
 					closed TINYINT(1) NOT NULL DEFAULT '0',
 					cat_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -668,7 +668,7 @@ else
 					g_search_flood SMALLINT(6) NOT NULL DEFAULT 30,
 					g_wiki_level SMALLINT(1) NOT NULL DEFAULT 1,
 					PRIMARY KEY (g_id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -766,7 +766,7 @@ else
 					status TINYINT(4) DEFAULT 0,
 					showed TINYINT(4) DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -856,7 +856,7 @@ else
 					ptype tinyint(4) NOT NULL DEFAULT '0',
 					votes LONGTEXT NOT NULL,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -905,7 +905,7 @@ else
 					topic_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					blocked TINYINT(1) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -960,7 +960,7 @@ else
 					rank VARCHAR(50) NOT NULL DEFAULT '',
 					min_posts MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1001,7 +1001,7 @@ else
 					zapped INT(10) UNSIGNED,
 					zapped_by INT(10) UNSIGNED,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1048,7 +1048,7 @@ else
 					ident VARCHAR(200) NOT NULL DEFAULT '',
 					search_data TEXT,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1082,7 +1082,7 @@ else
 					post_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					word_id MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0,
 					subject_match TINYINT(1) NOT NULL DEFAULT 0
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1115,7 +1115,7 @@ else
 					word VARCHAR(40) BINARY NOT NULL DEFAULT '',
 					PRIMARY KEY (word),
 					KEY ".$db_prefix."search_words_id_idx (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1148,7 +1148,7 @@ else
 					user_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					topic_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					PRIMARY KEY (user_id, topic_id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1196,7 +1196,7 @@ else
 					announcement TINYINT(1) NOT NULL DEFAULT 0,
 					post_sticky TINYINT(1) NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1259,7 +1259,7 @@ else
 					id INT(11) NOT NULL DEFAULT 0,
 					file TEXT NOT NULL,
 					user TEXT NOT NULL
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1294,7 +1294,7 @@ else
 					p_delete TINYINT(4) NOT NULL DEFAULT 0,
 					p_globaldelete TINYINT(4) NOT NULL DEFAULT 0,
 					p_setop TINYINT(4) NOT NULL DEFAULT 0
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1378,7 +1378,7 @@ else
 					imgaward varchar(255) NOT NULL DEFAULT '',
 					show_redirect TINYINT(1) NOT NULL DEFAULT 1,
 					PRIMARY KEY (id)
-					) ENGINE=MyISAM;";
+					) ENGINE=InnoDB;";
 			break;
 
 		case 'pgsql':
@@ -1692,7 +1692,7 @@ else
 
 
 	/// Display config.php and give further instructions
-	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(sha1(uniqid(rand(), true)), 0, 16)."';\n\ndefine('PUN', 1);";
+	$config = '<?php'."\n\n".'$db_type = \''.$db_type."';\n".'$db_host = \''.$db_host."';\n".'$db_name = \''.$db_name."';\n".'$db_username = \''.$db_username."';\n".'$db_password = \''.$db_password."';\n".'$db_prefix = \''.$db_prefix."';\n".'$p_connect = false;'."\n\n".'$cookie_name = '."'punbb_cookie';\n".'$cookie_domain = '."'';\n".'$cookie_path = '."'/';\n".'$cookie_secure = 0;'."\n".'$cookie_seed = \''.substr(sha1(uniqid((string)rand(), true)), 0, 16)."';\n\ndefine('PUN', 1);";
 
 
 ?>

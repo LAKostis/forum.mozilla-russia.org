@@ -7,6 +7,7 @@ $lang_post = [
 'Too long subject'	=>	'Subjects cannot be longer than 70 characters.',
 'No message'		=>	'You must enter a message.',
 'Too long message'	=>	'Posts cannot be longer that 65535 characters (64 KB).',
+'Empty after strip'	=>	'It seems your post consisted of empty BBCodes only. It is possible that this happened because e.g. the innermost quote was discarded because of the maximum quote depth level.',
 
 // Posting
 'Post errors'		=>	'Post errors',

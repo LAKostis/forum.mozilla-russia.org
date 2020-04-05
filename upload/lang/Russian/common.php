@@ -124,6 +124,13 @@ $lang_common = [
 'BBCode error 7'		=>	'Отсутствует начальный тег для [/spoiler].',
 'BBCode error 8'		=>	'Отсутствует конечный тег для [noindex].',
 'BBCode error 9'		=>	'Отсутствует начальный тег для [/noindex].',
+'BBCode error no opening tag' => 'Обнаружен парный тег [/%1$s] без соответствующего начального тега [%1$s]',
+'BBCode error invalid nesting' => 'Тег [%1$s] открывается внутри [%2$s], это недопустимо',
+'BBCode error invalid self-nesting' => 'Тег [%s] открывается внутри такого же тега, это недопустимо',
+'BBCode error no closing tag' => 'Обнаружен парный тег [%1$s] без соответствующего закрывающего тега [/%1$s]',
+'BBCode error empty attribute' => 'Тег [%s] с пустым атрибутом',
+'BBCode error tag not allowed'		=>	'Вам нельзя использовать тег [%s]',
+'BBCode list size error' => 'Ваш список слишком велик, пожалуйста уменьшите его!',
 
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Форумы',

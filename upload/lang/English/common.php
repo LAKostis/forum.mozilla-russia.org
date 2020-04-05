@@ -124,6 +124,13 @@ $lang_common = [
 'BBCode error 7'		=>	'Missing start tag for [/spoiler].',
 'BBCode error 8'		=>	'Missing end tag for [noindex].',
 'BBCode error 9'		=>	'Missing start tag for [/noindex].',
+'BBCode error no opening tag'		=>	'[/%1$s] was found without a matching [%1$s]',
+'BBCode error invalid self-nesting'	=>	'[%s] was opened within itself, this is not allowed',
+'BBCode error invalid nesting'		=>	'[%1$s] was opened within [%2$s], this is not allowed',
+'BBCode error tag not allowed'		=>	'You are not allowed to use [%s] tags',
+'BBCode error no closing tag'		=>	'[%1$s] was found without a matching [/%1$s]',
+'BBCode error empty attribute'		=>	'[%s] tag had an empty attribute section',
+'BBCode list size error'	=>	'Your list was too long to parse, please make it smaller!',
 
 // Stuff for the navigator (top of every page)
 'Index'					=>	'Index',

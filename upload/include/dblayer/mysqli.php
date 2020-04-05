@@ -48,7 +48,7 @@ class DBLayer
 			list($db_host, $db_port) = explode(':', $db_host);
 
 		if (isset($db_port))
-			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name, $db_port);
+			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name, (int)$db_port);
 		else
 			$this->link_id = @mysqli_connect($db_host, $db_username, $db_password, $db_name);
 
@@ -171,7 +171,7 @@ class DBLayer
 
 	function error()
 	{
-		$result['error_sql'] = @current(@end($this->saved_queries));
+		$result['error_sql'] = is_array($this->saved_queries) ? '' : @current(@end($this->saved_queries));
 		$result['error_no'] = @mysqli_errno($this->link_id);
 		$result['error_msg'] = @mysqli_error($this->link_id);
 

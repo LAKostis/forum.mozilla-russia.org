@@ -49,7 +49,7 @@ function check_cookie(&$pun_user)
 		// If user authorisation failed
 		if (!isset($pun_user['id']) || md5($cookie_seed.$pun_user['password']) !== $cookie['password_hash'])
 		{
-			pun_setcookie(1, md5(uniqid(rand(), true)), $expire);
+			pun_setcookie(1, md5(uniqid((string)rand(), true)), $expire);
 			set_default_user();
 
 			return;
@@ -2000,28 +2000,3 @@ function url_valid($url)
 	return $m; // return TRUE == array of useful named $matches plus the valid $url.
 }
 
-//
-// Replace string matching regular expression
-//
-// This function takes care of possibly disabled unicode properties in PCRE builds
-//
-function ucp_preg_replace($pattern, $replace, $subject)
-{
-	$replaced = preg_replace($pattern, $replace, $subject);
-
-	// If preg_replace() returns false, this probably means unicode support is not built-in, so we need to modify the pattern a little
-	if ($replaced === false)
-	{
-		if (is_array($pattern))
-		{
-			foreach ($pattern as $cur_key => $cur_pattern)
-				$pattern[$cur_key] = str_replace('\p{L}\p{N}', '\w', $cur_pattern);
-
-			$replaced = preg_replace($pattern, $replace, $subject);
-		}
-		else
-			$replaced = preg_replace(str_replace('\p{L}\p{N}', '\w', $pattern), $replace, $subject);
-	}
-
-	return $replaced;
-}

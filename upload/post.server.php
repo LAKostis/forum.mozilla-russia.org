@@ -23,7 +23,7 @@ function builderrordivcontent(&$errors)
     $errordiv .= "<h2><span>".$lang_post['Post errors']."</span></h2>";
     $errordiv .= "<div class=\"box\"><div class=\"inbox\">";
     $errordiv .= "<p>".$lang_post['Post errors info']."</p><ul>";
-    while (list(, $cur_error) = each($errors))
+    foreach ($errors as $cur_error)
 		$errordiv .= '<li><strong>'.$cur_error.'</strong></li>';
     $errordiv .= "</ul></div></div></div>";
     return $errordiv;

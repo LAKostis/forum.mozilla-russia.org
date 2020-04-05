@@ -75,6 +75,15 @@ if (get_magic_quotes_gpc())
 if (version_compare(PHP_VERSION, '4.2.0', '<'))
 	mt_srand((double)microtime()*1000000);
 
+// Load UTF-8 functions
+require PUN_ROOT.'include/utf8/utf8.php';
+
+// Strip out "bad" UTF-8 characters
+forum_remove_bad_characters();
+
+// Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
+setlocale(LC_CTYPE, 'C');
+
 // If a cookie name is not specified in config.php, we use the default (punbb_cookie)
 if (empty($cookie_name))
 	$cookie_name = 'punbb_cookie';
@@ -205,6 +214,11 @@ if (!defined('PUN_MAX_USERS_LOADED'))
 // Check if current user is banned
 if (!defined('PUN_NO_BAN'))
 	check_bans();
+
+if (!defined('PUN_SEARCH_MIN_WORD'))
+	define('PUN_SEARCH_MIN_WORD', 3);
+if (!defined('PUN_SEARCH_MAX_WORD'))
+	define('PUN_SEARCH_MAX_WORD', 20);
 
 // Update online list
 update_users_online();

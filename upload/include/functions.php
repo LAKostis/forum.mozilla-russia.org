@@ -1631,7 +1631,7 @@ function multigrp_getSql($db) {
 		$mgrps = explode(',', $pun_user["membergroupids"]);
 		$count = 1;
 		foreach($mgrps as $mgrp) {
-			if((int)$mgrp != 0) {
+			if(!is_null($mgrp) && $mgrp !== 0) {
 				$retJoin  .= " LEFT JOIN ".$db->prefix."forum_perms AS fp".$count." ON (fp".$count.".forum_id=f.id AND fp".$count.".group_id=".$mgrp.")";
 				$retWhere .= " OR (fp".$count.".read_forum IS NULL OR fp".$count.".read_forum=1)";
 				$count++;

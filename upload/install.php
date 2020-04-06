@@ -1046,7 +1046,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."search_cache (
 					id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
-					search_data TEXT,
+					search_data LONGTEXT,
 					PRIMARY KEY (id)
 					) ENGINE=InnoDB;";
 			break;

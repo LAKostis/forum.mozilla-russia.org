@@ -56,8 +56,8 @@ $multibyte = isset($lang_common['lang_multibyte']) && $lang_common['lang_multiby
 if (isset($_GET['action']) || isset($_GET['search_id']))
 {
 	$action = isset($_GET['action']) ? $_GET['action'] : null;
-	$forum = isset($_GET['forum']) && preg_match('#^[\d,]+$#', $_GET['forum']) ? $_GET['forum'] : -1;
-	$topic = isset($_GET['topic']) && preg_match('#^[\d,]+$#', $_GET['topic']) ? $_GET['topic'] : -1;
+	$forum = isset($_GET['forum']) && preg_match('%^[\d,]+$%', $_GET['forum']) ? $_GET['forum'] : '-1';
+	$topic = isset($_GET['topic']) && preg_match('%^[\d,]+$%', $_GET['topic']) ? $_GET['topic'] : '-1';
 	$sort_dir = isset($_GET['sort_dir']) ? ($_GET['sort_dir'] == 'DESC' ? 'DESC' : 'ASC') : 'DESC';
 	$search_in = 0;
 	if (isset($search_id)) unset($search_id);
@@ -72,26 +72,26 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	// If it's a regular search (keywords and/or author)
 	else if ($action == 'search')
 	{
-		$keywords = isset($_GET['keywords']) ? pun_strtolower(trim($_GET['keywords'])) : null;
-		$author = isset($_GET['author']) ? pun_strtolower(trim($_GET['author'])) : null;
+		$keywords = isset($_GET['keywords']) ? pun_strtolower(trim($_GET['keywords'])) : '';
+		$author = isset($_GET['author']) ? pun_strtolower(trim($_GET['author'])) : '';
 
-		if (preg_match('#^[\*%]+$#', $keywords) || strlen(str_replace(['*', '%'], '', $keywords)) < 3)
+		if (preg_match('%^[\*\%]+$%', $keywords) || (pun_strlen(str_replace(array('*', '%'), '', $keywords)) < PUN_SEARCH_MIN_WORD))
 			$keywords = '';
 
-		if (preg_match('#^[\*%]+$#', $author) || strlen(str_replace(['*', '%'], '', $author)) < 3)
+		if (preg_match('%^[\*\%]+$%', $author) || pun_strlen(str_replace(array('*', '%'), '', $author)) < 2)
 			$author = '';
 
 		if (!$keywords && !$author)
 			message($lang_search['No terms']);
 
 		if ($author)
-			$author = str_replace('*', '%', $author);
+			$author = str_replace(array('*', '_'), array('%', '\\_'), $author);
 
 		$after = isset($_GET['after']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['after']) ? strtotime($_GET['after']) : null;
 		$before = isset($_GET['before']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['before']) ? strtotime($_GET['before']) : null;
 
 		$show_as = isset($_GET['show_as']) ? $_GET['show_as'] : 'posts';
-		$sort_by = isset($_GET['sort_by']) ? intval($_GET['sort_by']) : null;
+		$sort_by = isset($_GET['sort_by']) ? intval($_GET['sort_by']) : 0;
 		$search_in = !isset($_GET['search_in']) || $_GET['search_in'] == 'all' ? 0 : ($_GET['search_in'] == 'message' ? 1 : -1);
 	}
 	// If it's a user search (by id)

@@ -124,7 +124,7 @@ if (isset($_POST['form_sent']))
 		require_once PUN_ROOT.'lang/'.$pun_user['language'].'/register.php';
 
 		// It's a guest, so we have to validate the username
-		if (strlen($username) < 2)
+		if (pun_strlen($username) < 2)
 			$errors[] = $lang_prof_reg['Username too short'];
 		else if (!strcasecmp($username, 'Guest') || !pun_strcasecmp($username, $lang_common['Guest']))
 			$errors[] = $lang_prof_reg['Username guest'];

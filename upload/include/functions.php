@@ -1155,12 +1155,11 @@ function pun_htmlspecialchars_decode($str)
 
 
 //
-// Equivalent to strlen(), but counts &#[0-9]+ as one character (for unicode)
+// Equivalent to strlen(), but for unicode
 //
 function pun_strlen($str)
 {
-	return strlen(preg_replace('/&#([0-9]+);/', '!', $str));
-//	return strlen(utf8_decode($str));
+	return utf8_strlen($str);
 }
 
 

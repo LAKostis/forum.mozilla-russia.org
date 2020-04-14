@@ -24,6 +24,7 @@
 
 define('PUN_QUIET_VISIT', 1);
 define('PUN_ROOT', './');
+define('URL_LIMIT', 20000);
 require PUN_ROOT.'include/common.php';
 
 //
@@ -64,7 +65,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 }
 
 // Output the data for the topics
-$result = $db->query('SELECT t.id as topic_id, last_post, sticky, num_replies FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=t.forum_id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL ORDER BY last_post DESC') or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT t.id as topic_id, last_post, sticky, num_replies FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=t.forum_id AND fp.group_id=3) WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL ORDER BY last_post DESC limit '.URL_LIMIT) or error('Unable to fetch topic list', __FILE__, __LINE__, $db->error());
 
 while ($cur_topic = $db->fetch_assoc($result))
 {

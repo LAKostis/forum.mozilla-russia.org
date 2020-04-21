@@ -206,7 +206,7 @@ elseif (isset($_POST['act']) && pun_trim($_POST['act']) == 'Upload' && isset($_F
     $file_name = pun_trim($_FILES['file']['name']);
     $file_type = pun_trim($_FILES['file']['type']);
     $file_size = intval($_FILES['file']['size']);
-    $result    = pun_trim($_FILES['file']['error']);
+    $result    = intval($_FILES['file']['error']);
 	if(($upl_conf['p_upload'] <> 1)) error('No permission', __FILE__, __LINE__, $db->error());
     $ext = strtolower(strrchr($file_name,'.'));
     if($file_name == "")

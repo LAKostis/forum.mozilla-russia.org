@@ -403,7 +403,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 		'h'		=> array('b', 'i', 'u', 's', 'ins', 'del', 'em', 'color', 'colour', 'url', 'email', 'topic', 'post', 'forum', 'user'),
 	);
 	// Tags we can automatically fix bad nesting
-	$tags_fix = array('quote', 'b', 'i', 'u', 's', 'ins', 'del', 'em', 'color', 'colour', 'url', 'email', 'h', 'topic', 'post', 'forum', 'user');
+	$tags_fix = array('quote', 'b', 'i', 'u', 's', 'ins', 'del', 'em', 'color', 'colour', 'url', 'email', 'h', 'topic', 'post', 'forum', 'user', 'spoiler', 'noindex');
 
 	$split_text = preg_split('%(\[[\*a-zA-Z0-9-/]*?(?:=.*?)?\])%', $text, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 
@@ -1039,16 +1039,10 @@ function do_bbcode($text, $is_signature = false)
 	if (strpos((string)$text, 'quote') !== false)
 	{
 		$text = str_replace('[quote]', '</p><blockquote><div class="incqbox"><p>', $text);
-		$text = preg_replace_callback(
-			'#\[quote=(&quot;|"|\'|)(.*)\\1\]#sU',
-			function($matches){
-				foreach($matches as $match) {
-					return str_replace('[\', \'&#91;\', \'$matches[2]\')." ".$lang_common[\'wrote\'].": </h4><p>"', $matches);
-				}
-			},
-			$text
-		);
-		$text = preg_replace('#\[\/quote\]\s*#', '</p></div></blockquote><p>', $text);
+		//$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><blockquote><div class=\"incqbox\"><h4>".str_replace(\'[\', \'&#91;\', \'$2\')." ".$lang_common[\'wrote\'].": </h4><p>"', $text);
+		$text = preg_replace_callback('%\[quote=(&quot;|&\#039;|"|\'|)([^\r\n]*?)\\1\]%s', function($matches) use ($lang_common) { return '"</p><blockquote><div class=\"incqbox\"><h4>"'.str_replace(array('[', '\\"'), array('&#91;', '"'), $matches[2])." {$lang_common['wrote']}: </h4><p>"; }, $text);
+		
+		$text = preg_replace('%\[\/quote\]%S', '</p></div></blockquote><p>', $text);
 	}
 
 	if (strpos((string)$text, 'added') !== false)
@@ -1174,19 +1168,16 @@ function parse_message($text, $hide_smilies)
 	// If we split up the message before we have to concatenate it together again (code tags)
 	if (isset($inside))
 	{
-		$outside = explode('<">', $text);
+		$parts = explode("\1", $text);
 		$text = '';
-
-		$num_tokens = count($outside);
-
-		for ($i = 0; $i < $num_tokens; ++$i)
+		foreach ($parts as $i => $part)
 		{
-			$text .= $outside[$i];
+			$text .= $part;
 			if (isset($inside[$i]))
 			{
-				$num_lines = (substr_count($inside[$i], "\n") + 3) * 1.5;
+				$num_lines = ((substr_count($inside[$i], "\n")) + 3) * 1.5;
 				$height_str = $num_lines > 35 ? '35em' : $num_lines.'em';
-				$text .= '</p><div class="codebox"><div class="incqbox"><a href="#" style="float:right" onclick="return codeSelect(this)">'.$lang_common['Code select'].'</a><h4>'.$lang_common['Code'].':</h4><div class="scrollbox" style="height: '.$height_str.'"><pre>'.$inside[$i].'</pre></div></div></div><p>';
+				$text .= '</p><div class="codebox"><div class="incqbox"><a href="#" style="float:right" onclick="return codeSelect(this)">'.$lang_common['Code select'].'</a><h4>'.$lang_common['Code'].':</h4><div class="scrollbox" style="height: '.$height_str.'"><pre>'.pun_trim($inside[$i], "\n\r").'</pre></div></div></div><p>';
 			}
 		}
 	}

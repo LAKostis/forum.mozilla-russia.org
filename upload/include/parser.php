@@ -31,7 +31,7 @@ if (!defined('PUN'))
 /* regular expression to match nested BBCode LIST tags
 '%
 \[list                # match opening bracket and tag name of outermost LIST tag
-(?:=([1a*]))?+        # optional attribute capture in group 1
+(?:=([1as*]))?+       # optional attribute capture in group 1
 \]                    # closing bracket of outermost opening LIST tag
 (                     # capture contents of LIST tag in group 2
   (?:                 # non capture group for either contents or whole nested LIST
@@ -39,7 +39,7 @@ if (!defined('PUN'))
     (?:               # (See "Mastering Regular Expressions" chapter 6 for details)
       (?!             # negative lookahead ensures we are NOT on [LIST*] or [/LIST]
         \[list        # opening LIST tag
-        (?:=[1a*])?+  # with optional attribute
+        (?:=[1as*])?+ # with optional attribute
         \]            # closing bracket of opening LIST tag
         |             # or...
         \[/list\]     # a closing LIST tag
@@ -53,7 +53,7 @@ if (!defined('PUN'))
 )                     # end capturing contents of LIST tag into group 2
 \[/list\]             # match outermost closing LIST tag
 %iex' */
-$re_list = '%\[list(?:=([1a*]))?+\]((?:[^\[]*+(?:(?!\[list(?:=[1a*])?+\]|\[/list\])\[[^\[]*+)*+|(?R))*)\[/list\]%i';
+$re_list = '%\[list(?:=([1as*]))?+\]((?:[^\[]*+(?:(?!\[list(?:=[1as*])?+\]|\[/list\])\[[^\[]*+)*+|(?R))*)\[/list\]%i';
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
 $smiley_text = [
@@ -372,9 +372,9 @@ function preparse_tags($text, &$errors, $is_signature = false)
 	// List of tags that we need to check are open (You could not put b,i,u in here then illegal nesting like [b][i][/b][/i] would be allowed)
 	$tags_opened = $tags;
 	// and tags we need to check are closed (the same as above, added it just in case)
-	$tags_closed = $tags;
+	$tags_closed = array_diff($tags, array('*'));
 	// Tags we can nest and the depth they can be nested to
-	$tags_nested = array('quote' => '3', 'list' => 5, '*' => 5, 'spoiler' => 5, 'noindex' => 5);
+	$tags_nested = array('quote' => '3', 'list' => 5, '*' => 99, 'spoiler' => 5, 'noindex' => 5);
 	// Tags to ignore the contents of completely (just code)
 	$tags_ignore = array('code');
 	// Tags not allowed
@@ -811,7 +811,7 @@ function preparse_list_tag($content, $type = '*')
 	foreach ($items as $item)
 	{
 		if (pun_trim($item) != '')
-			$content .= '[*'."\0".']'.str_replace('[/*]', '', pun_trim($item)).'[/*'."\0".']'."\n";
+			$content .= '[*'."\0".']'.pun_trim($item)."\n";
 	}
 
 	return '[list='.$type.']'."\n".$content.'[/list]';
@@ -907,17 +907,16 @@ function handle_list_tag($content, $type = '*')
 		$content = preg_replace_callback($re_list, function($matches) { return handle_list_tag($matches[2], $matches[1]); }, $content);
 	}
 
-	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', pun_trim($content));
+	$content = preg_replace('%\[\*\]%s', '<li class="list"/>', pun_trim($content));
 
 	if ($type == '*')
 		$content = '<ul type="disc" class="list">'.$content.'</ul>';
-	elseif ($type == 's')
+	if ($type == 's')
 		$content = '<ul type="circle" class="list">'.$content.'</ul>';
-	else
-		if ($type == 'a')
-			$content = '<ol class="alpha">'.$content.'</ol>';
-		else
-			$content = '<ol class="decimal">'.$content.'</ol>';
+	if ($type == 'a')
+		$content = '<ol type="A" class="list">'.$content.'</ol>';
+	if ($type == '1')
+		$content = '<ol type="1" class="list">'.$content.'</ol>';
 
 	return '</p>'.$content.'<p>';
 }
@@ -969,7 +968,7 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<strong>$1</strong>';
 	$replace[] = '<em>$1</em>';
 	$replace[] = '<span class="bbu">$1</span>';
-	$replace[] = '<span class="bbs">$1</span>';
+	$replace[] = '<del>$1</del>';
 	$replace[] = '<del>$1</del>';
 	$replace[] = '<ins>$1</ins>';
 	$replace[] = '<em>$1</em>';
@@ -1041,7 +1040,7 @@ function do_bbcode($text, $is_signature = false)
 		$text = str_replace('[quote]', '</p><blockquote><div class="incqbox"><p>', $text);
 		//$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><blockquote><div class=\"incqbox\"><h4>".str_replace(\'[\', \'&#91;\', \'$2\')." ".$lang_common[\'wrote\'].": </h4><p>"', $text);
 		$text = preg_replace_callback('%\[quote=(&quot;|&\#039;|"|\'|)([^\r\n]*?)\\1\]%s', function($matches) use ($lang_common) { return '"</p><blockquote><div class=\"incqbox\"><h4>"'.str_replace(array('[', '\\"'), array('&#91;', '"'), $matches[2])." {$lang_common['wrote']}: </h4><p>"; }, $text);
-		
+
 		$text = preg_replace('%\[\/quote\]%S', '</p></div></blockquote><p>', $text);
 	}
 

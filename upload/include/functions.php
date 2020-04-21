@@ -1789,8 +1789,8 @@ function pun_get_browser($uagent) {
 		'yandex'
 	];
 	$ua = get_browser($uagent,true);
-	$ua_browser = pun_strtolower($ua['browser']);
-	$ua_version = $ua['version'];
+	$ua_browser = (!is_null($ua['browser'])) ? pun_strtolower($ua['browser']) : "unknown";
+	$ua_version = (!is_null($ua['version'])) ? $ua['version'] : "0.0";
 	$ua_browser_alt = pun_ucwords($ua_browser);
 
 	if (!in_array($ua_browser,$known_bw)) {
@@ -1998,4 +1998,3 @@ function url_valid($url)
 	for ($i = 0; isset($m[$i]); ++$i) unset($m[$i]);
 	return $m; // return TRUE == array of useful named $matches plus the valid $url.
 }
-

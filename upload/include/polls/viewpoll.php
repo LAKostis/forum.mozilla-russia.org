@@ -46,7 +46,7 @@ if ($db->num_rows($result))
 			<table style="WIDTH: auto; TABLE-LAYOUT: auto; TEXT-ALIGN: left; BORDER: 0; CELLSPACING: 0; CELLPADDING: 0;">
 			<?php
 			if ($ptype == 1) {
-				while (list($key, $value) = each($options)) {
+				foreach($options as $key => $value) {
 
 					?>
 						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="vote" <?php if (!$firstcheck) { echo "checked"; $firstcheck = true; }?> type="radio" value="<?php echo $key ?>" /></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
@@ -55,7 +55,7 @@ if ($db->num_rows($result))
 						<?php
 				}
 			} elseif ($ptype == 2) {
-				while (list($key, $value) = each($options)) {
+				foreach($options as $key => $value) {
 					?>
 						<tr><td style="WIDTH: 10; BORDER: 0;"><input name="options[<?php echo $key ?>]" type="checkbox" value="1" /></td><td style="BORDER: 0; WIDTH: auto;"><span><?php echo pun_htmlspecialchars($value);
 
@@ -63,7 +63,7 @@ if ($db->num_rows($result))
 						<?php
 				}
 			} elseif ($ptype == 3) {
-				while (list($key, $value) = each($options)) {
+				foreach($options as $key => $value) {
 					?>
 						<tr><td style="WIDTH: auto; BORDER: 0;"><?php echo pun_htmlspecialchars($value); ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" checked type="radio" value="yes" /> <?php echo $cur_topic['yes']; ?></td><td style="BORDER: 0; WIDTH: auto;"><input name="options[<?php echo $key ?>]" type="radio" value="no" /> <?php echo $cur_topic['no']; ?></td></tr>
 						<?php
@@ -90,7 +90,7 @@ if ($db->num_rows($result))
 			$total = 0;
 			$percent = 0;
 			$percent_int = 0;
-			while (list($key, $val) = each($options))
+			foreach($options as $key => $val)
 			{
 				if (isset($votes[$key]))
 					$total += $votes[$key];
@@ -98,7 +98,7 @@ if ($db->num_rows($result))
 			reset($options);
 		}
 
-		while (list($key, $value) = each($options)) {
+		foreach($options as $key => $value) {
 
 			if ($ptype == 1 || $ptype == 2)
 			{

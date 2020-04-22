@@ -68,7 +68,7 @@ if ($fid)
 		<ul>
 		<?php
 
-			while (list(, $cur_error) = each($errors))
+			foreach($errors as $cur_error)
 			echo "\t\t\t\t" . '<li><strong>' . $cur_error . '</strong></li>' . "\n";
 
 		?>
@@ -100,7 +100,7 @@ if ($fid)
 			</strong>	<br /><br />
 			<form action="" method="POST">
 			<?php
-				while (list($key, $value) = each($option)) {
+				foreach($option as $key => $value) {
 					if (!empty($value)) {
 
 					?>
@@ -123,7 +123,7 @@ if ($fid)
 			</strong><br /><br />
 			<form action="" method="POST">
 			<?php
-				while (list($key, $value) = each($option)) {
+				foreach($option as $key => $value) {
 					if (!empty($value)) {
 
 					?>
@@ -146,7 +146,7 @@ if ($fid)
 			<br /><br />
 			<form action="" method="POST">
 			<?php
-				while (list($key, $value) = each($option)) {
+				foreach($option as $key => $value) {
 					if (!empty($value)) {
 
 					?>
@@ -329,8 +329,8 @@ if ($fid)
 				<ul>
 				<?php
 
-					while (list(, $cur_error) = each($errors))
-					echo "\t\t\t\t".'<li><strong>'.$cur_error.'</strong></li>'."\n";
+					foreach($errors as $cur_error)
+						echo "\t\t\t\t".'<li><strong>'.$cur_error.'</strong></li>'."\n";
 				?>
 				</ul>
 				</div>

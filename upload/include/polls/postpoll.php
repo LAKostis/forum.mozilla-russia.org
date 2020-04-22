@@ -36,7 +36,7 @@ if (!empty($_POST['create_poll']))
 	// This isn't exactly a good way todo it, but it works. I may rethink this code later
 	$option = [];
 	$lastoption = "null";
-	while (list($key, $value) = each($_POST['poll_option'])) {
+	foreach($_POST['poll_option'] as $key => $value) {
 		$value = pun_trim($value);
 		if ($value != "") {
 			if ($lastoption == '')

@@ -222,7 +222,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 				$cur_topic['subject'] = censor_words($cur_topic['subject']);
 
 			$result2 = $db->query('SELECT posted, message, hide_smilies FROM '.$db->prefix.'posts WHERE topic_id='.$cur_topic['id'].' ORDER BY posted ASC LIMIT 1') or error('Unable to fetch post list', __FILE__, __LINE__, $db->error());
-			$cur_message = $db->fetch_assoc($result2);
+			$cur_message = !is_null($db->fetch_assoc($result2)) ? $db->fetch_assoc($result2) : '';
 
 			echo "\t".'<item>'."\r\n";
 			if($site){

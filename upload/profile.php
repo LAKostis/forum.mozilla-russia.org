@@ -819,7 +819,7 @@ else if (isset($_POST['form_sent']))
 	$temp = [];
 	while (list($key, $input) = @each($form))
 	{
-		$value = $input !== '' ? '\''.$db->escape($input).'\'' : 'NULL';
+		$value = $input !== '' ? '\''.$db->escape((string)$input).'\'' : 'NULL';
 
 		$temp[] = $key.'='.$value;
 	}

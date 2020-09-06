@@ -782,7 +782,7 @@ function format_time($timestamp, $date_only = false)
 		return $lang_common['Never'];
 
 	$diff = ($pun_user['timezone'] - $pun_config['o_server_timezone']) * 3600;
-	$timestamp += $diff;
+	(int)$timestamp += $diff;
 	$now = time();
 
 	$date = date($pun_config['o_date_format'], $timestamp);

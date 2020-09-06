@@ -39,8 +39,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 
 if (isset($_POST['form_sent']) && $action == 'in')
 {
-	$form_username = trim($_POST['req_username']);
-	$form_password = trim($_POST['req_password']);
+	$form_username = isset($_POST['req_username']) ? trim($_POST['req_username']) : '';
+	$form_password = isset($_POST['req_password']) ? trim($_POST['req_password']) : '';
 
 	$username_sql = $db_type == 'mysql' || $db_type == 'mysqli' ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
 

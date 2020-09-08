@@ -1798,12 +1798,12 @@ function pun_get_browser($uagent) {
 		$ua_version = "0.0";
 		$ua_browser_alt = "unknown";
 	}
-	else {
+	elseif {
 		if ($ua_browser == "ie" && $ua_version >= "9.0") {
 			$ua_browser = "ie9";
 			$ua_browser_alt = "IE";
 		}
-		if($ua_browser == "ie")
+		if ($ua_browser == "ie")
 			$ua_browser_alt = "IE";
 	}
 	else {

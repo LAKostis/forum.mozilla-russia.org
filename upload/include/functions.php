@@ -1798,21 +1798,19 @@ function pun_get_browser($uagent) {
 		$ua_version = "0.0";
 		$ua_browser_alt = "unknown";
 	}
-	elseif {
-		if ($ua_browser == "ie" && $ua_version >= "9.0") {
-			$ua_browser = "ie9";
-			$ua_browser_alt = "IE";
-		}
-		if ($ua_browser == "ie")
-			$ua_browser_alt = "IE";
+	elseif ($ua_browser == "ie" && $ua_version >= "9.0") {
+		$ua_browser = "ie9";
+		$ua_browser_alt = "IE";
 	}
-	else {
-		if ($ua_browser == "edge" && $ua_version >= "79.0") {
-			$ua_browser = "edge79";
-			$ua_browser_alt = "Edge";
-		}
-		if($ua_browser == "edge")
-			$ua_browser_alt = "Edge";
+	elseif ($ua_browser == "ie") {
+		$ua_browser_alt = "IE";
+	}
+	elseif ($ua_browser == "edge" && $ua_version >= "79.0") {
+		$ua_browser = "edge79";
+		$ua_browser_alt = "Edge";
+	}
+	elseif ($ua_browser == "edge") {
+		$ua_browser_alt = "Edge";
 	}
 	return [$ua_browser,$ua_version,$ua_browser_alt];
 }

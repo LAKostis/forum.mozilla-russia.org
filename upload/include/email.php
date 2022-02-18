@@ -121,6 +121,15 @@ function is_banned_email($email)
 		}
 	}
 
+	$listed_emails_local = file(PUN_ROOT.'cache/listed_email_local.txt', FILE_IGNORE_NEW_LINES);
+	if($listed_emails_local)
+	{
+		foreach ($listed_emails_local as $cur_listed) {
+			if ($email == $cur_listed || (strpos($cur_listed, '@') === false && stristr($email, '@'.$cur_listed)))
+				return true;
+		}
+	}
+
 	return false;
 }
 

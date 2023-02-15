@@ -194,21 +194,12 @@ function process_form(the_form)
 }
 else
 {
-	//
-	// Strip slashes only if magic_quotes_gpc is on.
-	//
-	function unescape($str)
-	{
-		return get_magic_quotes_gpc() == 1 ? stripslashes($str) : $str;
-	}
-
-
 	if (!defined($db_prefix))
 	    $db_prefix = 'punbb_';
-	$username = unescape(trim($_POST['req_username']));
+	$username = trim($_POST['req_username']);
 	$email = strtolower(trim($_POST['req_email']));
-	$password1 = unescape(trim($_POST['req_password1']));
-	$password2 = unescape(trim($_POST['req_password2']));
+	$password1 = trim($_POST['req_password1']);
+	$password2 = trim($_POST['req_password2']);
 
 
 	// Make sure base_url doesn't end with a slash

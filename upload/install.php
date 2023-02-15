@@ -249,15 +249,6 @@ function process_form(the_form)
 else
 {
 	//
-	// Strip slashes only if magic_quotes_gpc is on.
-	//
-	function unescape($str)
-	{
-		return get_magic_quotes_gpc() == 1 ? stripslashes($str) : $str;
-	}
-
-
-	//
 	// Compute a hash of $str.
 	// Uses sha1() if available. If not, SHA1 through mhash() if available. If not, fall back on md5().
 	//
@@ -295,13 +286,13 @@ else
 	$db_type = $_POST['req_db_type'];
 	$db_host = trim($_POST['req_db_host']);
 	$db_name = trim($_POST['req_db_name']);
-	$db_username = unescape(trim($_POST['db_username']));
-	$db_password = unescape(trim($_POST['db_password']));
+	$db_username = trim($_POST['db_username']);
+	$db_password = trim($_POST['db_password']);
 	$db_prefix = trim($_POST['db_prefix']);
-	$username = unescape(trim($_POST['req_username']));
+	$username = trim($_POST['req_username']);
 	$email = strtolower(trim($_POST['req_email']));
-	$password1 = unescape(trim($_POST['req_password1']));
-	$password2 = unescape(trim($_POST['req_password2']));
+	$password1 = trim($_POST['req_password1']);
+	$password2 = trim($_POST['req_password2']);
 
 
 	// Make sure base_url doesn't end with a slash

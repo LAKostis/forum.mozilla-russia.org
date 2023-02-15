@@ -54,27 +54,6 @@ if (!defined('PUN'))
 list($usec, $sec) = explode(' ', microtime());
 $pun_start = (float)$usec + (float)$sec;
 
-// Turn off magic_quotes_runtime
-if (version_compare(PHP_VERSION, '5.3.0', '<'))
-set_magic_quotes_runtime(0);
-
-// Strip slashes from GET/POST/COOKIE (if magic_quotes_gpc is enabled)
-if (get_magic_quotes_gpc())
-{
-	function stripslashes_array($array)
-	{
-		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
-	}
-
-	$_GET = stripslashes_array($_GET);
-	$_POST = stripslashes_array($_POST);
-	$_COOKIE = stripslashes_array($_COOKIE);
-}
-
-// Seed the random number generator (PHP <4.2.0 only)
-if (version_compare(PHP_VERSION, '4.2.0', '<'))
-	mt_srand((double)microtime()*1000000);
-
 // Load UTF-8 functions
 require PUN_ROOT.'include/utf8/utf8.php';
 

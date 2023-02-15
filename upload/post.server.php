@@ -34,8 +34,6 @@ function getpreview($postform)
 	global $db, $pun_user, $pun_config, $lang_post;
 	$errors = [];
 	$message = pun_linebreaks(trim($postform['req_message']));
-	if(get_magic_quotes_gpc())
-		$message = stripslashes($message);
 
 	if ($message == '')
 		$errors[] = $lang_post['No message'];

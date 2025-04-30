@@ -38,8 +38,7 @@ class DBLayer
 	var $saved_queries = [];
 	var $num_queries = 0;
 
-
-	function DBLayer($db_host, $db_username, $db_password, $db_name, $db_prefix, $foo)
+	function __construct($db_host, $db_username, $db_password, $db_name, $db_prefix, $foo)
 	{
 		$this->prefix = $db_prefix;
 
@@ -190,5 +189,11 @@ class DBLayer
 		}
 		else
 			return false;
+	}
+
+	function table_exists($table_name, $no_prefix = false)
+	{
+		$result = $this->query('SHOW TABLES LIKE \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\'');
+		return $this->num_rows($result) > 0;
 	}
 }

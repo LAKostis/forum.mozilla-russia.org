@@ -448,7 +448,7 @@ require PUN_ROOT.'header.php';
 							<br /><select name="language">
 <?php
 
-			while (list(, $temp) = @each($languages))
+			foreach ($languages as $temp)
 			{
 				if ($pun_config['o_default_lang'] == $temp)
 					echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";

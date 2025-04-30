@@ -105,7 +105,7 @@ else	// If not, we show the form
 									<select name="form[language]">
 <?php
 
-		while (list(, $temp) = @each($languages))
+		foreach ($languages as $temp)
 		{
 				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.$temp.'</option>'."\n";
 		}
@@ -163,7 +163,7 @@ else	// If not, we show the form
 									<select name="form[style]">
 <?php
 
-		while (list(, $temp) = @each($styles))
+		foreach ($styles as $temp)
 		{
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'">'.str_replace('_', ' ', $temp).'</option>'."\n";
 		}

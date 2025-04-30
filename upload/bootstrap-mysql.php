@@ -773,8 +773,7 @@ else
 			break;
 	}
 
-	@reset($queries);
-	while (list(, $sql) = @each($queries))
+	foreach ($queries as $sql)
 		$db->query($sql) or error('Unable to create indexes. Please check your configuration and try again.', __FILE__, __LINE__, $db->error());
 
 
@@ -898,7 +897,7 @@ else
 		'o_spamreport_count'		=> "'2'"
 	];
 
-	while (list($conf_name, $conf_value) = @each($config))
+	foreach ($config as $conf_name => $conf_value)
 	{
 		$db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)")
 			or error('Unable to insert into table '.$db_prefix.'config. Please check your configuration and try again.');

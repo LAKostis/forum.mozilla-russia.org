@@ -90,7 +90,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 
 	if ($footer_style == 'viewforum' && $is_admmod)
 		echo "\t\t\t".'<p id="modcontrols"><a href="moderate.php?fid='.$forum_id.'&amp;p='.$p.'" class="admin">'.$lang_common['Moderate forum'].'</a></p>'."\n";
-	else if ($footer_style == 'viewtopic' && ($is_admmod || $cur_topic['poster'] == $pun_user['username']))
+	else if (!$pun_user['is_guest'] && $footer_style == 'viewtopic' && ($is_admmod || $cur_topic['poster'] == $pun_user['username']))
 	{
 		echo "\t\t\t".'<dl id="modcontrols">';
 

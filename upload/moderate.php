@@ -201,6 +201,7 @@ if (isset($_GET['tid']))
 
 	// Load the viewtopic.php language file
 	require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
+	require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 
 	// Used to disable the Move and Delete buttons if there are no replies to this topic
 	$button_status = $cur_topic['num_replies'] == 0 ? ' disabled' : '';
@@ -352,7 +353,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		// Should we create redirect topics?
 		if (isset($_POST['with_redirect']) || isset($_POST['with_notify']) || isset($_POST['with_close']) || isset($_POST['with_open']))
 		{
-			while (list(, $cur_topic) = @each($topics))
+			foreach ($topics as $cur_topic)
 			{
 				if (isset($_POST['with_redirect']))
 				{

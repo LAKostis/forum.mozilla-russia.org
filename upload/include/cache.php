@@ -168,7 +168,7 @@ function generate_quickjump_cache($group_id = false)
 	}
 
 	// Loop through the groups in $groups and output the cache for each of them
-	while (list(, $group_id) = @each($groups))
+	foreach ($groups as $group_id)
 	{
 		// Output quickjump as PHP code
 		$fh = @fopen(PUN_ROOT.'cache/cache_quickjump_'.$group_id.'.php', 'wb');
@@ -263,8 +263,8 @@ function generate_forums_cache()
 	$result = $db->query('SELECT id, forum_name FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
 
 	$output = [];
-	while ($output[] = $db->fetch_row($result))
-		;
+	while ($cur = $db->fetch_row($result))
+		$output[] = $cur;
 
 	// Output forums as PHP code
 	$fh = @fopen(PUN_ROOT.'cache/cache_forums.php', 'wb');

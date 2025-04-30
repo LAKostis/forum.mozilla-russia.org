@@ -974,7 +974,7 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<em>$1</em>';
 	$replace[] = '<span style="color: $1">$2</span>';
 	$replace[] = '</p><h5>$1</h5><p>';
-    $replace[] = '<span style="font-family: $1">$2</span>';
+	$replace[] = '<span style="font-family: $1">$2</span>';
 	$replace[] = '<div align="$1">$2</div>';
 	$replace[] = '</p><hr /><p>';
 	$replace[] = '<table border="1">$1</table>';

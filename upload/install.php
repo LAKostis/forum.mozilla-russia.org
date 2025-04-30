@@ -368,10 +368,12 @@ else
 
 
 	// Make sure PunBB isn't already installed
-	$result = $db->query('SELECT 1 FROM '.$db_prefix.'users WHERE id=1');
-	if ($db->num_rows($result))
-		error('A table called "'.$db_prefix.'users" is already present in the database "'.$db_name.'". This could mean that PunBB is already installed or that another piece of software is installed and is occupying one or more of the table names PunBB requires. If you want to install multiple copies of PunBB in the same database, you must choose a different table prefix.');
-
+	if ($db->table_exists('users'))
+	{
+		$result = $db->query('SELECT 1 FROM '.$db_prefix.'users WHERE id=1');
+		if ($db->num_rows($result))
+			error('A table called "'.$db_prefix.'users" is already present in the database "'.$db_name.'". This could mean that PunBB is already installed or that another piece of software is installed and is occupying one or more of the table names PunBB requires. If you want to install multiple copies of PunBB in the same database, you must choose a different table prefix.');
+	}
 
 	// Create all tables
 	switch ($db_type)
@@ -948,7 +950,7 @@ else
 		case 'mysqli':
 			$sql = 'CREATE TABLE '.$db_prefix."ranks (
 					id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-					rank VARCHAR(50) NOT NULL DEFAULT '',
+					`rank` VARCHAR(50) NOT NULL DEFAULT '',
 					min_posts MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0,
 					PRIMARY KEY (id)
 					) ENGINE=InnoDB;";
@@ -1516,8 +1518,7 @@ else
 			break;
 	}
 
-	@reset($queries);
-	while (list(, $sql) = @each($queries))
+	foreach ($queries as $sql)
 		$db->query($sql) or error('Unable to create indexes. Please check your configuration and try again.', __FILE__, __LINE__, $db->error());
 
 
@@ -1641,7 +1642,7 @@ else
 		'o_spamreport_count'		=> "'2'"
 	];
 
-	while (list($conf_name, $conf_value) = @each($config))
+	foreach ($config as $conf_name => $conf_value)
 	{
 		$db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)")
 			or error('Unable to insert into table '.$db_prefix.'config. Please check your configuration and try again.');
@@ -1660,10 +1661,10 @@ else
 	$db->query('INSERT INTO '.$db_prefix."posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES('".$db->escape($username)."', 2, '127.0.0.1', 'If you are looking at this (which I guess you are), the install of PunBB appears to have worked! Now log in and head over to the administration control panel to configure your forum.', ".$now.', 1)')
 		or error('Unable to insert into table '.$db_prefix.'posts. Please check your configuration and try again.');
 
-	$db->query('INSERT INTO '.$db_prefix."ranks (rank, min_posts) VALUES('New member', 0)")
+	$db->query('INSERT INTO '.$db_prefix."ranks (`rank`, min_posts) VALUES('New member', 0)")
 		or error('Unable to insert into table '.$db_prefix.'ranks. Please check your configuration and try again.');
 
-	$db->query('INSERT INTO '.$db_prefix."ranks (rank, min_posts) VALUES('Member', 10)")
+	$db->query('INSERT INTO '.$db_prefix."ranks (`rank`, min_posts) VALUES('Member', 10)")
 		or error('Unable to insert into table '.$db_prefix.'ranks. Please check your configuration and try again.');
 
 

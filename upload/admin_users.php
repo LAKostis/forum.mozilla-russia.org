@@ -268,7 +268,7 @@ else if (isset($_POST['action']) || isset($_POST['find_user']))
 	$registered_before = trim($_POST['registered_before']);
 	$order_by = $_POST['order_by'];
 	$direction = $_POST['direction'];
-	$user_group = intval($_POST['user_group']);
+	$user_group = $_POST['user_group'] === 'all' ? 'all' : intval($_POST['user_group']);
 	$search_limit = intval($_POST['search_limit']) > 0 ? $_POST['search_limit'] : 0;
 	$spam_email_match = isset($_POST['spam_email_match']) ? intval($_POST['spam_email_match']) : 0;
 	$spam_ip_match = isset($_POST['spam_ip_match']) ? intval($_POST['spam_ip_match']) : 0;

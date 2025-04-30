@@ -202,8 +202,8 @@ else if (isset($_GET['report']))
 	{
 		// Clean up reason from POST
 		$reason = pun_linebreaks(pun_trim($_POST['req_reason']));
-		$spam = (int)$_POST['spam'];
-		if ($spam)
+
+		if (!empty($_POST['spam']))
 			$reason = 'Spam';
 		if ($reason == '')
 			message($lang_misc['No reason']);

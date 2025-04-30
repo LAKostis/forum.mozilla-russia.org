@@ -183,12 +183,12 @@ if (!empty($errors))
 <div id="posterror" class="block">
 	<h2><span><?php echo $lang_post['Post errors'] ?></span></h2>
 	<div class="box">
-		<div class="inbox"
+		<div class="inbox">
 			<p><?php echo $lang_post['Post errors info'] ?></p>
 			<ul>
 <?php
 
-	while (list(, $cur_error) = each($errors))
+	foreach ($errors as $cur_error)
 		echo "\t\t\t\t".'<li><strong>'.$cur_error.'</strong></li>'."\n";
 ?>
 			</ul>

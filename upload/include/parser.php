@@ -974,7 +974,7 @@ function do_bbcode($text, $is_signature = false)
 	$replace[] = '<em>$1</em>';
 	$replace[] = '<span style="color: $1">$2</span>';
 	$replace[] = '</p><h5>$1</h5><p>';
-        $replace[] = '<span style="font-family: $1">$2</span>';
+    $replace[] = '<span style="font-family: $1">$2</span>';
 	$replace[] = '<div align="$1">$2</div>';
 	$replace[] = '</p><hr /><p>';
 	$replace[] = '<table border="1">$1</table>';
@@ -991,8 +991,8 @@ function do_bbcode($text, $is_signature = false)
 
 	if (($is_signature && $pun_config['p_sig_img_tag'] == '1') || (!$is_signature && $pun_config['p_message_img_tag'] == '1'))
 	{
-		$pattern_callback[] = '%\[img\]((ht|f)tps?://)([^\s<"]*?)\[/img\]%';
-		$pattern_callback[] = '%\[img=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/img\]%';
+		$pattern_callback[] = '%\[img\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/img\]%';
+		$pattern_callback[] = '%\[img=([^\[\x00-\x1f]*?)\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/img\]%';
 		if ($is_signature)
 		{
 			$replace_callback[] = function($matches) { return handle_img_tag($matches[1].$matches[3], true); };
@@ -1003,10 +1003,10 @@ function do_bbcode($text, $is_signature = false)
 			$replace_callback[] = function($matches) { return handle_img_tag($matches[1].$matches[3], false); };
 			$replace_callback[] = function($matches) { return handle_img_tag($matches[2].$matches[4], false, $matches[1]); };
 
-			$pattern_callback[] = '%\[imgr\]((ht|f)tps?://)([^\s<"]*?)\[/imgr\]%';
-			$pattern_callback[] = '%\[imgr=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/imgr\]%';
-			$pattern_callback[] = '%\[imgl\]((ht|f)tps?://)([^\s<"]*?)\[/imgl\]%';
-			$pattern_callback[] = '%\[imgl=([^\[]*?)\]((ht|f)tps?://)([^\s<"]*?)\[/imgl\]%';
+			$pattern_callback[] = '%\[imgr\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/imgr\]%';
+			$pattern_callback[] = '%\[imgr=([^\[\x00-\x1f]*?)\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/imgr\]%';
+			$pattern_callback[] = '%\[imgl\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/imgl\]%';
+			$pattern_callback[] = '%\[imgl=([^\[\x00-\x1f]*?)\]((ht|f)tps?://)([^\s<"\[\x00-\x1f]*?)\[/imgl\]%';
 
 			$replace_callback[] = function($matches) { return handle_img_tag($matches[1].$matches[3], false, null, 'right'); };
 			$replace_callback[] = function($matches) { return handle_img_tag($matches[2].$matches[4], false, $matches[1], 'right'); };

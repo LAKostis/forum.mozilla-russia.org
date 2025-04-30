@@ -851,7 +851,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 	}
 	else
 	{
-		if ($pun_config['o_board_redirect'] != '' && ($pun_user['is_guest'] || $pun_config['o_board_redirectg'] != '1') && !preg_match('/'.$pun_config['o_board_redirect'].'/i',$full_url))
+		if (!empty($pun_config['o_board_redirect']) && ($pun_user['is_guest'] || $pun_config['o_board_redirectg'] != '1') && !preg_match('/'.$pun_config['o_board_redirect'].'/i',$full_url))
 		{
 			$full_url = 're.php?u='.urlencode(str_replace(array('http://', 'https://', 'ftp://'), array('http___', 'https___', 'ftp___'), $full_url));
 			$url = str_replace(array('http://', 'https://', 'ftp://'), '', $url);

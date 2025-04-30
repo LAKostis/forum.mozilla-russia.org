@@ -570,7 +570,7 @@ class xajax
 		if ($sJsURI == "")
 			$sJsURI = $this->sRequestURI;
 
-		$separator=strpos($sJsURI,'?')==false?'?':'&';
+		$separator=strpos((string) $sJsURI,'?')==false?'?':'&';
 
 		return '<script type="text/javascript">var xajaxRequestUri="'.$this->sRequestURI.'";</script>'."\n".'<script type="text/javascript" src="'.$sJsURI.$separator.'xajaxjs=xajaxjs"></script>'."\n";
 	}

@@ -1018,8 +1018,8 @@ function do_bbcode($text, $is_signature = false)
 	$pattern_callback[] = '%\[noindex\](.*?)\[/noindex\]%s';
 	$pattern_callback[] = '%\[url\]([^\[\x00-\x1f]*?)\[/url\]%';
 	$pattern_callback[] = '%\[url=([^\[\x00-\x1f]+?)\]([^\x00\x01]*?)\[/url\]%';
-	$pattern[] = '%\[email\]([^\[\r\n\t]+?@[^\[\r\n\t]+?)\[/email\]%';
-	$pattern[] = '%\[email=([^\[\r\n\t]+?@[^\[\r\n\t]+?)\](.*?)\[/email\]%';
+	$pattern[] = '%\[email\]([^\[\x00-\x1f]+?@[^\[\x00-\x1f]+?)\[/email\]%';
+	$pattern[] = '%\[email=([^\[\x00-\x1f]+?@[^\[\x00-\x1f]+?)\]([^\x00\x01]*?)\[/email\]%';
 
 	$replace_callback[] = function($matches) { return handle_noindex_tag($matches[1]); };
 	$replace_callback[] = function($matches) { return handle_url_tag($matches[1]); };

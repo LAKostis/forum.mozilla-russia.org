@@ -180,7 +180,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Check for new post in topic
-	if ($_POST['modified'])
+	if (isset($_POST['modified']))
 	{
 		$result = $db->query('SELECT posted, edited FROM '.$db->prefix.'posts WHERE topic_id='.$tid.' ORDER BY id DESC LIMIT 1') or error('Unable to fetch last post date', __FILE__, __LINE__, $db->error());
 		$lastmodified = $db->fetch_assoc($result);
@@ -358,13 +358,13 @@ if (isset($_POST['form_sent']))
 			require PUN_ROOT.'include/polls/postpoll.php';
 			if ($ptype == 3)
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question, yes, no) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\', \'' . $db->escape($yesval) . '\', \'' . $db->escape($noval) . '\')') or error('Unable to create topic w/ poll 3', __FILE__, __LINE__, $db->error());
-			if ($question != '' && $ptype < 3 && $ptype != 0)
+			if (isset($question) && $question != '' && $ptype < 3 && $ptype != 0)
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id, question) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ', \'' . $db->escape($question) . '\')') or error('Unable to create topic w/ poll', __FILE__, __LINE__, $db->error());
 			else
 				$db->query('INSERT INTO '.$db->prefix.'topics (poster, subject, posted, last_post, last_poster, forum_id) VALUES(\''.$db->escape($username).'\', \''.$db->escape($subject).'\', '.$now.', '.$now.', \''.$db->escape($username).'\', '.$fid. ')') or error('Unable to create topic w/ null poll', __FILE__, __LINE__, $db->error());
 			$new_tid = $db->insert_id();
 			// some hackaround here :)
-			if ($question != '' && $ptype != 0)
+			if (isset($question) && $question != '' && $ptype != 0)
 				$db->query('INSERT INTO ' . $db->prefix . 'polls (pollid, options, ptype) VALUES(' . $new_tid . ', \'' . $db->escape(serialize($option)) . '\', ' . $ptype . ')') or error('Unable to create poll', __FILE__, __LINE__, $db->error());
 
 			if (!$pun_user['is_guest'])
@@ -527,7 +527,7 @@ if (!empty($errors))
 			<ul>
 <?php
 
-	while (list(, $cur_error) = each($errors))
+	foreach ($errors as $cur_error)
 		echo "\t\t\t\t".'<li><strong>'.$cur_error.'</strong></li>'."\n";
 ?>
 			</ul>

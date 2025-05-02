@@ -645,8 +645,7 @@ function get_title($user)
 		// Are there any ranks?
 		if ($pun_config['o_ranks'] == '1' && !empty($pun_ranks))
 		{
-			@reset($pun_ranks);
-			while (list(, $cur_rank) = @each($pun_ranks))
+			foreach ($pun_ranks as $cur_rank)
 			{
 				if (intval($user['num_posts']) >= $cur_rank['min_posts'])
 					$user_title = pun_htmlspecialchars($cur_rank['rank']);
@@ -672,6 +671,7 @@ function paginate($num_pages, $cur_page, $link_to)
 	$pages = [];
 	$link_to_all = false;
 	$nav_links = true;
+	$manual = false;
 
 	// If $cur_page == -1, we link to all pages (used in viewforum.php)
 	if ($cur_page == -1)
@@ -922,7 +922,7 @@ function get_remote_address()
 {
 	$remote_address = $_SERVER['REMOTE_ADDR'];
 
-        // The general format of the field is:
+    // The general format of the field is:
 	// X-Forwarded-For: client1, proxy1, proxy2
 	// where the value is a comma+space separated list of IP addresses, the left-most being the farthest downstream client,
 	// and each successive proxy that passed the request adding the IP address where it received the request from.
@@ -933,10 +933,10 @@ function get_remote_address()
 		// filter out private/reserved ranges
 		$via_proxy = filter_var($via_proxy, FILTER_VALIDATE_IP,FILTER_FLAG_NO_PRIV_RANGE);
 		$via_proxy = filter_var($via_proxy, FILTER_VALIDATE_IP,FILTER_FLAG_NO_RES_RANGE);
-	}
 
-	if ($via_proxy)
-		$remote_address=$via_proxy;
+		if ($via_proxy)
+			$remote_address=$via_proxy;
+	}
 
 	return $remote_address;
 }
@@ -1034,7 +1034,7 @@ function sanitizeXML($str)
         $length = strlen($str);
         for ($i=0; $i < $length; $i++)
         {
-            $current = ord($str{$i});
+            $current = ord($str[$i]);
             if (($current == 0x9) ||
                 ($current == 0xA) ||
                 ($current == 0xD) ||
@@ -1479,7 +1479,7 @@ function display_saved_queries()
 <?php
 
 	$query_time_total = 0.0;
-	while (list(, $cur_query) = @each($saved_queries))
+	foreach ($saved_queries as $cur_query)
 	{
 		$query_time_total += $cur_query[1];
 
@@ -1979,7 +1979,7 @@ function url_valid($url)
 		return FALSE;	// Unrecognised URI scheme. Default to FALSE.
 	}
 	// Validate host name conforms to DNS "dot-separated-parts".
-	if ($m{'regname'}) // If host regname specified, check for DNS conformance.
+	if ($m['regname']) // If host regname specified, check for DNS conformance.
 	{
 		if (!preg_match('/# HTTP DNS host name.
 			^					   # Anchor to beginning of string.

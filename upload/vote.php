@@ -119,7 +119,7 @@ if (isset($_POST['form_sent']))
 	}
 	else if ($ptype == 2)
 	{
-		while (list($key, $value) = each($_POST['options']))
+		foreach ($_POST['options'] as $key => $value)
 		{
             		if (!empty($value) && array_key_exists($key, $options))
 			{
@@ -132,7 +132,7 @@ if (isset($_POST['form_sent']))
 	}
 	else if ($ptype == 3)
 	{
-		while (list($key, $value) = each($_POST['options']))
+		foreach ($_POST['options'] as $key => $value)
 		{
            		if (!empty($value) && array_key_exists($key, $options))
 			{

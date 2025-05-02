@@ -39,6 +39,8 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/forum.php';
 // Load poll language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/polls.php';
+// Load the post.php language file
+require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 
 require_once PUN_ROOT.'include/parser.php';
 
@@ -171,7 +173,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					if (empty($keywords_array))
 						message($lang_search['No hits']);
 
-					while (list($i, $word) = @each($keywords_array))
+					foreach ($keywords_array as $i => $word)
 					{
 						$num_chars = pun_strlen($word);
 
@@ -186,8 +188,8 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$word_count = 0;
 				$match_type = 'and';
 				$result_list = [];
-				@reset($keywords_array);
-				while (list(, $cur_word) = @each($keywords_array))
+
+				foreach ($keywords_array as $cur_word)
 				{
 					switch ($cur_word)
 					{
@@ -235,8 +237,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 							if ($match_type == 'and' && $word_count)
 							{
-								@reset($result_list);
-								while (list($post_id,) = @each($result_list))
+								foreach (array_keys($result_list) as $post_id)
 								{
 									if (!isset($row[$post_id]))
 										$result_list[$post_id] = 0;
@@ -251,8 +252,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					}
 				}
 
-				@reset($result_list);
-				while (list($post_id, $matches) = @each($result_list))
+				foreach ($result_list as $post_id => $matches)
 				{
 					if ($matches)
 						$keyword_results[] = $post_id;
@@ -454,11 +454,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 		if ($action != 'show_new' && $action != 'show_24h')
 		{
+			// Redirect the user to the cached result page
+			hidden_redirect('search.php?search_id='.$search_id);
+
 			$db->end_transaction();
 			$db->close();
 
-			// Redirect the user to the cached result page
-			hidden_redirect('search.php?search_id='.$search_id);
 			exit;
 		}
 	}
@@ -563,8 +564,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		// Finally, lets loop through the results and output them
 		for ($i = 0; $i < count($search_set); ++$i)
 		{
-			@reset($pun_forums);
-			while (list(, $temp) = @each($pun_forums))
+			foreach ($pun_forums as $temp)
 			{
 				if ($temp[0] == $search_set[$i]['forum_id'])
 					$forum = '<a href="viewforum.php?id='.$temp[0].'">'.pun_htmlspecialchars($temp[1]).'</a>';

@@ -78,22 +78,22 @@ else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POS
 }
 
 
-else if (isset($_POST['form_sent']))
+else if (isset($_POST['form_sent'], $_POST['req_username'], $_POST['req_email1']))
 {
 	$username = pun_trim($_POST['req_username']);
 	$email1 = strtolower(trim($_POST['req_email1']));
 
 	if ($pun_config['o_regs_verify'] == '1')
 	{
-		$email2 = strtolower(trim($_POST['req_email2']));
+		$email2 = isset($_POST['req_email2']) ? strtolower(trim($_POST['req_email2'])) : '';
 
 		$password1 = random_pass(8);
 		$password2 = $password1;
 	}
 	else
 	{
-		$password1 = trim($_POST['req_password1']);
-		$password2 = trim($_POST['req_password2']);
+		$password1 = isset($_POST['req_password1']) ? trim($_POST['req_password1']) : '';
+		$password2 = isset($_POST['req_password2']) ? trim($_POST['req_password2']) : '';
 	}
 
 	// Convert multiple whitespace characters into one (to prevent people from registering with indistinguishable usernames)
@@ -187,18 +187,27 @@ else if (isset($_POST['form_sent']))
 	// Make sure we got a valid language string
 	if (isset($_POST['language']))
 	{
-		$language = preg_replace('#[\.\\\/]#', '', $_POST['language']);
+		$language = preg_replace('#[\.\\\/]#', '', (string) $_POST['language']);
 		if (!file_exists(PUN_ROOT.'lang/'.$language.'/common.php'))
 				message($lang_common['Bad request']);
 	}
 	else
 		$language = $pun_config['o_default_lang'];
 
-	$timezone = round($_POST['timezone'], 1);
+	if (isset($_POST['timezone']))
+		$timezone = round($_POST['timezone'], 1);
+	else
+		message($lang_common['Bad request']);
+
 	$save_pass = !isset($_POST['save_pass']) || $_POST['save_pass'] != '1' ? '0' : '1';
 
-	$email_setting = intval($_POST['email_setting']);
-	if ($email_setting < 0 || $email_setting > 2) $email_setting = 1;
+	if (isset($_POST['email_setting']))
+		$email_setting = intval($_POST['email_setting']);
+	else
+		message($lang_common['Bad request']);
+
+	if ($email_setting < 0 || $email_setting > 2)
+		$email_setting = 1;
 
 	// Insert the new user into the database. We do this now to get the last inserted id for later use.
 	$now = time();
@@ -448,7 +457,7 @@ require PUN_ROOT.'header.php';
 							<br /><select name="language">
 <?php
 
-			while (list(, $temp) = @each($languages))
+			foreach ($languages as $temp)
 			{
 				if ($pun_config['o_default_lang'] == $temp)
 					echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";

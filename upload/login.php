@@ -138,7 +138,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 	if (!$pun_user['is_guest'])
 		hidden_redirect('index.php');
 
-	if (isset($_POST['form_sent']))
+	if (isset($_POST['form_sent'], $_POST['req_email']))
 	{
 		require PUN_ROOT.'include/email.php';
 

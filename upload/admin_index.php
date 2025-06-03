@@ -65,7 +65,7 @@ if ($action == 'check_upgrade')
 
 
 // Show phpinfo() output
-else if ($action == 'phpinfo' && $pun_user['g_id'] == PUN_ADMIN)
+if ($action == 'phpinfo' && $pun_user['g_id'] == PUN_ADMIN)
 {
 	// Is phpinfo() a disabled function?
 	if (strpos(strtolower((string)@ini_get('disable_functions')), 'phpinfo') !== false)
@@ -75,6 +75,16 @@ else if ($action == 'phpinfo' && $pun_user['g_id'] == PUN_ADMIN)
 	exit;
 }
 
+// Show opcache statistics
+if ($action == 'opcache_status' && $pun_user['g_id'] == PUN_ADMIN)
+{
+	// Is opcache_get_status() a disabled function?
+	if (strpos(strtolower((string)@ini_get('disable_functions')), 'opcache_get_status') !== false)
+		message('The PHP function opcache_get_status() has been disabled on this server.');
+
+	opcache_get_status();
+	exit;
+}
 
 // Get the server load averages (if possible)
 if (@file_exists('/proc/loadavg') && is_readable('/proc/loadavg'))
@@ -136,14 +146,11 @@ if ($db_type == 'mysql' || $db_type == 'mysqli')
 }
 
 
-// See if MMCache or PHPA is loaded
-if (function_exists('mmcache'))
-	$php_accelerator = '<a href="http://turck-mmcache.sourceforge.net/">Turck MMCache</a>';
-else if (isset($_PHPA))
-	$php_accelerator = '<a href="http://www.php-accelerator.co.uk/">ionCube PHP Accelerator</a>';
+// See if opcache enabled
+if (function_exists('opcache_get_status'))
+	$php_accelerator = '<a href="admin_index.php?action=opcache_status">Zend OPcache</a>';
 else
 	$php_accelerator = 'N/A';
-
 
 $page_title = 'Admin | '.pun_htmlspecialchars($pun_config['o_board_title']);
 require PUN_ROOT.'header.php';

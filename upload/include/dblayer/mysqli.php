@@ -158,7 +158,17 @@ class DBLayer
 
 	function free_result($query_id = false)
 	{
-		return $query_id ? @mysqli_free_result($query_id) : false;
+		if ($query_id)
+		{
+			$result = @mysqli_free_result($query_id);
+
+			if ($query_id === $this->query_result)
+				$this->query_result = false;
+
+			return $result;
+		}
+		else
+			return false;
 	}
 
 
@@ -182,7 +192,7 @@ class DBLayer
 	{
 		if ($this->link_id)
 		{
-			if (!is_bool($this->query_result))
+			if ($this->query_result instanceof mysqli_result)
 				@mysqli_free_result($this->query_result);
 
 			return @mysqli_close($this->link_id);

@@ -65,24 +65,13 @@ if ($action == 'check_upgrade')
 
 
 // Show phpinfo() output
-if ($action == 'phpinfo' && $pun_user['g_id'] == PUN_ADMIN)
+else if ($action == 'phpinfo' && $pun_user['g_id'] == PUN_ADMIN)
 {
 	// Is phpinfo() a disabled function?
 	if (strpos(strtolower((string)@ini_get('disable_functions')), 'phpinfo') !== false)
 		message('The PHP function phpinfo() has been disabled on this server.');
 
 	phpinfo();
-	exit;
-}
-
-// Show opcache statistics
-if ($action == 'opcache_status' && $pun_user['g_id'] == PUN_ADMIN)
-{
-	// Is opcache_get_status() a disabled function?
-	if (strpos(strtolower((string)@ini_get('disable_functions')), 'opcache_get_status') !== false)
-		message('The PHP function opcache_get_status() has been disabled on this server.');
-
-	opcache_get_status();
 	exit;
 }
 
@@ -148,7 +137,10 @@ if ($db_type == 'mysql' || $db_type == 'mysqli')
 
 // See if opcache enabled
 if (function_exists('opcache_get_status'))
-	$php_accelerator = '<a href="admin_index.php?action=opcache_status">Zend OPcache</a>';
+{
+	$php_accelerator_status = opcache_get_status() ? 'enabled' : 'disabled';
+	$php_accelerator = '<a href="https://www.php.net/opcache/">Zend OPcache</a>: '.$php_accelerator_status;
+}
 else
 	$php_accelerator = 'N/A';
 

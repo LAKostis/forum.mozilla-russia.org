@@ -96,7 +96,7 @@ $smiley_text = [
 	':heart:',
 	':couple:',
 	':whiteflag:',
-	':offtopic:'
+	':offtopic:',
 ];
 $smiley_img = [
 	'smile.png',
@@ -138,7 +138,7 @@ $smiley_img = [
 	'heart.gif',
 	'couple.gif',
 	'whiteflag.gif',
-	'offtopic.gif'
+	'offtopic.gif',
 ];
 $smiley_limit = 17;
 
@@ -182,7 +182,7 @@ $browser_text = [
 	'[windows]',
 	'[linux]',
 	'[macos]',
-	'[android]'
+	'[android]',
 ];
 $browser_img = [
 	'firefox.png',
@@ -221,7 +221,7 @@ $browser_img = [
 	'windows.png',
 	'linux.png',
 	'macos.png',
-	'android.png'
+	'android.png',
 ];
 $browser_limit = 3;
 

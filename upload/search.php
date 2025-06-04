@@ -77,17 +77,17 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$keywords = isset($_GET['keywords']) ? pun_strtolower(trim($_GET['keywords'])) : '';
 		$author = isset($_GET['author']) ? pun_strtolower(trim($_GET['author'])) : '';
 
-		if (preg_match('%^[\*\%]+$%', $keywords) || (pun_strlen(str_replace(array('*', '%'), '', $keywords)) < PUN_SEARCH_MIN_WORD))
+		if (preg_match('%^[\*\%]+$%', $keywords) || (pun_strlen(str_replace(['*', '%'], '', $keywords)) < PUN_SEARCH_MIN_WORD))
 			$keywords = '';
 
-		if (preg_match('%^[\*\%]+$%', $author) || pun_strlen(str_replace(array('*', '%'), '', $author)) < 2)
+		if (preg_match('%^[\*\%]+$%', $author) || pun_strlen(str_replace(['*', '%'], '', $author)) < 2)
 			$author = '';
 
 		if (!$keywords && !$author)
 			message($lang_search['No terms']);
 
 		if ($author)
-			$author = str_replace(array('*', '_'), array('%', '\\_'), $author);
+			$author = str_replace(['*', '_'], ['%', '\\_'], $author);
 
 		$after = isset($_GET['after']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['after']) ? strtotime($_GET['after']) : null;
 		$before = isset($_GET['before']) && preg_match('#^(\d){4}\-(\d){2}\-(\d){2}$#', $_GET['before']) ? strtotime($_GET['before']) : null;
@@ -161,7 +161,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				{
 					// Filter out non-alphabetical chars
 					$noise_match = ['^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '[', ']', '{', '}', ':', '\\', '/', '=', '#', '\'', ';', '!', '€'];
-					$noise_replace = [' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ',  ' ', ' ', ' '];
+					$noise_replace = [' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ',  ' ', ' ', ' '];
 					$keywords = str_replace($noise_match, $noise_replace, $keywords);
 
 					// Strip out excessive whitespace

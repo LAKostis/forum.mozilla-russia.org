@@ -391,7 +391,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 				message($lang_profile['Move failed'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.');
 
 			// Now check the width/height
-			list($width, $height, $type,) = getimagesize($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
+			list($width, $height, $type) = getimagesize($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
 			if (empty($width) || empty($height) || $width > $pun_config['o_avatars_width'] || $height > $pun_config['o_avatars_height'])
 			{
 				@unlink($pun_config['o_avatars_dir'].'/'.$id.'.tmp');

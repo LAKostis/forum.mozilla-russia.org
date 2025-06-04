@@ -460,7 +460,7 @@ class Services_JSON
                 '#^\s*/\*(.+)\*/#Us',
 
                 // eliminate multi-line comments in '/* ... */' form, at end of string
-                '#/\*(.+)\*/\s*$#Us'
+                '#/\*(.+)\*/\s*$#Us',
 
             ], '', $str);
 

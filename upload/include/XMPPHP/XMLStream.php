@@ -246,7 +246,7 @@ class XMPPHP_XMLStream {
 	 */
 	public function addHandler($name, $ns, $pointer, $obj = null, $depth = 1) {
 		#TODO deprication warning
-		$this->nshandlers[] = [$name,$ns,$pointer,$obj, $depth];
+		$this->nshandlers[] = [$name, $ns, $pointer, $obj, $depth];
 	}
 
 	/**

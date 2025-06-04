@@ -91,7 +91,7 @@ function split_words_clear_link($url)
 	}
 
 	if (isset($arr['fragment']))
-		$text.= split_words_clear_link_minor(array($arr['fragment']));
+		$text.= split_words_clear_link_minor([$arr['fragment']]);
 
 	return $text;
 }
@@ -106,7 +106,7 @@ function split_words($text, $idx)
 	// Remove BBCode
 	$text = preg_replace('%\[/?(b|u|s|ins|del|em|i|h|colou?r|quote|code|img|url|email|list|topic|post|forum|user|imgr|imgl|hr|size|after|spoiler|right|center|justify|mono)(?:\=[^\]]*)?\]%', ' ', $text);
 
-	$text = str_replace(array('`', '’', 'ё'), array('\'', '\'', 'е'), $text); // Visman - for russian language
+	$text = str_replace(['`', '’', 'ё'], ['\'', '\'', 'е'], $text); // Visman - for russian language
 
 	// Visman - for clear local url
 	if (strpos($text, '/img/members/') !== false)
@@ -181,7 +181,7 @@ function validate_search_word($word, $idx)
 		return !$idx;
 
 	// Exclude % and * when checking whether current word is valid
-	$word = str_replace(array('%', '*'), '', $word);
+	$word = str_replace(['%', '*'], '', $word);
 
 	// Check the word is within the min/max length
 	$num_chars = pun_strlen($word);
@@ -216,14 +216,14 @@ function strip_bbcode($text)
 
 	if (!isset($patterns))
 	{
-		$patterns = array(
+		$patterns = [
 			'%\[img=([^\]]*+)\]([^[]*+)\[/img\]%'									=>	' $2 $1 ',	// Keep the url and description
 			'%\[imgr=([^\]]*+)\]([^[]*+)\[/imgr\]%'									=>	' $2 $1 ',	// Keep the url and description
 			'%\[imgl=([^\]]*+)\]([^[]*+)\[/imgl\]%'									=>	' $2 $1 ',	// Keep the url and description
 			'%\[(url|email)=([^\]]*+)\]([^[]*+(?:(?!\[/\1\])\[[^[]*+)*)\[/\1\]%'	=>	' $2 $3 ',	// Keep the url and text
 			'%\[(img|imgr|imgl|url|email)\]([^[]*+(?:(?!\[/\1\])\[[^[]*+)*)\[/\1\]%'			=>	' $2 ',		// Keep the url
 			'%\[(topic|post|forum|user)\][1-9]\d*\[/\1\]%'							=>	' ',		// Do not index topic/post/forum/user ID
-		);
+		];
 	}
 
 	return preg_replace(array_keys($patterns), array_values($patterns), $text);
@@ -245,15 +245,15 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 	// Split old and new post/subject to obtain array of 'words'
 	$words_message = split_words($message, true);
-	$words_subject = ($subject) ? split_words($subject, true) : array();
+	$words_subject = ($subject) ? split_words($subject, true) : [];
 
 	if ($mode == 'edit')
 	{
 		$result = $db->query('SELECT w.id, w.word, m.subject_match FROM '.$db->prefix.'search_words AS w INNER JOIN '.$db->prefix.'search_matches AS m ON w.id=m.word_id WHERE m.post_id='.$post_id, true) or error('Unable to fetch search index words', __FILE__, __LINE__, $db->error());
 
 		// Declare here to stop array_keys() and array_diff() from complaining if not set
-		$cur_words['post'] = array();
-		$cur_words['subject'] = array();
+		$cur_words['post'] = [];
+		$cur_words['subject'] = [];
 
 		while ($row = $db->fetch_row($result))
 		{
@@ -272,8 +272,8 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	{
 		$words['add']['post'] = $words_message;
 		$words['add']['subject'] = $words_subject;
-		$words['del']['post'] = array();
-		$words['del']['subject'] = array();
+		$words['del']['post'] = [];
+		$words['del']['subject'] = [];
 	}
 
 	unset($words_message);
@@ -284,9 +284,9 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 	if (!empty($unique_words))
 	{
-		$result = $db->query('SELECT id, word FROM '.$db->prefix.'search_words WHERE word IN(\''.implode('\',\'', array_map(array($db, 'escape'), $unique_words)).'\')', true) or error('Unable to fetch search index words', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT id, word FROM '.$db->prefix.'search_words WHERE word IN(\''.implode('\',\'', array_map([$db, 'escape'], $unique_words)).'\')', true) or error('Unable to fetch search index words', __FILE__, __LINE__, $db->error());
 
-		$word_ids = array();
+		$word_ids = [];
 		while ($row = $db->fetch_row($result))
 			$word_ids[$row[1]] = $row[0];
 
@@ -301,7 +301,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 			{
 				case 'mysql':
 				case 'mysqli':
-					$db->query('INSERT INTO '.$db->prefix.'search_words (word) VALUES(\''.implode('\'),(\'', array_map(array($db, 'escape'), $new_words)).'\')');
+					$db->query('INSERT INTO '.$db->prefix.'search_words (word) VALUES(\''.implode('\'),(\'', array_map([$db, 'escape'], $new_words)).'\')');
 					break;
 
 				default:
@@ -335,7 +335,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 		$subject_match = ($match_in == 'subject') ? 1 : 0;
 
 		if (!empty($wordlist))
-			$db->query('INSERT INTO '.$db->prefix.'search_matches (post_id, word_id, subject_match) SELECT '.$post_id.', id, '.$subject_match.' FROM '.$db->prefix.'search_words WHERE word IN(\''.implode('\',\'', array_map(array($db, 'escape'), $wordlist)).'\')') or error('Unable to insert search index word matches', __FILE__, __LINE__, $db->error());
+			$db->query('INSERT INTO '.$db->prefix.'search_matches (post_id, word_id, subject_match) SELECT '.$post_id.', id, '.$subject_match.' FROM '.$db->prefix.'search_words WHERE word IN(\''.implode('\',\'', array_map([$db, 'escape'], $wordlist)).'\')') or error('Unable to insert search index word matches', __FILE__, __LINE__, $db->error());
 	}
 
 	unset($words);

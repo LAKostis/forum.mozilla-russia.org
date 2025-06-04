@@ -894,7 +894,7 @@ else
 		'o_spamreport_whitelist'	=> "''",
 		'o_spamreport_blacklist'	=> "''",
 		'o_spamreport_forums'		=> "''",
-		'o_spamreport_count'		=> "'2'"
+		'o_spamreport_count'		=> "'2'",
 	];
 
 	foreach ($config as $conf_name => $conf_value)

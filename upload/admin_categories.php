@@ -236,7 +236,7 @@ generate_admin_menu('categories');
 									<select name="cat_to_delete" tabindex="3">
 <?php
 
-	foreach ($cat_list as list($cat_id, $cat_name, ,))
+	foreach ($cat_list as list($cat_id, $cat_name))
 		echo "\t\t\t\t\t\t\t\t\t\t".'<option value="'.$cat_id.'">'.pun_htmlspecialchars($cat_name).'</option>'."\n";
 
 ?>

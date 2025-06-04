@@ -129,8 +129,8 @@ require PUN_ROOT.'header.php';
 	}
 
 
-  $allowed = [".txt",".gif",".jpg",".jpeg",".png", ".xpi", ".zip", ".src"];
-  $pics = [".gif",".jpg",".jpeg",".png"];
+  $allowed = [".txt", ".gif", ".jpg", ".jpeg", ".png", ".xpi", ".zip", ".src"];
+  $pics = [".gif", ".jpg", ".jpeg", ".png"];
 
  ?>
 

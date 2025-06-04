@@ -448,7 +448,7 @@ function delete_post($post_id, $topic_id)
 	global $db;
 
 	$result = $db->query('SELECT id, poster, posted FROM '.$db->prefix.'posts WHERE topic_id='.$topic_id.' ORDER BY id DESC LIMIT 2') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
-	list($last_id, ,) = $db->fetch_row($result);
+	list($last_id) = $db->fetch_row($result);
 	list($second_last_id, $second_poster, $second_posted) = $db->fetch_row($result);
 
 	// Delete the post
@@ -1077,7 +1077,7 @@ function remove_bad_characters($array)
 
 	if (!isset($bad_utf8_chars))
 	{
-		$bad_utf8_chars = array(
+		$bad_utf8_chars = [
 			"\xcc\xb7"		=> '',		// COMBINING SHORT SOLIDUS OVERLAY		0337	*
 			"\xcc\xb8"		=> '',		// COMBINING LONG SOLIDUS OVERLAY		0338	*
 			"\xe1\x85\x9F"	=> '',		// HANGUL CHOSEONG FILLER				115F	*
@@ -1115,7 +1115,7 @@ function remove_bad_characters($array)
 			"\xe2\x80\x89"	=> ' ',		// THIN SPACE							2009	*
 			"\xe2\x80\x8a"	=> ' ',		// HAIR SPACE							200A	*
 			"\xE3\x80\x80"	=> ' ',		// IDEOGRAPHIC SPACE					3000	*
-		);
+		];
 	}
 
 	if (is_array($array))
@@ -1786,7 +1786,7 @@ function pun_get_browser($uagent) {
 		'webianshell',
 		'w3m',
 		'wyzo',
-		'yandex'
+		'yandex',
 	];
 	$ua = get_browser($uagent,true);
 	$ua_browser = (!is_null($ua['browser'])) ? pun_strtolower($ua['browser']) : "unknown";
@@ -1812,7 +1812,7 @@ function pun_get_browser($uagent) {
 	elseif ($ua_browser == "edge") {
 		$ua_browser_alt = "Edge";
 	}
-	return [$ua_browser,$ua_version,$ua_browser_alt];
+	return [$ua_browser, $ua_version, $ua_browser_alt];
 }
 
 //

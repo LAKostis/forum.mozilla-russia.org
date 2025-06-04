@@ -314,7 +314,7 @@ else if (isset($_GET['report_spam']))
 
 	$sfs = new StopForumSpam( $api_key );
 	// $ban_user, $ban_ip, $ban_email, $ban_message
-	$args = ['email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message ];
+	$args = ['email' => $ban_email, 'ip_addr' => $ban_ip, 'username' => $ban_user, 'evidence' => 'Reported by forum moderator with message '.$ban_message];
 
 	$report = $sfs->add($args);
 

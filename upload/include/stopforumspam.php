@@ -135,7 +135,7 @@ class StopForumSpam
 
         return [
             'spammer' => $spammer,
-            'known' => $known
+            'known' => $known,
         ];
     }
 

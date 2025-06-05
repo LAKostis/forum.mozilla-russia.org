@@ -846,11 +846,11 @@ generate_admin_menu('options');
 						<div class="infldset">
 							<table class="aligntop" cellspacing="0">
 								<tr>
-									<th scope="row">Disable URLs in signature</th>
+									<th scope="row">Hide URLs in signature and profile</th>
 									<td>
 										<input type="text" name="form[urls_in_signature]" size="5" value="<?php echo $pun_config['o_urls_in_signature'] ?>" />
-										<span>Users with less than N forum comments can not use links in signature.</span>
-										<span>(This option also disables URLs in personal profile).</span>
+										<span>Users with less than N forum comments can not use links in signature. This option also disables URLs in personal profile</span>
+										<span>and hide Website/signature with links in topics for such users.</span>
 									</td>
 								</tr>
 								<tr>

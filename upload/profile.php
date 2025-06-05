@@ -756,7 +756,7 @@ else if (isset($_POST['form_sent']))
 				message($lang_prof_reg['Sig too long'].' '.$pun_config['p_sig_length'].' '.$lang_prof_reg['characters'].'.');
 			else if (substr_count($form['signature'], "\n") > $pun_config['p_sig_lines']-1)
 				message($lang_prof_reg['Sig too many lines'].' '.$pun_config['p_sig_lines'].' '.$lang_prof_reg['lines'].'.');
-			else if ($pun_user['g_id'] == PUN_MEMBER && (int)$pun_user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
+			else if ($pun_user['g_id'] > PUN_MOD && preg_match('#\[url|https?:\/\/[^\s]+#i', $form['signature']) && (int)$pun_user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
 				message($lang_prof_reg['Sig URLs disabled'].' '.$pun_config['o_urls_in_signature'].' '.$lang_prof_reg['messages on forum'].'.');
 			else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && pun_strtoupper($form['signature']) == $form['signature'] && $pun_user['g_id'] > PUN_MOD)
 				$form['signature'] = pun_ucwords(pun_strtolower($form['signature']));
@@ -883,6 +883,7 @@ $last_post = format_time($user['last_post']);
 
 if ($user['signature'] != '')
 {
+	if ($pun_user['g_id'] < PUN_MOD || (preg_match('#\[url|https?:\/\/[^\s]+#i', $user['signature']) && (int)$user['num_posts'] >= (int)$pun_config['o_urls_in_signature']))
 	require PUN_ROOT.'include/parser.php';
 	$parsed_signature = parse_signature($user['signature']);
 }
@@ -913,7 +914,7 @@ if ($view || $section == 'view')
 	if ($pun_config['o_censoring'] == '1')
 		$user_title = censor_words($user_title);
 
-	if ($user['url'] != '')
+	if ($user['url'] != '' && ($pun_user['g_id'] < PUN_MOD || (int)$user['num_posts'] >= (int)$pun_config['o_urls_in_signature']))
 	{
 		$user['url'] = pun_htmlspecialchars($user['url']);
 
@@ -921,9 +922,6 @@ if ($view || $section == 'view')
 			$user['url'] = censor_words($user['url']);
 
 		$url = '<a href="'.$user['url'].'">'.$user['url'].'</a>';
-
-		if ($user['g_id'] > PUN_MOD && (int)$user['num_posts'] < (int)$pun_config['o_urls_in_signature'])
-			$url = $lang_profile['Unknown'];
 	}
 	else
 		$url = $lang_profile['Unknown'];

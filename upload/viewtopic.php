@@ -295,7 +295,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
 				$user_contacts[] = '<a href="misc.php?email='.$cur_post['poster_id'].'" class="email">'.$lang_common['E-mail'].'</a>';
 			require(PUN_ROOT.'include/pms/viewtopic_PM-link.php');
-			if ($cur_post['url'] != '')
+			if ($cur_post['g_id'] < PUN_MOD || $cur_post['url'] != '' && $cur_post['num_posts'] >= (int)$pun_config['o_urls_in_signature'])
 				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'" class="website" rel="nofollow">'.$lang_topic['Website'].'</a></noindex>';
 		}
 
@@ -367,6 +367,10 @@ while ($cur_post = $db->fetch_assoc($result))
 
 	// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 	$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
+
+	// Do not show user signature in posts if it contains URLs and he/she didn't reached certain posts nr
+	if ($cur_post['g_id'] > PUN_MOD && ($cur_post['signature'] != '' && preg_match('#\[url|https?:\/\/[^\s]+#i', $cur_post['signature']) && $cur_post['num_posts'] < (int)$pun_config['o_urls_in_signature'])
+		$cur_post['signature'] = '';
 
 	// Do signature parsing/caching
 	if (!$user_banned && $cur_post['signature'] != '' && $pun_user['show_sig'] != '0')

@@ -850,6 +850,7 @@ generate_admin_menu('options');
 									<td>
 										<input type="text" name="form[urls_in_signature]" size="5" value="<?php echo $pun_config['o_urls_in_signature'] ?>" />
 										<span>Users with less than N forum comments can not use links in signature.</span>
+										<span>(This option also disables URLs in personal profile).</span>
 									</td>
 								</tr>
 								<tr>

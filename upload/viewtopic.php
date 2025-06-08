@@ -368,13 +368,18 @@ while ($cur_post = $db->fetch_assoc($result))
 	// Perform the main parsing of the message (BBCode, smilies, censor words etc)
 	$cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smilies']);
 
-	// Do not show user signature in posts if it contains URLs and he/she didn't reached certain posts nr
-	if ($cur_post['g_id'] > PUN_MOD && ($cur_post['signature'] != '' && preg_match('#\[url|https?:\/\/[^\s]+#i', $cur_post['signature']) && $cur_post['num_posts'] < (int)$pun_config['o_urls_in_signature']))
-		$cur_post['signature'] = '';
-
 	// Do signature parsing/caching
 	if (!$user_banned && $cur_post['signature'] != '' && $pun_user['show_sig'] != '0')
 	{
+		// Do not show user signature in posts if it contains URLs and he/she didn't reached certain posts nr
+		if ($pun_user['g_id'] > PUN_MOD)
+		{
+			if ($cur_post['g_id'] > PUN_MOD && ($cur_post['signature'] != '' && preg_match('#\[url|https?:\/\/[^\s]+#i', $cur_post['signature']) && $cur_post['num_posts'] < (int)$pun_config['o_urls_in_signature']))
+			{
+				$cur_post['signature'] = '';
+				$signature_cache[$cur_post['poster_id']] = $signature;
+			}
+		}
 		if (isset($signature_cache[$cur_post['poster_id']]))
 			$signature = $signature_cache[$cur_post['poster_id']];
 		else

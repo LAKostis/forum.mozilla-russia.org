@@ -132,7 +132,7 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 }
 
 ?>
-			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />Modified by <a href="http://mozilla-russia.org/">Mozilla Russia</a><br />Copyright © 2004–2020 Mozilla Russia <a href="https://github.com/LAKostis/forum.mozilla-russia.org"><img src="img/GitHub-Mark-32px.png" alt='GitHub mark'/></a><br /><?php
+			<p class="conr">Powered by <a href="http://punbb.informer.com/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />Modified by <a href="http://mozilla-russia.org/">Mozilla Russia</a><br />Copyright © 2004–2025 Mozilla Russia <a href="https://github.com/LAKostis/forum.mozilla-russia.org"><img src="img/GitHub-Mark-32px.png" alt='GitHub mark'/></a><br /><?php
 
 echo $lang_common['Forum language'].': ';
 if ($pun_user['language'] == 'Russian')

@@ -884,8 +884,10 @@ $last_post = format_time($user['last_post']);
 if ($user['signature'] != '')
 {
 	if ($pun_user['g_id'] < PUN_MOD || (preg_match('#\[url|https?:\/\/[^\s]+#i', $user['signature']) && (int)$user['num_posts'] >= (int)$pun_config['o_urls_in_signature']))
-	require PUN_ROOT.'include/parser.php';
-	$parsed_signature = parse_signature($user['signature']);
+	{
+		require PUN_ROOT.'include/parser.php';
+		$parsed_signature = parse_signature($user['signature']);
+	}
 }
 
 

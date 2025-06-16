@@ -375,7 +375,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 					// Create the notify post
 					$message = 'Тема перенесена из форума «[url='.$pun_config['o_base_url'].'/viewforum.php?id='.$fid.']'.$result_old.'[/url]» в форум «[url='.$pun_config['o_base_url'].'/viewforum.php?id='.$move_to_forum.']'.$result_new.'[/url]».';
-					$hide_smilies = false;
+					$hide_smilies = isset($_POST['hide_smilies']) ? 1 : 0;
 					$db->query('INSERT INTO '.$db->prefix.'posts (poster, poster_id, poster_ip, message, hide_smilies, posted, topic_id) VALUES(\''.$db->escape($pun_user['username']).'\', '.$pun_user['id'].', \''.get_remote_address().'\', \''.$db->escape($message).'\', \''.$hide_smilies.'\', '.time().', '.$cur_topic.')') or error('Unable to create post', __FILE__, __LINE__, $db->error());
 				}
 
